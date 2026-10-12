@@ -23,5 +23,6 @@ ruamel.yaml==0.19.1
 scipy==1.18.1
 setuptools==84.0.0
 six==1.17.0
+thermohalinesteps @ git+https://github.com/callumrollo/thermohaline-steps.git@976a4febdf85192aab1d247f7fc32abd3aeab83f
 wheel==0.47.0
 xarray==2026.9.0

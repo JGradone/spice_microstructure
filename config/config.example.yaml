@@ -258,18 +258,19 @@ regimes:
       min_interfaces: 2
     rollo2022:
       # Rollo et al. (2022), Geosci. Instrum. Method. Data Syst. 11, 359-373,
-      # doi:10.5194/gi-11-359-2022; code doi:10.5281/zenodo.5541659.
-      # Values as printed in the paper, whose units are garbled ("kg m-4",
-      # "kg m-1"). Confirm defaults and units against the Zenodo code before use.
-      verified_against_code: false
-      grid_m: 1.0
-      background_window_m: 100
-      derived_window_m: 50
-      ml_max_density_gradient: 0.001
-      ml_max_density_difference: 0.01
-      interface_max_height_m: 30
-      temperature_only_steps: true           # FP07 temperature resolves steps better than salinity
-      salinity_smoothing_m: 5
+      # doi:10.5194/gi-11-359-2022. Code: github.com/callumrollo/thermohaline-steps
+      # (GPL-3.0), pinned in requirements.txt. Keys are the arguments of
+      # thermohalinesteps.detect_staircases.classify_staircase; defaults and
+      # units checked in the code (commit 976a4fe). The code defaults equal the
+      # van der Boog values; the paper's glider run used ml_grad 0.001 and
+      # ml_density_difference 0.01 (its "kg m-4" units are a typo).
+      grid_dbar: 1.0                         # input must be evenly spaced in pressure
+      ml_grad: 0.0005                        # kg m-3 dbar-1
+      ml_density_difference: 0.005           # kg m-3
+      av_window: 200                         # dbar; background profiles. Too long for VMP250 casts (~180-270 m)
+      interface_max_height: 30               # dbar
+      layer_height_ratio: 1                  # max mixed layer / gradient layer height ratio
+      temp_flag_only: true                   # mixed layers flagged by temperature only (FP07 resolves steps)
     ml:
       # Labels from an external machine learning classifier (intern project),
       # read from a file and compared with the published methods. Expected
