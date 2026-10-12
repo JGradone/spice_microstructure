@@ -206,6 +206,30 @@ def data_records_identical(raw: Path, patched: Path, header_bound: int = 65536) 
 
 
 # --------------------------------------------------------------------------
+# perturb output trees
+# --------------------------------------------------------------------------
+
+def single_dir(root: Path, prefix: str) -> Path:
+    """The one <prefix>_NN directory perturb wrote under root."""
+    found = sorted(Path(root).glob(f"{prefix}_[0-9][0-9]"))
+    if len(found) != 1:
+        raise RuntimeError(f"Expected one {prefix}_NN directory in {root}, found {found}")
+    return found[0]
+
+
+def profile_table(diss_dir: Path):
+    """file, profile file name and start time (epoch s) of each per-profile NetCDF."""
+    import netCDF4
+    import pandas as pd
+    rows = []
+    for f in sorted(Path(diss_dir).glob("*_prof*.nc")):
+        with netCDF4.Dataset(f) as ds:
+            rows.append({"profile_file": f.name, "file": f.name.split("_prof")[0],
+                         "stime": float(ds["stime"][...])})
+    return pd.DataFrame(rows)
+
+
+# --------------------------------------------------------------------------
 # Patch edits from the config
 # --------------------------------------------------------------------------
 

@@ -36,6 +36,7 @@ STEPS = [
     "diffusivities",  # 8. bin averaged diffusivities
     "uncertainty",    # 10. bootstrap over profiles
     "compare_archive",  # sanity check against shipboard outputs
+    "figures",        # first-look figures (convert output until export exists)
     "export",         # documented products for use outside this repository
 ]
 

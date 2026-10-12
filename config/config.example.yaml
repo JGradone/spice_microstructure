@@ -55,6 +55,7 @@ instruments:
       raw: manifests/vmp250_raw.sha256.csv
       patched: manifests/vmp250_patched.sha256.csv
       processed: manifests/vmp250_processed.sha256.csv
+    archive_generation: "01"      # vmp250_processed/*_01: last shipboard-parameter run (2026-09-30)
     process_station_files: [data_0132.p, data_0133.p, data_0134.p]
     perturb_overrides: {}         # VMP250 uses the shared perturb block as is (JAC CT)
     towyo: [data_0134.p]          # Tow-yo lines 1 and 2, 2026-08-20, ship under way
@@ -95,10 +96,11 @@ instruments:
       raw: manifests/vmp6000_raw.sha256.csv
       patched: manifests/vmp6000_patched.sha256.csv
       processed: manifests/vmp6000_processed.sha256.csv
+    archive_generation: "00"      # only generation in vmp6000_processed
     process_station_files: [SPC_033.P, SPC_034.P, SPC_038.P, SPC_039.P]
     perturb_overrides:            # VMP5500 carries a Sea-Bird CT, not a JAC CT (shipboard params)
       ct: {T_name: SBT1, C_name: SBC1}
-      fp07: {reference: SBT1}
+      fp07: {reference: SBT1, reference_interval: 0.015625}   # SBT1 is a native 64 Hz slow channel
       ctd: {T_name: SBT1, C_name: SBC1}
     towyo: []
     exclude:
@@ -149,12 +151,17 @@ perturb:
   # Every perturb option, set explicitly. Baseline = the shipboard parameters
   # (vmp*_processed .params_sha256_* files; docs/shipboard_processing.md).
   # Options added after 0.3.1 are set to their 0.3.1-equivalent behaviour
-  # where one exists; `epsilon.anchor` and `fp07.min_corr` have no off switch.
+  # where one exists (`fp07.min_corr: 0` disables the new gate); `epsilon.anchor`
+  # has no 0.3.1-equivalent setting.
   # files.*, gps.*, hotel.*, netcdf.* are filled in by the driver.
   profiles: {P_min: 0.5, W_min: null, direction: auto, min_duration: 7.0, diagnostics: false}
                                   # W_min null = auto, 0.3 dbar/s for a free-fall VMP
   fp07: {calibrate: true, order: 2, max_lag_seconds: 10, reference: JAC_T,
-         must_be_negative: true, min_corr: 0.5, reference_interval: null}
+         must_be_negative: true, reference_interval: null,
+         min_corr: 0.0}           # 0 = no correlation gate, as in 0.3.1. With the new
+                                  # default 0.5 every VMP5500 profile failed the gate and
+                                  # the uncalibrated FP07 kept nominal coefficients (+3 degC;
+                                  # decisions.md 2026-10-12)
   ct: {align: true, T_name: JAC_T, C_name: JAC_C}
   bottom: {enable: false, method: vibration, depth_window: 4.0, depth_minimum: 10.0,
            speed_factor: 0.3, median_factor: 1.0, vibration_frequency: 16,

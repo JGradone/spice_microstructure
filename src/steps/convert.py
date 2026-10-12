@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import copy
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -91,7 +92,11 @@ def run(ctx: dict) -> None:
         if not files:
             raise RuntimeError(f"No patched files for {name} in {patched}; run the patch step")
         output = out / name
-        output.mkdir(exist_ok=True)
+        # perturb suffixes output dirs by a parameter hash (diss_00, diss_01, ...);
+        # start clean so one run never mixes two parameter sets.
+        if output.exists():
+            shutil.rmtree(output)
+        output.mkdir()
         cfg_path = out / f"perturb_config_{name}.yaml"
         cfg_path.write_text(yaml.safe_dump(
             perturb_config(config, name, inst, patched, output, track, prov), sort_keys=False))
