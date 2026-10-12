@@ -53,6 +53,7 @@ instruments:
       patched: manifests/vmp250_patched.sha256.csv
       processed: manifests/vmp250_processed.sha256.csv
     process_station_files: [data_0132.p, data_0133.p, data_0134.p]
+    perturb_overrides: {}         # VMP250 uses the shared perturb block as is (JAC CT)
     towyo: [data_0134.p]          # Tow-yo lines 1 and 2, 2026-08-20, ship under way
     exclude: {}                   # e.g. {data_0112.p: "test casts, sh2 probe M3463"}
     exclude_probes: {}            # e.g. {data_0112.p: [sh2]}
@@ -91,6 +92,10 @@ instruments:
       patched: manifests/vmp6000_patched.sha256.csv
       processed: manifests/vmp6000_processed.sha256.csv
     process_station_files: [SPC_033.P, SPC_034.P, SPC_038.P, SPC_039.P]
+    perturb_overrides:            # VMP5500 carries a Sea-Bird CT, not a JAC CT (shipboard params)
+      ct: {T_name: SBT1, C_name: SBC1}
+      fp07: {reference: SBT1}
+      ctd: {T_name: SBT1, C_name: SBC1}
     towyo: []
     exclude:
       SPC_003.P: "bench test with test probes; placeholder calibrations; clock set incorrectly"
@@ -124,55 +129,172 @@ instruments:
           T2: {sn: T3301}
 
 conversion:
-  # microstructure-tpw conversion settings; confirm argument names with --help
-  tool: TODO
+  # Conversion and dissipation are done by `perturb run` (microstructure-tpw),
+  # called per instrument by the driver with a perturb config generated from
+  # the `perturb` block below plus instruments.<name>.perturb_overrides.
+  # Argument names checked with --help on the pinned commit (decisions.md).
+  tool: perturb run
   extra_args: []
+  jobs: 1                         # perturb parallel.jobs (shipboard: 1)
   # Positions: the shipboard runs had none (perturb gps.source: nan). Use the
   # ship track built by the cast_log step as a perturb gps csv file.
   gps_source: csv                 # perturb gps.source
   gps_max_time_diff_s: 600        # ASNAP snapshots every 300 s
 
+perturb:
+  # Every perturb option, set explicitly. Baseline = the shipboard parameters
+  # (vmp*_processed .params_sha256_* files; docs/shipboard_processing.md).
+  # Options added after 0.3.1 are set to their 0.3.1-equivalent behaviour
+  # where one exists; `epsilon.anchor` and `fp07.min_corr` have no off switch.
+  # files.*, gps.*, hotel.*, netcdf.* are filled in by the driver.
+  profiles: {P_min: 0.5, W_min: null, direction: auto, min_duration: 7.0, diagnostics: false}
+                                  # W_min null = auto, 0.3 dbar/s for a free-fall VMP
+  fp07: {calibrate: true, order: 2, max_lag_seconds: 10, reference: JAC_T,
+         must_be_negative: true, min_corr: 0.5, reference_interval: null}
+  ct: {align: true, T_name: JAC_T, C_name: JAC_C}
+  bottom: {enable: false, method: vibration, depth_window: 4.0, depth_minimum: 10.0,
+           speed_factor: 0.3, median_factor: 1.0, vibration_frequency: 16,
+           vibration_factor: 4.0, proximity_bins: 2, height: 0.15,
+           fallrate_fraction: 0.9, fallrate_smooth_s: 0.05}
+  top_trim: {enable: false, dz: 0.5, min_depth: 1.0, max_depth: 50.0, quantile: 0.6, noise_factor: 2.0}
+  epsilon:
+    fft_sec: 4.0                  # sensitivity parameter (shipboard 4 s)
+    diss_sec: 16.0                # shipboard null = 4 x fft_sec; sensitivity parameter
+    overlap_sec: 8.0              # shipboard null = half the window
+    fft_length: null
+    diss_length: null
+    overlap: null
+    anchor: top                   # new since 0.3.1; no 0.3.1-equivalent setting
+    bbl_diss_sec: null
+    bbl_overlap_sec: null
+    bbl_extent_sec: null
+    goodman: true
+    f_AA: 98.0
+    f_limit: null                 # null = f_AA
+    fit_order: 3
+    despike_thresh: 8
+    despike_smooth: 0.5
+    salinity: null                # viscosity salinity fixed at 35
+    epsilon_minimum: 1.0e-13
+    T_source: null
+    spectral_qc: false            # new since 0.3.1; false = 0.3.1 behaviour
+    FM_max: 1.15                  # used only when spectral_qc is true
+    var_resolved_min: 0.5         # used only when spectral_qc is true
+    pair_policy: keep_both        # new since 0.3.1; keep_both = 0.3.1 behaviour
+    pair_limit: 2.7718585822512662
+    fom_max: null                 # shipboard: no figure-of-merit cut
+    diagnostics: false
+  chi:
+    enable: true
+    fft_sec: 4.0
+    diss_sec: 16.0
+    overlap_sec: 8.0
+    fft_length: null
+    diss_length: null
+    overlap: null
+    fp07_model: single_pole
+    goodman: true
+    f_AA: 98.0
+    use_epsilon: false            # Method 2: chi and epsilon_T from FP07 spectral fits
+    fit_method: iterative         # shipboard; MLE (Ruddick et al. 2000) is the first planned change
+    spectrum_model: kraichnan
+    salinity: null
+    mixing_use_qc_fallback: false
+    mixing: true
+    chi_minimum: 1.0e-13
+    fom_max: null
+    spectral_qc: true
+    diagnostics: false
+  ctd: {enable: true, bin_width: 0.5, T_name: JAC_T, C_name: JAC_C, variables: null, method: mean, diagnostics: false}
+  speed: {method: pressure, value: null, hotel_var: speed, aoa_deg: 3.0, min_pitch_deg: 5.0,
+          speed_cutout: 0.05, tau: null, amplitude_quantile: [1.0, 99.0]}
+  qc: {enable: true, drop_action: nan, epsilon_drop_from: [], chi_drop_from: [], rules: {}}
+  binning: {method: depth, width: 1.0, aggregation: mean, diss_width: null,
+            diss_aggregation: null, chi_width: null, chi_aggregation: null, diagnostics: false}
+  stratification: {enable: true, window: 2.0, salinity: null}
+
 segments:
-  # Shared defaults; per-instrument values may be needed (the VMP5500 falls
-  # at 0.4 to 1.0 m/s depending on ballast).
-  min_fall_speed_m_s: TODO
-  max_fall_speed_m_s: TODO
-  drop_top_m: TODO
-  drop_bottom_m: TODO
+  # Extra segment QC applied after perturb (CLAUDE.md step 2). The shipboard
+  # run had none beyond perturb's profile detection (P_min, W_min, no top or
+  # bottom trim), so the baseline leaves it off.
+  enabled: false
+  min_fall_speed_m_s: null
+  max_fall_speed_m_s: null
+  drop_top_m: null
+  drop_bottom_m: null
 
-shear:
-  fft_length_s: 4
-  diss_length_s: 16
-  goodman_noise_removal: true
-  noise_floor_w_kg: TODO          # explicit threshold, independent of figure of merit
-  figure_of_merit_max: TODO
-
-thermistor:
-  fft_length_s: 4
-  diss_length_s: 16
-  spectrum_model: kraichnan       # kraichnan or batchelor
-  fit_method: mle
+shear_qc:
+  # Explicit noise floor test, independent of the figure of merit. Not applied
+  # at sea; first planned change after the baseline.
+  noise_floor_w_kg: null
 
 hydrography:
-  gradient_smoothing_m: TODO      # key sensitivity parameter
+  # Background gradients (T_z, S_z, N2, R_rho, Turner) for the double
+  # diffusion steps. Baseline matches perturb stratification.window (2 dbar);
+  # key sensitivity parameter.
+  gradient_smoothing_m: 2.0
 
 regimes:
   turner_finger_min_deg: 45
   turner_finger_strong_deg: 72
-  interface_layer_method: TODO
-  interface_layer_threshold: TODO
+  staircase:
+    # Interface/layer labels from each method are kept side by side in the
+    # products and compared; none is privileged until the comparison is done.
+    methods: [vdb2021, rollo2022]
+    vdb2021:
+      # van der Boog et al. (2021), ESSD 13, 43-61, doi:10.5194/essd-13-43-2021.
+      # Values from the paper text (Sects. 2-3, Table 2). Its 200 dbar
+      # background window and 100 dbar end trims assume deep profiles; VMP250
+      # casts reach ~180-270 m, so apply to the VMP5500, or to the VMP250 only
+      # with the background taken from a co-located deep profile.
+      grid_dbar: 1.0
+      background_window_dbar: 200
+      turner_window_dbar: 50
+      sigma_reference_dbar: 1000
+      ml_max_gradient_kg_m3_dbar: 0.0005     # applied to (alpha/rho0) T_p, (beta/rho0) S_p, sigma1_p
+      ml_max_density_range_kg_m3: 0.005
+      interface_max_height_dbar: 30
+      interface_max_extrema: 2               # local extrema of CT and SA per interface
+      min_interfaces: 2
+    rollo2022:
+      # Rollo et al. (2022), Geosci. Instrum. Method. Data Syst. 11, 359-373,
+      # doi:10.5194/gi-11-359-2022; code doi:10.5281/zenodo.5541659.
+      # Values as printed in the paper, whose units are garbled ("kg m-4",
+      # "kg m-1"). Confirm defaults and units against the Zenodo code before use.
+      verified_against_code: false
+      grid_m: 1.0
+      background_window_m: 100
+      derived_window_m: 50
+      ml_max_density_gradient: 0.001
+      ml_max_density_difference: 0.01
+      interface_max_height_m: 30
+      temperature_only_steps: true           # FP07 temperature resolves steps better than salinity
+      salinity_smoothing_m: 5
+    ml:
+      # Labels from an external machine learning classifier (intern project),
+      # read from a file and compared with the published methods. Expected
+      # columns: instrument, file, profile, depth_top_m, depth_bottom_m,
+      # label (layer | interface), model_name, model_version.
+      enabled: false
+      labels_path: null
 
 double_diffusion:
   flux_coefficient: 0.2           # Gamma used for chi_expected
   epsilon_source: shear           # shear or thermistor
   flux_ratio_gamma: 0.65          # sensitivity parameter
-  profiles_per_average: TODO
-  depth_bin_m: TODO
-  min_n2_s2: TODO                 # exclude weakest stratification in checks
+  average_over: station           # average all valid profiles in a station group
+  min_profiles_per_average: 3     # bins with fewer profiles are reported, flagged
+  depth_bin_m: 25                 # baseline; 10 m in the bin10m sensitivity run
+  exclude_weakest_n2_percent: 10  # robustness check: repeat with the weakest N2 decile removed
 
 uncertainty:
   bootstrap_samples: 1000
   random_seed: 20260812
+
+sensitivity_runs:
+  # Each entry is its own run, reported as a difference from the baseline.
+  - name: bin10m
+    set: {double_diffusion.depth_bin_m: 10}
 
 products:
   # Final exported products for use outside this repository. Layout and
@@ -180,8 +302,8 @@ products:
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
   product_version: "0.1"          # bump on any change to variables or methods
-  depth_bin_m: TODO               # bin size of the binned product
-  creator_name: TODO
-  creator_email: TODO
+  depth_bin_m: 1.0                # binned profiles; matches shipboard binning
+  creator_name: "Joe Gradone"
+  creator_email: "joe@gradone.com"
   institution: "Rutgers University"
-  license: TODO
+  license: "CC-BY-4.0"            # data products; the code is MIT

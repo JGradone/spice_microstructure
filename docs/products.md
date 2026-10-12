@@ -24,7 +24,7 @@ One record per dissipation window per profile (dimension `segment`), at native r
 * `epsilon_sh1`, `epsilon_sh2`, `epsilon_shear` (combined), figure of merit, fraction of variance resolved, noise-floor flag
 * `chi_T1`, `chi_T2`, `chi` (combined), `epsilon_T` (from the Kraichnan fit), fit quality
 * Background hydrography at the configured smoothing scale: `SA`, `CT`, `N2`, `T_z`, `S_z`, `alpha`, `beta`, `R_rho`, `turner_angle`
-* `Re_b` (buoyancy Reynolds number), regime label (Turner class), staircase label (interface or layer)
+* `Re_b` (buoyancy Reynolds number), regime label (Turner class), and one staircase label (interface, layer, or none) per detection method (`staircase_vdb2021`, `staircase_rollo2022`, and `staircase_ml` when ML labels are supplied)
 * QC bit flags with a `flag_meanings` attribute
 
 No diffusivities at this level. K_T and K_S computed per segment are biased where T_z or S_z approach zero (CLAUDE.md, steps 7 and 8). Users who need their own averages should average epsilon, chi and the gradients here, then form diffusivities from the averages.
