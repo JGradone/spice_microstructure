@@ -10,8 +10,8 @@ fp07:
   max_lag_seconds: 10
   reference: JAC_T
   must_be_negative: true
-  min_corr: 0.5
   reference_interval: null
+  min_corr: 0.0
 ct:
   align: true
   T_name: JAC_T
@@ -151,5 +151,5 @@ netcdf:
   project: SPICE
   platform: R/V Falkor (too)
   instrument: Rockland VMP-250IR SN 537
-  comment: spice_microstructure git 0d02b25e896a10912928c03540db7bf4a2ca5448; config
-    sha256 84e7d72bc9cb; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)
+  comment: spice_microstructure git 34219db41840a89678531a9c99c4cc86a653c1c6; config
+    sha256 e6ac693c1c4e; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)

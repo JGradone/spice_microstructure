@@ -1,0 +1,27 @@
+{
+  "step": "figures",
+  "created_utc": "2026-10-12T22:56:16+00:00",
+  "config_sha256": "e6ac693c1c4ee9f87d79323a9a7d6d4bd4d33a0bb063feac9e39771f78d3c439",
+  "git_commit": "34219db41840a89678531a9c99c4cc86a653c1c6",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "manifests_verified": true,
+  "figures": [
+    "cruise_map.png",
+    "process_station_profiles.png",
+    "sections_vmp250.png",
+    "sections_vmp5500.png",
+    "probe_agreement.png"
+  ]
+}

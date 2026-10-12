@@ -1,8 +1,8 @@
 {
   "step": "convert",
-  "created_utc": "2026-10-12T22:31:32+00:00",
-  "config_sha256": "84e7d72bc9cbf5dc41f04d3c388e2cb6efd7aedf19ec0158adb0207df9660fee",
-  "git_commit": "0d02b25e896a10912928c03540db7bf4a2ca5448",
+  "created_utc": "2026-10-12T22:56:10+00:00",
+  "config_sha256": "e6ac693c1c4ee9f87d79323a9a7d6d4bd4d33a0bb063feac9e39771f78d3c439",
+  "git_commit": "34219db41840a89678531a9c99c4cc86a653c1c6",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
