@@ -80,3 +80,7 @@ Requires Python 3.10 or newer.
    ```
 
    Steps are stubs until implemented. The first milestone is a baseline run from raw on the pinned package version with the shipboard parameters (see CLAUDE.md).
+
+## License
+
+Code in this repository is released under the MIT License (see `LICENSE`). It covers the code and documentation only; no cruise data are included. The microstructure-tpw dependency is distributed separately under its own license (GPL-3.0-or-later).
