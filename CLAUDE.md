@@ -1,6 +1,13 @@
-# Salt finger diagnostics from VMP microstructure
+# SPICE VMP microstructure processing
 
-This directory holds the processing workflow for estimating double diffusive (salt finger) contributions to mixing from Rockland VMP microstructure data (shear probes, FP07 thermistors, CTD). Read this file fully before writing or running any code.
+This repository is the main processing workflow for all Rockland VMP microstructure data (shear probes, FP07 thermistors, CTD) from the FKt260806 SPICE cruise, both instruments. It runs from the raw .p files to documented derived products: epsilon, chi, background hydrography, regime labels, and bin-averaged diffusivities with uncertainty. Those products are exported for further analysis elsewhere (see `docs/products.md`). A central science question, and the reason for the double diffusion steps, is the salt finger contribution to mixing. Read this file fully before writing or running any code.
+
+## Outputs are the interface
+
+* Analyses outside this repository read only the exported products (`export` step, specified in `docs/products.md`), never intermediate step outputs.
+* Products carry full provenance (config hash, git commit, package versions, product version) and keep every exclusion and caution as a flag, not as silently missing data.
+* Any change to product variables, units, or methods bumps `products.product_version` and gets a dated entry in `docs/decisions.md`.
+* Diffusivities are exported only as bin averages (see steps 7 and 8). The segment product carries epsilon, chi and gradients so other users can form their own averages correctly.
 
 ## Context
 
@@ -42,7 +49,7 @@ config/       # config.example.yaml (committed); config.yaml (local copy with re
 src/          # pipeline driver and one module per step
 scripts/      # utilities: checksum manifests, environment snapshots
 manifests/    # committed checksum manifests of data directories
-docs/         # shipboard_processing.md, decisions.md
+docs/         # shipboard_processing.md, decisions.md, products.md
 ```
 
 Outputs (derived data, figures, run logs) are written to a data location set in the config, not into the repository.
@@ -60,25 +67,27 @@ Existing pieces:
 
 ## Archived shipboard processing (read only)
 
-The first round of processing, done at sea, lives in three directories outside this repository:
+The first round of processing, done at sea, lives in three directories per instrument outside this repository (`vmp250_*` for the VMP250, `vmp6000_*` for the VMP5500):
 
-* `vmp250_raw`: original .P files. These are the true pipeline input.
-* `vmp250_patched`: .P files after a patch step done at sea.
-* `vmp250_processed`: shipboard processing outputs.
+* `*_raw`: original .p/.P files. These are the true pipeline input.
+* `*_patched`: files after a patch step done at sea.
+* `*_processed`: shipboard processing outputs.
+
+The Rockland cal sheets (`SPICE_turbulence/SpiceProbeCalSheets`) are also read-only inputs.
 
 Rules:
 
-* Never modify, move, rename, or delete anything in these directories. Treat all three as an archive.
+* Never modify, move, rename, or delete anything in these directories. Treat all of them as an archive.
 * Each has a committed checksum manifest in `manifests/`. Verify against it before using the data.
-* What the patch step changed, and why, must be documented in `docs/shipboard_processing.md`. In this pipeline, patching is a scripted step that regenerates the patched files from `vmp250_raw`, so the chain starts from truly raw data.
+* What each patch step changed, and why, must be documented in `docs/shipboard_processing.md`. In this pipeline, patching is a scripted step that regenerates the patched files from the raw files, per instrument and per cast range (`instruments.<name>.patch` in the config), so the chain starts from truly raw data.
 * `docs/shipboard_processing.md` is the record of what was run at sea (commands recovered from shell history, package versions, parameters, problem casts). Read it before writing pipeline code.
 
 ## First milestone: baseline run on the latest package version
 
 Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit `81102fc`) is waived (see `docs/decisions.md`, 2026-10-12). The pipeline uses the latest microstructure-tpw, pinned to an exact git commit in `requirements.txt`.
 
-* The baseline is the first full run from `vmp250_raw` (including the scripted patch step) on the pinned version, using the shipboard parameters recorded in `docs/shipboard_processing.md`. Set every shipboard parameter explicitly in the config, and set any option added since 0.3.1 explicitly as well.
-* Compare the baseline outputs against `vmp250_processed` (generation `_01`) as a sanity check, not a pass/fail test. Differences mix package changes with pipeline changes and cannot be attributed to either alone. Record the comparison in `docs/decisions.md`.
+* The baseline is the first full run from the raw files of both instruments (including the scripted patch step) on the pinned version, using the shipboard parameters recorded in `docs/shipboard_processing.md`. Set every shipboard parameter explicitly in the config, and set any option added since 0.3.1 explicitly as well.
+* Compare the baseline outputs against `vmp250_processed` (generation `_01`) and `vmp6000_processed` as a sanity check, not a pass/fail test. Differences mix package changes with pipeline changes and cannot be attributed to either alone. Record the comparison in `docs/decisions.md`.
 * If epsilon or chi move a lot, read the microstructure-tpw changelog between 0.3.1 and the pinned commit before assuming the pipeline is wrong.
 * The regenerated patched files cannot match `vmp250_patched` byte for byte (the patch header embeds a timestamp and source path). Compare them on the non-comment config lines and the data records.
 * Every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from the baseline.
@@ -91,7 +100,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 
 ## Workflow (order of operations)
 
-0. **Cast log and patch.** Build a cast table from the Sealog export and the .p headers: file, start time, position, probe serials, station, operating notes, and exclusion or tow-yo flags. Build a ship track from the ASNAP snapshots. Then patch shear probe calibrations into the raw files per cast range from the config's probe history, not one spec for all files. `data_0112.p` was recorded with sh2 = M3463, before the swap to M2662. Every probe serial in the cast table must match the serial written into that file's config.
+0. **Cast log and patch.** Build a cast table from the Sealog export and the .p headers: file, start time, position, probe serials, station, operating notes, and exclusion or tow-yo flags. Build a ship track from the ASNAP snapshots. Then patch each instrument's raw files per cast range from the config (`instruments.<name>.patch.ranges`), not one spec for all files. For the VMP250 that is the shear probe calibration; `data_0112.p` was recorded with sh2 = M3463, before the swap to M2662. For the VMP5500 it is the 11 dbar pressure offset (coef0) and the T2 serial after the 2026-08-22 swap; its shear calibrations are already correct in the raw files. Every probe serial in the cast table must match the serial written into that file's config.
 1. **Convert and log.** Convert .P files to physical units with the `microstructure-tpw` conversion tool, called from the driver script. Supply positions from the ship track (the shipboard run had none). Record the package version, probe serial numbers, and calibration coefficients.
 2. **Select clean segments.** Keep steady fall speed portions only; drop launch acceleration and bottom approach. Despike shear; flag vibration contamination using accelerometers. Analyze tow-yo profiles (`data_0134.p`) separately from free-fall casts, and do not pool them at the process station without first showing they agree. Check casts with logged operating problems (line under the hull, sargassum on the line, twisted rod, poor line angle; see the cast table) before using them.
 3. **Background hydrography.** TEOS-10 (gsw): SA, CT, alpha, beta, N2, T_z, S_z, density ratio R_rho = alpha T_z / (beta S_z), Turner angle. The smoothing scale for background gradients is a key sensitivity parameter (see below), not a fixed choice.
@@ -108,6 +117,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
    * Caveat: Osborn and Cox assumes local vertical production balances dissipation. Lateral finescale gradients could also produce chi. This should be stated, and checked if the data allow.
 9. **Flux ratio gamma.** Poorly constrained (roughly 0.5 to 0.7 from lab and DNS work, possibly R_rho dependent). Treat as a sensitivity parameter.
 10. **Averaging and uncertainty.** Epsilon and chi are roughly lognormal and intermittent (individual profiles at one station can disagree); average arithmetically over profiles and use bootstrap confidence intervals resampled over profiles.
+11. **Export.** Write the products in `docs/products.md` (cast table, segments, binned profiles, diffusivities) per instrument, with provenance and flags. This is the last step and the only output meant for use outside this repository.
 
 ## Sensitivity parameters (all in config, each varied in its own run)
 

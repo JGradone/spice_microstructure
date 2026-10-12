@@ -9,7 +9,8 @@ Usage:
 Each step reads the previous step's saved output and writes its own under
 <output_root>/<run.name>/<step>/, so any step can be rerun on its own. Every
 run writes run_metadata.json with the config hash, git commit, and package
-versions. Steps are stubs until implemented; see CLAUDE.md for the methods.
+versions. Each step processes every instrument listed in run.instruments.
+Steps are stubs until implemented; see CLAUDE.md for the methods.
 """
 
 import argparse
@@ -38,7 +39,8 @@ STEPS = [
     "dd_test",        # 7. ratio of averages test
     "diffusivities",  # 8. bin averaged diffusivities
     "uncertainty",    # 10. bootstrap over profiles
-    "compare_archive",  # milestone check against shipboard outputs
+    "compare_archive",  # sanity check against shipboard outputs
+    "export",         # documented products for use outside this repository
 ]
 
 
@@ -88,12 +90,13 @@ def verify_manifests(config: dict) -> None:
     if not manifests.get("verify_before_run", False):
         return
     pairs = [
-        (config["paths"]["archive_raw"], manifests.get("raw")),
-        (config["paths"]["archive_patched"], manifests.get("patched")),
-        (config["paths"]["archive_processed"], manifests.get("processed")),
         (config["paths"]["sealog_dir"], manifests.get("sealog")),
         (config["paths"]["probe_calsheets"], manifests.get("probe_calsheets")),
     ]
+    for name in config["run"]["instruments"]:
+        inst = config["instruments"][name]
+        for kind in ("raw", "patched", "processed"):
+            pairs.append((inst[f"archive_{kind}"], inst["manifests"].get(kind)))
     script = REPO_ROOT / "scripts" / "make_manifest.py"
     for data_dir, manifest in pairs:
         if not manifest:

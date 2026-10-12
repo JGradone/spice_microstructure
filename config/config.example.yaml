@@ -1,18 +1,15 @@
 # Processing configuration template.
 # Copy to config/config.yaml and set local paths. Every parameter that affects
 # results lives here; scripts must not hard code values.
-# Values marked TODO must be filled from docs/shipboard_processing.md before the
-# reproduction run.
+# Values marked TODO must be filled before the baseline run (see
+# docs/shipboard_processing.md for the shipboard values).
 
 run:
-  name: shipboard_reproduction   # short label written into output metadata
-  notes: "Reproduce shipboard processing from raw with shipboard parameters."
+  name: baseline                  # short label written into output metadata
+  notes: "Baseline: all VMP casts from raw on the pinned package version with shipboard parameters."
+  instruments: [vmp250, vmp5500]  # which entries of `instruments` to process
 
 paths:
-  # Archived shipboard directories (read only)
-  archive_raw: /path/to/vmp250_raw
-  archive_patched: /path/to/vmp250_patched
-  archive_processed: /path/to/vmp250_processed
   # Cruise event log (Sealog export, read only). Directory holds one file.
   sealog_dir: /path/to/SPICE_turbulence/sealog
   sealog_file: FKt260806_sealog_export.csv
@@ -22,69 +19,122 @@ paths:
   output_root: /path/to/spice_microstructure_outputs
 
 manifests:
-  raw: manifests/vmp250_raw.sha256.csv
-  patched: manifests/vmp250_patched.sha256.csv
-  processed: manifests/vmp250_processed.sha256.csv
   sealog: manifests/sealog.sha256.csv
   probe_calsheets: manifests/probe_calsheets.sha256.csv
-  verify_before_run: true
-
-instrument:
-  name: VMP250                    # VMP-250IR SN 537 (the deep profiler is VMP-5500 SN 010,
-                                  # also called "VMP6000" in directory names)
+  verify_before_run: true         # instrument archive manifests are listed per instrument
 
 cast_log:
-  # Build a cast table (file, start time from the .p header, position, probe
-  # serials, station, notes) and a ship track from the Sealog export.
-  # Match Sealog VMP events to files by .p header start time, not by the
-  # logged file name: several names are mistyped and some times are wrong
-  # (see docs/shipboard_processing.md, "Sealog cross check").
+  # Build a cast table (instrument, file, start time from the .p header,
+  # position, probe serials, station, notes, flags) and a ship track from the
+  # Sealog export. Match Sealog VMP events to files by .p header start time,
+  # not by the logged file name: several names are mistyped and some times are
+  # wrong (see docs/shipboard_processing.md, "Sealog cross check").
   match_window_min: 15            # max |Sealog ts - file start| for a match
   track_events: [ASNAP]           # events whose ship lat/lon form the track
-  process_station:
-    files: [data_0132.p, data_0133.p, data_0134.p]
+  process_station:                # 48 h station, both instruments
     center_lat: 11.626
     center_lon: -50.577
-  # Casts to exclude from the analysis, with reasons. Excluded casts are still
-  # processed and logged, never silently dropped.
-  exclude: {}                     # e.g. {data_0112.p: "test casts, sh2 probe M3463"}
-  # Casts that are not free-fall profiles from a stationary ship
-  towyo: [data_0134.p]            # Tow-yo lines 1 and 2, 2026-08-20, ship under way
+    start_utc: "2026-08-19T22:30:00Z"
+    end_utc: "2026-08-21T19:30:00Z"
 
-patch:
-  # Shear probe calibration written into each raw file's config record with
-  # rsi-tpw patch-config (see docs/shipboard_processing.md, Patch step).
-  # Probe history comes from the Sealog equipment entries; sens values and
-  # dates from the Rockland cal sheets in paths.probe_calsheets. FP07 probes
-  # are uncalibrated at the factory (calibrated in situ against JAC_T). The shipboard patch
-  # applied M2662 to every file, but data_0112.p was recorded with M3463 on sh2.
-  enabled: true
-  method: rsi-tpw patch-config
-  author: "Joe"
-  probes:                         # applied to files first..last inclusive
-    - first: data_0112.p
-      last: data_0112.p
-      sh1: {sn: M3464, sens: "0.1215", cal_date: "2026-04-07"}
-      sh2: {sn: M3463, sens: "0.1079", cal_date: "2026-04-07"}
-      T1: T3306
-      T2: T3308
-    - first: data_0113.p
-      last: data_0149.p
-      sh1: {sn: M3464, sens: "0.1215", cal_date: "2026-04-07"}
-      sh2: {sn: M2662, sens: "0.1134", cal_date: "2023-04-12"}   # cal sheet confirms; 3.5 yr old calibration
-      T1: T3306
-      T2: T3308
+instruments:
+  # Excluded casts and probes are still processed and logged with their
+  # reason, and flagged in the products; they are never silently dropped.
+
+  vmp250:
+    model: VMP-250IR
+    serial: "537"
+    archive_raw: /path/to/SPICE_turbulence/vmp250_raw
+    archive_patched: /path/to/SPICE_turbulence/vmp250_patched
+    archive_processed: /path/to/SPICE_turbulence/vmp250_processed
+    file_pattern: "data_*.p"
+    manifests:
+      raw: manifests/vmp250_raw.sha256.csv
+      patched: manifests/vmp250_patched.sha256.csv
+      processed: manifests/vmp250_processed.sha256.csv
+    process_station_files: [data_0132.p, data_0133.p, data_0134.p]
+    towyo: [data_0134.p]          # Tow-yo lines 1 and 2, 2026-08-20, ship under way
+    exclude: {}                   # e.g. {data_0112.p: "test casts, sh2 probe M3463"}
+    exclude_probes: {}            # e.g. {data_0112.p: [sh2]}
+    patch:
+      # Written into each raw file's config record with rsi-tpw patch-config.
+      # Probe history from the Sealog; sens and dates from the cal sheets.
+      # FP07 probes are uncalibrated at the factory (calibrated in situ).
+      # The shipboard patch applied M2662 to every file, but data_0112.p was
+      # recorded with M3463 on sh2.
+      method: rsi-tpw patch-config
+      author: "Joe"
+      ranges:                     # applied to files first..last inclusive
+        - first: data_0112.p
+          last: data_0112.p
+          sh1: {sn: M3464, sens: "0.1215", cal_date: "2026-04-07"}
+          sh2: {sn: M3463, sens: "0.1079", cal_date: "2026-04-07"}
+          T1: {sn: T3306}
+          T2: {sn: T3308}
+        - first: data_0113.p
+          last: data_0149.p
+          sh1: {sn: M3464, sens: "0.1215", cal_date: "2026-04-07"}
+          sh2: {sn: M2662, sens: "0.1134", cal_date: "2023-04-12"}   # 3.5 yr old calibration
+          T1: {sn: T3306}
+          T2: {sn: T3308}
+
+  vmp5500:
+    # Same instrument as "VMP6000" in directory names.
+    model: VMP-5500
+    serial: "010"
+    archive_raw: /path/to/SPICE_turbulence/vmp6000_raw
+    archive_patched: /path/to/SPICE_turbulence/vmp6000_patched
+    archive_processed: /path/to/SPICE_turbulence/vmp6000_processed
+    file_pattern: "SPC_*.P"
+    manifests:
+      raw: manifests/vmp6000_raw.sha256.csv
+      patched: manifests/vmp6000_patched.sha256.csv
+      processed: manifests/vmp6000_processed.sha256.csv
+    process_station_files: [SPC_033.P, SPC_034.P, SPC_038.P, SPC_039.P]
+    towyo: []
+    exclude:
+      SPC_003.P: "bench test with test probes; placeholder calibrations; clock set incorrectly"
+    exclude_probes:
+      SPC_040.P: [T2]             # T2 (T3304) flat-lined; replaced after this cast
+      SPC_060.P: [sh1]            # sh1 (M3461) low response; replaced after SPC_061
+      SPC_061.P: [sh1]
+    flag:                         # usable with caution; carried as flags into products
+      SPC_004.P: "ballast tuning: 0.4 m/s, spiking"
+      SPC_012.P: "ballast tuning: 1.0 m/s, vibration noise"
+      SPC_014.P: "ballast tuning: 0.85 m/s, vibration noise"
+      SPC_015.P: "ballast tuning: 0.81 m/s, vibration noise"
+      SPC_038.P: "short file (31 min); check whether the cast completed"
+    patch:
+      # Shear probe serials and sensitivities are already correct in the raw
+      # files (setup.cfg was updated aboard at each swap; verified against the
+      # Sealog and cal sheets). The shipboard patch changed only pressure coef0
+      # (29.48 -> 18.48, an 11 dbar offset fix; on-deck pressure reads 11-12
+      # dbar raw and 0-1 dbar patched) and cruise_info. The T2 serial was never
+      # updated after the 2026-08-22 swap, so it is corrected here (metadata
+      # only: FP07 coefficients are nominal and calibrated in situ).
+      method: rsi-tpw patch-config
+      author: "Joe"
+      cruise_info: {operator: "Rutgers", project: "SPICE", ship: "R/V Falkor (too)"}
+      ranges:
+        - first: SPC_004.P
+          last: SPC_063.P
+          P: {coef0: "18.48", coef1: "0.272780", coef2: "-3.8053e-8", cal_date: "2026-05-19"}
+        - first: SPC_041.P
+          last: SPC_063.P
+          T2: {sn: T3301}
 
 conversion:
   # microstructure-tpw conversion settings; confirm argument names with --help
   tool: TODO
   extra_args: []
-  # Positions: the shipboard run had none (perturb gps.source: nan). Use the
+  # Positions: the shipboard runs had none (perturb gps.source: nan). Use the
   # ship track built by the cast_log step as a perturb gps csv file.
   gps_source: csv                 # perturb gps.source
-  gps_max_time_diff_s: 600        # ASNAP snapshots are sparse; warn beyond this gap
+  gps_max_time_diff_s: 600        # ASNAP snapshots every 300 s
 
 segments:
+  # Shared defaults; per-instrument values may be needed (the VMP5500 falls
+  # at 0.4 to 1.0 m/s depending on ballast).
   min_fall_speed_m_s: TODO
   max_fall_speed_m_s: TODO
   drop_top_m: TODO
@@ -123,3 +173,15 @@ double_diffusion:
 uncertainty:
   bootstrap_samples: 1000
   random_seed: 20260812
+
+products:
+  # Final exported products for use outside this repository. Layout and
+  # variables are specified in docs/products.md.
+  format: netcdf4
+  conventions: "CF-1.13, ACDD-1.3"
+  product_version: "0.1"          # bump on any change to variables or methods
+  depth_bin_m: TODO               # bin size of the binned product
+  creator_name: TODO
+  creator_email: TODO
+  institution: "Rutgers University"
+  license: TODO

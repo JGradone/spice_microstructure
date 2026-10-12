@@ -1,6 +1,6 @@
-# SPICE microstructure: salt finger diagnostics
+# SPICE microstructure processing
 
-Reproducible processing of Rockland VMP microstructure data (shear, FP07, CTD) from the 2026 R/V Falkor (too) SPICE expedition, aimed at testing whether thermal variance dissipation in thermohaline staircases exceeds what shear driven turbulence can explain, and estimating salt finger heat and salt diffusivities.
+Reproducible processing of all Rockland VMP microstructure data (VMP-250IR SN 537 and VMP-5500 SN 010; shear, FP07, CTD) from the 2026 R/V Falkor (too) SPICE expedition (FKt260806). The chain runs from raw .p files to exported products (epsilon, chi, hydrography, regime labels, and bin-averaged diffusivities with uncertainty; see `docs/products.md`) for use in other analyses. A central question is whether thermal variance dissipation in thermohaline staircases exceeds what shear driven turbulence can explain, and what the salt finger heat and salt diffusivities are.
 
 This repository holds code, configuration, environment files, and documentation only. Data live outside the repository and are located through the config file.
 
@@ -52,6 +52,9 @@ Requires Python 3.10 or newer.
    python scripts/make_manifest.py write /path/to/vmp250_raw manifests/vmp250_raw.sha256.csv
    python scripts/make_manifest.py write /path/to/vmp250_patched manifests/vmp250_patched.sha256.csv
    python scripts/make_manifest.py write /path/to/vmp250_processed manifests/vmp250_processed.sha256.csv
+   python scripts/make_manifest.py write /path/to/vmp6000_raw manifests/vmp6000_raw.sha256.csv
+   python scripts/make_manifest.py write /path/to/vmp6000_patched manifests/vmp6000_patched.sha256.csv
+   python scripts/make_manifest.py write /path/to/vmp6000_processed manifests/vmp6000_processed.sha256.csv
    python scripts/make_manifest.py write /path/to/SPICE_turbulence/sealog manifests/sealog.sha256.csv
    python scripts/make_manifest.py write /path/to/SPICE_turbulence/SpiceProbeCalSheets manifests/probe_calsheets.sha256.csv
    ```

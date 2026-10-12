@@ -14,7 +14,7 @@ All three live under `/Users/joegradone/SynologyDrive/Rutgers/Research/data/SPIC
 | `vmp250_patched` | 38 patched .p files plus 1 YAML file | 39 | 920 MB | `manifests/vmp250_patched.sha256.csv` |
 | `vmp250_processed` | perturb outputs from two output generations, logs, trim cache | 1451 | 2.0 GB | `manifests/vmp250_processed.sha256.csv` |
 
-Manifests skip `.DS_Store`. All three verified OK on 2026-10-12.
+Manifests skip `.DS_Store`. All three verified OK on 2026-10-12. The VMP5500 (`vmp6000_*`) directories have their own manifests; see that section below.
 
 ### vmp250_raw
 
@@ -48,7 +48,15 @@ perturb appends a `_NN` suffix per output directory whenever the parameter hash 
 * "VMP6000" and "VMP5500" are the same instrument: every `SPC_*.P` header reads `vmp-5500 SN 010`, and the Sealog calls it VMP5500 throughout. There is no separate VMP6000 dataset.
 * Location: `SPICE_turbulence/vmp6000_raw` (45 `SPC_*.P` files, SPC_003 to SPC_063 with gaps, plus `SETUP.CFG`, `SETUP_OG_041326.CFG`, `edits.yaml`, `perturb_config.yaml`, `spice_config.yaml`, `bench/`, `results/`), `vmp6000_patched` (45 .P plus `perturb_config.yaml`) and `vmp6000_processed` (one `_00` generation, last written 2026-08-28).
 * Processed at sea: yes. Early runs used `rsi-tpw pipeline ../vmp6000_raw/*.P -o ../vmp6000_processed/`, then patched with `rsi-tpw patch-config` and processed with `perturb run --config perturb_config.yaml` in `vmp6000_patched`, in the same way as the VMP250.
-* Not yet inventoried in detail, manifested, or checked for patch content. The Sealog records four probe changes on this instrument (see Probe history), so a single patch spec across all `SPC_*.P` files would be wrong for some of them. Check `vmp6000_patched` against that history before using it: TODO.
+* Manifests (all verified 2026-10-12): `manifests/vmp6000_raw.sha256.csv` (54 entries, 1.4 GB, including `bench/` and `results/logs/`), `manifests/vmp6000_patched.sha256.csv` (46, 1.4 GB), `manifests/vmp6000_processed.sha256.csv` (608, 1.2 GB).
+* Patch content, checked 2026-10-12 against the Sealog probe history and the cal sheets. Each raw and patched pair was compared with `rsi-tpw config`; the data records are identical in all 45 pairs.
+  * **What the patch changed:** pressure `coef0` 29.48 -> 18.48 (an 11 dbar offset; the note "Edited P coef0 to -11" means *by* -11) and `cruise_info` (operator APL -> Rutgers, project, ship). Applied to all 45 files with one spec (`vmp6000_raw/edits.yaml`, author "Joe Gradoner"). Patch timestamps run from 2026-08-20 08:18 (SPC_003 to SPC_033 in one batch) to 2026-08-30 08:38.
+  * **Pressure fix checked:** median on-deck pressure in the first and last 30 s is 11 to 12 dbar raw and 0.4 to 1.3 dbar patched (SPC_020, SPC_040, SPC_062). The patched minimum drifts from +0.4 dbar (SPC_020) to -0.4 dbar (SPC_062), so a residual offset of about 1 dbar remains over the cruise.
+  * **Shear probes need no patch.** The raw `setup.cfg` was updated aboard at every swap, and serials and sensitivities match the Sealog and the cal sheets in every file: sh1 M3461 (0.1207) to SPC_061 and M3456 (0.1301) from SPC_062; sh2 M3462 (0.1174) in SPC_004, M3244 (0.1031) in SPC_012 to SPC_019, and M3459 (0.1038) from SPC_020. SPC_003 (bench test) has placeholders (M, 0.07).
+  * **T2 serial is wrong from SPC_041 on.** The config still says T3304, but the Sealog says T3301 was installed on 2026-08-22 at 14:50 (SPC_041 starts 16:03). This is metadata only: the FP07 coefficients in `setup.cfg` are nominal (beta_1 3143.55, t_0 289.301), identical in every file, and replaced by the in-situ calibration. The pipeline corrects the serial in its patch.
+  * **Data problems that the configuration cannot fix:** T2 flat-lined on SPC_040, and sh1 (M3461) showed low response on SPC_060 and SPC_061. These probes are excluded for those files in the config (`exclude_probes`).
+  * Shear `cal_date` is empty in every file (cosmetic).
+* Patch banner timestamps (both instruments) are laptop local time (UTC-4), not UTC. For example, SPC_040 is stamped 10:09 but started at 10:24 UTC.
 
 ## Software environment at sea
 
