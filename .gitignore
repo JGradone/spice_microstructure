@@ -1,0 +1,30 @@
+# Local config with machine specific paths
+config/config.yaml
+
+# Data never go in git
+*.P
+*.p
+*.nc
+*.mat
+*.h5
+*.hdf5
+*.zarr/
+data/
+derived/
+outputs/
+figures/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

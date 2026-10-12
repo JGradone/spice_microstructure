@@ -1,0 +1,12 @@
+# Direct dependencies (unpinned). Generate the pinned requirements.txt with
+#   pip install -r requirements.in && pip freeze > requirements.txt
+# and commit it. Prefer the shipboard environment's pip freeze for the
+# reproduction run.
+microstructure-tpw
+gsw
+numpy
+scipy
+xarray
+netCDF4
+pyyaml
+matplotlib

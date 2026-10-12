@@ -1,0 +1,76 @@
+# Processing configuration template.
+# Copy to config/config.yaml and set local paths. Every parameter that affects
+# results lives here; scripts must not hard code values.
+# Values marked TODO must be filled from docs/shipboard_processing.md before the
+# reproduction run.
+
+run:
+  name: shipboard_reproduction   # short label written into output metadata
+  notes: "Reproduce shipboard processing from raw with shipboard parameters."
+
+paths:
+  # Archived shipboard directories (read only)
+  archive_raw: /path/to/vmp250_raw
+  archive_patched: /path/to/vmp250_patched
+  archive_processed: /path/to/vmp250_processed
+  # Where this pipeline writes its outputs (outside the repository)
+  output_root: /path/to/spice_microstructure_outputs
+
+manifests:
+  raw: manifests/vmp250_raw.sha256.csv
+  patched: manifests/vmp250_patched.sha256.csv
+  processed: manifests/vmp250_processed.sha256.csv
+  verify_before_run: true
+
+instrument:
+  name: VMP250
+
+patch:
+  # Describe what the shipboard patch step changed (see docs/shipboard_processing.md)
+  enabled: true
+  method: TODO
+
+conversion:
+  # microstructure-tpw conversion settings; confirm argument names with --help
+  tool: TODO
+  extra_args: []
+
+segments:
+  min_fall_speed_m_s: TODO
+  max_fall_speed_m_s: TODO
+  drop_top_m: TODO
+  drop_bottom_m: TODO
+
+shear:
+  fft_length_s: 4
+  diss_length_s: 16
+  goodman_noise_removal: true
+  noise_floor_w_kg: TODO          # explicit threshold, independent of figure of merit
+  figure_of_merit_max: TODO
+
+thermistor:
+  fft_length_s: 4
+  diss_length_s: 16
+  spectrum_model: kraichnan       # kraichnan or batchelor
+  fit_method: mle
+
+hydrography:
+  gradient_smoothing_m: TODO      # key sensitivity parameter
+
+regimes:
+  turner_finger_min_deg: 45
+  turner_finger_strong_deg: 72
+  interface_layer_method: TODO
+  interface_layer_threshold: TODO
+
+double_diffusion:
+  flux_coefficient: 0.2           # Gamma used for chi_expected
+  epsilon_source: shear           # shear or thermistor
+  flux_ratio_gamma: 0.65          # sensitivity parameter
+  profiles_per_average: TODO
+  depth_bin_m: TODO
+  min_n2_s2: TODO                 # exclude weakest stratification in checks
+
+uncertainty:
+  bootstrap_samples: 1000
+  random_seed: 20260812
