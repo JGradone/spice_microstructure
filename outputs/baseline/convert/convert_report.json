@@ -1,0 +1,47 @@
+{
+  "vmp250": {
+    "files": 38,
+    "exit_code": 0,
+    "perturb_summary": "Pipeline complete: no errors.",
+    "perturb_log": "/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/baseline/convert/vmp250/logs/run_20261012T222421Z.log",
+    "warnings_in_log": 787,
+    "outputs": {
+      ".cache": 0,
+      "chi_00": 131,
+      "chi_binned_00": 1,
+      "chi_combo_00": 1,
+      "combo_00": 1,
+      "ctd_00": 38,
+      "ctd_combo_00": 1,
+      "diss_00": 131,
+      "diss_binned_00": 1,
+      "diss_combo_00": 1,
+      "logs": 0,
+      "profiles_00": 137,
+      "profiles_binned_00": 1
+    }
+  },
+  "vmp5500": {
+    "files": 45,
+    "exit_code": 0,
+    "perturb_summary": "Pipeline complete: no errors.",
+    "perturb_log": "/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/baseline/convert/vmp5500/logs/run_20261012T222742Z.log",
+    "warnings_in_log": 552,
+    "outputs": {
+      ".cache": 0,
+      "chi_00": 46,
+      "chi_binned_00": 1,
+      "chi_combo_00": 1,
+      "combo_00": 1,
+      "ctd_00": 45,
+      "ctd_combo_00": 1,
+      "diss_00": 46,
+      "diss_binned_00": 1,
+      "diss_combo_00": 1,
+      "logs": 0,
+      "profiles_00": 46,
+      "profiles_binned_00": 1,
+      "trimmed": 0
+    }
+  }
+}

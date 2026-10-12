@@ -20,6 +20,8 @@ derived/
 # committed; bulky or machine-generated working files stay local.
 # patched .p copies and links to raw files
 outputs/*/patch/*/
+# ...but keep the edit specs passed to patch-config
+!outputs/*/patch/edits/
 # perturb working trees (NetCDF, per-cast logs, caches)
 outputs/*/convert/*/
 # full CLI transcripts; regenerated on every run

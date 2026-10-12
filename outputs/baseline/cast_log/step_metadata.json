@@ -1,0 +1,21 @@
+{
+  "step": "cast_log",
+  "created_utc": "2026-10-12T22:21:21+00:00",
+  "config_sha256": "84e7d72bc9cbf5dc41f04d3c388e2cb6efd7aedf19ec0158adb0207df9660fee",
+  "git_commit": "0d02b25e896a10912928c03540db7bf4a2ca5448",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "manifests_verified": true,
+  "sealog_sha256_manifest": "manifests/sealog.sha256.csv"
+}
