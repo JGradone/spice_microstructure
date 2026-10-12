@@ -42,21 +42,29 @@ This repository is the main processing workflow for all Rockland VMP microstruct
 
 ## Repository and data layout
 
-This repository holds code, config, environment files, and documentation only. Data live outside the repository; the config file gives their paths. GitHub rejects files over 100 MB, and data never go in git.
+This repository holds code, config, environment files, documentation, and this analysis's outputs. Input data (archives, Sealog, cal sheets) live outside the repository; the config file gives their paths. GitHub rejects files over 100 MB, and instrument data (.p, NetCDF) never go in git.
 
 ```
 config/       # config.example.yaml (committed); config.yaml (local copy with real paths)
-src/          # pipeline driver and one module per step
+src/          # run_pipeline.py, common.py, steps/<name>.py
 scripts/      # utilities: checksum manifests, environment snapshots
 manifests/    # committed checksum manifests of data directories
-docs/         # shipboard_processing.md, decisions.md, products.md
+docs/         # shipboard_processing.md, decisions.md, products.md; private/ (gitignored)
+outputs/      # <run.name>/<step>/ results and figures (bulky files gitignored)
 ```
 
-Outputs (derived data, figures, run logs) are written to a data location set in the config, not into the repository.
+Everything this analysis produces (derived data, figures, reports, run records) is written inside this repository under `outputs/<run.name>/` (`paths.output_root`). `.gitignore` decides what is committed: figures, cast tables, reports and step metadata are tracked, while patched .p copies, NetCDF, perturb working trees and full command transcripts stay local.
+
+Keep this analysis separate from the earlier work. Never write into the data directories: not the archives, and not the shipboard-era scripts and figures in `SPICE_turbulence/code/`. Those earlier figures came from the shipboard processing and are not inputs to, or outputs of, this pipeline. Read-only inputs (raw files, Sealog export, cal sheets) are the only things read from the data area.
 
 Existing pieces:
 
-* `src/run_pipeline.py` is the single entry point. It loads the config, refuses to run while any value is `TODO`, verifies the archive manifests, writes `run_metadata.json` (config hash, git commit, package versions), and dispatches steps in order. Each step is a stub to be replaced by its own module in `src/`.
+* `src/run_pipeline.py` is the single entry point. It loads the config, refuses to run while any value is `TODO`, verifies the archive manifests, writes `run_metadata.json` (config hash, git commit, package versions), and dispatches steps in order. Each step is `src/steps/<name>.py` with `run(ctx)`, and can also run on its own: `python src/steps/<name>.py --config config/config.yaml`. Steps without a module raise `NotImplementedError`.
+* `src/common.py` holds shared helpers: provenance, `run_cmd` (every CLI call is appended with its output to the step's `commands.log`), parsing of `rsi-tpw config` output, and per-file patch edits from the config.
+* Implemented steps:
+  * `cast_log`: cast table, Sealog matching and ship track.
+  * `patch`: per-cast `rsi-tpw patch-config`, with every output verified.
+  * `convert`: one `perturb run` per instrument. perturb's stage subcommands each run the whole pipeline, so epsilon and chi are computed here, and the `epsilon_shear` and `thermistor` steps post-process perturb's output.
 * `scripts/make_manifest.py` writes and verifies SHA-256 manifests (standard library only; refuses to overwrite an existing manifest).
 * `scripts/record_environment.py` snapshots Python and package versions to JSON.
 * `config/config.example.yaml` lists every parameter; values marked `TODO` must be filled from `docs/shipboard_processing.md`.
@@ -101,7 +109,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 ## Workflow (order of operations)
 
 0. **Cast log and patch.** Build a cast table from the Sealog export and the .p headers: file, start time, position, probe serials, station, operating notes, and exclusion or tow-yo flags. Build a ship track from the ASNAP snapshots. Then patch each instrument's raw files per cast range from the config (`instruments.<name>.patch.ranges`), not one spec for all files. For the VMP250 that is the shear probe calibration; `data_0112.p` was recorded with sh2 = M3463, before the swap to M2662. For the VMP5500 it is the 11 dbar pressure offset (coef0) and the T2 serial after the 2026-08-22 swap; its shear calibrations are already correct in the raw files. Every probe serial in the cast table must match the serial written into that file's config.
-1. **Convert and log.** Convert .P files to physical units with the `microstructure-tpw` conversion tool, called from the driver script. Supply positions from the ship track (the shipboard run had none). Record the package version, probe serial numbers, and calibration coefficients.
+1. **Convert and log.** Run `perturb run` (microstructure-tpw) per instrument on the patched files, with a perturb config generated from the config's `perturb` block. This produces profiles, shear epsilon, FP07 chi and epsilon_T, CTD, and binned and combined files in one pass. Supply positions from the ship track (the shipboard run had none). Record the package version, probe serial numbers, and calibration coefficients.
 2. **Select clean segments.** Keep steady fall speed portions only; drop launch acceleration and bottom approach. Despike shear; flag vibration contamination using accelerometers. Analyze tow-yo profiles (`data_0134.p`) separately from free-fall casts, and do not pool them at the process station without first showing they agree. Check casts with logged operating problems (line under the hull, sargassum on the line, twisted rod, poor line angle; see the cast table) before using them.
 3. **Background hydrography.** TEOS-10 (gsw): SA, CT, alpha, beta, N2, T_z, S_z, density ratio R_rho = alpha T_z / (beta S_z), Turner angle. The smoothing scale for background gradients is a key sensitivity parameter (see below), not a fixed choice.
 4. **Epsilon from shear.** Spectra with Goodman coherent noise removal; integrate to the Kolmogorov cutoff or fit a Nasmyth type spectrum. QC with probe agreement and figure of merit, plus an explicit noise floor test that does not rely on the figure of merit alone.

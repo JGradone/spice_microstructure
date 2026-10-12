@@ -1,7 +1,10 @@
 # Local config with machine specific paths
 config/config.yaml
 
-# Data never go in git
+# Local-only records (e.g. unfiltered personal shell history)
+docs/private/
+
+# Data never go in git: raw, patched and converted instrument files
 *.P
 *.p
 *.nc
@@ -11,9 +14,16 @@ config/config.yaml
 *.zarr/
 data/
 derived/
-outputs/
-figures/
-logs/
+
+# Pipeline outputs live in outputs/<run.name>/ inside this repository.
+# Figures, cast tables, reports and step metadata are small and may be
+# committed; bulky or machine-generated working files stay local.
+# patched .p copies and links to raw files
+outputs/*/patch/*/
+# perturb working trees (NetCDF, per-cast logs, caches)
+outputs/*/convert/*/
+# full CLI transcripts; regenerated on every run
+outputs/**/commands.log
 
 # Python
 __pycache__/

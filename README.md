@@ -2,7 +2,7 @@
 
 Reproducible processing of all Rockland VMP microstructure data (VMP-250IR SN 537 and VMP-5500 SN 010; shear, FP07, CTD) from the 2026 R/V Falkor (too) SPICE expedition (FKt260806). The chain runs from raw .p files to exported products (epsilon, chi, hydrography, regime labels, and bin-averaged diffusivities with uncertainty; see `docs/products.md`) for use in other analyses. A central question is whether thermal variance dissipation in thermohaline staircases exceeds what shear driven turbulence can explain, and what the salt finger heat and salt diffusivities are.
 
-This repository holds code, configuration, environment files, and documentation only. Data live outside the repository and are located through the config file.
+This repository holds the code, configuration, environment files and documentation, plus the analysis outputs under `outputs/<run.name>/`. Figures, cast tables and reports are committed. Raw and converted instrument data (.p, NetCDF) are gitignored and stay local; the input archives live outside the repository and are located through the config file.
 
 ## Layout
 

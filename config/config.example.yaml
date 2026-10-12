@@ -15,8 +15,10 @@ paths:
   sealog_file: FKt260806_sealog_export.csv
   # Rockland shear probe calibration sheets and FP07 production reports (read only)
   probe_calsheets: /path/to/SPICE_turbulence/SpiceProbeCalSheets
-  # Where this pipeline writes its outputs (outside the repository)
-  output_root: /path/to/spice_microstructure_outputs
+  # Where this pipeline writes its outputs. Relative paths are inside this
+  # repository; .gitignore decides what is committed. Never point this at the
+  # data directories (archives, or the earlier shipboard-era code and figures).
+  output_root: outputs
 
 manifests:
   sealog: manifests/sealog.sha256.csv
@@ -44,6 +46,7 @@ instruments:
   vmp250:
     model: VMP-250IR
     serial: "537"
+    sealog_platform: VMP250       # event_option.platform value in the Sealog
     archive_raw: /path/to/SPICE_turbulence/vmp250_raw
     archive_patched: /path/to/SPICE_turbulence/vmp250_patched
     archive_processed: /path/to/SPICE_turbulence/vmp250_processed
@@ -83,6 +86,7 @@ instruments:
     # Same instrument as "VMP6000" in directory names.
     model: VMP-5500
     serial: "010"
+    sealog_platform: VMP5500
     archive_raw: /path/to/SPICE_turbulence/vmp6000_raw
     archive_patched: /path/to/SPICE_turbulence/vmp6000_patched
     archive_processed: /path/to/SPICE_turbulence/vmp6000_processed

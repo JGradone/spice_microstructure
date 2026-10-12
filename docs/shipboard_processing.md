@@ -70,7 +70,7 @@ perturb appends a `_NN` suffix per output directory whenever the parameter hash 
 
 ## Commands run
 
-Recovered from `~/.zsh_history`, which has no timestamps; dates come from the patch headers and run logs. There is no `~/.bash_history`. A filtered copy, keeping original line numbers, is kept outside the repository (it contains unrelated personal command history) at `SPICE_turbulence/shipboard_records/shipboard_shell_history.txt`. Lines 60 to 304 of the history also contain earlier MicroRider glider work that is not part of SPICE.
+Recovered from `~/.zsh_history`, which has no timestamps; dates come from the patch headers and run logs. There is no `~/.bash_history`. A filtered copy, keeping original line numbers, is kept locally at `docs/private/shipboard_shell_history.txt`, which is gitignored because it contains unrelated personal command history. Lines 60 to 304 of the history also contain earlier MicroRider glider work that is not part of SPICE.
 
 ```
 # Environment (history lines 60-72, 178)
