@@ -27,7 +27,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # Ordered list of steps, matching the workflow in CLAUDE.md.
 STEPS = [
-    "patch",          # regenerate patched .P files from raw
+    "cast_log",       # cast table and ship track from the Sealog export
+    "patch",          # regenerate patched .P files from raw (per-cast probe serials)
     "convert",        # 1. convert to physical units
     "segments",       # 2. select clean segments
     "hydrography",    # 3. background hydrography
@@ -90,6 +91,8 @@ def verify_manifests(config: dict) -> None:
         (config["paths"]["archive_raw"], manifests.get("raw")),
         (config["paths"]["archive_patched"], manifests.get("patched")),
         (config["paths"]["archive_processed"], manifests.get("processed")),
+        (config["paths"]["sealog_dir"], manifests.get("sealog")),
+        (config["paths"]["probe_calsheets"], manifests.get("probe_calsheets")),
     ]
     script = REPO_ROOT / "scripts" / "make_manifest.py"
     for data_dir, manifest in pairs:

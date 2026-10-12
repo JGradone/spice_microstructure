@@ -52,6 +52,8 @@ Requires Python 3.10 or newer.
    python scripts/make_manifest.py write /path/to/vmp250_raw manifests/vmp250_raw.sha256.csv
    python scripts/make_manifest.py write /path/to/vmp250_patched manifests/vmp250_patched.sha256.csv
    python scripts/make_manifest.py write /path/to/vmp250_processed manifests/vmp250_processed.sha256.csv
+   python scripts/make_manifest.py write /path/to/SPICE_turbulence/sealog manifests/sealog.sha256.csv
+   python scripts/make_manifest.py write /path/to/SPICE_turbulence/SpiceProbeCalSheets manifests/probe_calsheets.sha256.csv
    ```
 
    Verify at any time:

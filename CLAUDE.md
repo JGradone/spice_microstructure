@@ -4,7 +4,8 @@ This directory holds the processing workflow for estimating double diffusive (sa
 
 ## Context
 
-* Data come from a 2026 R/V Falkor (too) cruise: VMP250 and VMP6000 casts (plus at least one VMP5500 cast to >1000 m), including a 48 hour process station with repeated casts (15 VMP250, 3 VMP6000) in a region with thermohaline staircases.
+* Data come from a 2026 R/V Falkor (too) cruise (FKt260806): VMP-250IR SN 537 casts and deep casts with VMP-5500 SN 010. "VMP6000" and "VMP5500" are the same deep instrument; its directories are named `vmp6000_*`, and the Sealog calls it VMP5500.
+* The 48 hour process station (11.626 N, 50.577 W, 2026-08-19 22:40 to 2026-08-21 ~19:30 UTC) is in a region with thermohaline staircases. VMP250: `data_0132.p` (4 profiles), `data_0133.p` (3) and `data_0134.p` (8), 15 profiles in total. The 8 in `data_0134.p` are tow-yo profiles with the ship under way, not free-fall casts from a stationary ship. VMP5500: `SPC_033.P`, `SPC_034.P`, `SPC_038.P` (31 min, short) and `SPC_039.P`.
 * Observed pattern: elevated thermal variance dissipation (chi) at or near staircase interfaces, with low shear derived epsilon (order 1e-10 W/kg in places, near the shear probe noise floor).
 * Goal: test whether chi exceeds what shear driven turbulence with a flux coefficient of 0.2 can explain, and if so, estimate salt finger heat and salt diffusivities with defensible uncertainty.
 * Initial shear processing used an FFT length of 4 s and a dissipation length of 16 s. Treat these as starting values, not fixed choices.
@@ -53,6 +54,10 @@ Existing pieces:
 * `scripts/record_environment.py` snapshots Python and package versions to JSON.
 * `config/config.example.yaml` lists every parameter; values marked `TODO` must be filled from `docs/shipboard_processing.md`.
 
+## Cruise event log (read only)
+
+`SPICE_turbulence/sealog/FKt260806_sealog_export.csv` is the ship's Sealog export: VMP deployment notes, shear probe and thermistor serial numbers and swaps, operating problems, and 5 minute ship position snapshots (ASNAP). It has a committed manifest (`manifests/sealog.sha256.csv`), and the config gives its path. Treat its times and file names as notes, not ground truth. Match events to casts by the .p header start time; known errors are listed in `docs/shipboard_processing.md`.
+
 ## Archived shipboard processing (read only)
 
 The first round of processing, done at sea, lives in three directories outside this repository:
@@ -86,8 +91,9 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 
 ## Workflow (order of operations)
 
-1. **Convert and log.** Convert .P files to physical units with the `microstructure-tpw` conversion tool, called from the driver script. Record the package version, probe serial numbers, and calibration coefficients.
-2. **Select clean segments.** Keep steady fall speed portions only; drop launch acceleration and bottom approach. Despike shear; flag vibration contamination using accelerometers.
+0. **Cast log and patch.** Build a cast table from the Sealog export and the .p headers: file, start time, position, probe serials, station, operating notes, and exclusion or tow-yo flags. Build a ship track from the ASNAP snapshots. Then patch shear probe calibrations into the raw files per cast range from the config's probe history, not one spec for all files. `data_0112.p` was recorded with sh2 = M3463, before the swap to M2662. Every probe serial in the cast table must match the serial written into that file's config.
+1. **Convert and log.** Convert .P files to physical units with the `microstructure-tpw` conversion tool, called from the driver script. Supply positions from the ship track (the shipboard run had none). Record the package version, probe serial numbers, and calibration coefficients.
+2. **Select clean segments.** Keep steady fall speed portions only; drop launch acceleration and bottom approach. Despike shear; flag vibration contamination using accelerometers. Analyze tow-yo profiles (`data_0134.p`) separately from free-fall casts, and do not pool them at the process station without first showing they agree. Check casts with logged operating problems (line under the hull, sargassum on the line, twisted rod, poor line angle; see the cast table) before using them.
 3. **Background hydrography.** TEOS-10 (gsw): SA, CT, alpha, beta, N2, T_z, S_z, density ratio R_rho = alpha T_z / (beta S_z), Turner angle. The smoothing scale for background gradients is a key sensitivity parameter (see below), not a fixed choice.
 4. **Epsilon from shear.** Spectra with Goodman coherent noise removal; integrate to the Kolmogorov cutoff or fit a Nasmyth type spectrum. QC with probe agreement and figure of merit, plus an explicit noise floor test that does not rely on the figure of merit alone.
 5. **Chi (and epsilon) from FP07.** Calibrate FP07 against CTD temperature; correct for the fall speed dependent thermistor response; fit Kraichnan (or Batchelor) spectra by maximum likelihood (Ruddick et al., 2000) to obtain chi and an independent epsilon. Where shear epsilon is at or near the noise floor, the thermistor derived epsilon is the candidate replacement, but note it assumes a turbulent spectral shape that may not hold for finger scale variance. Carry both epsilon estimates through. Inspect a sample of spectra visually. Consider a shorter dissipation length in staircase depth ranges to resolve interfaces.
