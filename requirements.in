@@ -1,8 +1,8 @@
 # Direct dependencies (unpinned). Generate the pinned requirements.txt with
 #   pip install -r requirements.in && pip freeze > requirements.txt
-# and commit it. Prefer the shipboard environment's pip freeze for the
-# reproduction run.
-microstructure-tpw
+# and commit it. microstructure-tpw comes from git; requirements.txt pins the exact
+# commit (see docs/decisions.md, 2026-10-12).
+microstructure-tpw @ git+https://github.com/mousebrains/turbulence.git
 gsw
 numpy
 scipy

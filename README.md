@@ -36,7 +36,7 @@ Requires Python 3.10 or newer.
    pip freeze > requirements.txt
    ```
 
-   If the shipboard environment is still available, prefer its `pip freeze` output for `requirements.txt` so the reproduction run uses the same versions.
+   To reproduce the pinned environment exactly, install from `requirements.txt` instead, which pins microstructure-tpw to a git commit. The shipboard environment (microstructure-tpw 0.3.1) is recorded in `docs/shipboard_pip_freeze.txt` for reference only.
 
 2. Copy the config template and set data paths:
 
@@ -74,4 +74,4 @@ Requires Python 3.10 or newer.
    python src/run_pipeline.py --config config/config.yaml
    ```
 
-   Steps are stubs until implemented. The first milestone is reproducing the shipboard outputs from raw (see CLAUDE.md).
+   Steps are stubs until implemented. The first milestone is a baseline run from raw on the pinned package version with the shipboard parameters (see CLAUDE.md).

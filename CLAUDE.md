@@ -68,9 +68,16 @@ Rules:
 * What the patch step changed, and why, must be documented in `docs/shipboard_processing.md`. In this pipeline, patching is a scripted step that regenerates the patched files from `vmp250_raw`, so the chain starts from truly raw data.
 * `docs/shipboard_processing.md` is the record of what was run at sea (commands recovered from shell history, package versions, parameters, problem casts). Read it before writing pipeline code.
 
-## First milestone: reproduce the shipboard results
+## First milestone: baseline run on the latest package version
 
-Before any new analysis, the pipeline must regenerate `vmp250_patched` and `vmp250_processed` from `vmp250_raw` using the shipboard parameters, and the outputs must be compared numerically against the archive. Record the comparison in `docs/decisions.md`. If outputs differ, find out why before continuing. Once reproduction works, that run is the baseline, and every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from it.
+Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit `81102fc`) is waived (see `docs/decisions.md`, 2026-10-12). The pipeline uses the latest microstructure-tpw, pinned to an exact git commit in `requirements.txt`.
+
+* The baseline is the first full run from `vmp250_raw` (including the scripted patch step) on the pinned version, using the shipboard parameters recorded in `docs/shipboard_processing.md`. Set every shipboard parameter explicitly in the config, and set any option added since 0.3.1 explicitly as well.
+* Compare the baseline outputs against `vmp250_processed` (generation `_01`) as a sanity check, not a pass/fail test. Differences mix package changes with pipeline changes and cannot be attributed to either alone. Record the comparison in `docs/decisions.md`.
+* If epsilon or chi move a lot, read the microstructure-tpw changelog between 0.3.1 and the pinned commit before assuming the pipeline is wrong.
+* The regenerated patched files cannot match `vmp250_patched` byte for byte (the patch header embeds a timestamp and source path). Compare them on the non-comment config lines and the data records.
+* Every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from the baseline.
+* Upgrading the pinned commit later starts a new baseline. Record why in `docs/decisions.md` and rerun.
 
 ## Documentation habits
 

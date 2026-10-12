@@ -1,0 +1,27 @@
+# Pinned environment (Python 3.12.15, conda env spice_microstructure).
+# Generated with: pip freeze > requirements.txt. microstructure-tpw is pinned to an exact
+# git commit because the 0.4.0 version string does not identify a unique build.
+certifi==2026.7.22
+cftime==1.6.6
+cmocean==4.0.3
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.66.1
+gsw==3.6.23
+kiwisolver==1.5.1
+matplotlib==3.11.2
+microstructure-tpw @ git+https://github.com/mousebrains/turbulence.git@ebec847c157051d6835ebf2d8ac9553166c01880
+netCDF4==1.7.4
+numpy==2.5.4
+packaging==26.3
+pandas==3.0.6
+pillow==12.3.0
+pyparsing==3.3.3
+python-dateutil==2.9.0.post0
+PyYAML==6.0.3
+ruamel.yaml==0.19.1
+scipy==1.18.1
+setuptools==84.0.0
+six==1.17.0
+wheel==0.47.0
+xarray==2026.9.0
