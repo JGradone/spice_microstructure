@@ -158,10 +158,11 @@ def main() -> int:
         near = nearest_vmp250(p, v250)
         grid = (zgrid, hydro["CT"].values[row[name]], hydro["SA_used"].values[row[name]])
         k = row[name]
-        on_ship = hydro["SA_from_ship"].values[k][(zgrid > STATS_DEPTHS[0]) & (zgrid < STATS_DEPTHS[1])]
-        ts_source = ("ship T–S throughout (bad conductivity)" if bool(hydro["ts_ship_only"].values[k])
-                     else "own T–S (no ship check)" if not np.isfinite(hydro["ts_bad_fraction"].values[k])
-                     else f"own T–S; {np.nanmean(on_ship > 0.5):.0%} of 150–500 m on ship values")
+        diff = hydro["SA_ship_diff"].values[k][(zgrid > STATS_DEPTHS[0]) & (zgrid < STATS_DEPTHS[1])]
+        limit = config["hydrography"]["own_ts"]["ship_check"]["max_diff_g_kg"]
+        ts_source = ("ship T–S (bad conductivity cell)" if bool(hydro["ts_ship_only"].values[k])
+                     else "own T–S (no ship cast to check)" if not np.isfinite(diff).any()
+                     else f"own T–S; {np.nanmean(diff > limit):.0%} of 150–500 m differs from ship by > {limit} g/kg")
         stats_r = cast_stats(*grid, ship, match)
         png = out / f"{name}.png"
         figure(name, p, grid, ship, match, near, v250, png, foot)
