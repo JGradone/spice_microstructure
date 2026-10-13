@@ -122,6 +122,30 @@ instruments:
     exclude:
       SPC_003.P: "bench test with test probes; placeholder calibrations; clock set incorrectly"
     exclude_probes:
+      # T2 (T3304) chi 1.7x T1 at signal/noise > 100 from SPC_012 to SPC_039 (0.95 on SPC_004),
+      # i.e. a gain error, not noise; T1 agrees with the replacement T3301 (0.98). T3304
+      # flat-lined on SPC_040 and was replaced (decisions.md 2026-10-13).
+      SPC_012.P: [T2]
+      SPC_014.P: [T2]
+      SPC_015.P: [T2]
+      SPC_016.P: [T2]
+      SPC_017.P: [T2]
+      SPC_018.P: [T2]
+      SPC_019.P: [T2]
+      SPC_020.P: [T2]
+      SPC_021.P: [T2]
+      SPC_022.P: [T2]
+      SPC_023.P: [T2]
+      SPC_025.P: [T2]
+      SPC_026.P: [T2]
+      SPC_027.P: [T2]
+      SPC_028.P: [T2]
+      SPC_030.P: [T2]
+      SPC_031.P: [T2]
+      SPC_033.P: [T2]
+      SPC_034.P: [T2]
+      SPC_038.P: [T2]
+      SPC_039.P: [T2]
       SPC_040.P: [T2]             # T2 (T3304) flat-lined; replaced after this cast
       SPC_060.P: [sh1]            # sh1 (M3461) low response; replaced after SPC_061
       SPC_061.P: [sh1]
@@ -289,6 +313,29 @@ shear_qc:
   combine: geometric              # mean of usable probes: geometric (perturb's epsilonMean) or arithmetic
   gallery:                        # spectra figure for inspecting the FM threshold (display only)
     per_panel: 5                  # spectra drawn per epsilon decade x FM bin
+    seed: 1
+
+chi_qc:
+  # thermistor step: QC of perturb's per-probe FP07 chi and epsilon_T, a noise
+  # floor per window from perturb's FP07 electronics noise spectrum, and the
+  # combined estimate (decisions.md 2026-10-13). Windows near the floor are
+  # flagged, never dropped. Segment QC follows segments.enabled; probe
+  # exclusions come from instruments.<name>.exclude_probes.
+  k_max_ratio:
+    min: 0.5                      # K_max/kB below this: chi mostly extrapolated (perturb's soft-QC value)
+    apply: true
+  fom:
+    band: 1.15                    # observed/model variance ratio outside [1/band, band] (perturb's value)
+    apply: false                  # flagged only until spectra are inspected
+  noise_floor:
+    factor: 2.0                   # at_floor when chi < factor x the window's floor
+    policy: clamp                 # chi_bounded = max(chi, floor); flagged, never dropped
+  probe_pair:
+    limit: 2.7718585822512662     # |ln(chi1/chi2)| > ln(limit): probes disagree (same limit as shear)
+    policy: min                   # keep the smaller estimate on disagreement (noise and spikes raise chi)
+  combine: geometric              # mean of usable probes (perturb's chiMean is geometric)
+  gallery:
+    per_panel: 5
     seed: 1
 
 hydrography:
