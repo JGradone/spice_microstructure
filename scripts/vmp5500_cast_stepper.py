@@ -43,6 +43,8 @@ TEMPLATE = REPO / "scripts" / "vmp5500_cast_stepper_template.html"
 VMP250_MAX_KM, VMP250_MAX_HOURS = 15.0, 12.0
 VMP250_MIN_DEPTH = 100.0        # skip false starts (some files begin with a few-metre profile)
 STATS_DEPTHS = (150, 500)
+DISPLAY_MEDIAN_M = 5            # running median on the plotted VMP5500 salinity (display only;
+                                # noise and offset are computed without it; decisions.md 2026-10-13)
 
 
 def km(lat1, lon1, lat2, lon2):
@@ -98,13 +100,15 @@ def figure(name, p, ship, match, near250, v250, path, foot):
         lines.append((ps.BLUE, f"VMP250 {near250[0][:9]} ({near250[2]:.1f} h, {near250[1]:.1f} km)"))
     # VMP5500: response-corrected temperature and salinity only
     ct_r, sa_r = bin_profile(p["z"], p["CT_resp"], edges), bin_profile(p["z"], p["SA_resp"], edges)
+    sa_r = pd.Series(sa_r).rolling(DISPLAY_MEDIAN_M, center=True, min_periods=3).median().to_numpy()
     axes[0].plot(ct_r, zc, color=ps.ORANGE, lw=1.0, zorder=3)
     s = ts_sel(zc)
     axes[1].plot(sa_r, zc, color=ps.ORANGE, lw=1.0, zorder=3)
     axes[2].scatter(sa_r[s], ct_r[s], s=6, color=ps.ORANGE, linewidths=0, zorder=3)
     rp = p["resp_params"]
     lines.append((ps.ORANGE, f"VMP5500 {name[:7]}, response-corrected (SBE4 τ {rp['tau']:g} s, "
-                             f"delay {rp['delay']:g} s{'' if rp['fitted'] else ', cruise median'})"))
+                             f"delay {rp['delay']:g} s{'' if rp['fitted'] else ', cruise median'}); "
+                             f"S {DISPLAY_MEDIAN_M} m median"))
     axes[0].set_xlabel("Θ (°C)")
     axes[1].set_xlabel(r"$S_A$ (g kg$^{-1}$)")
     axes[2].set_xlabel(r"$S_A$ (g kg$^{-1}$), 100–550 m")

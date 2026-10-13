@@ -63,7 +63,7 @@ select { min-width: 0; max-width: 100%; }
 
 <div class="wrap">
   <h1>VMP5500 cast comparisons</h1>
-  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. VMP5500 CT data sit at the CT sensor's depth, 1.57 m above the pressure sensor. Noise and offset are measured over 150–500 m. VMP5500 temperature and salinity are corrected for the Sea-Bird response lag: temperature is the nose FP07 moved to the CT sensor, and salinity uses the measured conductivity with that temperature slowed to match the SBE4 cell (time constant fitted per cast, about 6 s). The scatter that remains is unexplained noise, largest at staircase interfaces.</p>
+  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. VMP5500 CT data sit at the CT sensor's depth, 1.57 m above the pressure sensor. Noise and offset are measured over 150–500 m. VMP5500 temperature and salinity are corrected for the Sea-Bird response lag: temperature is the nose FP07 moved to the CT sensor, and salinity uses the measured conductivity with that temperature slowed to match the SBE4 cell (time constant fitted per cast, about 6 s). For display, the plotted VMP5500 salinity has a 5 m running median to suppress spikes at staircase interfaces; the noise and offset in the side panel are computed without it. The smoothing does not make VMP5500 salinity usable for gradients, which still come from the ship CTD.</p>
 
   <div class="bar" role="toolbar" aria-label="Step through casts">
     <button type="button" id="prev" aria-label="Previous cast">← Previous</button>
@@ -83,11 +83,11 @@ select { min-width: 0; max-width: 100%; }
       <div class="row"><span class="k">Max depth</span><span class="v" id="depth"></span></div>
       <div class="row"><span class="k">Ship CTD</span><span class="v" id="ship"></span></div>
       <div class="row"><span class="k">VMP250</span><span class="v" id="v250"></span></div>
-      <div class="row"><span class="k">S noise</span><span class="v" id="noiseR"></span></div>
-      <div class="row"><span class="k">S offset</span><span class="v" id="offsetR"></span></div>
+      <div class="row"><span class="k">S noise*</span><span class="v" id="noiseR"></span></div>
+      <div class="row"><span class="k">S offset*</span><span class="v" id="offsetR"></span></div>
       <div class="row"><span class="k">SBE4 τ, delay</span><span class="v" id="respParams"></span></div>
       <div class="notes" id="notesBox"><span class="k">Sealog notes and flags</span><span id="notes"></span></div>
-      <p class="guide">For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
+      <p class="guide">* Unsmoothed corrected salinity. For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
     </aside>
   </div>
   <p class="prov" id="prov"></p>
