@@ -9,7 +9,8 @@ For each run and instrument (epsilon_shear outputs, kept windows):
     bins of double_diffusion.depth_bin_m over 150-550 dbar, ratio to the
     first run for the same profile and bin (what the averaged tests see);
   * example profiles through the staircase: FP07 temperature with epsilon and
-    chi drawn over each window's vertical extent, one colour per run.
+    chi drawn over each window's vertical extent (every other window, so the
+    50%-overlapping windows do not overlap on the plot), one colour per run.
 
 Reads:  outputs/<run>/epsilon_shear/epsilon_shear_<instrument>.csv,
         outputs/<run>/convert/<instrument>/{profiles,chi}_NN/
@@ -96,7 +97,7 @@ def examples_figure(examples, runs, cfgs, path, foot):
             pe = cfgs[run][0]["perturb"]["epsilon"]
             half = pe["diss_sec"] * df["speed"] / 2                        # window half extent (m ~ dbar)
             for ax, col in ((axE, "epsilon_shear"), (axC, "chi")):
-                for _, r in df.iterrows():
+                for _, r in df[df["window"] % 2 == 0].iterrows():     # every other window: no overlap
                     if z0 - 10 <= r["P_mean"] <= z1 + 10 and np.isfinite(r[col]):
                         h = half.loc[_]
                         ax.plot([r[col], r[col]], [r["P_mean"] - h, r["P_mean"] + h], color=c, lw=1.6)
