@@ -19,42 +19,42 @@ import json
 import sys
 from pathlib import Path
 
-import gsw
 import netCDF4
 import numpy as np
 import pandas as pd
+import xarray as xr
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "src" / "steps"))
 import common  # noqa: E402
 
 TEMPLATE = REPO / "scripts" / "qc_explorer_template.html"
 STRAT_SCALES_M = [5, 10, 25]
 
 
-def stratification(P: np.ndarray, CT: np.ndarray, SA: np.ndarray, lat: float,
-                   centres: np.ndarray, scale: float) -> tuple[np.ndarray, np.ndarray]:
-    """N2 and dT/dz (K/m, positive down) at each window centre from a linear fit of
-    CT and SA against pressure over +-scale/2 dbar, with TEOS-10 alpha and beta.
-
-    Independent of perturb's window-scale values, which are wrong for the VMP5500
-    (decisions.md 2026-10-12). Pressure in dbar is used as depth in m (<1% error)."""
-    ok = np.isfinite(P) & np.isfinite(CT) & np.isfinite(SA)
-    P, CT, SA = P[ok], CT[ok], SA[ok]
-    n2, tz = np.full(len(centres), np.nan), np.full(len(centres), np.nan)
-    for i, pc in enumerate(centres):
-        m = np.abs(P - pc) <= scale / 2
-        if m.sum() < 10 or np.ptp(P[m]) < 0.5 * scale:
-            continue
-        dct = np.polyfit(P[m], CT[m], 1)[0]          # K per dbar, down
-        dsa = np.polyfit(P[m], SA[m], 1)[0]
-        ct0, sa0 = CT[m].mean(), SA[m].mean()
-        alpha = gsw.alpha(sa0, ct0, pc)
-        beta = gsw.beta(sa0, ct0, pc)
-        g = gsw.grav(lat, pc)
-        n2[i] = g * (beta * dsa - alpha * dct)        # z up: -d/dp
-        tz[i] = dct
-    return n2, tz
+def hydrography_windows(run_dir: Path, name: str, config: dict) -> dict:
+    """N2, T_z, R_rho and Turner at each window centre for several fit scales, computed
+    with the hydrography step's own code on its 1 m grid (CT and the salinity it used)."""
+    from steps import hydrography as hy
+    import gsw
+    hc = config["hydrography"]
+    grid = xr.open_dataset(run_dir / "hydrography" / f"hydrography_{name}.nc")
+    wins = pd.read_csv(run_dir / "hydrography" / f"windows_{name}.csv")
+    z = grid["depth"].values
+    out = {}
+    for i, prof in enumerate(grid["profile_file"].values):
+        ct, sa = grid["CT"].values[i], grid["SA_used"].values[i]
+        lat = float(grid["lat"].values[i]) if np.isfinite(grid["lat"].values[i]) else 12.0
+        p = gsw.p_from_z(-z, lat)
+        w = wins[wins["profile_file"] == prof]
+        cols = {}
+        for scale in STRAT_SCALES_M:
+            st = hy.stratification(z, ct, sa, p, scale, hc["bin_m"], hc["min_fit_fraction"])
+            for key, var in (("N2", "N2"), ("Tz", "T_z"), ("Rr", "R_rho"), ("Tu", "Turner")):
+                cols[f"{key}_h{scale}"] = np.interp(w["depth"], z, st[var], left=np.nan, right=np.nan)
+        out[prof] = (w["window"].to_numpy(), cols)
+    return out
 
 
 def var(ds, name) -> np.ndarray:
@@ -74,11 +74,11 @@ def collect(run_dir: Path, config: dict) -> dict:
     profiles, cols = [], {k: [] for k in [
         "pi", "w", "P", "spd", "scv", "vib", "e1", "e2", "fm1", "fm2", "vr1", "vr2",
         "c1", "c2", "cvr1", "cvr2", "eT1", "eT2", "N2", "Tz"]
-        + [f"{q}_{s}" for s in STRAT_SCALES_M for q in ("N2", "Tz")]}
+        + [f"{q}_h{s}" for s in STRAT_SCALES_M for q in ("N2", "Tz", "Rr", "Tu")]}
     for inst_idx, (name, inst) in enumerate(common.instruments(config)):
         root = run_dir / "convert" / name
         diss_dir, chi_dir = common.single_dir(root, "diss"), common.single_dir(root, "chi")
-        prof_dir = common.single_dir(root, "profiles")
+        hydro = hydrography_windows(run_dir, name, config)
         seg = pd.read_csv(run_dir / "segments" / f"segments_{name}.csv")
         casts = pd.read_csv(run_dir / "cast_log" / f"casts_{name}.csv").set_index("file")
         for prof_file, s in seg.groupby("profile_file", sort=True):
@@ -91,13 +91,10 @@ def collect(run_dir: Path, config: dict) -> dict:
             with netCDF4.Dataset(chi_dir / prof_file) as c:
                 c1, c2 = var(c, "chi_1"), var(c, "chi_2")
                 cvr, eT = var(c, "var_resolved"), var(c, "epsilon_T")
-            with netCDF4.Dataset(prof_dir / prof_file) as pr:
-                Pp, CTp, SAp = var(pr, "P"), var(pr, "CT"), var(pr, "SA")
-                lat = float(pr["lat"][...]) if np.isfinite(pr["lat"][...]) else 12.0
-            for scale in STRAT_SCALES_M:
-                n2s, tzs = stratification(Pp, CTp, SAp, lat, s["P_mean"].to_numpy(), scale)
-                cols[f"N2_{scale}"] += sig(n2s)
-                cols[f"Tz_{scale}"] += sig(tzs)
+            hw, hcols = hydro[prof_file]
+            assert np.array_equal(hw, s["window"].to_numpy()), prof_file
+            for key, vals in hcols.items():
+                cols[key] += sig(vals)
             n = len(s)
             assert n == len(e1) == len(c1), prof_file
             pi = len(profiles)

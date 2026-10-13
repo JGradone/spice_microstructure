@@ -158,9 +158,17 @@ table.agree th:first-child, table.agree td:first-child { text-align: left; }
         <h2>Averaging</h2>
         <div class="ctl"><label for="bin">Depth bin</label>
           <select id="bin"><option value="10">10 m</option><option value="25">25 m</option><option value="50">50 m</option></select></div>
-        <div class="ctl"><label for="strat">Stratification for chi expected</label>
-          <select id="strat"><option value="">perturb window values</option><option value="_5">TEOS-10 from CT/SA, 5 m fit</option><option value="_10">TEOS-10 from CT/SA, 10 m fit</option><option value="_25">TEOS-10 from CT/SA, 25 m fit</option></select>
-          <span class="hint">Only the process-station ratio uses this.</span></div>
+      </div>
+
+      <div class="group">
+        <h2>Process-station ratio</h2>
+        <div class="ctl"><label for="strat">Stratification (N², T<sub>z</sub>)</label>
+          <select id="strat"><option value="_h10">Hydrography step, 10 m fits (baseline)</option><option value="_h5">Hydrography step, 5 m fits</option><option value="_h25">Hydrography step, 25 m fits</option><option value="">perturb window values (wrong for the VMP5500)</option></select>
+          <span class="hint">Hydrography uses TEOS-10, with VMP5500 salinity from the ship CTD T–S relation.</span></div>
+        <div class="ctl"><label for="regime">Windows</label>
+          <select id="regime"><option value="all">All stably stratified</option><option value="finger">Finger favourable (Turner 45–90°)</option><option value="strong">Strongly finger favourable (72–90°)</option></select></div>
+        <div class="ctl"><label for="gamma">Finger flux ratio γ <span class="val" id="gammaV"></span></label>
+          <input type="range" id="gamma" min="50" max="70" step="5"><span class="hint">Sets the dashed salt-finger model line (St. Laurent and Schmitt 1999).</span></div>
       </div>
     </aside>
 
@@ -190,8 +198,8 @@ table.agree th:first-child, table.agree td:first-child { text-align: left; }
 
       <section class="panel" aria-labelledby="hRatio">
         <h3 id="hRatio">Process station: χ observed / χ expected</h3>
-        <p class="sub">Ratio of averages per depth bin, ⟨χ⟩ / ⟨2 K<sub>ρ</sub> T<sub>z</sub>²⟩ with K<sub>ρ</sub> = 0.2 ε / N² (Fernández-Castro et al. 2024). Values above 1 are not explained by shear turbulence with Γ = 0.2. Windows with N² ≤ 0 are left out and counted below.</p>
-        <div class="note">Preliminary. The hydrography step has not been written, and the stratification estimate is the largest uncertainty here (see findings). Treat the shape of this panel's response to the controls as the result, not the values.</div>
+        <p class="sub">Ratio of averages per depth bin, ⟨χ⟩ / ⟨2 K<sub>ρ</sub> T<sub>z</sub>²⟩ with K<sub>ρ</sub> = 0.2 ε / N² (Fernández-Castro et al. 2024). Values above 1 are not explained by shear turbulence with Γ = 0.2. Dashed: the salt-finger prediction Γ<sub>finger</sub>/0.2 with Γ<sub>finger</sub> = [(R<sub>ρ</sub> − 1)/R<sub>ρ</sub>]·γ/(1 − γ), using the median R<sub>ρ</sub> of each bin. Windows with N² ≤ 0 or no stratification are left out and counted below.</p>
+        <div class="note">Preliminary. Stratification now comes from the hydrography step (validated against the ship CTD), but epsilon QC, the noise floor and interface/layer classification are not final, so read the response to the controls rather than single values. The VMP5500 has no usable salinity below the ship CTD's 550 m reach.</div>
         <div class="chart" id="cRatio" style="margin-top:10px"></div>
         <div class="legend" id="legRatio"></div>
         <p class="sub mono" id="ratioNote" style="margin-top:6px"></p>
@@ -207,16 +215,18 @@ table.agree th:first-child, table.agree td:first-child { text-align: left; }
         <h3 id="hFind">What the QC choices change</h3>
         <p class="sub">From the baseline run (both instruments, all casts). Each finding can be reproduced with the controls.</p>
         <div class="findings">
-          <article class="key"><h4>Stratification moves the ratio far more than any epsilon QC choice</h4>
-            <p>perturb's window-scale N² for the VMP5500 is about 4.5× larger, and its dT/dz about 2.3× smaller, than TEOS-10 values from the same instrument's CT and SA (SPC_033, 150–250 m: N² 2.7×10⁻⁴ vs 6.0×10⁻⁵ s⁻²). The VMP250's window values agree with TEOS-10. The shipboard archive has the same values, so shipboard VMP5500 ratios inherit the error. TEOS-10 N² from the VMP5500 is itself negative in 34–44% of windows at 150–250 m because its salinity is spiky. Switch the stratification control to see the ratio change by an order of magnitude; the hydrography step has to fix this before any ratio is interpreted.</p></article>
+          <article class="key"><h4>Fixing the stratification moved the VMP5500 ratio from about 29 to 1.5</h4>
+            <p>perturb's window-scale N² for the VMP5500 was about 4.5× too large and its dT/dz about 2.3× too small, and the shipboard archive carried the same values. The hydrography step now computes N² and T<sub>z</sub> with TEOS-10, taking VMP5500 salinity from the nearest ship CTD's T–S relation because its conductivity cell is too noisy for gradients. Both instruments then match the ship CTD (N² median ratio 1.01 and 1.08, R<sub>ρ</sub> about 1.7). The pooled 150–550 m ratio of averages at the process station falls from 29 to 1.5 for the VMP5500 and from 4.3 to 3.5 for the VMP250. Select "perturb window values" to see the old answer.</p></article>
+          <article class="key"><h4>The figure-of-merit cut is now the choice that matters most</h4>
+            <p>With stratification fixed, the ATOMIX cut (FM above 1.15) doubles the VMP250's pooled ratio (3.5 to 6.8) and raises the VMP5500's (1.5 to 1.9), while removing about half the windows. It rejects 41–77% of windows in every epsilon decade, including high epsilon, which points to the threshold not suiting these spectra (4 s FFT, 16 s windows) rather than to bad data. Inspect spectra before adopting it.</p></article>
+          <article><h4>Below about 200 m the ratios exceed 1 and bracket the finger prediction</h4>
+            <p>In 25 m bins from 200 to 550 m the ratio ranges from about 1.3 to 10, against a salt-finger prediction of about 3–5 for γ = 0.65 at the observed R<sub>ρ</sub> of 1.5–2. Above 200 m the ratios are near 1. Restricting to finger-favourable windows (Turner 45–90°) changes little, because nearly all windows below 150 m already are. The fit scale matters less than expected: 5 to 25 m changes the pooled ratio by at most about 35% (VMP250 2.3–3.7, VMP5500 1.4–1.6).</p></article>
           <article><h4>The two instruments agree where both measure</h4>
-            <p>At the process station between 150 and 250 m, median ε is 8.9×10⁻¹⁰ (VMP250 free fall) and 8.0×10⁻¹⁰ W kg⁻¹ (VMP5500); median χ is 3.9×10⁻⁸ and 3.7×10⁻⁸ K² s⁻¹. Epsilon and chi are not the source of the instruments' different ratios.</p></article>
+            <p>At the process station between 150 and 250 m, median ε is 8.9×10⁻¹⁰ (VMP250 free fall) and 8.0×10⁻¹⁰ W kg⁻¹ (VMP5500); median χ is 3.9×10⁻⁸ and 3.7×10⁻⁸ K² s⁻¹. The VMP250 covers only the top 270 m, through 15 profiles, so its ratios rest on far fewer windows.</p></article>
           <article><h4>Their noise floors differ by a factor of ten</h4>
-            <p>The lowest epsilon each instrument reports (0.5–2nd percentile below 50 m) is about 3×10⁻¹⁰ for the VMP250 and 3×10⁻¹¹ W kg⁻¹ for the VMP5500. Below 150 m the VMP250 median sits within about 2× of its floor, so VMP250 epsilon there is close to an upper bound, which makes χ expected an upper bound and the ratio a lower bound. Excluding below-floor windows raises the VMP5500 mean by 24%, a bias; setting them to the floor changes it little.</p></article>
-          <article><h4>The ATOMIX figure-of-merit cut removes half the data at every level</h4>
-            <p>FM above 1.15 on one or both probes removes about 36% of VMP250 and 54% of VMP5500 windows beyond segment QC, and the rejected fraction is 41–77% in every epsilon decade, including high epsilon. That pattern points to the threshold not suiting these spectra (4 s FFT, 16 s windows) rather than to bad data. Inspect spectra before adopting it; it lowers the 150–600 m mean ε by 32% (VMP250) and 13% (VMP5500).</p></article>
+            <p>The lowest epsilon each instrument reports is about 3×10⁻¹⁰ (VMP250) and 3×10⁻¹¹ W kg⁻¹ (VMP5500). VMP250 epsilon below 150 m sits within about 2× of its floor, so treat it as near an upper bound, which makes its ratios lower bounds. Excluding below-floor windows biases means high; setting them to the floor barely moves anything here.</p></article>
           <article><h4>Segment QC matters little below 50 m</h4>
-            <p>The proposed thresholds remove 4.4% of VMP250 and 2.3% of VMP5500 windows, mostly in the top 20 m, and change the 150–600 m mean ε by less than 3%. Variance resolved never binds (under 0.1% of windows below 0.5), and the probe-pair rule changes means by under 1%.</p></article>
+            <p>The proposed thresholds remove 4.4% of VMP250 and 2.3% of VMP5500 windows, mostly in the top 20 m, and change the 150–600 m mean ε by under 3%. Variance resolved never binds, and the probe-pair rule changes means by under 1%.</p></article>
         </div>
       </section>
     </main>
@@ -245,7 +255,7 @@ const DATA = /*__DATA__*/null;
   const inv = (map, x, hi) => { if (!isFinite(x)) return hi; let best = 0, d = 1e9; for (let i = 0; i <= hi; i++) { const e = Math.abs(map(i) - x); if (e < d) { d = e; best = i; } } return best; };
   const fmt = x => x >= 0.01 && x < 100 ? x.toFixed(x < 1 ? 3 : 2) : x.toExponential(1);
   const sci = x => { if (!isFinite(x)) return "–"; const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e); return `${m.toFixed(1)}e${e}`; };
-  const ids = ["top", "bottom", "cv", "vib", "fm", "vr", "pair", "floor", "fmode", "cfgprobes", "x0112", "towyo", "bin", "strat"];
+  const ids = ["top", "bottom", "cv", "vib", "fm", "vr", "pair", "floor", "fmode", "cfgprobes", "x0112", "towyo", "bin", "strat", "regime", "gamma"];
 
   function setPreset(p) {
     const s = { top: 0, bottom: 0, cv: Infinity, vib: Infinity, fm: Infinity, vr: 0, pair: Infinity, floor: null, fmode: "keep", cfgprobes: false, x0112: false, towyo: true };
@@ -265,7 +275,7 @@ const DATA = /*__DATA__*/null;
       fm: fmMap(+$("fm").value), vr: +$("vr").value / 100, pair: pairMap(+$("pair").value),
       floor: fl <= -120 ? null : Math.pow(10, fl / 10), fmode: $("fmode").value,
       cfgprobes: $("cfgprobes").checked, x0112: $("x0112").checked, towyo: $("towyo").checked,
-      bin: +$("bin").value, strat: $("strat").value,
+      bin: +$("bin").value, strat: $("strat").value, regime: $("regime").value, gamma: +$("gamma").value / 100,
     };
   }
   function labels(s) {
@@ -273,6 +283,7 @@ const DATA = /*__DATA__*/null;
     $("cvV").textContent = isFinite(s.cv) ? fmt(s.cv) : "off"; $("vibV").textContent = isFinite(s.vib) ? `${s.vib.toFixed(1)}×` : "off";
     $("fmV").textContent = isFinite(s.fm) ? s.fm.toFixed(2) : "off"; $("vrV").textContent = s.vr > 0 ? s.vr.toFixed(2) : "off";
     $("pairV").textContent = isFinite(s.pair) ? `${s.pair.toFixed(2)}×` : "keep both"; $("floorV").textContent = s.floor ? `${sci(s.floor)} W/kg` : "off";
+    $("gammaV").textContent = s.gamma.toFixed(2);
   }
 
   // ---------------- QC ----------------
@@ -330,24 +341,35 @@ const DATA = /*__DATA__*/null;
     return out;
   }
   function ratio(q, s) {
-    const out = [], skipped = new Int32Array(NI), used = new Int32Array(NI);
+    const out = [], skipped = new Int32Array(NI), used = new Int32Array(NI), nostrat = new Int32Array(NI);
     const N2 = col["N2" + s.strat], Tz = col["Tz" + s.strat];
+    const tag = s.strat || "_h10", Tu = col["Tu" + tag], Rr = col["Rr" + tag];
+    const tuLo = s.regime === "strong" ? 72 : s.regime === "finger" ? 45 : -Infinity;
+    const tuHi = s.regime === "all" ? Infinity : 90;
     for (let k = 0; k < NI; k++) {
       const acc = new Map();
       for (let i = 0; i < N; i++) {
         const p = PR[W.pi[i]];
-        if (inst[i] !== k || !q.keep[i] || !p.station || !isFinite(q.chi[i]) || !isFinite(Tz[i]) || !isFinite(N2[i])) continue;
+        if (inst[i] !== k || !q.keep[i] || !p.station || !isFinite(q.chi[i])) continue;
+        if (!isFinite(Tz[i]) || !isFinite(N2[i])) { nostrat[k]++; continue; }
         if (N2[i] <= 0) { skipped[k]++; continue; }
+        if (!(Tu[i] >= tuLo && Tu[i] <= tuHi)) continue;
         used[k]++;
         const ce = 2 * 0.2 * q.eps[i] / N2[i] * Tz[i] * Tz[i];
         const b = Math.floor(col.P[i] / s.bin) * s.bin + s.bin / 2;
-        let a = acc.get(b); if (!a) { a = { co: 0, ce: 0, n: 0, prof: new Set() }; acc.set(b, a); }
+        let a = acc.get(b); if (!a) { a = { co: 0, ce: 0, n: 0, prof: new Set(), rr: [] }; acc.set(b, a); }
         a.co += q.chi[i]; a.ce += ce; a.n++; a.prof.add(W.pi[i]);
+        if (isFinite(Rr[i])) a.rr.push(Rr[i]);
       }
+      const g = s.gamma;
       out.push([...acc.entries()].filter(([, a]) => a.prof.size >= 3).sort((x, y) => x[0] - y[0])
-        .map(([b, a]) => ({ z: b, r: a.co / a.ce, n: a.n, np: a.prof.size })));
+        .map(([b, a]) => {
+          a.rr.sort((x, y) => x - y); const rr = a.rr.length ? a.rr[Math.floor(a.rr.length / 2)] : NaN;
+          const fm = rr > 1 ? ((rr - 1) / rr) * (g / (1 - g)) / 0.2 : NaN;
+          return { z: b, r: a.co / a.ce, n: a.n, np: a.prof.size, rrho: rr, fm };
+        }));
     }
-    return { rows: out, skipped, used };
+    return { rows: out, skipped, used, nostrat };
   }
 
   // ---------------- drawing ----------------
@@ -394,7 +416,7 @@ const DATA = /*__DATA__*/null;
         let best = null, d = 1e9;
         s.rows.forEach(r => { if (!isFinite(r[key]) || r[key] <= 0) return; const dd = Math.abs(y(r.z) - p.y); if (dd < d) { d = dd; best = r; } });
         if (best && d < 30) { any = true; zShown = best.z; dots[j].setAttribute("cx", x(best[key])); dots[j].setAttribute("cy", y(best.z)); dots[j].setAttribute("opacity", 1);
-          lines.push(`${s.name}: ${sci(best[key])}${unit ? " " + unit : ""} · ${best.np} prof, ${best.n} win`); }
+          lines.push(`${s.name}: ${unit ? sci(best[key]) + " " + unit : best[key].toFixed(2)} · ${best.np} prof, ${best.n} win` + (isFinite(best.rrho) ? ` · Rρ ${best.rrho.toFixed(2)}, model ${isFinite(best.fm) ? best.fm.toFixed(1) : "–"}` : "")); }
         else dots[j].setAttribute("opacity", 0);
       });
       if (!any) { tip.hidden = true; guide.setAttribute("opacity", 0); return; }
@@ -452,6 +474,7 @@ const DATA = /*__DATA__*/null;
     const vals = [], zs = [];
     series.forEach(s => s.rows.forEach(r => { vals.push(r.r); zs.push(r.z); }));
     if (!vals.length) { el("text", { x: Wd / 2, y: H / 2, "text-anchor": "middle" }, svg).textContent = "No bins with 3 or more profiles"; return; }
+    series.forEach(s => s.rows.forEach(r => { if (r.fm > 0) vals.push(r.fm); }));
     const lo = Math.pow(10, Math.floor(Math.log10(Math.min(0.5, ...vals)))), hi = Math.pow(10, Math.ceil(Math.log10(Math.max(2, ...vals))));
     const zmax = Math.max(...zs) * 1.03;
     const x = v => m.l + (Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) * (Wd - m.l - m.r);
@@ -463,6 +486,10 @@ const DATA = /*__DATA__*/null;
     el("line", { x1: x(1), x2: x(1), y1: m.t, y2: H - m.b, class: "ref", "stroke-width": 1.5 }, svg);
     el("text", { x: x(1) + 4, y: H - m.b - 6 }, svg).textContent = "shear turbulence, Γ = 0.2";
     el("text", { x: 12, y: (H - m.b) / 2, transform: `rotate(-90 12 ${(H - m.b) / 2})`, "text-anchor": "middle" }, svg).textContent = "depth (m)";
+    series.forEach(s => {
+      const fm = s.rows.filter(r => r.fm > 0 && r.fm >= lo && r.fm <= hi);
+      if (fm.length > 1) el("path", { d: fm.map((r, i) => `${i ? "L" : "M"}${x(r.fm).toFixed(1)},${y(r.z).toFixed(1)}`).join(""), class: s.cls, fill: "none", "stroke-width": 1.5, "stroke-dasharray": "5 4", opacity: 0.75 }, svg);
+    });
     series.forEach(s => {
       if (s.rows.length > 1) el("path", { d: s.rows.map((r, i) => `${i ? "L" : "M"}${x(r.r).toFixed(1)},${y(r.z).toFixed(1)}`).join(""), class: s.cls, fill: "none", "stroke-width": 2 }, svg);
       s.rows.forEach(r => el("circle", { cx: x(r.r), cy: y(r.z), r: 4, class: s.cls.replace("s", "f"), stroke: "var(--surface)", "stroke-width": 2 }, svg));
@@ -499,8 +526,8 @@ const DATA = /*__DATA__*/null;
     legend($("legHist"), [["s1", NAMES[0]], ["s2", NAMES[1]]]);
     const R = ratio(q, s);
     ratioChart($("cRatio"), R);
-    legend($("legRatio"), [["s1", `${NAMES[0]}${s.towyo ? " (free fall + tow-yo)" : " (free fall)"}`], ["s2", NAMES[1]]]);
-    $("ratioNote").textContent = DATA.instruments.map((n, k) => `${NAMES[k]}: ${R.used[k]} windows used, ${R.skipped[k]} with N² ≤ 0 left out`).join(" · ");
+    legend($("legRatio"), [["s1", `${NAMES[0]} observed${s.towyo ? " (free fall + tow-yo)" : " (free fall)"}`], ["s1", `${NAMES[0]} finger model`, true], ["s2", `${NAMES[1]} observed`], ["s2", `${NAMES[1]} finger model`, true]]);
+    $("ratioNote").textContent = DATA.instruments.map((n, k) => `${NAMES[k]}: ${R.used[k]} windows used; left out ${R.skipped[k]} with N² ≤ 0, ${R.nostrat[k]} without stratification`).join(" · ");
     // probe agreement
     const med = a => { if (!a.length) return NaN; a.sort((x, y) => x - y); return a[Math.floor(a.length / 2)]; };
     let html = "<tr><th>Instrument</th><th>ε₂/ε₁</th><th>windows</th><th>χ₂/χ₁</th><th>windows</th></tr>";
@@ -521,7 +548,7 @@ const DATA = /*__DATA__*/null;
   $("pNone").addEventListener("click", () => setPreset("none"));
   $("pSeg").addEventListener("click", () => setPreset("seg"));
   $("pAtomix").addEventListener("click", () => setPreset("atomix"));
-  $("bin").value = "25";
+  $("bin").value = "25"; $("gamma").value = 65;
   setPreset("seg");
 })();
 </script>
