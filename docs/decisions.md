@@ -154,3 +154,10 @@ Dated record of methods choices and why they were made. Newest entries at the bo
 * Interpretation: the conductivity measurement degraded during the deployment. Contamination, fouling, damage or poor flushing of the unpumped cell are all consistent. Fouling usually biases salinity fresh, so the salty offset is unusual, and the data cannot separate these causes. Temperature gradients from the SBE3 agree with the ship CTD (T_z ratio 0.999 at 25 m fits). The SBE3's absolute temperature could not be checked independently; it is also the FP07 calibration reference.
 * Consequences: the VMP5500 salinity is not used (the hydrography step uses the ship CTD T-S relation). perturb's VMP5500 N2, which uses this conductivity, is not used either.
 * Recommended: a post-cruise Sea-Bird calibration of SBE4 #4076, and a visual inspection of the cell, to confirm.
+
+## 2026-10-13: Despiking VMP5500 conductivity does not help
+
+* Tested on 42 VMP5500 casts against the ship CTD (150-550 m). Three treatments were applied to the 64 Hz SBC1 conductivity before computing salinity and the 1 m averages: Hampel filter (0.5 s window, 3 sigma and 2 sigma) and a 0.5 s running median.
+* The raw 64 Hz conductivity is very spiky (excess kurtosis of the high-passed signal about 77), and the filters replace 13-18% of samples. The results do not change: 1 m salinity noise 0.0729 -> 0.0727 g/kg, offset +0.153 g/kg, N2 <= 0 in 44.6% (ship CTD 1.5%), N2 ratio to ship 3.05.
+* Reason: each 1 m bin already averages about 80 samples, so sample-level spikes average out. The problem lies at metre and longer scales (noise about 0.07 g/kg plus the systematic offset), which point despiking cannot reach. This points to the cell's response in the water rather than electronic glitches.
+* Decision: no conductivity despiking. A Lueck and Picklo (1990) thermal-mass correction is the only untested candidate for the metre-scale spikes at interfaces; it would not address the offset. VMP5500 salinity stays sourced from the ship CTD T-S relation.
