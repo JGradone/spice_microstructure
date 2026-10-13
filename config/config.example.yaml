@@ -261,9 +261,28 @@ segments:
   vibration_factor: 3.0           # flag rms > 3 x the profile median (99th pct ~3-5x)
 
 shear_qc:
-  # Explicit noise floor test, independent of the figure of merit. Not applied
-  # at sea; first planned change after the baseline.
-  noise_floor_w_kg: null
+  # epsilon_shear step: QC of perturb's per-probe shear epsilon, a noise floor
+  # per window, and the combined estimate (decisions.md 2026-10-13). Windows
+  # are never dropped for being near the floor; they are flagged and carry an
+  # upper-bound value. Segment QC follows segments.enabled.
+  noise_floor:
+    method: quietest_windows      # noise spectrum = median frequency spectrum of the quietest windows
+    quantile: 0.02                # quietest 2% of windows (per instrument and probe, segment-QC passed)
+    factor: 2.0                   # at_floor when epsilon < factor x the window's floor
+    policy: clamp                 # epsilon_shear_bounded = max(epsilon_shear, floor); flagged, never dropped
+  figure_of_merit:
+    max: 1.15                     # ATOMIX (Lueck 2022) limit; flagged per probe
+    apply: false                  # not applied until spectra are inspected (decisions.md 2026-10-12)
+  var_resolved:
+    min: 0.5                      # fraction of Nasmyth variance resolved below K_max
+    apply: true
+  probe_pair:
+    limit: 2.7718585822512662     # |ln(e1/e2)| > ln(limit): probes disagree (perturb epsilon.pair_limit)
+    policy: min                   # on disagreement keep the smaller estimate (contamination raises epsilon)
+  combine: geometric              # mean of usable probes: geometric (perturb's epsilonMean) or arithmetic
+  gallery:                        # spectra figure for inspecting the FM threshold (display only)
+    per_panel: 5                  # spectra drawn per epsilon decade x FM bin
+    seed: 1
 
 hydrography:
   # Background stratification per profile (TEOS-10): CT, SA, N2, T_z, S_z,
