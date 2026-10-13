@@ -529,3 +529,25 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   * At Re_b > 10 the two agree within about 1.5×.
   * At Re_b < 3, epsilon_T exceeds shear in every regime, most in strong-finger water. This is consistent with weak turbulence or finger-scale variance not following the Kraichnan shape.
 * **Uncertainty carried forward:** chi depends on the FP07 response model by a factor of about 1.4–1.8. It is less where the roll-off is resolved (double/single 0.61–0.72 at K_max/kB > 1.6), but not negligible. Per-thermistor tau calibration (perturb `instruments.<SN>.fp07_tau_scale`, anchored where K_max/kB > 1.2 against shear epsilon) is a possible next refinement. It would tie epsilon_T to shear epsilon in the calibration windows.
+
+## 2026-10-13: perturb's own warnings reviewed; email thread with Pat Welch (Jul–Aug 2026)
+
+The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) prompted a review of the warnings perturb writes to its per-file logs. This pipeline had not been reading them. Analysis run `fft2_diss8_mle`:
+
+* **Chi T1/T2 disagreement** is flagged for exactly SPC_012–SPC_040 (median ratio 0.45–0.79). This independently confirms the T3304 exclusion.
+* **Shear disagreement:**
+  * VMP5500, nearly every cast: e1/e2 0.3–0.86, so sh2 reads higher (known; `min` policy). SPC_060–061 (sh1 low response) are already excluded.
+  * VMP250, new:
+    * data_0112 profiles 1–2: e1/e2 0.08 and 0.18 (test casts, sh2 M3463; already a candidate for exclusion in shipboard_processing.md).
+    * data_0123 profile 4 and data_0124: 3.3–5.4, sh1 high. The Sealog notes sargassum and very high surface current on data_0124, so sh1 is likely fouled.
+    * data_0127–0147: a steady 1.2–1.45, sh1 higher. This is consistent with an uncertain sh2 sensitivity (M2662, calibrated 2023).
+    * data_0148–0149: 0.8–0.85.
+  * Open: exclude sh2 for data_0112 and sh1 for data_0123–0124 (exclusions are per file; data_0123 profiles 1–3 agree).
+* **Chi windows dropped** because the fitted kB > 1.5 K_AA: 2364 windows (fft2_diss8_mle). All are near the surface (VMP250 median 14 m, 99th percentile 44 m; median shear epsilon about 1e-6). None of the VMP250 windows and 3 of the VMP5500 windows are below 150 dbar, so the staircase analysis is unaffected. Near-surface chi is missing exactly where turbulence is strongest.
+* **perturb's `Gamma`/`K_rho` use shear epsilon even with `use_epsilon: false`** (warned on every file). This pipeline does not use perturb's mixing outputs.
+* **Points from the thread that support existing choices:**
+  * Patch the .p files for sensor coefficients, except the FP07s, which are calibrated in situ.
+  * Keep the original files untouched.
+  * Inspect the spectral fits visually; perturb-diag is the package's tool, and this pipeline has its own galleries.
+  * Pat considers epsilon validated against the SCOR160/ATOMIX benchmarks (within 2%). He described chi and the mixing parameters as still under review at the time.
+* **Caching:** `perturb run` reuses unchanged stages and supports `--jobs`. The `convert` step's `rmtree` defeats the reuse (docs/package_issues.md #6 retracted).

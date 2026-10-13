@@ -83,12 +83,13 @@ Before sending, recheck each Likely or Question entry against the current upstre
   Where the roll-off is resolved, epsilon_T agrees with shear. Below it, the fit extrapolates kB, and epsilon_T (∝ kB⁴) is biased high.
 * `_CHI_K_MAX_RATIO_MIN = 0.5` (`odas_tpw/chi/l4_chi.py`) admits windows where epsilon_T is 4–6× high. That may be acceptable for chi, but not for epsilon_T. Suggestion: a separate, stricter resolution limit (or flag) for epsilon_T, and documentation of this dependence.
 * Fit method is not the cause: median MLE/iterative ratios are chi 1.07–1.08, epsilon_T 0.94–0.97 and kB 0.99.
+* Contrast with the package's own warning: "fitted kB > 1.5*K_AA (Batchelor rolloff beyond the anti-alias band; chi and epsilon_T under-resolved, biased low)" (dropped windows). In our data, partly resolved windows (K_max/kB 0.8–1.6, kB inside the band) show epsilon_T biased *high* against shear epsilon, not low. Worth checking which direction the package expects for partially resolved roll-offs.
 * Reproduce: `outputs/fft2_diss8_mle/thermistor/` (columns `K_max_ratio`, `epsilon_T`, `epsilon_T_resolved`); `docs/decisions.md` 2026-10-13, "FP07 response model and where epsilon_T can be used".
 
-## 6. `perturb` stage subcommands each run the whole pipeline (Request)
+## 6. ~~perturb stage subcommands each run the whole pipeline~~ (Retracted)
 
-* `perturb profiles`, `diss` and `chi` each call the full pipeline (`odas_tpw/perturb/cli.py`), so a stage cannot be rerun on its own from saved output (for example, chi with a different fit method without recomputing profiles and epsilon). Every chi or epsilon variant needs a full `perturb run`.
-* decisions.md: 2026-10-12, convert step.
+* Pat Welch (email, 2026-08-04): rerunning `perturb run` after changing a parameter reprocesses only the affected stage and those downstream, into fresh `_NN` directories; `--jobs N` runs files in parallel. The stage directories are already versioned by a parameter hash (`diss_00`, `chi_01`, ...).
+* The full recomputes we saw came from this pipeline's `convert` step, which deletes perturb's output tree before every run (`shutil.rmtree` in `src/steps/convert.py`), and from sensitivity runs writing to separate run directories. Not a package problem.
 
 ## 7. Minor and documentation
 
