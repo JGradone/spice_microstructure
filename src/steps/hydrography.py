@@ -29,15 +29,17 @@ Salinity source per instrument (instruments.<name>.salinity_source):
                the T-S relation averages that out while the FP07 keeps the
                native vertical resolution. S_z, R_rho and Turner then follow
                the T-S slope and are not independent of T_z.
-               Ship fallback (hydrography.own_ts.ship_fallback): where a ship
-               CTD cast is matched, each T-S bin is compared with the ship's
-               relation (same bins and smoothing); bins differing by more than
-               max_diff_g_kg take the ship value and the merged relation is
-               the correction ramps over smooth_bins bins. If the median difference over bins colder than
-               cast_check_max_degC exceeds cast_fail_median_g_kg (a bad
-               conductivity cell), the whole profile uses the ship relation
-               and is NaN outside its temperature range. SA_from_ship records the
-               fraction of each 1 m bin on ship values.
+               Bad cells (hydrography.own_ts.bad_cell_check): each profile's
+               relation is compared, over a cold CT range where T-S varies
+               little across the cruise, with the median relation of all
+               profiles of the instrument (no ship data). A profile whose
+               median offset exceeds max_offset_g_kg has a bad conductivity
+               cell and uses the matched ship CTD cast's relation instead
+               (NaN beyond its range, or throughout if no cast matches);
+               ts_bad_cell and ts_ship_only record this. Elsewhere the ship
+               CTD is only a check: SA_ship_diff is |own - ship| T-S relation
+               at each 1 m bin, and windows above ship_check.max_diff_g_kg are
+               flagged ts_disagrees_with_ship. Nothing is replaced.
 With a T-S derived salinity (ship_ctd_ts, own_ts), windows with T_z <= 0 are
 flagged ts_salinity_invalid: temperature inversions are mostly intrusions whose
 salinity compensates in density, which a T-S relation cannot represent, so N2,
@@ -174,35 +176,23 @@ def own_ts_profile(d, lat: float, lon: float, ct_off: float, ms_off: float,
             "sa_ref": float(np.nanmedian(sa_m)) if usable else np.nan}
 
 
-def ship_fallback(nodes, ship_nodes, cfg: dict) -> dict:
-    """Merge own T-S nodes with the ship's where they differ by more than max_diff_g_kg."""
-    fb = cfg["ship_fallback"]
-    if nodes is None:
-        return {"nodes": ship_nodes, "bad_nodes": None, "failed": True, "bad_fraction": 1.0}
-    ct, sa = nodes
-    ship_sa = np.interp(ct, *ship_nodes, left=np.nan, right=np.nan)
-    diff = sa - ship_sa
-    checked = np.isfinite(diff)
-    bad = checked & (np.abs(diff) > fb["max_diff_g_kg"])
-    frac = float(bad.sum() / checked.sum()) if checked.any() else 0.0
-    cold = checked & (ct < fb["cast_check_max_degC"])
-    if cold.any() and np.median(np.abs(diff[cold])) > fb["cast_fail_median_g_kg"]:
-        return {"nodes": ship_nodes, "bad_nodes": None, "failed": True, "bad_fraction": frac}
-    # Smooth only the correction, so bins away from a switch keep their own values
-    step = pd.Series(np.where(bad, ship_sa - sa, 0.0))
-    corr = step.rolling(cfg["smooth_bins"], center=True, min_periods=1).mean().to_numpy()
-    weight = pd.Series(bad.astype(float)).rolling(cfg["smooth_bins"], center=True,
-                                                  min_periods=1).mean().to_numpy()
-    corr = np.where(bad, ship_sa - sa, corr)          # switched bins take the ship value exactly
-    return {"nodes": (ct, sa + corr), "bad_nodes": (ct, np.where(bad, 1.0, weight)),
-            "failed": False, "bad_fraction": frac}
+def deep_offsets(nodes_by_profile: dict, cfg: dict) -> dict:
+    """Median offset of each profile's T-S relation from the instrument median over a cold CT range."""
+    bc = cfg["bad_cell_check"]
+    q = np.arange(bc["ct_min_degC"], bc["ct_max_degC"] + 1e-9, cfg["bin_degC"])
+    tab = pd.DataFrame({k: np.interp(q, *n, left=np.nan, right=np.nan)
+                        for k, n in nodes_by_profile.items() if n is not None}, index=q).T
+    dev = tab - tab.median()
+    enough = dev.notna().sum(axis=1) >= bc["min_points"]
+    return {k: (float(dev.loc[k].median()) if k in dev.index and enough[k] else np.nan)
+            for k in nodes_by_profile}
 
 
-def evaluate_ts(own: dict, nodes, bad_nodes, sa_ref: float) -> dict:
-    """Native-rate FP07 CT and SA from T-S nodes, plus the fraction from ship values."""
+def evaluate_ts(own: dict, nodes, sa_ref: float, check_nodes=None) -> dict:
+    """Native-rate FP07 CT and SA from T-S nodes; ship_diff is |SA - check relation| (NaN if none)."""
     n = len(own["t_fp"])
     if nodes is None or len(nodes[0]) < 2:
-        return {"CT": np.full(n, np.nan), "SA": np.full(n, np.nan), "from_ship": np.full(n, np.nan)}
+        return {"CT": np.full(n, np.nan), "SA": np.full(n, np.nan), "ship_diff": np.full(n, np.nan)}
     interp = lambda ct: np.interp(ct, *nodes, left=np.nan, right=np.nan)  # noqa: E731
     t_fp, p_tip = own["t_fp"], own["P_tip"]
     ct = gsw.CT_from_t(sa_ref, t_fp, p_tip)
@@ -210,8 +200,9 @@ def evaluate_ts(own: dict, nodes, bad_nodes, sa_ref: float) -> dict:
         sa = interp(ct)
         ct = gsw.CT_from_t(np.where(np.isfinite(sa), sa, sa_ref), t_fp, p_tip)
     sa = interp(ct)
-    from_ship = (np.interp(ct, *bad_nodes) if bad_nodes is not None else np.ones(n))
-    return {"CT": ct, "SA": sa, "from_ship": np.where(np.isfinite(sa), from_ship, np.nan)}
+    diff = (np.abs(sa - np.interp(ct, *check_nodes, left=np.nan, right=np.nan))
+            if check_nodes is not None else np.full(n, np.nan))
+    return {"CT": ct, "SA": sa, "ship_diff": diff}
 
 
 # --------------------------------------------------------------------------
@@ -380,14 +371,16 @@ def run(ctx: dict) -> None:
             zmax = max(zmax, float(np.nanmax(depth)) + max(ms_off - ct_off, 0.0))
             raw.append((f, P, CT, SA, depth, lat, lon, latu, t0, own))
 
+        if source == "own_ts":                           # ship-free bad-cell check
+            offsets = deep_offsets({r[0].name: r[-1]["nodes"] for r in raw}, hc["own_ts"])
         edges = np.arange(0.0, np.ceil(zmax) + bin_m, bin_m)
         zc = (edges[:-1] + edges[1:]) / 2
         nz, npf = len(zc), len(raw)
-        fields = ["CT", "SA_own", "SA_used", "SA_from_ship", "sigma0", "N2", "T_z", "S_z",
+        fields = ["CT", "SA_own", "SA_used", "SA_ship_diff", "sigma0", "N2", "T_z", "S_z",
                   "alpha", "beta", "R_rho", "Turner"]
         arr = {k: np.full((npf, nz), np.nan) for k in fields}
         meta = {"profile_file": [], "ship_cast": [], "ship_km": [], "ship_hours": [],
-                "lat": [], "lon": [], "stime": [], "ts_bad_fraction": [], "ts_ship_only": []}
+                "lat": [], "lon": [], "stime": [], "ts_deep_offset": [], "ts_bad_cell": [], "ts_ship_only": []}
         win_frames = []
         for i, (f, P, CT, SA, depth, lat, lon, latu, t0, own) in enumerate(raw):
             ct = bin_profile(depth, CT, edges)
@@ -400,23 +393,22 @@ def run(ctx: dict) -> None:
                 sa = ship.ts_salinity(m["index"], ct) if m else np.full(nz, np.nan)
             elif source == "own_ts":                     # FP07 CT on the probe-tip depth grid
                 oc = hc["own_ts"]
-                if m and oc["ship_fallback"]["enabled"]:
+                ship_nodes = None
+                if m:
                     sa_c, ct_c, _ = ship.profile(m["index"])
-                    fbk = ship_fallback(own["nodes"], ts_relation(ct_c, sa_c, oc["bin_degC"],
-                                                                  oc["smooth_bins"]), oc)
-                else:
-                    fbk = {"nodes": own["nodes"], "bad_nodes": None, "failed": False,
-                           "bad_fraction": np.nan}
-                bad = fbk["bad_nodes"]
-                if bad is None and not fbk["failed"] and own["nodes"] is not None:
-                    bad = (own["nodes"][0], np.zeros(len(own["nodes"][0])))
+                    ship_nodes = ts_relation(ct_c, sa_c, oc["bin_degC"], oc["smooth_bins"])
+                off = offsets[f.name]
+                bad_cell = own["nodes"] is None or (np.isfinite(off) and
+                                                    abs(off) > oc["bad_cell_check"]["max_offset_g_kg"])
+                nodes = ship_nodes if bad_cell else own["nodes"]
                 sa_ref = own["sa_ref"] if np.isfinite(own["sa_ref"]) else 35.0
-                ev = evaluate_ts(own, fbk["nodes"], bad, sa_ref)
+                ev = evaluate_ts(own, nodes, sa_ref, None if bad_cell else ship_nodes)
                 tip = -gsw.z_from_p(own["P_tip"], latu)
                 ct, sa = bin_profile(tip, ev["CT"], edges), bin_profile(tip, ev["SA"], edges)
-                arr["SA_from_ship"][i] = bin_profile(tip, ev["from_ship"], edges)
-                meta["ts_bad_fraction"].append(fbk["bad_fraction"])
-                meta["ts_ship_only"].append(fbk["failed"])
+                arr["SA_ship_diff"][i] = bin_profile(tip, ev["ship_diff"], edges)
+                meta["ts_deep_offset"].append(off)
+                meta["ts_bad_cell"].append(bool(bad_cell))
+                meta["ts_ship_only"].append(bool(bad_cell and ship_nodes is not None))
             else:
                 raise ValueError(f"Unknown salinity_source {source!r} for {name}")
             st = stratification(zc, ct, sa, p, scale, bin_m, min_frac)
@@ -440,7 +432,9 @@ def run(ctx: dict) -> None:
             w["CT"] = np.interp(wd, zc, ct, left=np.nan, right=np.nan)
             w["SA"] = np.interp(wd, zc, sa, left=np.nan, right=np.nan)
             if source == "own_ts":
-                w["SA_from_ship"] = np.interp(wd, zc, arr["SA_from_ship"][i], left=np.nan, right=np.nan)
+                w["SA_ship_diff"] = np.interp(wd, zc, arr["SA_ship_diff"][i], left=np.nan, right=np.nan)
+                w["ts_bad_cell"] = meta["ts_bad_cell"][-1]
+                w["ts_ship_only"] = meta["ts_ship_only"][-1]
             win_frames.append(w)
 
             # Validation against the matched ship CTD cast, same scale and grid
@@ -461,13 +455,15 @@ def run(ctx: dict) -> None:
         for k in ("ship_cast", "ship_km", "ship_hours", "lat", "lon", "stime"):
             ds[k] = ("profile", np.asarray(meta[k]))
         if source == "own_ts":
-            ds["ts_bad_fraction"] = ("profile", np.asarray(meta["ts_bad_fraction"], float))
-            ds["ts_ship_only"] = ("profile", np.asarray(meta["ts_ship_only"], bool))
-            ds["ts_bad_fraction"].attrs["comment"] = "fraction of own T-S bins failing the ship check (NaN: no ship cast)"
-            ds["ts_ship_only"].attrs["comment"] = "whole profile on the ship T-S relation"
+            for k in ("ts_deep_offset", "ts_bad_cell", "ts_ship_only"):
+                ds[k] = ("profile", np.asarray(meta[k], float if k == "ts_deep_offset" else bool))
+            ds["ts_deep_offset"].attrs.update(units="g/kg", comment="median offset of the profile's T-S relation from the instrument median over the bad-cell check range (NaN: too shallow)")
+            ds["ts_bad_cell"].attrs["comment"] = "bad conductivity cell: own T-S relation not used"
+            ds["ts_ship_only"].attrs["comment"] = "salinity from the matched ship CTD cast's T-S relation"
+            ds["SA_ship_diff"].attrs["comment"] = "|own - ship| T-S relation at this CT (QC only; NaN without a ship cast)"
         else:
-            ds = ds.drop_vars("SA_from_ship")
-        units = {"CT": "degC", "SA_own": "g/kg", "SA_used": "g/kg", "SA_from_ship": "1", "sigma0": "kg m-3",
+            ds = ds.drop_vars("SA_ship_diff")
+        units = {"CT": "degC", "SA_own": "g/kg", "SA_used": "g/kg", "SA_ship_diff": "g/kg", "sigma0": "kg m-3",
                  "N2": "s-2", "T_z": "K m-1", "S_z": "g kg-1 m-1", "alpha": "K-1",
                  "beta": "kg g-1", "R_rho": "1", "Turner": "degree", "depth": "m"}
         for k, u in ((k, u) for k, u in units.items() if k in ds):
@@ -489,6 +485,8 @@ def run(ctx: dict) -> None:
         wins["no_stratification"] = ~np.isfinite(wins["N2"])
         wins["N2_nonpositive"] = wins["N2"] <= 0
         wins["ts_salinity_invalid"] = (source in ("ship_ctd_ts", "own_ts")) & ~(wins["T_z"] > 0)
+        if source == "own_ts":
+            wins["ts_disagrees_with_ship"] = wins["SA_ship_diff"] > hc["own_ts"]["ship_check"]["max_diff_g_kg"]
         wins.to_csv(out / f"windows_{name}.csv", index=False, float_format="%.6g")
         station_profiles[name] = [f for f in meta["profile_file"] if f.split("_prof")[0] in station]
 
@@ -503,10 +501,10 @@ def run(ctx: dict) -> None:
             "windows_without_stratification": int(wins["no_stratification"].sum()),
             "windows_N2_nonpositive": int(wins["N2_nonpositive"].sum()),
             "windows_ts_salinity_invalid": int(wins["ts_salinity_invalid"].sum()),
-            **({"profiles_ts_ship_only": int(np.sum(meta["ts_ship_only"])),
-                "profiles_ts_ship_only_files": [f for f, x in zip(meta["profile_file"], meta["ts_ship_only"]) if x],
-                "ts_bad_fraction_median": round(float(np.nanmedian(meta["ts_bad_fraction"])), 3),
-                "windows_SA_mostly_from_ship": int((wins["SA_from_ship"] > 0.5).sum())}
+            **({"profiles_ts_bad_cell": [f for f, x in zip(meta["profile_file"], meta["ts_bad_cell"]) if x],
+                "profiles_ts_ship_only": [f for f, x in zip(meta["profile_file"], meta["ts_ship_only"]) if x],
+                "windows_ts_ship_only": int(wins["ts_ship_only"].sum()),
+                "windows_ts_disagrees_with_ship": int(wins["ts_disagrees_with_ship"].sum())}
                if source == "own_ts" else {}),
             "validation_150_550m": {
                 "estimates": int(len(v)),

@@ -284,12 +284,13 @@ hydrography:
     fp07: T1                      # temperature the relation is evaluated at (probe-tip depth)
     bin_degC: 0.5                 # median SA in CT bins; 0.25 still noisy (0.006 g/kg at 1 m)
     smooth_bins: 3                # running mean over bins (~1.5 degC); sets the R_rho resolution
-    ship_fallback:                # replace T-S bins that disagree with the matched ship CTD cast
-      enabled: true
-      max_diff_g_kg: 0.15         # |own - ship| per T-S bin that switches it to ship values; real cast-to-cast
-                                  # differences reach ~0.05-0.1 (decisions.md 2026-10-13)
-      cast_check_max_degC: 13.0   # whole-profile check uses bins colder than this (staircase range)
-      cast_fail_median_g_kg: 0.15 # median |own - ship| there above this: bad cell, whole profile on ship T-S
+    bad_cell_check:               # ship-free: compare each profile's T-S with the instrument median
+      ct_min_degC: 5.5            # cold range where T-S varies little across the cruise (MAD 0.01-0.024 g/kg)
+      ct_max_degC: 8.0
+      min_points: 3               # T-S nodes needed in the range, else unchecked
+      max_offset_g_kg: 0.1        # median offset above this: bad cell (SPC_041 +0.26, SPC_045 +0.18; next +0.07)
+    ship_check:                   # QC flag only; the ship T-S replaces nothing except bad-cell profiles
+      max_diff_g_kg: 0.15         # |own - ship| T-S relation above this: window flagged ts_disagrees_with_ship
   # Perturb's window-scale N2 and dTdz are not used: for the VMP5500 they are
   # ~4.5x and ~0.4x the TEOS-10 values.
 
