@@ -265,6 +265,11 @@ shear_qc:
   # per window, and the combined estimate (decisions.md 2026-10-13). Windows
   # are never dropped for being near the floor; they are flagged and carry an
   # upper-bound value. Segment QC follows segments.enabled.
+  refit:                          # re-solve epsilon over f_min_hz..K_max (decisions.md 2026-10-13)
+    enabled: true                 # false = perturb's epsilon (integration from the lowest wavenumber)
+    f_min_hz: 1.0                 # below ~1 Hz the spectra sit 3-5x above Nasmyth; tested 0.5, 1, 2 Hz
+    min_points: 5                 # wavenumber points needed in the refit range, else no estimate
+    test_f_min_hz: [0.0, 0.5, 1.0, 2.0]   # scripts/test_shear_fmin.py; 0.0 must reproduce perturb
   noise_floor:
     method: quietest_windows      # noise spectrum = median frequency spectrum of the quietest windows
     quantile: 0.02                # quietest 2% of windows (per instrument and probe, segment-QC passed)

@@ -6,6 +6,15 @@ with Goodman coherent-noise removal and Nasmyth fitting. This step decides
 which probe estimates to use and how close each window is to the noise floor.
 
 Per probe and window:
+  * Low-wavenumber refit (shear_qc.refit): perturb integrates the spectrum from
+    the lowest wavenumber to K_max. Energy below ~1 Hz (vehicle motion or other
+    non-turbulent shear) sits 3-5x above Nasmyth and biases epsilon high
+    (decisions.md 2026-10-13). With refit enabled, epsilon is re-solved so the
+    Nasmyth variance between k_min = f_min_hz / speed and perturb's K_max
+    equals the observed variance over the same range, and FM is recomputed
+    over that range with the package's formula (Lueck 2022; num_ffts and the
+    number of vibration channels recovered by reproducing perturb's FM).
+    perturb's values are kept as epsilon_<probe>_perturb and FM_<probe>_perturb.
   * Probe exclusions from the config and, if segments.enabled, the segment QC.
   * var_resolved < shear_qc.var_resolved.min    flagged; dropped if `apply`.
   * Lueck (2022) FM > shear_qc.figure_of_merit.max  flagged; dropped if `apply`.
@@ -52,6 +61,8 @@ from pathlib import Path
 import netCDF4
 import numpy as np
 import pandas as pd
+from odas_tpw.scor160.nasmyth import nasmyth_grid
+from scipy.optimize import brentq
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import common  # noqa: E402
@@ -73,13 +84,18 @@ def read_var(ds, name) -> np.ndarray:
 def load(diss_dir: Path) -> dict:
     """All windows of one instrument: per-probe scalars, spectra (wavenumber) and grids."""
     rows, spec, nasm, kgrid = [], [], [], []
-    freq = None
+    freq, num_ffts = None, None
     for f in sorted(diss_dir.glob("*_prof*.nc")):
         with netCDF4.Dataset(f) as d:
             probes = [str(p) for p in d["probe"][:]]
             eps, fm, vr, kmax = (read_var(d, k) for k in ("epsilon", "FM", "var_resolved", "K_max"))
             s, n, K, F = (read_var(d, k) for k in ("spec_shear", "spec_nasmyth", "K", "F"))
             u, nu, P = read_var(d, "speed"), read_var(d, "nu"), read_var(d, "P_mean")
+            nf = 2 * (int(d.diss_length) // int(d.fft_length)) - 1     # as in perturb's pipeline
+        if num_ffts is None:
+            num_ffts = nf
+        if nf != num_ffts:
+            raise ValueError(f"{f.name}: FFT count differs from the instrument's first file")
         if freq is None:
             freq = F[:, 0]
         if not np.allclose(F, freq[:, None], equal_nan=True):
@@ -94,7 +110,82 @@ def load(diss_dir: Path) -> dict:
             nasm.append(n[:, :, w])
             kgrid.append(K[:, w])
     return {"df": pd.DataFrame(rows), "probes": probes, "spec": np.array(spec),
-            "nasmyth": np.array(nasm), "K": np.array(kgrid), "F": freq}
+            "nasmyth": np.array(nasm), "K": np.array(kgrid), "F": freq, "num_ffts": num_ffts}
+
+
+def lueck_fm(obs: np.ndarray, nas: np.ndarray, num_ffts: int, n_v: int) -> float:
+    """Lueck (2022) figure of merit, as in microstructure-tpw scor160/l4.py."""
+    r = obs / nas
+    r = r[r > 0]
+    if len(r) == 0:
+        return np.nan
+    sigma_ln = np.sqrt(1.25 * max(num_ffts - n_v, 1) ** (-7 / 9))
+    t_m = 0.8 + np.sqrt(1.56 / len(r))
+    return float(np.mean(np.abs(np.log(r))) / (t_m * sigma_ln))
+
+
+def vibration_channels(data: dict, probe: int = 0, n_check: int = 200) -> int:
+    """Number of Goodman vibration channels that reproduces perturb's FM (range 0 < k <= K_max)."""
+    df, K, p = data["df"], data["K"], data["probes"][probe]
+    eps, kmax, fm = (df[f"{v}_{p}"].to_numpy() for v in ("epsilon", "K_max", "FM"))
+    idx = np.flatnonzero(np.isfinite(eps) & np.isfinite(fm) & (eps < 1e-7))[:n_check]
+    for n_v in range(0, 5):
+        ours = []
+        for w in idx:
+            m = (K[w] > 0) & (K[w] <= kmax[w])
+            ours.append(lueck_fm(data["spec"][w, probe, m], data["nasmyth"][w, probe, m],
+                                 data["num_ffts"], n_v))
+        if np.nanmedian(np.abs(np.array(ours) / fm[idx] - 1)) < 0.02:
+            return n_v
+    raise ValueError("Could not reproduce perturb's FM; check the FM formula against the package")
+
+
+def refit(data: dict, f_min_hz: float, min_points: int, n_v: int) -> dict:
+    """Epsilon re-solved over f_min_hz/speed <= k <= K_max by matching Nasmyth variance; FM over that range."""
+    df, K = data["df"], data["K"]
+    u, nu = df["speed"].to_numpy(), df["nu"].to_numpy()
+    out = {}
+    for i, p in enumerate(data["probes"]):
+        kmax, e0 = df[f"K_max_{p}"].to_numpy(), df[f"epsilon_{p}"].to_numpy()
+        eps, fm = np.full(len(df), np.nan), np.full(len(df), np.nan)
+        for w in np.flatnonzero(np.isfinite(e0) & np.isfinite(kmax)):
+            k = K[w]
+            m = (k > 0) & (k >= f_min_hz / u[w]) & (k <= kmax[w])
+            if m.sum() < min_points:
+                continue
+            obs = data["spec"][w, i, m]
+            target = np.log(np.trapezoid(obs, k[m]))
+            f = lambda le: np.log(np.trapezoid(nasmyth_grid(10 ** le, nu[w], k[m]), k[m])) - target  # noqa: E731
+            lo, hi = np.log10(e0[w]) - 3, np.log10(e0[w]) + 1
+            if f(lo) * f(hi) > 0:
+                continue
+            eps[w] = 10 ** brentq(f, lo, hi, xtol=1e-4)
+            fm[w] = lueck_fm(obs, nasmyth_grid(eps[w], nu[w], k[m]), data["num_ffts"], n_v)
+        out[p] = {"epsilon": eps, "FM": fm}
+    return out
+
+
+def apply_refit(data: dict, cfg: dict) -> dict:
+    """Replace per-probe epsilon and FM by the refit (originals kept with suffix _perturb)."""
+    rc = cfg["refit"]
+    df = data["df"]
+    info = {"enabled": bool(rc["enabled"]), "num_ffts": data["num_ffts"]}
+    data["k_min_hz"] = 0.0
+    for p in data["probes"]:
+        df[f"epsilon_{p}_perturb"], df[f"FM_{p}_perturb"] = df[f"epsilon_{p}"], df[f"FM_{p}"]
+    if not rc["enabled"]:
+        return info
+    n_v = vibration_channels(data)
+    res = refit(data, rc["f_min_hz"], rc["min_points"], n_v)
+    for p in data["probes"]:
+        df[f"epsilon_{p}"], df[f"FM_{p}"] = res[p]["epsilon"], res[p]["FM"]
+    data["k_min_hz"] = rc["f_min_hz"]
+    info.update({"n_vibration_channels": n_v, "f_min_hz": rc["f_min_hz"],
+                 "unfit": {p: int((np.isfinite(df[f"epsilon_{p}_perturb"]) & ~np.isfinite(df[f"epsilon_{p}"])).sum())
+                           for p in data["probes"]},
+                 "median_ratio_refit_perturb": {p: float(np.nanmedian(df[f"epsilon_{p}"] / df[f"epsilon_{p}_perturb"]))
+                                                for p in data["probes"]}})
+    return info
 
 
 def noise_spectra(data: dict, base_ok: np.ndarray, cfg: dict) -> dict:
@@ -116,7 +207,7 @@ def window_floor(data: dict, noise: dict) -> dict:
     out = {}
     for i, p in enumerate(data["probes"]):
         kmax = df[f"K_max_{p}"].to_numpy()
-        m = (K > 0) & (K <= kmax[:, None])
+        m = (K > 0) & (K <= kmax[:, None]) & (K >= data.get("k_min_hz", 0.0) / u[:, None])
         obs = np.where(m, data["spec"][:, i, :], 0.0)
         nk = np.where(m, noise[p]["spectrum"][None, :] * u[:, None], 0.0)   # noise on each window's k grid
         with np.errstate(invalid="ignore", divide="ignore"):
@@ -303,7 +394,8 @@ def gallery_figure(name: str, r: dict, gal: dict, path: Path, foot: str) -> None
             pick = [cand[c] for c in rng.choice(total, min(gal["per_panel"], total), replace=False)] if total else []
             for c, (w, pi) in zip(GALLERY_COLORS, pick):
                 p = data["probes"][pi]
-                K, s, n = data["K"][w], data["spec"][w, pi], data["nasmyth"][w, pi]
+                K, s = data["K"][w], data["spec"][w, pi]
+                n = nasmyth_grid(df[f"epsilon_{p}"].iloc[w], df["nu"].iloc[w], K)
                 ax.loglog(K[1:], s[1:], color=c, lw=0.9)
                 ax.loglog(K[1:], n[1:], color=c, lw=0.8, ls=":")
                 ax.loglog(K[1:], (r["noise"][p]["spectrum"] * u[w])[1:], color=c, lw=0.6, ls="--", alpha=0.7)
@@ -338,6 +430,7 @@ def run(ctx: dict) -> None:
     results = {}
     for name, _inst in common.instruments(config):
         data = load(common.single_dir(ctx["run_dir"] / "convert" / name, "diss"))
+        refit_info = apply_refit(data, cfg)
         seg = pd.read_csv(ctx["run_dir"] / "segments" / f"segments_{name}.csv")
         df, noise, counts = qc(data, seg, cfg, seg_enabled)
         df.insert(0, "instrument", name)
@@ -346,6 +439,7 @@ def run(ctx: dict) -> None:
             .to_csv(out / f"noise_spectrum_{name}.csv", index=False, float_format="%.6g")
         k = df["keep"]
         deep = k & (df["P_mean"] > 150)
+        counts["refit"] = refit_info
         counts["noise_windows"] = {p: v["windows"] for p, v in noise.items()}
         counts["noise_window_epsilon_max"] = {p: v["epsilon_max"] for p, v in noise.items()}
         counts["floor_median_w_kg"] = float(df.loc[k, "epsilon_floor"].median())
