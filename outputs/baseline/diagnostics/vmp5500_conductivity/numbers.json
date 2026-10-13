@@ -1,6 +1,6 @@
 {
-  "provenance": "spice_microstructure git 3a3c860b7605d17138835d31e7afb18cec570919; config sha256 7a0db3ce257a; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)",
-  "created_utc": "2026-10-13T15:54:26+00:00",
+  "provenance": "spice_microstructure git 985fae000dd542a93a23afd98324100701ee4313; config sha256 b2d3f9107c33; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)",
+  "created_utc": "2026-10-13T16:10:25+00:00",
   "profiles": {
     "vmp5500": 44,
     "vmp250": 110
@@ -74,6 +74,40 @@
   "sbe4": {
     "serial": "4076",
     "cal_date": "2026-02-19"
+  },
+  "response": {
+    "casts": 40,
+    "excluded": "SPC_042 and SPC_061",
+    "separation_m": 1.87,
+    "sbe3_tau_median": 2.0,
+    "sbe3_tau_iqr": [
+      2.0,
+      3.0
+    ],
+    "sbe4_tau_median": 6.0,
+    "sbe4_tau_iqr": [
+      4.0,
+      6.0
+    ],
+    "sbe4_delay_median": 0.25,
+    "misfit": [
+      0.29,
+      0.15
+    ],
+    "bias": [
+      0.176,
+      0.006
+    ],
+    "offset_matched_median": 0.024,
+    "early": {
+      "dCdt": 0.0093,
+      "bias": 0.1
+    },
+    "late": {
+      "dCdt": 0.0241,
+      "bias": 0.27
+    },
+    "corr_bias_rate": 0.42
   },
   "sbe3": {
     "serial": "5621",
