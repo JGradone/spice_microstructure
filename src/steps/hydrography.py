@@ -119,6 +119,8 @@ def bin_profile(depth, x, edges):
 def fill(x: np.ndarray) -> np.ndarray:
     ok = np.isfinite(x)
     out = x.copy()
+    if ok.sum() < 2:
+        return out
     out[~ok] = np.interp(np.flatnonzero(~ok), np.flatnonzero(ok), x[ok])
     return out
 
@@ -154,6 +156,8 @@ def own_ts_profile(d, lat: float, lon: float, ct_off: float, ms_off: float,
     t_cell = match_to_cell(t_sbe, fs, float(m["delay_s"]), float(m["tau_s"]))
     sa_m = gsw.SA_from_SP(gsw.SP_from_C(c_sbe, t_cell, p_ct), p_ct, lon, lat)
     nodes = ts_relation(gsw.CT_from_t(sa_m, t_sbe, p_ct), sa_m, cfg["bin_degC"], cfg["smooth_bins"])
+    if len(nodes[0]) < 2 or not np.isfinite(t_fp).any():  # no usable Sea-Bird or FP07 data
+        return {"P_tip": p_tip, "CT": np.full_like(P, np.nan), "SA": np.full_like(P, np.nan), "fs": fs}
     interp = lambda ct: np.interp(ct, *nodes, left=np.nan, right=np.nan)  # noqa: E731
     ct = gsw.CT_from_t(np.nanmedian(sa_m), t_fp, p_tip)
     for _ in range(2):                                # SA depends weakly on CT_from_t's SA
