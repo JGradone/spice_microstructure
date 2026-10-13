@@ -40,3 +40,5 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+# QC explorer data (embedded in qc_explorer.html)
+outputs/**/qc_explorer_data.json
