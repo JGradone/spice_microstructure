@@ -1,0 +1,16 @@
+note: spice_microstructure patch step; spice_microstructure git 68781f5ab86e417d9bdeb88bfa74c16acc89002f;
+  config sha256 bfc12c412439; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)
+author: Joe
+channels:
+  T1:
+    sn: T3306
+  T2:
+    sn: T3308
+  sh1:
+    cal_date: '2026-04-07'
+    sens: '0.1215'
+    sn: M3464
+  sh2:
+    cal_date: '2023-04-12'
+    sens: '0.1134'
+    sn: M2662

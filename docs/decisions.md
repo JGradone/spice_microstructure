@@ -386,3 +386,28 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   | At floor | 9% | 10% |
 
   The floor also falls, because the noise spectrum below 1 Hz is excluded.
+
+## 2026-10-13: Upper integration limit (K_max) test — keep perturb's K_max
+
+`scripts/test_shear_kmax.py` (`epsilon_shear/kmax_test/`). With the 1 Hz refit, the spectra rise above Nasmyth toward K_max: about 2× on the VMP250 and 2.7× on the VMP5500 at epsilon 1e-10–1e-9. Is that noise inside the fit range?
+
+* **Quiet-window noise spectrum as the criterion: not usable.** It still holds low-epsilon turbulence at low wavenumbers, so a "spectrum < 2× noise" limit triggers just above 1 Hz. On the VMP250, 56% of windows could not be fitted and the rest kept about 9 points.
+* **Flat electronic floor:** median of the quiet-window spectrum over 20–40 Hz (`test_white_band_hz`).
+
+  | Probe | Floor (s⁻²/Hz) |
+  |---|---|
+  | VMP250 sh1 | 1.5e-7 |
+  | VMP250 sh2 | 1.7e-8 |
+  | VMP5500 sh1 | 1.6e-8 |
+  | VMP5500 sh2 | 4.7e-8 |
+
+  A spectrum-vs-floor limit at 2× or 3× never binds (median epsilon unchanged), and subtracting the floor changes epsilon by under 3%. The excess near K_max is not electronic noise.
+* **Not vibration either.** The upper-end excess (mean ln obs/Nasmyth over 0.7–1 K_max) has Spearman correlation −0.13 (VMP250) and −0.21 (VMP5500) with the accelerometer ratio, the opposite sign to contamination. It decreases slowly with epsilon (−0.22, −0.31) and Re_b (median 0.98 at Re_b < 3 to 0.63 at Re_b > 1000, VMP5500), and persists at all Re_b. It is a systematic shape difference from Nasmyth at low epsilon. Possible contributors: perturb's K_max sits at the spectral minimum where the spectrum turns up, and weak, anisotropic turbulence.
+* **Sensitivity**, refit with the upper limit at a fraction of K_max:
+
+  | Upper limit | VMP250 median / 150–550 mean | VMP5500 median / 150–550 mean |
+  |---|---|---|
+  | 0.7 K_max | 0.94 / 0.97 | 0.82 / 0.90 |
+  | 0.5 K_max | 0.88 / 1.01 | 0.71 / 0.85 |
+
+* **Decision:** keep perturb's K_max. There is no noise-based criterion for a lower limit, and pulling it in would just fit a different part of a non-Nasmyth shape. Carry it as a structural uncertainty in low-epsilon shear estimates: about 5% (VMP250) and 10–20% (VMP5500), in the direction of lower epsilon.
