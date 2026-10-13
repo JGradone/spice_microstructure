@@ -140,20 +140,30 @@ def vibration_channels(data: dict, probe: int = 0, n_check: int = 200) -> int:
     raise ValueError("Could not reproduce perturb's FM; check the FM formula against the package")
 
 
-def refit(data: dict, f_min_hz: float, min_points: int, n_v: int) -> dict:
-    """Epsilon re-solved over f_min_hz/speed <= k <= K_max by matching Nasmyth variance; FM over that range."""
+def refit(data: dict, f_min_hz: float, min_points: int, n_v: int,
+          k_upper: dict | None = None, subtract: dict | None = None) -> dict:
+    """Epsilon re-solved over f_min_hz/speed <= k <= K_max by matching Nasmyth variance; FM over that range.
+
+    k_upper[probe]: optional per-window upper limit (cpm) replacing K_max where smaller.
+    subtract[probe]: optional noise frequency spectrum subtracted before the fit."""
     df, K = data["df"], data["K"]
     u, nu = df["speed"].to_numpy(), df["nu"].to_numpy()
     out = {}
     for i, p in enumerate(data["probes"]):
         kmax, e0 = df[f"K_max_{p}"].to_numpy(), df[f"epsilon_{p}"].to_numpy()
         eps, fm = np.full(len(df), np.nan), np.full(len(df), np.nan)
+        if k_upper is not None:
+            kmax = np.fmin(kmax, k_upper[p])
         for w in np.flatnonzero(np.isfinite(e0) & np.isfinite(kmax)):
             k = K[w]
             m = (k > 0) & (k >= f_min_hz / u[w]) & (k <= kmax[w])
             if m.sum() < min_points:
                 continue
             obs = data["spec"][w, i, m]
+            if subtract is not None:
+                obs = np.maximum(obs - subtract[p][m] * u[w], 0.0)
+                if not obs.any():
+                    continue
             target = np.log(np.trapezoid(obs, k[m]))
             f = lambda le: np.log(np.trapezoid(nasmyth_grid(10 ** le, nu[w], k[m]), k[m])) - target  # noqa: E731
             lo, hi = np.log10(e0[w]) - 3, np.log10(e0[w]) + 1
@@ -161,7 +171,7 @@ def refit(data: dict, f_min_hz: float, min_points: int, n_v: int) -> dict:
                 continue
             eps[w] = 10 ** brentq(f, lo, hi, xtol=1e-4)
             fm[w] = lueck_fm(obs, nasmyth_grid(eps[w], nu[w], k[m]), data["num_ffts"], n_v)
-        out[p] = {"epsilon": eps, "FM": fm}
+        out[p] = {"epsilon": eps, "FM": fm, "K_max": kmax}
     return out
 
 
