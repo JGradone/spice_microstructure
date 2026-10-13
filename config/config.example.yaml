@@ -271,6 +271,7 @@ shear_qc:
     min_points: 5                 # wavenumber points needed in the refit range, else no estimate
     test_f_min_hz: [0.0, 0.5, 1.0, 2.0]   # scripts/test_shear_fmin.py; 0.0 must reproduce perturb
     test_noise_ratio: [2.0, 3.0]  # scripts/test_shear_kmax.py: upper limit where spectrum < ratio x noise
+    test_white_band_hz: [20.0, 40.0]   # flat noise level = median of the quiet-window spectrum in this band
   noise_floor:
     method: quietest_windows      # noise spectrum = median frequency spectrum of the quietest windows
     quantile: 0.02                # quietest 2% of windows (per instrument and probe, segment-QC passed)

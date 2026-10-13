@@ -7,9 +7,12 @@ with these upper limits (per probe and window):
   r=<x>      min(K_max, first k above the cutoff where the observed spectrum,
              smoothed over 3 bins, falls below x times the noise spectrum);
              x from shear_qc.refit.test_noise_ratio
-  subtract   perturb's K_max, noise spectrum subtracted first (lower bracket:
-             the noise spectrum is an upper bound on the noise)
-The noise spectrum is the epsilon_shear step's (noise_spectrum_<instrument>.csv).
+  subtract   perturb's K_max, noise subtracted first (lower bracket)
+Two noise models: `quiet` is the epsilon_shear step's noise spectrum
+(noise_spectrum_<instrument>.csv; median of the quietest windows, which still
+holds low-epsilon turbulence at low wavenumbers), and `white` is its flat
+high-frequency plateau (median over shear_qc.refit.test_white_band_hz) taken as
+constant in frequency.
 Reported for windows below 150 dbar: median ratio to `perturb` by epsilon
 decade, residual ln(observed/Nasmyth) along k/K_used for epsilon 1e-10-1e-9,
 median points in the fit, unfit fraction, mean epsilon over 150-550 dbar.
@@ -92,27 +95,34 @@ def main() -> int:
     ps.apply()
     names = [n for n, _ in common.instruments(config)]
     fig, axes = plt.subplots(1, len(names), figsize=(6.8 * len(names), 4.8), squeeze=False)
-    colors = [ps.MUTED, ps.BLUE, ps.AQUA, ps.ORANGE, ps.RED]
+    colors = [ps.MUTED, ps.BLUE_RAMP[2], ps.BLUE_RAMP[4], ps.BLUE_RAMP[6], ps.ORANGE, ps.RED, ps.ORANGE_RAMP[6]]
     summary = {"f_min_hz": f_min}
     mids = (XB[:-1] + XB[1:]) / 2
     for j, name in enumerate(names):
         data = load(common.single_dir(run_dir / "convert" / name, "diss"))
         n_v = vibration_channels(data)
         nz = pd.read_csv(run_dir / "epsilon_shear" / f"noise_spectrum_{name}.csv")
-        noise = {p: nz[f"noise_{p}"].to_numpy() for p in data["probes"]}
+        lo, hi = rc["test_white_band_hz"]
+        fb = (nz["frequency_hz"] >= lo) & (nz["frequency_hz"] < hi)
+        models = {"quiet": {p: nz[f"noise_{p}"].to_numpy() for p in data["probes"]},
+                  "white": {p: np.full(len(nz), float(nz.loc[fb, f"noise_{p}"].median())) for p in data["probes"]}}
         df = data["df"]
         deep = (df["P_mean"] > 150).to_numpy()
         band = deep & (df["P_mean"] < 550).to_numpy()
         variants = {"perturb": refit(data, f_min, rc["min_points"], n_v)}
-        for r in rc["test_noise_ratio"]:
-            variants[f"r={r:g}"] = refit(data, f_min, rc["min_points"], n_v,
-                                         k_upper=noise_limit(data, noise, float(r), f_min))
-        variants["subtract"] = refit(data, f_min, rc["min_points"], n_v, subtract=noise)
+        for mname, noise in models.items():
+            for r in rc["test_noise_ratio"]:
+                variants[f"{mname} r={r:g}"] = refit(data, f_min, rc["min_points"], n_v,
+                                                     k_upper=noise_limit(data, noise, float(r), f_min))
+            variants[f"{mname} subtract"] = refit(data, f_min, rc["min_points"], n_v, subtract=noise)
+        s_noise = {p: float(v[0]) for p, v in models["white"].items()}
         base = variants["perturb"]
-        s = summary[name] = {}
+        s = summary[name] = {"white_noise_level_s-2_per_Hz": s_noise}
         p0 = data["probes"][0]
         sel = deep & (base[p0]["epsilon"] >= 1e-10) & (base[p0]["epsilon"] < 1e-9)
         for c, (lab, res) in zip(colors, variants.items()):
+            if lab.startswith("quiet r"):
+                continue
             ratios, e_band = [], []
             for p in data["probes"]:
                 e0, e1 = base[p]["epsilon"], res[p]["epsilon"]
