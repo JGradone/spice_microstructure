@@ -18,6 +18,9 @@
       "policy": "min"
     },
     "combine": "geometric",
+    "epsilon_T": {
+      "k_max_ratio_min": 1.6
+    },
     "gallery": {
       "per_panel": 5,
       "seed": 1
@@ -46,6 +49,21 @@
         "T2": 306.5537113237127
       },
       "probe_ratio_median_below_150": 1.0049975752928786,
+      "epsilon_T_resolved_fraction_below_150": 0.3752,
+      "epsilon_T_vs_shear_below_150_resolved": {
+        "Tu < 45 (not finger)": {
+          "n": 88,
+          "median_ratio": 0.7355091639053584
+        },
+        "Tu 45-72": {
+          "n": 662,
+          "median_ratio": 0.9938517352010191
+        },
+        "Tu 72-90": {
+          "n": 985,
+          "median_ratio": 1.2694270326359178
+        }
+      },
       "epsilon_T_vs_shear_below_150": {
         "Tu < 45 (not finger)": {
           "n": 259,
@@ -94,6 +112,21 @@
         "T2": 67.97468171389464
       },
       "probe_ratio_median_below_150": 1.0422646250013252,
+      "epsilon_T_resolved_fraction_below_150": 0.524,
+      "epsilon_T_vs_shear_below_150_resolved": {
+        "Tu < 45 (not finger)": {
+          "n": 493,
+          "median_ratio": 0.8915505814891036
+        },
+        "Tu 45-72": {
+          "n": 2169,
+          "median_ratio": 1.0485983884608157
+        },
+        "Tu 72-90": {
+          "n": 1283,
+          "median_ratio": 1.8141551299160108
+        }
+      },
       "epsilon_T_vs_shear_below_150": {
         "Tu < 45 (not finger)": {
           "n": 894,

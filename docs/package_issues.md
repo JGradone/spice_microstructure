@@ -70,14 +70,20 @@ Before sending, recheck each Likely or Question entry against the current upstre
 * Reproduce: `outputs/fft2_diss8/thermistor/figures/spectra_gallery_<instrument>.png` (observed against `spec_noise`).
 * decisions.md: 2026-10-13, thermistor step (pending).
 
-## 5. epsilon_T about 1.8× shear epsilon outside finger water, with either fit method (Question)
+## 5. epsilon_T is badly biased where the Batchelor roll-off is not resolved; the soft-QC K_max/kB limit of 0.5 is too lenient (Question)
 
-* With `chi.use_epsilon: false` and `fit_method: iterative`, epsilon_T exceeds shear epsilon (shear above its noise floor, below 150 dbar) by a median 1.6–1.8×. That holds even where the fit ends at the noise floor, and outside finger-favourable water (Turner < 45°: 2.0 VMP-250, 1.9 VMP-5500).
-* The larger excesses (up to 4–9×) are in finger-favourable windows and may be physical (finger-scale variance).
-* MLE (`fit_method: mle`, 2 s / 8 s windows) changes little against iterative, as median MLE/iterative ratios: chi 1.07–1.08, epsilon_T 0.94–0.97, kB 0.99. The offset persists: epsilon_T/shear outside finger water is 1.86 (VMP-250) and 1.80 (VMP-5500).
-* Since epsilon_T is proportional to kB⁴, a ~16% kB bias explains 1.8×. The next suspect is the FP07 response correction (`fp07_model: single_pole` with the speed-dependent `lueck` tau); test run `fft2_diss8_mle_dp` uses `double_pole` with tau 3 ms.
-* Reproduce: `python src/steps/thermistor.py --config config/config.yaml --sensitivity fft2_diss8`.
-* decisions.md: 2026-10-13, thermistor step (pending).
+* Median epsilon_T/shear epsilon (shear ≥ 5× its floor, below 150 dbar, MLE, perturb's default single-pole response), by K_max/kB:
+
+  | K_max/kB | VMP-250 | VMP-5500 |
+  |---|---|---|
+  | 0.8–1.2 | 4.0 | 6.3 |
+  | 1.2–1.6 | 2.1 | 3.4 |
+  | > 1.6 | 0.90 | 1.19 |
+
+  Where the roll-off is resolved, epsilon_T agrees with shear. Below it, the fit extrapolates kB, and epsilon_T (∝ kB⁴) is biased high.
+* `_CHI_K_MAX_RATIO_MIN = 0.5` (`odas_tpw/chi/l4_chi.py`) admits windows where epsilon_T is 4–6× high. That may be acceptable for chi, but not for epsilon_T. Suggestion: a separate, stricter resolution limit (or flag) for epsilon_T, and documentation of this dependence.
+* Fit method is not the cause: median MLE/iterative ratios are chi 1.07–1.08, epsilon_T 0.94–0.97 and kB 0.99.
+* Reproduce: `outputs/fft2_diss8_mle/thermistor/` (columns `K_max_ratio`, `epsilon_T`, `epsilon_T_resolved`); `docs/decisions.md` 2026-10-13, "FP07 response model and where epsilon_T can be used".
 
 ## 6. `perturb` stage subcommands each run the whole pipeline (Request)
 
@@ -89,3 +95,20 @@ Before sending, recheck each Likely or Question entry against the current upstre
 * **Probe naming differs between products:** shear probes are `sh1`/`sh2` in the dissipation files, but thermistors are `T1_dT1`/`T2_dT2` in the chi files.
 * **No sensor vertical offsets:** a CT pair 1.57 m above the pressure port on the VMP-5500, and probe tips about 0.3 m below it. Every CT-derived quantity is placed at the pressure-sensor depth (Request).
 * **SBE4 conversion omits the CTcor/CPcor term** (`odas_tpw/rsi/channels.py`). It is negligible here, but worth a comment in the code.
+
+## 8. FP07 response-model choice changes chi by 30–45% (Question)
+
+* `chi.fp07_model: double_pole` (tau model `goto`, fixed 3 ms) against `single_pole` (tau model `lueck`, about 11–12 ms at 0.7–0.8 m/s), paired windows, double/single:
+
+  | Quantity | VMP-250 | VMP-5500 |
+  |---|---|---|
+  | kB | 0.79 | 0.82 |
+  | epsilon_T | 0.39 | 0.46 |
+  | chi | 0.57 | 0.68 |
+
+  Even where the roll-off is resolved (K_max/kB > 1.6), chi differs by 0.61–0.72.
+* The pairing of transfer function and tau model is implicit (`default_tau_model`). The two pairings are not two estimates of the same response: their tau values differ by about 4×. A user switching `fp07_model` silently changes tau as well.
+* Suggestion: expose the tau model as its own config key (`fp07_tau_model`, including `peterson`), warn that the choice is first-order for chi, and consider documenting a recommended in-situ calibration path (`fp07_tau_scale` anchored on shear epsilon where K_max/kB > 1.2).
+* Against shear epsilon in our data, the single-pole/`lueck` pairing is consistent where the roll-off is resolved (epsilon_T/shear 0.90–1.19), and the double-pole/`goto` pairing is 2–3× low.
+* Reproduce: runs `fft2_diss8_mle` and `fft2_diss8_mle_dp`, `outputs/<run>/thermistor/`.
+

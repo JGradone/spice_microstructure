@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-10-13T19:02:39+00:00",
+  "config_sha256": "85ea6b72034525d7a122fdded221f961903fea90c1f36fec101b5241afdb59dd",
+  "git_commit": "846dec541785a9f3f9238497fad6ad8bed95df05",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "config_path": "config/config.yaml",
+  "run": {
+    "name": "fft2_diss8_mle_dp",
+    "notes": "Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.",
+    "instruments": [
+      "vmp250",
+      "vmp5500"
+    ],
+    "sensitivity": {
+      "of": "baseline",
+      "set": {
+        "perturb.epsilon.fft_sec": 2.0,
+        "perturb.epsilon.diss_sec": 8.0,
+        "perturb.epsilon.overlap_sec": 4.0,
+        "perturb.chi.fft_sec": 2.0,
+        "perturb.chi.diss_sec": 8.0,
+        "perturb.chi.overlap_sec": 4.0,
+        "perturb.chi.fit_method": "mle",
+        "perturb.chi.fp07_model": "double_pole"
+      }
+    }
+  },
+  "steps": [
+    "cast_log",
+    "patch",
+    "convert",
+    "segments",
+    "hydrography",
+    "epsilon_shear",
+    "thermistor"
+  ],
+  "manifests_verified": true
+}

@@ -491,3 +491,41 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   * Within the iterative run, windows whose spectrum at K_max is still well above the high-k floor have 4–9× ratios, mostly in strong-finger water, which is consistent with finger-scale variance read as turbulence.
   * The ~1.8× offset outside finger water is not a fit-method effect. Epsilon_T scales as kB⁴, so a ~16% kB error (for example from the FP07 response correction) would explain it. Test run `fft2_diss8_mle_dp`: double-pole FP07 response with a fixed 3 ms tau (Goto et al. 2016).
 * epsilon_T is not used to replace shear epsilon until this offset is understood.
+
+## 2026-10-13: FP07 response model and where epsilon_T can be used
+
+* **Test run `fft2_diss8_mle_dp`:** double-pole FP07 response with a fixed tau of 3 ms (Goto et al. 2016), against perturb's default single-pole with the speed-dependent `lueck` tau (10 ms × U^-0.5, about 11–12 ms here). Paired windows below 150 dbar, double/single:
+
+  | Quantity | VMP250 | VMP5500 |
+  |---|---|---|
+  | kB | 0.79 | 0.82 |
+  | epsilon_T | 0.39 | 0.46 |
+  | chi | 0.57 | 0.68 |
+
+  The FP07 response model is a first-order uncertainty in chi (30–45%), much larger than the fit method (7–8%).
+* **Agreement with shear depends on how much of the Batchelor roll-off is resolved.** Median epsilon_T/shear, shear ≥ 5× its floor:
+
+  | K_max/kB | VMP250 single / double | VMP5500 single / double |
+  |---|---|---|
+  | 0.8–1.2 | 4.0 / 1.6 | 6.3 / 2.6 |
+  | 1.2–1.6 | 2.1 / 0.85 | 3.4 / 1.5 |
+  | > 1.6 | 0.90 / 0.34 | 1.19 / 0.51 |
+
+  * Where the roll-off is resolved, the single-pole model agrees with shear and the double-pole model is 2–3× low. Where it is not, the fit extrapolates kB and epsilon_T is biased high under either model.
+  * The earlier "1.8× offset" was a mix of the two.
+  * perturb's soft QC limit (K_max/kB ≥ 0.5) is far too permissive for epsilon_T.
+* **Decision:**
+  * Keep the single-pole response (shipboard and perturb default) in the analysis run.
+  * Use epsilon_T only where K_max/kB ≥ 1.6 (`chi_qc.epsilon_T.k_max_ratio_min`, flag `epsilon_T_resolved`). Below 150 dbar that is 38% of VMP250 and 52% of VMP5500 windows.
+  * epsilon_T is reported everywhere.
+* **Result where resolved** (`fft2_diss8_mle`), median epsilon_T/shear:
+
+  | Turner angle | VMP250 | VMP5500 |
+  |---|---|---|
+  | < 45° | 0.74 | 0.89 |
+  | 45–72° | 0.99 | 1.05 |
+  | 72–90° | 1.27 | 1.81 |
+
+  * At Re_b > 10 the two agree within about 1.5×.
+  * At Re_b < 3, epsilon_T exceeds shear in every regime, most in strong-finger water. This is consistent with weak turbulence or finger-scale variance not following the Kraichnan shape.
+* **Uncertainty carried forward:** chi depends on the FP07 response model by a factor of about 1.4–1.8. It is less where the roll-off is resolved (double/single 0.61–0.72 at K_max/kB > 1.6), but not negligible. Per-thermistor tau calibration (perturb `instruments.<SN>.fp07_tau_scale`, anchored where K_max/kB > 1.2 against shear epsilon) is a possible next refinement. It would tie epsilon_T to shear epsilon in the calibration windows.
