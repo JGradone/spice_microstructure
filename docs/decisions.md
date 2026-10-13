@@ -195,3 +195,5 @@ Dated record of methods choices and why they were made. Newest entries at the bo
   * The learned response does not help. Noise is unchanged at 0.069 g/kg, the offset grows to +0.092 g/kg, and N2 <= 0 reaches 46%. The spikes are not a consistent linear response, which is consistent with flushing of the unpumped cell that varies with the flow.
   * The running median removes the spikes visually (1 m scatter 0.069 -> 0.036 g/kg, partly by construction) but not the gradient problem. N2 <= 0 stays at 41% (10 m fits) and 30% (25 m fits), against 1.6% and 0.1% for the ship CTD, and R_rho stays near 1 against the ship's 1.67. A slower salinity wander over 5-20 m, not the spikes, is what corrupts N2.
 * Decision: no spike treatment in the pipeline; VMP5500 gradients keep the ship CTD T-S salinity. A running median is acceptable for display only, labelled as such.
+
+* 2026-10-13 follow-up: the display-only 5 m running median was tried in the cast stepper and dropped; it did not make the casts easier to judge. The stepper shows the unsmoothed lag-corrected salinity.
