@@ -29,6 +29,10 @@ Salinity source per instrument (instruments.<name>.salinity_source):
                the T-S relation averages that out while the FP07 keeps the
                native vertical resolution. S_z, R_rho and Turner then follow
                the T-S slope and are not independent of T_z.
+With a T-S derived salinity (ship_ctd_ts, own_ts), windows with T_z <= 0 are
+flagged ts_salinity_invalid: temperature inversions are mostly intrusions whose
+salinity compensates in density, which a T-S relation cannot represent, so N2,
+R_rho and Turner there are not reliable (decisions.md 2026-10-13).
 perturb's window-scale N2 and dTdz are not used (wrong for the VMP5500).
 
 Reads:  <run_dir>/convert/<instrument>/profiles_NN/*.nc (P, CT, SA, lat, lon;
@@ -415,6 +419,7 @@ def run(ctx: dict) -> None:
         wins = pd.concat(win_frames, ignore_index=True)
         wins["no_stratification"] = ~np.isfinite(wins["N2"])
         wins["N2_nonpositive"] = wins["N2"] <= 0
+        wins["ts_salinity_invalid"] = (source in ("ship_ctd_ts", "own_ts")) & ~(wins["T_z"] > 0)
         wins.to_csv(out / f"windows_{name}.csv", index=False, float_format="%.6g")
         station_profiles[name] = [f for f in meta["profile_file"] if f.split("_prof")[0] in station]
 
@@ -428,6 +433,7 @@ def run(ctx: dict) -> None:
             "windows": len(wins),
             "windows_without_stratification": int(wins["no_stratification"].sum()),
             "windows_N2_nonpositive": int(wins["N2_nonpositive"].sum()),
+            "windows_ts_salinity_invalid": int(wins["ts_salinity_invalid"].sum()),
             "validation_150_550m": {
                 "estimates": int(len(v)),
                 "N2_nonpositive_fraction": round(float((v["N2"] <= 0).mean()), 3),

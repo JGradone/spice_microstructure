@@ -25,7 +25,7 @@
       }
     },
     "vmp5500": {
-      "salinity_source": "ship_ctd_ts",
+      "salinity_source": "own_ts",
       "profiles": 46,
       "profiles_with_ship_ctd": 44,
       "sensor_offsets_m": {
@@ -33,17 +33,17 @@
         "microstructure": 0.3
       },
       "windows": 6749,
-      "windows_without_stratification": 3344,
-      "windows_N2_nonpositive": 247,
+      "windows_without_stratification": 736,
+      "windows_N2_nonpositive": 843,
       "validation_150_550m": {
         "estimates": 1804,
-        "N2_nonpositive_fraction": 0.071,
+        "N2_nonpositive_fraction": 0.169,
         "ship_N2_nonpositive_fraction": 0.014,
-        "N2_median_ratio": 1.044,
-        "N2_within_factor2": 0.627,
-        "T_z_median_ratio": 0.877,
-        "S_z_median_ratio": 0.775,
-        "R_rho_median": 1.671,
+        "N2_median_ratio": 1.121,
+        "N2_within_factor2": 0.56,
+        "T_z_median_ratio": 0.888,
+        "S_z_median_ratio": 0.674,
+        "R_rho_median": 1.723,
         "R_rho_ship_median": 1.584
       }
     }

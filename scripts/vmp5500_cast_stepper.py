@@ -4,12 +4,13 @@
 For every VMP5500 profile: conservative temperature and absolute salinity
 against depth, plus the T-S diagram, compared with the nearest ship CTD cast
 (within the hydrography step's match limits) and the nearest VMP250 profile
-(within 15 km and 12 h, reaching at least 100 m). VMP5500 temperature is
-the Sea-Bird SBE3; salinity is computed from the SBE4 conductivity with that
-temperature delayed and slowed to match the cell (config
-instruments.vmp5500.ct_match). Writes one PNG per cast, casts.json and a stepper
+(within 15 km and 12 h, reaching at least 100 m). VMP5500 temperature and
+salinity are the hydrography step's 1 m grid (salinity_source own_ts: FP07
+temperature, salinity from the cast's own T-S relation). Writes one PNG per cast, casts.json and a stepper
 page built from scripts/vmp5500_cast_stepper_template.html to
 <run_dir>/diagnostics/vmp5500_conductivity/casts/.
+
+Reads:  <run_dir>/hydrography/hydrography_vmp5500.nc, convert/ profiles (VMP250, positions)
 
 Usage:
     python scripts/vmp5500_cast_stepper.py --config config/config.yaml
@@ -26,6 +27,7 @@ from pathlib import Path
 import gsw
 import numpy as np
 import pandas as pd
+import xarray as xr
 from scipy.signal import lfilter
 
 REPO = Path(__file__).resolve().parents[1]
@@ -35,8 +37,7 @@ sys.path.insert(0, str(REPO / "src" / "steps"))
 import common  # noqa: E402
 import plotstyle as ps  # noqa: E402
 from hydrography import ShipCTD, bin_profile  # noqa: E402
-from diagnose_vmp5500_conductivity import (SHIP_COLOR, highpass, read_profile,  # noqa: E402
-                                           response_corrected)
+from diagnose_vmp5500_conductivity import SHIP_COLOR, highpass, read_profile  # noqa: E402
 import matplotlib.pyplot as plt  # noqa: E402
 
 TEMPLATE = REPO / "scripts" / "vmp5500_cast_stepper_template.html"
@@ -61,9 +62,7 @@ def nearest_vmp250(p, v250):
     return best
 
 
-def cast_stats(p, ship, match, edges, sa_key="SA", ct_key="CT"):
-    zc = (edges[:-1] + edges[1:]) / 2
-    sa, ct = bin_profile(p["z"], p[sa_key], edges), bin_profile(p["z"], p[ct_key], edges)
+def cast_stats(zc, ct, sa, ship, match):
     m = (zc > STATS_DEPTHS[0]) & (zc < STATS_DEPTHS[1]) & np.isfinite(sa)
     out = {"noise": float(np.nanstd(highpass(sa)[m])) if m.sum() > 20 else None, "offset": None}
     if match and m.sum() > 20:
@@ -71,10 +70,9 @@ def cast_stats(p, ship, match, edges, sa_key="SA", ct_key="CT"):
     return {k: v if v is not None and np.isfinite(v) else None for k, v in out.items()}
 
 
-def figure(name, p, ship, match, near250, v250, path, foot):
+def figure(name, p, grid, ship, match, near250, v250, path, foot):
     zmax = min(max(np.nanmax(p["z"]), 300), 1050)
-    edges = np.arange(0, zmax + 1, 1.0)
-    zc = (edges[:-1] + edges[1:]) / 2
+    zc, ct_r, sa_r = grid
     fig, axes = plt.subplots(1, 3, figsize=(12, 6.2), gridspec_kw={"width_ratios": [1, 1, 1.1]})
     ts_sel = lambda z: (z > 100) & (z < 550)  # noqa: E731
     lines = []
@@ -96,13 +94,12 @@ def figure(name, p, ship, match, near250, v250, path, foot):
         s = ts_sel(z2)
         axes[2].plot(sa2[s], ct2[s], color=ps.BLUE, lw=1.1)
         lines.append((ps.BLUE, f"VMP250 {near250[0][:9]} ({near250[2]:.1f} h, {near250[1]:.1f} km)"))
-    # VMP5500: response-corrected temperature and salinity only
-    ct_r, sa_r = bin_profile(p["z"], p["CT_resp"], edges), bin_profile(p["z"], p["SA_resp"], edges)
+    # VMP5500: hydrography grid (FP07 temperature, own T-S salinity)
     axes[0].plot(ct_r, zc, color=ps.ORANGE, lw=1.0, zorder=3)
     s = ts_sel(zc)
     axes[1].plot(sa_r, zc, color=ps.ORANGE, lw=1.0, zorder=3)
     axes[2].scatter(sa_r[s], ct_r[s], s=6, color=ps.ORANGE, linewidths=0, zorder=3)
-    lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (Sea-Bird T matched to C)"))
+    lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (FP07 T, own T–S salinity)"))
     axes[0].set_xlabel("Θ (°C)")
     axes[1].set_xlabel(r"$S_A$ (g kg$^{-1}$)")
     axes[2].set_xlabel(r"$S_A$ (g kg$^{-1}$), 100–550 m")
@@ -145,10 +142,11 @@ def main() -> int:
     load = lambda inst: {f.name[:-3]: read_profile(f, inst, off(inst)) for f in  # noqa: E731
                          sorted(common.single_dir(run_dir / "convert" / inst, "profiles").glob("*_prof*.nc"))}
     v55, v250 = load("vmp5500"), load("vmp250")
-    offs = config["instruments"]["vmp5500"].get("sensor_offsets_m", {})
-    ct_off = float(offs.get("ct", 0.0))
-    match_cfg = config["instruments"]["vmp5500"]["ct_match"]
-    params = {"delay": float(match_cfg["delay_s"]), "tau": float(match_cfg["tau_s"])}
+    hydro = xr.open_dataset(run_dir / "hydrography" / "hydrography_vmp5500.nc")
+    if hydro.attrs.get("salinity_source") != "own_ts":
+        raise SystemExit(f"hydrography_vmp5500.nc has salinity_source={hydro.attrs.get('salinity_source')}, expected own_ts")
+    row = {f[:-3]: i for i, f in enumerate(hydro["profile_file"].values)}
+    zgrid = hydro["depth"].values
     casts55 = pd.read_csv(run_dir / "cast_log" / "casts_vmp5500.csv").set_index("file")
 
     entries = []
@@ -158,13 +156,10 @@ def main() -> int:
         cast = casts55.loc[f"{name.split('_prof')[0]}.P"]
         match = ship.match(p["lat"], p["lon"], p["t0"])
         near = nearest_vmp250(p, v250)
-        edges = np.arange(0, np.nanmax(p["z"]) + 1, 1.0)
-        corr = response_corrected(p, ct_off, params["delay"], params["tau"])
-        p["SA_resp"], p["CT_resp"] = corr["SA"], corr["CT"]
-        stats = cast_stats(p, ship, match, edges)
-        stats_r = cast_stats(p, ship, match, edges, sa_key="SA_resp", ct_key="CT_resp")
+        grid = (zgrid, hydro["CT"].values[row[name]], hydro["SA_used"].values[row[name]])
+        stats_r = cast_stats(*grid, ship, match)
         png = out / f"{name}.png"
-        figure(name, p, ship, match, near, v250, png, foot)
+        figure(name, p, grid, ship, match, near, v250, png, foot)
         note = "" if pd.isna(cast.get("sealog_notes")) else str(cast["sealog_notes"])
         flag = " ".join(str(cast.get(k)) for k in ("excluded", "caution") if not pd.isna(cast.get(k)))
         entries.append({
@@ -174,11 +169,8 @@ def main() -> int:
             "station": cast.get("station") == "process_station",
             "ship": match, "vmp250": {"profile": near[0], "km": round(near[1], 1),
                                       "hours": round(near[2], 1)} if near else None,
-            "noise": None if stats["noise"] is None else round(stats["noise"], 3),
-            "offset": None if stats["offset"] is None else round(stats["offset"], 3),
             "noiseR": None if stats_r["noise"] is None else round(stats_r["noise"], 3),
             "offsetR": None if stats_r["offset"] is None else round(stats_r["offset"], 3),
-            "response": params,
             "notes": note, "flags": flag,
             "img": "data:image/png;base64," + base64.b64encode(png.read_bytes()).decode(),
         })
