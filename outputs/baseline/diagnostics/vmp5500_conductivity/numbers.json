@@ -1,0 +1,82 @@
+{
+  "provenance": "spice_microstructure git a5bda79cec94e0f74dfeb8afecfb833974109e02; config sha256 67d32c6ec771; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)",
+  "created_utc": "2026-10-13T01:09:40+00:00",
+  "profiles": {
+    "vmp5500": 44,
+    "vmp250": 110
+  },
+  "noise_median": {
+    "vmp5500": 0.0729,
+    "vmp250": 0.0025
+  },
+  "noise_ratio": 29,
+  "spike_fraction_median": {
+    "vmp5500": 0.1,
+    "vmp250": 0.0
+  },
+  "offset_median": {
+    "vmp5500": 0.153,
+    "vmp250": 0.0061
+  },
+  "offset_range_vmp5500": [
+    0.04,
+    0.51
+  ],
+  "early": {
+    "casts": "SPC_004\u2013SPC_043",
+    "noise_median": 0.06,
+    "offset_median": 0.11
+  },
+  "late": {
+    "casts": "SPC_044\u2013SPC_063",
+    "noise_median": 0.093,
+    "offset_median": 0.22
+  },
+  "split_median": {
+    "T": 0.0099,
+    "C": 0.0601
+  },
+  "lag_curve_range": {
+    "vmp5500": [
+      0.0752,
+      0.0801
+    ],
+    "vmp250": [
+      0.0046,
+      0.0103
+    ]
+  },
+  "n2_nonpositive": {
+    "own": 0.446,
+    "ts": 0.075,
+    "ship": 0.015
+  },
+  "gradient_scale_m": 10,
+  "n2_nonpositive_pct": {
+    "own": "45%",
+    "ts": "7%",
+    "ship": "2%"
+  },
+  "noise_speed_corr": 0.24,
+  "T_repeat_range": [
+    0.5,
+    0.55
+  ],
+  "C_repeat_first_last": [
+    0.29,
+    0.25
+  ],
+  "ts_cast_offsets": {
+    "SPC_014": 0.04,
+    "SPC_045": 0.51
+  },
+  "fig1_ship_hours": 1.39,
+  "sbe4": {
+    "serial": "4076",
+    "cal_date": "2026-02-19"
+  },
+  "sbe3": {
+    "serial": "5621",
+    "cal_date": "2026-03-25"
+  }
+}
