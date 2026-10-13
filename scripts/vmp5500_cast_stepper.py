@@ -4,7 +4,9 @@
 For every VMP5500 profile: conservative temperature and absolute salinity
 against depth, plus the T-S diagram, compared with the nearest ship CTD cast
 (within the hydrography step's match limits) and the nearest VMP250 profile
-(within 15 km and 12 h, reaching at least 100 m). Writes one PNG per cast, casts.json and a stepper
+(within 15 km and 12 h, reaching at least 100 m), plus VMP5500 salinity
+with a Lueck and Picklo (1990) thermal-mass correction (Morison et al. 1994
+flow-dependent parameters at each cast's fall speed) for comparison. Writes one PNG per cast, casts.json and a stepper
 page built from scripts/vmp5500_cast_stepper_template.html to
 <run_dir>/diagnostics/vmp5500_conductivity/casts/.
 
@@ -20,8 +22,10 @@ import json
 import sys
 from pathlib import Path
 
+import gsw
 import numpy as np
 import pandas as pd
+from scipy.signal import lfilter
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
@@ -55,9 +59,35 @@ def nearest_vmp250(p, v250):
     return best
 
 
-def cast_stats(p, ship, match, edges):
+def celltm(C, T, alpha, tau, fs=64.0):
+    """Lueck and Picklo (1990) thermal-mass correction (Sea-Bird celltm recursion).
+
+    C in mS/cm, T in degC from the SBE3; dC/dT = 1 + 0.006 (T - 20) mS/cm per degC."""
+    a = 2 * alpha / (tau ** -1 / fs + 2)
+    b = 1 - 2 * a / alpha
+    dT = np.r_[0.0, np.diff(T)]
+    ctm = lfilter([1.0], [1.0, b], a * (1 + 0.006 * (T - 20)) * dT)
+    return C + ctm
+
+
+def thermal_mass_sa(p):
+    """S_A with the thermal-mass correction, using Morison et al. (1994) flow-dependent
+    parameters for an unpumped SBE4 at this cast's median fall speed."""
+    descent = p["z"] > 20
+    v = float(np.nanmedian(p["W"][descent]))
+    alpha, tau = 0.0135 + 0.0264 / v, 7.1499 + 2.7858 / np.sqrt(v)
+    ok = np.isfinite(p["C"]) & np.isfinite(p["T"])
+    idx = np.arange(len(ok))
+    C = np.interp(idx, idx[ok], p["C"][ok])
+    T = np.interp(idx, idx[ok], p["T"][ok])
+    sp = gsw.SP_from_C(celltm(C, T, alpha, tau), p["T"], p["P"])
+    return gsw.SA_from_SP(sp, p["P"], p["lon"], p["lat"]), {"speed": round(v, 2), "alpha": round(alpha, 4),
+                                                            "tau": round(tau, 2)}
+
+
+def cast_stats(p, ship, match, edges, sa_key="SA"):
     zc = (edges[:-1] + edges[1:]) / 2
-    sa, ct = bin_profile(p["z"], p["SA"], edges), bin_profile(p["z"], p["CT"], edges)
+    sa, ct = bin_profile(p["z"], p[sa_key], edges), bin_profile(p["z"], p["CT"], edges)
     m = (zc > STATS_DEPTHS[0]) & (zc < STATS_DEPTHS[1]) & np.isfinite(sa)
     out = {"noise": float(np.nanstd(highpass(sa)[m])) if m.sum() > 20 else None, "offset": None}
     if match and m.sum() > 20:
@@ -96,6 +126,11 @@ def figure(name, p, ship, match, near250, v250, path, foot):
     s = ts_sel(zc)
     axes[2].scatter(sa[s], ct[s], s=5, color=ps.ORANGE, linewidths=0)
     lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (SBE3/SBE4)"))
+    sa_tm = bin_profile(p["z"], p["SA_tm"], edges)
+    axes[1].plot(sa_tm, zc, color=ps.AQUA, lw=0.9)
+    axes[2].scatter(sa_tm[s], ct[s], s=4, color=ps.AQUA, linewidths=0)
+    tm = p["tm_params"]
+    lines.append((ps.AQUA, f"VMP5500 thermal-mass corrected (α {tm['alpha']:.3f}, τ {tm['tau']:.1f} s)"))
     axes[0].set_xlabel("Θ (°C)")
     axes[1].set_xlabel(r"$S_A$ (g kg$^{-1}$)")
     axes[2].set_xlabel(r"$S_A$ (g kg$^{-1}$), 100–550 m")
@@ -147,7 +182,9 @@ def main() -> int:
         match = ship.match(p["lat"], p["lon"], p["t0"])
         near = nearest_vmp250(p, v250)
         edges = np.arange(0, np.nanmax(p["z"]) + 1, 1.0)
+        p["SA_tm"], p["tm_params"] = thermal_mass_sa(p)
         stats = cast_stats(p, ship, match, edges)
+        stats_tm = cast_stats(p, ship, match, edges, sa_key="SA_tm")
         png = out / f"{name}.png"
         figure(name, p, ship, match, near, v250, png, foot)
         note = "" if pd.isna(cast.get("sealog_notes")) else str(cast["sealog_notes"])
@@ -161,6 +198,9 @@ def main() -> int:
                                       "hours": round(near[2], 1)} if near else None,
             "noise": None if stats["noise"] is None else round(stats["noise"], 3),
             "offset": None if stats["offset"] is None else round(stats["offset"], 3),
+            "noiseTM": None if stats_tm["noise"] is None else round(stats_tm["noise"], 3),
+            "offsetTM": None if stats_tm["offset"] is None else round(stats_tm["offset"], 3),
+            "thermalMass": p["tm_params"],
             "notes": note, "flags": flag,
             "img": "data:image/png;base64," + base64.b64encode(png.read_bytes()).decode(),
         })

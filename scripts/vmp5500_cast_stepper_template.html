@@ -53,6 +53,8 @@ select { min-width: 0; max-width: 100%; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--chip); color: var(--ink); }
 .chip.bad { color: var(--bad); } .chip.ok { color: var(--ok); }
+.tm { display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 8px; }
+.tm > .k { color: var(--muted); font-size: 12px; }
 .notes { font-size: 13px; color: var(--ink); border-top: 1px solid var(--rule); padding-top: 8px; }
 .notes .k { color: var(--muted); display: block; font-size: 12px; }
 .guide { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 8px; }
@@ -61,7 +63,7 @@ select { min-width: 0; max-width: 100%; }
 
 <div class="wrap">
   <h1>VMP5500 cast comparisons</h1>
-  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. Noise and offset are measured over 150–500 m.</p>
+  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. Noise and offset are measured over 150–500 m. The aqua series applies a thermal-mass correction (Lueck and Picklo 1990, Morison et al. 1994 parameters at each cast's fall speed); across all casts it trims the salty offset by 10–20% and leaves the noise unchanged.</p>
 
   <div class="bar" role="toolbar" aria-label="Step through casts">
     <button type="button" id="prev" aria-label="Previous cast">← Previous</button>
@@ -83,6 +85,12 @@ select { min-width: 0; max-width: 100%; }
       <div class="row"><span class="k">VMP250</span><span class="v" id="v250"></span></div>
       <div class="row"><span class="k">S noise</span><span class="v" id="noise"></span></div>
       <div class="row"><span class="k">S offset</span><span class="v" id="offset"></span></div>
+      <div class="tm">
+        <span class="k">With thermal-mass correction</span>
+        <div class="row"><span class="k">S noise</span><span class="v" id="noiseTM"></span></div>
+        <div class="row"><span class="k">S offset</span><span class="v" id="offsetTM"></span></div>
+        <div class="row"><span class="k">α, τ</span><span class="v" id="tmParams"></span></div>
+      </div>
       <div class="notes" id="notesBox"><span class="k">Sealog notes and flags</span><span id="notes"></span></div>
       <p class="guide">For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
     </aside>
@@ -118,6 +126,9 @@ const META = /*__META__*/null;
     $("v250").textContent = c.vmp250 ? `${c.vmp250.profile.slice(0, 9)} · ${c.vmp250.hours} h · ${c.vmp250.km} km` : "none within 15 km, 12 h";
     $("noise").textContent = c.noise === null ? "–" : `${c.noise.toFixed(3)} g/kg`;
     $("offset").textContent = c.offset === null ? "–" : `${fmt(c.offset, 3)} g/kg`;
+    $("noiseTM").textContent = c.noiseTM === null ? "–" : `${c.noiseTM.toFixed(3)} g/kg`;
+    $("offsetTM").textContent = c.offsetTM === null ? "–" : `${fmt(c.offsetTM, 3)} g/kg`;
+    $("tmParams").textContent = `${c.thermalMass.alpha.toFixed(3)}, ${c.thermalMass.tau.toFixed(1)} s at ${c.thermalMass.speed} m/s`;
     const chips = [];
     if (c.station) chips.push(`<span class="chip">Process station</span>`);
     if (c.noise !== null) chips.push(c.noise > 0.05 ? `<span class="chip bad">Noisy salinity</span>` : `<span class="chip ok">Noise under 0.05</span>`);
