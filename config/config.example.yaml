@@ -286,8 +286,10 @@ hydrography:
     smooth_bins: 3                # running mean over bins (~1.5 degC); sets the R_rho resolution
     ship_fallback:                # replace T-S bins that disagree with the matched ship CTD cast
       enabled: true
-      max_diff_g_kg: 0.05         # |own - ship| T-S bin difference that switches the bin to ship values
-      cast_fail_fraction: 0.5     # more bins failing than this: whole profile on the ship relation
+      max_diff_g_kg: 0.15         # |own - ship| per T-S bin that switches it to ship values; real cast-to-cast
+                                  # differences reach ~0.05-0.1 (decisions.md 2026-10-13)
+      cast_check_max_degC: 13.0   # whole-profile check uses bins colder than this (staircase range)
+      cast_fail_median_g_kg: 0.15 # median |own - ship| there above this: bad cell, whole profile on ship T-S
   # Perturb's window-scale N2 and dTdz are not used: for the VMP5500 they are
   # ~4.5x and ~0.4x the TEOS-10 values.
 

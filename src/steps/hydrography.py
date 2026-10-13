@@ -33,9 +33,10 @@ Salinity source per instrument (instruments.<name>.salinity_source):
                CTD cast is matched, each T-S bin is compared with the ship's
                relation (same bins and smoothing); bins differing by more than
                max_diff_g_kg take the ship value and the merged relation is
-               smoothed again. If more than cast_fail_fraction of the bins
-               fail, the whole profile uses the ship relation and is NaN
-               outside its temperature range. SA_from_ship records the
+               smoothed again. If the median difference over bins colder than
+               cast_check_max_degC exceeds cast_fail_median_g_kg (a bad
+               conductivity cell), the whole profile uses the ship relation
+               and is NaN outside its temperature range. SA_from_ship records the
                fraction of each 1 m bin on ship values.
 With a T-S derived salinity (ship_ctd_ts, own_ts), windows with T_z <= 0 are
 flagged ts_salinity_invalid: temperature inversions are mostly intrusions whose
@@ -184,7 +185,8 @@ def ship_fallback(nodes, ship_nodes, cfg: dict) -> dict:
     checked = np.isfinite(diff)
     bad = checked & (np.abs(diff) > fb["max_diff_g_kg"])
     frac = float(bad.sum() / checked.sum()) if checked.any() else 0.0
-    if frac > fb["cast_fail_fraction"]:
+    cold = checked & (ct < fb["cast_check_max_degC"])
+    if cold.any() and np.median(np.abs(diff[cold])) > fb["cast_fail_median_g_kg"]:
         return {"nodes": ship_nodes, "bad_nodes": None, "failed": True, "bad_fraction": frac}
     merged = pd.Series(np.where(bad, ship_sa, sa)).rolling(
         cfg["smooth_bins"], center=True, min_periods=1).mean().to_numpy()
