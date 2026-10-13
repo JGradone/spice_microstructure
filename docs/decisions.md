@@ -257,3 +257,28 @@ Baseline run, 150–550 m, compared with the matched ship CTD cast at 10 m smoot
   * It is worst in the main thermocline, where the cell's errors across steep gradients bias the bin medians (SPC_031: ~0.8 g/kg too fresh at 18–20 °C).
   * SPC_041 and SPC_045 (and partly SPC_044) have bad conductivity throughout (0.26–0.64 g/kg off).
 * Open: a per-cast or per-band QC flag against the ship T–S, or a ship_ctd_ts fallback for bad casts. Not yet decided.
+
+## 2026-10-13: Ship T–S fallback for own_ts
+
+Config `hydrography.own_ts.ship_fallback`:
+
+* For each 0.5 °C T–S bin, the cast's relation is compared with the matched ship cast's relation (same bins and smoothing).
+* Bins differing by more than 0.15 g/kg take the ship value. The correction, not the whole relation, ramps over 3 bins, so untouched bins keep their own values.
+* If the median difference over bins colder than 13 °C exceeds 0.15 g/kg, the whole profile uses the ship relation and is NaN beyond its temperature range.
+* Outputs: `SA_from_ship` (grid and windows), `ts_bad_fraction`, `ts_ship_only`.
+
+Threshold choice: |own − ship| per bin has 90th percentiles of 0.11 (< 10 °C), 0.24 (10–13 °C), 0.22 (13–16 °C) and 0.41 g/kg (> 16 °C). A 0.05 threshold sent 40 of 44 casts to the ship, because real cast-to-cast differences are that large. The first version re-smoothed the whole merged relation, which flattened T–S slopes everywhere (R_rho 1.87); fixed.
+
+Result:
+
+* Whole profiles on the ship relation: SPC_041, SPC_045, SPC_018_prof002 and SPC_049_prof002.
+* Windows mostly on ship values: 594 of 6749, mainly the thermocline (> 16 °C).
+* Stepper per cast, 150–500 m: median 1 m noise 0.001 g/kg, median offset +0.018 g/kg, 4 of 42 casts above 0.05.
+* Against the ship, 150–550 m, T_z > 0:
+
+  | Salinity from | Median R_rho (ship) | S_z ratio to ship |
+  |---|---|---|
+  | Own T–S bins | 1.80 (1.63) | 0.76 |
+  | Ship bins | 1.66 (1.66) | 0.93 |
+
+Remaining issue: the slope of the own T–S relation is noisy from cast to cast. In 9 casts with a VMP250 profile nearby, the 10.5–13 °C slope dSA/dCT was 0.12–0.29 (median 0.158) for the cast's own relation, against 0.14–0.17 (median 0.166) for the ship. The VMP250 median, 0.167, agrees with the ship. R_rho depends directly on this slope, so own-relation R_rho carries roughly ±30% per-cast scatter even where offsets pass the check.
