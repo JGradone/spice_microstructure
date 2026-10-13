@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-13T00:31:41+00:00",
-  "config_sha256": "25e8e7ce3405afef95fce227747f8fa708868b956403af8fcbef2b763a65f9bc",
-  "git_commit": "013f4a049181307935c987209ca1e4f0bc0e402d",
+  "created_utc": "2026-10-13T00:51:30+00:00",
+  "config_sha256": "67d32c6ec77187bdd4351d550d5b881f8762451914dfbdc788eafb7258b791e1",
+  "git_commit": "c63ed758c00d6ce9359298a0a09bbfc98c0a0636",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -17,7 +17,7 @@
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
   "config_path": "config/config.yaml",
   "steps": [
-    "segments"
+    "hydrography"
   ],
   "manifests_verified": true
 }

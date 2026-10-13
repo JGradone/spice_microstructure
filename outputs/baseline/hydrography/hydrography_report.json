@@ -1,0 +1,43 @@
+{
+  "gradient_smoothing_m": 10,
+  "instruments": {
+    "vmp250": {
+      "salinity_source": "own",
+      "profiles": 137,
+      "profiles_with_ship_ctd": 134,
+      "windows": 6002,
+      "windows_without_stratification": 0,
+      "windows_N2_nonpositive": 140,
+      "validation_150_550m": {
+        "estimates": 5494,
+        "N2_nonpositive_fraction": 0.012,
+        "ship_N2_nonpositive_fraction": 0.016,
+        "N2_median_ratio": 1.006,
+        "N2_within_factor2": 0.829,
+        "T_z_median_ratio": 0.97,
+        "S_z_median_ratio": 0.945,
+        "R_rho_median": 1.706,
+        "R_rho_ship_median": 1.598
+      }
+    },
+    "vmp5500": {
+      "salinity_source": "ship_ctd_ts",
+      "profiles": 46,
+      "profiles_with_ship_ctd": 44,
+      "windows": 6749,
+      "windows_without_stratification": 3339,
+      "windows_N2_nonpositive": 237,
+      "validation_150_550m": {
+        "estimates": 1804,
+        "N2_nonpositive_fraction": 0.072,
+        "ship_N2_nonpositive_fraction": 0.014,
+        "N2_median_ratio": 1.075,
+        "N2_within_factor2": 0.599,
+        "T_z_median_ratio": 0.902,
+        "S_z_median_ratio": 0.767,
+        "R_rho_median": 1.671,
+        "R_rho_ship_median": 1.584
+      }
+    }
+  }
+}
