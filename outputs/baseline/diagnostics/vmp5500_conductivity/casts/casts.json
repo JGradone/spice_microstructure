@@ -641,9 +641,9 @@
   },
   "vmp250": null,
   "noise": 0.065,
-  "offset": NaN,
+  "offset": null,
   "noiseR": 0.065,
-  "offsetR": NaN,
+  "offsetR": null,
   "response": {
    "delay": 0.25,
    "tau": 6.0
