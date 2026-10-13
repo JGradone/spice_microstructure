@@ -63,7 +63,7 @@ select { min-width: 0; max-width: 100%; }
 
 <div class="wrap">
   <h1>VMP5500 cast comparisons</h1>
-  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. VMP5500 CT data sit at the CT sensor's depth, 1.57 m above the pressure sensor. Noise and offset are measured over 150–500 m. The aqua series applies a thermal-mass correction (Lueck and Picklo 1990, Morison et al. 1994 parameters at each cast's fall speed); across all casts it moves the median salty offset only from +0.155 to +0.146 g/kg and leaves the median noise at 0.073 g/kg.</p>
+  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. VMP5500 CT data sit at the CT sensor's depth, 1.57 m above the pressure sensor. Noise and offset are measured over 150–500 m. The aqua series corrects for the Sea-Bird response lag: temperature is the nose FP07 moved to the CT sensor, and salinity uses the measured conductivity with that temperature slowed to match the SBE4 cell (time constant fitted per cast, about 6 s). This removes most of the salty offset; the scatter that remains is the unexplained noise, largest at staircase interfaces.</p>
 
   <div class="bar" role="toolbar" aria-label="Step through casts">
     <button type="button" id="prev" aria-label="Previous cast">← Previous</button>
@@ -86,10 +86,10 @@ select { min-width: 0; max-width: 100%; }
       <div class="row"><span class="k">S noise</span><span class="v" id="noise"></span></div>
       <div class="row"><span class="k">S offset</span><span class="v" id="offset"></span></div>
       <div class="tm">
-        <span class="k">With thermal-mass correction</span>
-        <div class="row"><span class="k">S noise</span><span class="v" id="noiseTM"></span></div>
-        <div class="row"><span class="k">S offset</span><span class="v" id="offsetTM"></span></div>
-        <div class="row"><span class="k">α, τ</span><span class="v" id="tmParams"></span></div>
+        <span class="k">With response correction</span>
+        <div class="row"><span class="k">S noise</span><span class="v" id="noiseR"></span></div>
+        <div class="row"><span class="k">S offset</span><span class="v" id="offsetR"></span></div>
+        <div class="row"><span class="k">SBE4 τ, delay</span><span class="v" id="respParams"></span></div>
       </div>
       <div class="notes" id="notesBox"><span class="k">Sealog notes and flags</span><span id="notes"></span></div>
       <p class="guide">For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
@@ -126,13 +126,14 @@ const META = /*__META__*/null;
     $("v250").textContent = c.vmp250 ? `${c.vmp250.profile.slice(0, 9)} · ${c.vmp250.hours} h · ${c.vmp250.km} km` : "none within 15 km, 12 h";
     $("noise").textContent = c.noise === null ? "–" : `${c.noise.toFixed(3)} g/kg`;
     $("offset").textContent = c.offset === null ? "–" : `${fmt(c.offset, 3)} g/kg`;
-    $("noiseTM").textContent = c.noiseTM === null ? "–" : `${c.noiseTM.toFixed(3)} g/kg`;
-    $("offsetTM").textContent = c.offsetTM === null ? "–" : `${fmt(c.offsetTM, 3)} g/kg`;
-    $("tmParams").textContent = `${c.thermalMass.alpha.toFixed(3)}, ${c.thermalMass.tau.toFixed(1)} s at ${c.thermalMass.speed} m/s`;
+    $("noiseR").textContent = c.noiseR === null ? "–" : `${c.noiseR.toFixed(3)} g/kg`;
+    $("offsetR").textContent = c.offsetR === null ? "–" : `${fmt(c.offsetR, 3)} g/kg`;
+    $("respParams").textContent = `${c.response.tau} s, ${c.response.delay} s` + (c.response.fitted ? " (fitted)" : c.brokenFit ? " (fit failed; cruise median)" : " (cruise median)");
     const chips = [];
     if (c.station) chips.push(`<span class="chip">Process station</span>`);
     if (c.noise !== null) chips.push(c.noise > 0.05 ? `<span class="chip bad">Noisy salinity</span>` : `<span class="chip ok">Noise under 0.05</span>`);
     if (c.offset !== null) chips.push(c.offset > 0.1 ? `<span class="chip bad">Salty by more than 0.1</span>` : `<span class="chip ok">Offset under 0.1</span>`);
+    if (c.offsetR !== null) chips.push(Math.abs(c.offsetR) > 0.05 ? `<span class="chip bad">Corrected offset over 0.05</span>` : `<span class="chip ok">Corrected offset under 0.05</span>`);
     $("chips").innerHTML = chips.join("");
     const text = [c.flags, c.notes].filter(Boolean).join(" · ");
     $("notes").textContent = text || "None";
