@@ -352,3 +352,37 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   | > 1.5 | 0.45 | 0.75 |
 
 * **Consequence:** the QC explorer's FM cut raised the chi ratio (VMP250 3.5 → 6.8) because it removed the most biased windows. Correcting the bias with a low-wavenumber cutoff is preferable to discarding windows. Not yet adopted; it needs a decision and goes into the epsilon_shear step as a config option.
+
+## 2026-10-13: Shear epsilon refit from 1 Hz (adopted); cutoff test
+
+* **Method:** `shear_qc.refit` (enabled, f_min_hz 1.0). Per probe and window, epsilon is re-solved so the Nasmyth variance over f_min/speed ≤ k ≤ K_max (perturb's K_max) equals the observed variance. FM is recomputed over that range with the package's formula. num_ffts (7) and vibration channels (2) are recovered by reproducing perturb's FM. perturb's values are kept as `epsilon_<probe>_perturb` and `FM_<probe>_perturb`. This is the first method change from the shipboard processing.
+* **Cutoff test** (`scripts/test_shear_fmin.py`, `epsilon_shear/fmin_test/`), windows below 150 dbar, median refit/perturb:
+
+  | f_min (Hz) | VMP250 | VMP5500 |
+  |---|---|---|
+  | 0 | 0.96 | 0.96 |
+  | 0.5 | 0.87 | 0.87 |
+  | 1 | 0.66 | 0.74 |
+  | 2 | 0.63 | 0.79 |
+
+  * The 0 Hz control reproduces perturb to within about 4% (perturb's own variance correction).
+  * Mean epsilon over 150–550 dbar:
+
+    | f_min | VMP250 (W/kg) | VMP5500 (W/kg) |
+    |---|---|---|
+    | perturb | 1.93e-9 | 5.57e-10 |
+    | 1 Hz | 1.19e-9 | 3.74e-10 |
+    | 2 Hz | 1.01e-9 | 3.41e-10 |
+  * Most of the change happens between 0.5 and 1 Hz. From 1 to 2 Hz the median changes by under 5% for VMP250 windows with perturb FM < 1.15 and for all VMP5500 bins.
+  * VMP250 high-FM windows keep falling with a higher cutoff (FM 1.15–1.5: 0.59 to 0.55; FM > 1.5: 0.45 to 0.40), so their contamination extends above 1 Hz.
+  * 1 Hz is chosen as the smallest cutoff past the main drop that keeps the fit range. At 0.7 m/s, 2 Hz is about 3 cpm against a K_max of about 15 cpm at low epsilon.
+* **Open issue, the upper end.** Inside the refit range the residual is still not flat for epsilon 1e-10–1e-9: a dip at k/K_max 0.2–0.5, then the spectrum rises above Nasmyth toward K_max (+0.7 VMP250, +1.0 VMP5500 in ln). The spectra are flatter than Nasmyth, as expected when the dissipation range approaches the noise or vibration level (or for low buoyancy Reynolds number turbulence, Re_b ~ 2–20 here). perturb's K_max may therefore include noise, which would still bias epsilon high. With the refit, VMP5500 FM > 1.15 rises to 83% of kept windows, driven by this upper end. Next test: K_max chosen against the noise spectrum.
+* **Baseline outputs with refit:**
+
+  | Below 150 dbar | VMP250 | VMP5500 |
+  |---|---|---|
+  | Median epsilon (W/kg) | 4.6e-10 | 8.2e-11 |
+  | Median floor (W/kg) | 1.4e-10 | 1.1e-11 |
+  | At floor | 9% | 10% |
+
+  The floor also falls, because the noise spectrum below 1 Hz is excluded.
