@@ -33,7 +33,7 @@ Salinity source per instrument (instruments.<name>.salinity_source):
                CTD cast is matched, each T-S bin is compared with the ship's
                relation (same bins and smoothing); bins differing by more than
                max_diff_g_kg take the ship value and the merged relation is
-               smoothed again. If the median difference over bins colder than
+               the correction ramps over smooth_bins bins. If the median difference over bins colder than
                cast_check_max_degC exceeds cast_fail_median_g_kg (a bad
                conductivity cell), the whole profile uses the ship relation
                and is NaN outside its temperature range. SA_from_ship records the
@@ -188,10 +188,14 @@ def ship_fallback(nodes, ship_nodes, cfg: dict) -> dict:
     cold = checked & (ct < fb["cast_check_max_degC"])
     if cold.any() and np.median(np.abs(diff[cold])) > fb["cast_fail_median_g_kg"]:
         return {"nodes": ship_nodes, "bad_nodes": None, "failed": True, "bad_fraction": frac}
-    merged = pd.Series(np.where(bad, ship_sa, sa)).rolling(
-        cfg["smooth_bins"], center=True, min_periods=1).mean().to_numpy()
-    return {"nodes": (ct, merged), "bad_nodes": (ct, bad.astype(float)), "failed": False,
-            "bad_fraction": frac}
+    # Smooth only the correction, so bins away from a switch keep their own values
+    step = pd.Series(np.where(bad, ship_sa - sa, 0.0))
+    corr = step.rolling(cfg["smooth_bins"], center=True, min_periods=1).mean().to_numpy()
+    weight = pd.Series(bad.astype(float)).rolling(cfg["smooth_bins"], center=True,
+                                                  min_periods=1).mean().to_numpy()
+    corr = np.where(bad, ship_sa - sa, corr)          # switched bins take the ship value exactly
+    return {"nodes": (ct, sa + corr), "bad_nodes": (ct, np.where(bad, 1.0, weight)),
+            "failed": False, "bad_fraction": frac}
 
 
 def evaluate_ts(own: dict, nodes, bad_nodes, sa_ref: float) -> dict:
