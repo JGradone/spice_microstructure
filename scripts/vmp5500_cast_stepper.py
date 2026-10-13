@@ -98,15 +98,16 @@ def figure(name, p, ship, match, near250, v250, path, foot):
         lines.append((ps.BLUE, f"VMP250 {near250[0][:9]} ({near250[2]:.1f} h, {near250[1]:.1f} km)"))
     ct, sa = bin_profile(p["z"], p["CT"], edges), bin_profile(p["z"], p["SA"], edges)
     ct_r, sa_r = bin_profile(p["z"], p["CT_resp"], edges), bin_profile(p["z"], p["SA_resp"], edges)
-    axes[0].plot(ct_r, zc, color=ps.AQUA, lw=1.4, zorder=2)
-    axes[0].plot(ct, zc, color=ps.ORANGE, lw=0.9)
-    axes[1].plot(sa, zc, color=ps.ORANGE, lw=0.9, zorder=3)
+    # Uncorrected series faded underneath; the response-corrected series on top
+    axes[0].plot(ct, zc, color=ps.ORANGE, lw=0.9, alpha=0.55, zorder=1)
+    axes[0].plot(ct_r, zc, color=ps.AQUA, lw=1.2, zorder=3)
+    axes[1].plot(sa, zc, color=ps.ORANGE, lw=0.9, alpha=0.55, zorder=1)
     s = ts_sel(zc)
-    axes[2].scatter(sa[s], ct[s], s=5, color=ps.ORANGE, linewidths=0, zorder=3)
+    axes[2].scatter(sa[s], ct[s], s=5, color=ps.ORANGE, linewidths=0, alpha=0.55, zorder=1)
     lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (SBE3/SBE4)"))
     s = ts_sel(zc)
-    axes[1].plot(sa_r, zc, color=ps.AQUA, lw=1.4, zorder=2)
-    axes[2].scatter(sa_r[s], ct_r[s], s=6, color=ps.AQUA, linewidths=0, zorder=2)
+    axes[1].plot(sa_r, zc, color=ps.AQUA, lw=1.2, zorder=3)
+    axes[2].scatter(sa_r[s], ct_r[s], s=6, color=ps.AQUA, linewidths=0, zorder=3)
     rp = p["resp_params"]
     lines.append((ps.AQUA, f"VMP5500 response-corrected (SBE4 τ {rp['tau']:g} s, delay {rp['delay']:g} s"
                            f"{'' if rp['fitted'] else ', cruise median'})"))
