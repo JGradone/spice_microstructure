@@ -393,6 +393,10 @@ sensitivity_runs:
   - name: fft2_diss8              # 2 s FFT, 8 s windows (~6 m): resolves staircase interfaces, 7 FFTs as baseline
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0}
+  - name: fft2_diss8_mle           # analysis run (decisions.md 2026-10-13): 2 s / 8 s windows, chi by MLE
+    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
+          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
+          perturb.chi.fit_method: mle}
 
 products:
   # Final exported products for use outside this repository. Layout and

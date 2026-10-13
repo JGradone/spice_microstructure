@@ -448,3 +448,8 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   * SPC_031: chi about 1e-10 in the 301–318 dbar layer against 3e-8 at the 290–297 dbar interface. The 16 s windows give about 1e-9 to 1e-8 for both.
   * data_0133_prof003: chi about 2e-9 in the 222–240 dbar mixed layer at 8 s against 1e-8 to 5e-8 at 16 s, with the interface near 220 dbar at about 1e-7.
 * **Recommendation, not yet adopted:** use the 2 s / 8 s settings for the regime classification and the interface/layer double-diffusion test. Report them as a difference from the baseline, which keeps the shipboard 4 s / 16 s.
+
+## 2026-10-13: Analysis settings 2 s FFT / 8 s windows; chi by MLE
+
+* Decision (user): regime classification and the double-diffusion tests use 2 s FFT / 8 s dissipation windows (for epsilon and chi). The baseline keeps the shipboard 4 s / 16 s, and analysis results are reported as differences from it. Reason: averaged epsilon and chi are unchanged (previous entry), and 8 s windows separate staircase interfaces from layers.
+* The analysis run `fft2_diss8_mle` also fits chi by maximum likelihood (`perturb.chi.fit_method: mle`, Ruddick et al. 2000), the method in CLAUDE.md step 5 and the first planned change after the baseline. The iterative fit (`fft2_diss8`) is kept for comparison.
