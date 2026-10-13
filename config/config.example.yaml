@@ -444,6 +444,10 @@ sensitivity_runs:
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle}
+  - name: fft2_diss8_mle_dp        # FP07 response test: double-pole transfer, fixed tau 3 ms (Goto et al. 2016)
+    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
+          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
+          perturb.chi.fit_method: mle, perturb.chi.fp07_model: double_pole}
 
 products:
   # Final exported products for use outside this repository. Layout and

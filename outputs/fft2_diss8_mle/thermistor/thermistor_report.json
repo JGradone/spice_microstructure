@@ -1,0 +1,125 @@
+{
+  "segments_applied": false,
+  "chi_qc": {
+    "k_max_ratio": {
+      "min": 0.5,
+      "apply": true
+    },
+    "fom": {
+      "band": 1.15,
+      "apply": false
+    },
+    "noise_floor": {
+      "factor": 2.0,
+      "policy": "clamp"
+    },
+    "probe_pair": {
+      "limit": 2.7718585822512662,
+      "policy": "min"
+    },
+    "combine": "geometric",
+    "gallery": {
+      "per_panel": 5,
+      "seed": 1
+    }
+  },
+  "fit_method": "mle",
+  "instruments": {
+    "vmp250": {
+      "windows": 12206,
+      "after_segment_qc": 12206,
+      "probe_estimates_removed": {
+        "probe_exclusion": 0,
+        "k_max_ratio": 0,
+        "fom": 0
+      },
+      "no_usable_probe": 596,
+      "probe_disagree": 43,
+      "kept": 11610,
+      "kept_at_floor_fraction": 0.0031,
+      "kept_fom_out_of_band_fraction": 0.0005,
+      "chi_median_below_150": 1.4690703218437474e-08,
+      "chi_floor_median_below_150": 4.8880332553231145e-11,
+      "at_floor_fraction_below_150": 0.0037,
+      "snr_median_below_150": {
+        "T1": 343.5210784401975,
+        "T2": 306.5537113237127
+      },
+      "probe_ratio_median_below_150": 1.0049975752928786,
+      "epsilon_T_vs_shear_below_150": {
+        "Tu < 45 (not finger)": {
+          "n": 259,
+          "median_ratio": 1.86087673845299,
+          "iqr_log10": [
+            -0.06268004476588124,
+            0.5023373858790972
+          ]
+        },
+        "Tu 45-72": {
+          "n": 1277,
+          "median_ratio": 1.3299581749432627,
+          "iqr_log10": [
+            -0.06817985323269679,
+            0.3177996820186907
+          ]
+        },
+        "Tu 72-90": {
+          "n": 3376,
+          "median_ratio": 2.05228311974157,
+          "iqr_log10": [
+            0.10707078655650115,
+            0.5069344830745275
+          ]
+        }
+      }
+    },
+    "vmp5500": {
+      "windows": 13562,
+      "after_segment_qc": 13562,
+      "probe_estimates_removed": {
+        "probe_exclusion": 6204,
+        "k_max_ratio": 3,
+        "fom": 0
+      },
+      "no_usable_probe": 178,
+      "probe_disagree": 547,
+      "kept": 13384,
+      "kept_at_floor_fraction": 0.0342,
+      "kept_fom_out_of_band_fraction": 0.0131,
+      "chi_median_below_150": 9.350339436155568e-10,
+      "chi_floor_median_below_150": 2.123384970368689e-11,
+      "at_floor_fraction_below_150": 0.0392,
+      "snr_median_below_150": {
+        "T1": 62.2128066219357,
+        "T2": 67.97468171389464
+      },
+      "probe_ratio_median_below_150": 1.0422646250013252,
+      "epsilon_T_vs_shear_below_150": {
+        "Tu < 45 (not finger)": {
+          "n": 894,
+          "median_ratio": 1.7991573213399228,
+          "iqr_log10": [
+            -0.19466834680083464,
+            0.6538116701809352
+          ]
+        },
+        "Tu 45-72": {
+          "n": 4036,
+          "median_ratio": 1.8574849830949165,
+          "iqr_log10": [
+            -0.15756798019607351,
+            0.6408559996197161
+          ]
+        },
+        "Tu 72-90": {
+          "n": 3024,
+          "median_ratio": 3.249781634144808,
+          "iqr_log10": [
+            0.18501321626912992,
+            0.7969368102347485
+          ]
+        }
+      }
+    }
+  }
+}
