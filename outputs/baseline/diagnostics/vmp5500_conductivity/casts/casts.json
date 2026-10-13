@@ -11,14 +11,12 @@
   "vmp250": null,
   "noise": 0.015,
   "offset": null,
-  "noiseR": 0.02,
+  "noiseR": 0.023,
   "offsetR": null,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": false
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "Before first test dive to 500 meters | Test dive to 500 m",
   "flags": "ballast tuning: 0.4 m/s, spiking"
  },
@@ -39,14 +37,12 @@
   "vmp250": null,
   "noise": 0.051,
   "offset": 0.158,
-  "noiseR": 0.028,
-  "offsetR": 0.023,
+  "noiseR": 0.031,
+  "offsetR": 0.021,
   "response": {
-   "delay": 3.0,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "Not sure about this timestamp. Forgot to log it at the moment.",
   "flags": "ballast tuning: 1.0 m/s, vibration noise"
  },
@@ -67,14 +63,12 @@
   "vmp250": null,
   "noise": 0.019,
   "offset": 0.041,
-  "noiseR": 0.028,
-  "offsetR": -0.013,
+  "noiseR": 0.036,
+  "offsetR": -0.077,
   "response": {
-   "delay": 0.5,
-   "tau": 2.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "full charge",
   "flags": "ballast tuning: 0.85 m/s, vibration noise"
  },
@@ -95,14 +89,12 @@
   "vmp250": null,
   "noise": 0.046,
   "offset": 0.106,
-  "noiseR": 0.041,
-  "offsetR": -0.014,
+  "noiseR": 0.038,
+  "offsetR": -0.01,
   "response": {
-   "delay": 0.5,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": "ballast tuning: 0.81 m/s, vibration noise"
  },
@@ -123,14 +115,12 @@
   "vmp250": null,
   "noise": 0.066,
   "offset": 0.098,
-  "noiseR": 0.066,
-  "offsetR": 0.019,
+  "noiseR": 0.062,
+  "offsetR": 0.003,
   "response": {
    "delay": 0.25,
-   "tau": 4.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -151,14 +141,12 @@
   "vmp250": null,
   "noise": 0.05,
   "offset": 0.104,
-  "noiseR": 0.05,
-  "offsetR": 0.039,
+  "noiseR": 0.045,
+  "offsetR": -0.0,
   "response": {
    "delay": 0.25,
-   "tau": 4.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -179,14 +167,12 @@
   "vmp250": null,
   "noise": 0.034,
   "offset": 0.082,
-  "noiseR": 0.035,
-  "offsetR": -0.054,
+  "noiseR": 0.038,
+  "offsetR": -0.026,
   "response": {
-   "delay": 0.0,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "Lost red flag but overcast and raining so strobe is on",
   "flags": ""
  },
@@ -207,14 +193,12 @@
   "vmp250": null,
   "noise": 0.093,
   "offset": 0.195,
-  "noiseR": 0.096,
-  "offsetR": 0.016,
+  "noiseR": 0.095,
+  "offsetR": 0.064,
   "response": {
-   "delay": 0.75,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -235,14 +219,12 @@
   "vmp250": null,
   "noise": 0.102,
   "offset": 0.215,
-  "noiseR": 0.103,
-  "offsetR": 0.041,
+  "noiseR": 0.104,
+  "offsetR": 0.094,
   "response": {
-   "delay": 0.0,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -263,14 +245,12 @@
   "vmp250": null,
   "noise": 0.045,
   "offset": 0.063,
-  "noiseR": 0.057,
-  "offsetR": -0.033,
+  "noiseR": 0.058,
+  "offsetR": -0.01,
   "response": {
-   "delay": 1.0,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -292,13 +272,11 @@
   "noise": 0.087,
   "offset": 0.128,
   "noiseR": 0.092,
-  "offsetR": 0.021,
+  "offsetR": 0.061,
   "response": {
-   "delay": 0.0,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -314,14 +292,12 @@
   "vmp250": null,
   "noise": 0.098,
   "offset": null,
-  "noiseR": 0.101,
+  "noiseR": 0.102,
   "offsetR": null,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": false
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "Delayed because we had to reattach one of the screws that attaches the cable to the release body.",
   "flags": ""
  },
@@ -342,14 +318,12 @@
   "vmp250": null,
   "noise": 0.06,
   "offset": 0.109,
-  "noiseR": 0.054,
-  "offsetR": -0.007,
+  "noiseR": 0.053,
+  "offsetR": 0.049,
   "response": {
-   "delay": 0.75,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "~16.34V initial",
   "flags": ""
  },
@@ -374,14 +348,12 @@
   },
   "noise": 0.069,
   "offset": 0.109,
-  "noiseR": 0.072,
-  "offsetR": -0.024,
+  "noiseR": 0.071,
+  "offsetR": 0.05,
   "response": {
-   "delay": 0.0,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "Co-located with VMP250",
   "flags": ""
  },
@@ -403,13 +375,11 @@
   "noise": 0.053,
   "offset": 0.11,
   "noiseR": 0.055,
-  "offsetR": 0.02,
+  "offsetR": 0.031,
   "response": {
-   "delay": 0.0,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -430,14 +400,12 @@
   "vmp250": null,
   "noise": 0.047,
   "offset": 0.055,
-  "noiseR": 0.054,
-  "offsetR": -0.023,
+  "noiseR": 0.055,
+  "offsetR": 0.008,
   "response": {
-   "delay": 1.25,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -458,14 +426,12 @@
   "vmp250": null,
   "noise": 0.053,
   "offset": 0.05,
-  "noiseR": 0.054,
-  "offsetR": -0.048,
+  "noiseR": 0.053,
+  "offsetR": -0.0,
   "response": {
-   "delay": 1.25,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -486,14 +452,12 @@
   "vmp250": null,
   "noise": 0.075,
   "offset": 0.073,
-  "noiseR": 0.066,
-  "offsetR": 0.003,
+  "noiseR": 0.063,
+  "offsetR": 0.015,
   "response": {
-   "delay": 1.0,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -518,14 +482,12 @@
   },
   "noise": 0.071,
   "offset": 0.109,
-  "noiseR": 0.074,
-  "offsetR": 0.013,
+  "noiseR": 0.07,
+  "offsetR": 0.027,
   "response": {
    "delay": 0.25,
-   "tau": 4.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -550,14 +512,12 @@
   },
   "noise": 0.047,
   "offset": 0.101,
-  "noiseR": 0.048,
-  "offsetR": 0.028,
+  "noiseR": 0.05,
+  "offsetR": 0.021,
   "response": {
-   "delay": 0.5,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -578,14 +538,12 @@
   "vmp250": null,
   "noise": 0.075,
   "offset": 0.163,
-  "noiseR": 0.081,
-  "offsetR": 0.056,
+  "noiseR": 0.083,
+  "offsetR": 0.081,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": "short file (31 min); check whether the cast completed"
  },
@@ -606,14 +564,12 @@
   "vmp250": null,
   "noise": 0.058,
   "offset": 0.074,
-  "noiseR": 0.057,
-  "offsetR": -0.014,
+  "noiseR": 0.058,
+  "offsetR": 0.01,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -634,14 +590,12 @@
   "vmp250": null,
   "noise": 0.079,
   "offset": 0.102,
-  "noiseR": 0.075,
-  "offsetR": -0.005,
+  "noiseR": 0.072,
+  "offsetR": 0.012,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -663,13 +617,11 @@
   "noise": 0.151,
   "offset": 0.472,
   "noiseR": 0.154,
-  "offsetR": 0.317,
+  "offsetR": 0.374,
   "response": {
-   "delay": 0.0,
-   "tau": 10.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -694,10 +646,8 @@
   "offsetR": NaN,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": false
+   "tau": 6.0
   },
-  "brokenFit": true,
   "notes": "",
   "flags": ""
  },
@@ -719,13 +669,11 @@
   "noise": 0.037,
   "offset": 0.082,
   "noiseR": 0.043,
-  "offsetR": -0.014,
+  "offsetR": 0.003,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -747,13 +695,11 @@
   "noise": 0.112,
   "offset": 0.244,
   "noiseR": 0.111,
-  "offsetR": 0.071,
+  "offsetR": 0.093,
   "response": {
-   "delay": 0.0,
-   "tau": 8.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -774,14 +720,12 @@
   "vmp250": null,
   "noise": 0.14,
   "offset": 0.53,
-  "noiseR": 0.146,
-  "offsetR": 0.444,
+  "noiseR": 0.147,
+  "offsetR": 0.404,
   "response": {
-   "delay": 0.0,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -802,14 +746,12 @@
   "vmp250": null,
   "noise": 0.073,
   "offset": 0.144,
-  "noiseR": 0.076,
-  "offsetR": 0.025,
+  "noiseR": 0.077,
+  "offsetR": 0.011,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -830,14 +772,12 @@
   "vmp250": null,
   "noise": 0.09,
   "offset": 0.101,
-  "noiseR": 0.089,
-  "offsetR": 0.042,
+  "noiseR": 0.092,
+  "offsetR": -0.007,
   "response": {
-   "delay": 0.0,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -858,14 +798,12 @@
   "vmp250": null,
   "noise": 0.138,
   "offset": 0.244,
-  "noiseR": 0.13,
-  "offsetR": 0.144,
+  "noiseR": 0.126,
+  "offsetR": 0.075,
   "response": {
-   "delay": 0.75,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -886,14 +824,12 @@
   "vmp250": null,
   "noise": 0.101,
   "offset": 0.244,
-  "noiseR": 0.101,
-  "offsetR": 0.084,
+  "noiseR": 0.098,
+  "offsetR": 0.07,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -914,14 +850,12 @@
   "vmp250": null,
   "noise": 0.069,
   "offset": 0.176,
-  "noiseR": 0.069,
-  "offsetR": 0.11,
+  "noiseR": 0.067,
+  "offsetR": 0.016,
   "response": {
    "delay": 0.25,
-   "tau": 4.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -942,14 +876,12 @@
   "vmp250": null,
   "noise": 0.115,
   "offset": 0.289,
-  "noiseR": 0.114,
-  "offsetR": 0.143,
+  "noiseR": 0.113,
+  "offsetR": 0.115,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -970,14 +902,12 @@
   "vmp250": null,
   "noise": 0.066,
   "offset": 0.153,
-  "noiseR": 0.069,
-  "offsetR": 0.04,
+  "noiseR": 0.071,
+  "offsetR": -0.006,
   "response": {
-   "delay": 0.5,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1003,13 +933,11 @@
   "noise": 0.092,
   "offset": 0.246,
   "noiseR": 0.096,
-  "offsetR": 0.148,
+  "offsetR": 0.066,
   "response": {
-   "delay": 0.5,
-   "tau": 4.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1034,14 +962,12 @@
   },
   "noise": 0.094,
   "offset": 0.232,
-  "noiseR": 0.088,
-  "offsetR": 0.089,
+  "noiseR": 0.087,
+  "offsetR": 0.061,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1066,14 +992,12 @@
   },
   "noise": 0.097,
   "offset": 0.236,
-  "noiseR": 0.098,
-  "offsetR": 0.101,
+  "noiseR": 0.097,
+  "offsetR": 0.047,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1098,14 +1022,12 @@
   },
   "noise": 0.097,
   "offset": 0.18,
-  "noiseR": 0.093,
-  "offsetR": 0.037,
+  "noiseR": 0.091,
+  "offsetR": 0.022,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1130,14 +1052,12 @@
   },
   "noise": 0.066,
   "offset": 0.168,
-  "noiseR": 0.065,
-  "offsetR": 0.104,
+  "noiseR": 0.066,
+  "offsetR": 0.023,
   "response": {
    "delay": 0.25,
-   "tau": 2.0,
-   "fitted": true
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1162,14 +1082,12 @@
   },
   "noise": 0.079,
   "offset": 0.18,
-  "noiseR": 0.083,
-  "offsetR": 0.27,
+  "noiseR": 0.076,
+  "offsetR": 0.029,
   "response": {
-   "delay": 0.5,
-   "tau": 1.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1190,14 +1108,12 @@
   "vmp250": null,
   "noise": 0.124,
   "offset": 0.374,
-  "noiseR": 0.118,
-  "offsetR": 0.011,
+  "noiseR": 0.117,
+  "offsetR": -0.073,
   "response": {
    "delay": 0.25,
-   "tau": 6.0,
-   "fitted": false
+   "tau": 6.0
   },
-  "brokenFit": true,
   "notes": "",
   "flags": ""
  },
@@ -1218,14 +1134,12 @@
   "vmp250": null,
   "noise": 0.062,
   "offset": 0.174,
-  "noiseR": 0.067,
-  "offsetR": 0.009,
+  "noiseR": 0.07,
+  "offsetR": 0.014,
   "response": {
-   "delay": 0.0,
-   "tau": 6.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1246,14 +1160,12 @@
   "vmp250": null,
   "noise": 0.094,
   "offset": 0.211,
-  "noiseR": 0.08,
-  "offsetR": -0.08,
+  "noiseR": 0.079,
+  "offsetR": 0.034,
   "response": {
-   "delay": 0.75,
-   "tau": 10.0,
-   "fitted": true
+   "delay": 0.25,
+   "tau": 6.0
   },
-  "brokenFit": false,
   "notes": "",
   "flags": ""
  }

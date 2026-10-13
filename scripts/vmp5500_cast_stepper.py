@@ -68,7 +68,7 @@ def cast_stats(p, ship, match, edges, sa_key="SA", ct_key="CT"):
     out = {"noise": float(np.nanstd(highpass(sa)[m])) if m.sum() > 20 else None, "offset": None}
     if match and m.sum() > 20:
         out["offset"] = float(np.nanmedian((sa - ship.ts_salinity(match["index"], ct))[m]))
-    return out
+    return {k: v if v is not None and np.isfinite(v) else None for k, v in out.items()}
 
 
 def figure(name, p, ship, match, near250, v250, path, foot):
