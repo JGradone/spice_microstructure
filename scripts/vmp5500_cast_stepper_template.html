@@ -1,0 +1,145 @@
+<meta charset="utf-8">
+<title>VMP5500 Cast Comparisons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,600&display=swap">
+<style>
+/* Layout: sticky stepping bar on top; figure plate with a facts column beside
+   it (stacks under it on narrow screens). */
+:root {
+  --bg: #f4f6f7; --paper: #ffffff; --ink: #142029; --muted: #5a6a74; --rule: #d9e1e5;
+  --accent: #b5501f; --plate: #fcfcfb; --plate-edge: #d9e1e5; --chip: #eef2f4;
+  --bad: #b3261e; --ok: #2f6b3a;
+  --serif: "Literata", Georgia, serif;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f161b; --paper: #151e24; --ink: #e3ebef; --muted: #98a9b2; --rule: #26343d;
+    --accent: #f08a55; --plate: #fcfcfb; --plate-edge: #33424c; --chip: #1d2830;
+    --bad: #f28b82; --ok: #8fcf98; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f161b; --paper: #151e24; --ink: #e3ebef; --muted: #98a9b2; --rule: #26343d;
+  --accent: #f08a55; --plate: #fcfcfb; --plate-edge: #33424c; --chip: #1d2830;
+  --bad: #f28b82; --ok: #8fcf98; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1360px; margin: 0 auto; padding-inline: 18px; padding-block: 20px 40px; }
+h1 { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; margin: 0 0 4px; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 90ch; margin: 0 0 14px; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border-bottom: 1px solid var(--rule); }
+button, select { font: inherit; font-size: 14px; color: var(--ink); background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 5px; padding: 6px 12px; }
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select { min-width: 0; max-width: 100%; }
+.count { font-family: var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.keys { color: var(--muted); font-size: 12px; margin-left: auto; }
+.view { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 18px; margin-top: 16px; align-items: start; }
+@media (max-width: 980px) { .view { grid-template-columns: minmax(0, 1fr); } .keys { display: none; } }
+.plate img { display: block; width: 100%; height: auto; background: var(--plate); border: 1px solid var(--plate-edge); border-radius: 4px; }
+.facts { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px; display: grid; gap: 10px; min-width: 0; }
+.facts h2 { font-family: var(--serif); font-size: 1.25rem; margin: 0; }
+.row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; font-size: 13px; }
+.row .k { color: var(--muted); }
+.row .v { font-family: var(--mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--chip); color: var(--ink); }
+.chip.bad { color: var(--bad); } .chip.ok { color: var(--ok); }
+.notes { font-size: 13px; color: var(--ink); border-top: 1px solid var(--rule); padding-top: 8px; }
+.notes .k { color: var(--muted); display: block; font-size: 12px; }
+.guide { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 8px; }
+.prov { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 18px; overflow-wrap: anywhere; }
+</style>
+
+<div class="wrap">
+  <h1>VMP5500 cast comparisons</h1>
+  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 cast, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. Noise and offset are measured over 150–500 m.</p>
+
+  <div class="bar" role="toolbar" aria-label="Step through casts">
+    <button type="button" id="prev" aria-label="Previous cast">← Previous</button>
+    <select id="pick" aria-label="Choose a cast"></select>
+    <button type="button" id="next" aria-label="Next cast">Next →</button>
+    <span class="count" id="count"></span>
+    <span class="keys">Arrow keys step through casts</span>
+  </div>
+
+  <div class="view">
+    <div class="plate"><img id="img" alt=""></div>
+    <aside class="facts" aria-live="polite">
+      <h2 id="title"></h2>
+      <div class="chips" id="chips"></div>
+      <div class="row"><span class="k">Start (UTC)</span><span class="v" id="time"></span></div>
+      <div class="row"><span class="k">Position</span><span class="v" id="pos"></span></div>
+      <div class="row"><span class="k">Max depth</span><span class="v" id="depth"></span></div>
+      <div class="row"><span class="k">Ship CTD</span><span class="v" id="ship"></span></div>
+      <div class="row"><span class="k">VMP250</span><span class="v" id="v250"></span></div>
+      <div class="row"><span class="k">S noise</span><span class="v" id="noise"></span></div>
+      <div class="row"><span class="k">S offset</span><span class="v" id="offset"></span></div>
+      <div class="notes" id="notesBox"><span class="k">Sealog notes and flags</span><span id="notes"></span></div>
+      <p class="guide">For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
+    </aside>
+  </div>
+  <p class="prov" id="prov"></p>
+</div>
+
+<script>
+const CASTS = /*__CASTS__*/null;
+const META = /*__META__*/null;
+(function () {
+  const $ = id => document.getElementById(id);
+  const pick = $("pick");
+  CASTS.forEach((c, i) => {
+    const o = document.createElement("option");
+    o.value = i;
+    o.textContent = `${c.id} · ${c.time.slice(5, 16)}${c.station ? " · process station" : ""}`;
+    pick.appendChild(o);
+  });
+  $("prov").textContent = `${META.provenance} · generated ${META.created_utc}`;
+  let idx = 0;
+  const fmt = (v, d) => v === null || v === undefined ? "–" : (v >= 0 ? "+" : "") + v.toFixed(d);
+  function show(i) {
+    idx = Math.max(0, Math.min(CASTS.length - 1, i));
+    const c = CASTS[idx];
+    $("img").src = c.img;
+    $("img").alt = `Temperature, salinity and T–S comparison for VMP5500 cast ${c.id}`;
+    $("title").textContent = c.id;
+    $("time").textContent = c.time;
+    $("pos").textContent = `${c.lat.toFixed(3)}°N ${(-c.lon).toFixed(3)}°W`;
+    $("depth").textContent = `${c.maxDepth} m`;
+    $("ship").textContent = c.ship ? `${c.ship.cast} · ${c.ship.hours} h · ${c.ship.km} km` : "none within 15 km, 6 h";
+    $("v250").textContent = c.vmp250 ? `${c.vmp250.profile.slice(0, 9)} · ${c.vmp250.hours} h · ${c.vmp250.km} km` : "none within 15 km, 12 h";
+    $("noise").textContent = c.noise === null ? "–" : `${c.noise.toFixed(3)} g/kg`;
+    $("offset").textContent = c.offset === null ? "–" : `${fmt(c.offset, 3)} g/kg`;
+    const chips = [];
+    if (c.station) chips.push(`<span class="chip">Process station</span>`);
+    if (c.noise !== null) chips.push(c.noise > 0.05 ? `<span class="chip bad">Noisy salinity</span>` : `<span class="chip ok">Noise under 0.05</span>`);
+    if (c.offset !== null) chips.push(c.offset > 0.1 ? `<span class="chip bad">Salty by more than 0.1</span>` : `<span class="chip ok">Offset under 0.1</span>`);
+    $("chips").innerHTML = chips.join("");
+    const text = [c.flags, c.notes].filter(Boolean).join(" · ");
+    $("notes").textContent = text || "None";
+    pick.value = idx;
+    $("prev").disabled = idx === 0;
+    $("next").disabled = idx === CASTS.length - 1;
+    $("count").textContent = `${idx + 1} / ${CASTS.length}`;
+    try { history.replaceState(null, "", "#" + c.id); } catch (e) { /* hash optional */ }
+  }
+  $("prev").addEventListener("click", () => show(idx - 1));
+  $("next").addEventListener("click", () => show(idx + 1));
+  pick.addEventListener("change", () => show(+pick.value));
+  document.addEventListener("keydown", e => {
+    if (e.target === pick) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); show(idx - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); show(idx + 1); }
+  });
+  const start = CASTS.findIndex(c => "#" + c.id === location.hash);
+  show(start >= 0 ? start : 0);
+})();
+</script>
