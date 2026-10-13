@@ -131,3 +131,14 @@ Dated record of methods choices and why they were made. Newest entries at the bo
   * Ship-CTD T-S salinity fixes the VMP5500: N2 <= 0 in 7% at 10 m (ship 1%), N2 ratio 1.08, R_rho 1.67 vs 1.58. It is not circular: on the VMP250 it reproduces the instrument's own N2 (median ratio 1.00-1.02) and R_rho (1.71-1.76 vs 1.68-1.75).
 * Decision: `salinity_source: own` for the VMP250 and `ship_ctd_ts` for the VMP5500. Below the ship CTD's 550 m reach the VMP5500 has no usable salinity; those windows carry `no_stratification` and are excluded from anything that needs N2.
 * Result at the process station: R_rho about 1.5-2 and Turner angle about 70-80 deg from 150 to 550 m, strongly finger favourable.
+
+## 2026-10-12: QC explorer revisited with hydrography stratification
+
+* The explorer now takes stratification from the hydrography step at 5, 10 and 25 m fits. perturb's window values remain only as a comparison. It adds a Turner-angle regime filter and the St. Laurent and Schmitt finger prediction with adjustable gamma. Republished as version 2 of the same artifact.
+* Process station, segment QC, 10 m fits, pooled ratio of averages over 150-550 m:
+  * VMP5500: 1.5, down from 29 with perturb's N2.
+  * VMP250: 3.5, down from 4.3; it covers only the top 270 m, from 15 profiles.
+  * In 25 m bins below about 200 m the ratio is 1.3-10, bracketing the finger prediction of about 3-5 (gamma 0.65, R_rho 1.5-2). Above 200 m it is near 1.
+  * Fit scale 5-25 m changes the pooled ratio by at most about 35%.
+* With stratification fixed, the epsilon choice that moves the ratio most is the ATOMIX FM cut: the VMP250 ratio goes from 3.5 to 6.8 and the VMP5500's from 1.5 to 1.9, with about half the windows removed. Spectra must be inspected before any FM threshold is adopted; this is the next QC question. The noise-floor clamp and segment QC barely move the ratio.
+* All of this is preliminary: interface/layer classification, epsilon spectral QC and bootstrap uncertainty are not done.
