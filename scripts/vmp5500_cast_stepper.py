@@ -170,7 +170,8 @@ def main() -> int:
     ship = ShipCTD(Path(config["paths"]["ship_ctd"]), config["hydrography"]["ship_ctd"])
     ps.apply()
 
-    load = lambda inst: {f.name[:-3]: read_profile(f, inst) for f in  # noqa: E731
+    off = lambda inst: float(config["instruments"][inst].get("sensor_offsets_m", {}).get("ct", 0.0))  # noqa: E731
+    load = lambda inst: {f.name[:-3]: read_profile(f, inst, off(inst)) for f in  # noqa: E731
                          sorted(common.single_dir(run_dir / "convert" / inst, "profiles").glob("*_prof*.nc"))}
     v55, v250 = load("vmp5500"), load("vmp250")
     casts55 = pd.read_csv(run_dir / "cast_log" / "casts_vmp5500.csv").set_index("file")

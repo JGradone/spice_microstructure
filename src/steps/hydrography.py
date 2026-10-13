@@ -7,6 +7,10 @@ from linear fits over hydrography.gradient_smoothing_m. Gradients use z
 positive upward (T_z > 0 when warmer above), so salt fingers have
 T_z > 0, S_z > 0, R_rho > 1 and Turner angle between 45 and 90 degrees.
 
+Sensor offsets (instruments.<name>.sensor_offsets_m, sensor depth minus
+pressure-sensor depth): CT-derived values are placed at the CT sensor's depth
+and window values are evaluated at the microstructure probes' depth.
+
 Salinity source per instrument (instruments.<name>.salinity_source):
   own          the profiler's CT-sensor salinity (VMP250: agrees with the ship CTD)
   ship_ctd_ts  SA from the nearest ship CTD cast's T-S relation, evaluated at
@@ -238,6 +242,8 @@ def run(ctx: dict) -> None:
 
     for name, inst in common.instruments(config):
         source = inst["salinity_source"]
+        offsets = inst.get("sensor_offsets_m", {})
+        ct_off, ms_off = float(offsets.get("ct", 0.0)), float(offsets.get("microstructure", 0.0))
         prof_dir = common.single_dir(ctx["run_dir"] / "convert" / name, "profiles")
         seg = pd.read_csv(ctx["run_dir"] / "segments" / f"segments_{name}.csv")
         casts = pd.read_csv(ctx["run_dir"] / "cast_log" / f"casts_{name}.csv")
@@ -253,7 +259,7 @@ def run(ctx: dict) -> None:
                 lat, lon = float(np.ma.filled(d["lat"][...], np.nan)), float(np.ma.filled(d["lon"][...], np.nan))
                 t0 = pd.Timestamp(float(d["stime"][...]), unit="s", tz="UTC")
             latu = lat if np.isfinite(lat) else 12.0
-            depth = -gsw.z_from_p(P, latu)
+            depth = -gsw.z_from_p(P, latu) + ct_off      # depth of the CT sensor
             zmax = max(zmax, float(np.nanmax(depth)))
             raw.append((f, P, CT, SA, depth, lat, lon, latu, t0))
 
@@ -291,7 +297,7 @@ def run(ctx: dict) -> None:
 
             # Values at the dissipation window centres (P_mean converted to depth)
             w = seg[seg["profile_file"] == f.name][["profile_file", "window", "P_mean"]].copy()
-            wd = -gsw.z_from_p(w["P_mean"].to_numpy(), latu)
+            wd = -gsw.z_from_p(w["P_mean"].to_numpy(), latu) + ms_off   # probe-tip depth
             w["depth"] = wd
             for k in ("N2", "T_z", "S_z", "alpha", "beta", "R_rho", "Turner"):
                 w[k] = np.interp(wd, zc, st[k], left=np.nan, right=np.nan)
@@ -324,6 +330,7 @@ def run(ctx: dict) -> None:
         ds["T_z"].attrs["comment"] = ds["S_z"].attrs["comment"] = "z positive upward"
         ds["SA_used"].attrs["comment"] = f"salinity_source={source}"
         ds.attrs.update({"instrument": name, "gradient_smoothing_m": scale,
+                         "ct_offset_m": ct_off, "microstructure_offset_m": ms_off,
                          "salinity_source": source, "provenance": foot})
         ds.to_netcdf(out / f"hydrography_{name}.nc")
         grids[name] = ds
@@ -340,6 +347,7 @@ def run(ctx: dict) -> None:
         matched = sum(1 for c in meta["ship_cast"] if c)
         report["instruments"][name] = {
             "salinity_source": source, "profiles": npf, "profiles_with_ship_ctd": matched,
+            "sensor_offsets_m": {"ct": ct_off, "microstructure": ms_off},
             "windows": len(wins),
             "windows_without_stratification": int(wins["no_stratification"].sum()),
             "windows_N2_nonpositive": int(wins["N2_nonpositive"].sum()),

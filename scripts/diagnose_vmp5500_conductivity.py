@@ -44,7 +44,9 @@ DEGRADED_FROM = "SPC_044"       # first cast of the later, noisier period
 SHIP_COLOR = "#3d4a52"
 
 
-def read_profile(path: Path, inst: str) -> dict:
+def read_profile(path: Path, inst: str, ct_offset_m: float = 0.0) -> dict:
+    """Slow CT channels of one profile; z is the CT sensor's depth (pressure-sensor
+    depth plus ct_offset_m, which is negative when the CT sits above the pressure port)."""
     T, C = SENSORS[inst]
     with netCDF4.Dataset(path) as d:
         g = lambda n: np.ma.filled(d[n][:].astype(float), np.nan)  # noqa: E731
@@ -53,7 +55,7 @@ def read_profile(path: Path, inst: str) -> dict:
                "lon": float(np.ma.filled(d["lon"][...], np.nan)),
                "t0": pd.Timestamp(float(d["stime"][...]), unit="s", tz="UTC")}
     lat = out["lat"] if np.isfinite(out["lat"]) else 12.0
-    out["z"] = -gsw.z_from_p(out["P"], lat)
+    out["z"] = -gsw.z_from_p(out["P"], lat) + ct_offset_m
     return out
 
 
@@ -158,7 +160,8 @@ def main() -> int:
     profs = {}
     for inst in SENSORS:
         d = common.single_dir(run_dir / "convert" / inst, "profiles")
-        profs[inst] = {f.name[:-3]: read_profile(f, inst) for f in sorted(d.glob("*_prof*.nc"))}
+        off = float(config["instruments"][inst].get("sensor_offsets_m", {}).get("ct", 0.0))
+        profs[inst] = {f.name[:-3]: read_profile(f, inst, off) for f in sorted(d.glob("*_prof*.nc"))}
 
     # ---- per-profile statistics through the cruise
     stats = {inst: pd.DataFrame({k: v for k, v in
