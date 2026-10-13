@@ -334,6 +334,9 @@ chi_qc:
     limit: 2.7718585822512662     # |ln(chi1/chi2)| > ln(limit): probes disagree (same limit as shear)
     policy: min                   # keep the smaller estimate on disagreement (noise and spikes raise chi)
   combine: geometric              # mean of usable probes (perturb's chiMean is geometric)
+  epsilon_T:
+    k_max_ratio_min: 1.6          # epsilon_T used only where K_max/kB >= this (roll-off resolved);
+                                  # below it epsilon_T/shear is 2-6x (decisions.md 2026-10-13)
   gallery:
     per_panel: 5
     seed: 1

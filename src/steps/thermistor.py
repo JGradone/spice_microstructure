@@ -26,6 +26,12 @@ Per window:
   * at_floor: chi < factor x floor; kept and flagged, chi_bounded =
     max(chi, floor) (policy clamp).
 
+epsilon_T is only trusted where the Batchelor roll-off is resolved:
+epsilon_T_resolved = K_max/kB >= chi_qc.epsilon_T.k_max_ratio_min on the
+probes used (decisions.md 2026-10-13: below ~1.6 the fit extrapolates kB and
+epsilon_T runs 2-6x above shear epsilon; above it the single-pole response
+agrees with shear within ~20%). epsilon_T is reported everywhere; the flag
+says where to use it.
 epsilon_T assumes the Kraichnan (turbulent) spectral shape, which may not hold
 for finger-scale variance. The report compares it with shear epsilon where the
 shear estimate is above its floor, by Turner-angle regime and buoyancy
@@ -179,6 +185,9 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
     df["chi"] = combine(c, u, cfg["combine"])
     df["chi_floor"] = combine(np.column_stack([fl[p] for p in probes]), u, cfg["combine"])
     df["epsilon_T"] = combine(np.column_stack([df[f"epsilon_T_{p}"].to_numpy() for p in probes]), u, cfg["combine"])
+    kr = np.column_stack([df[f"K_max_ratio_{p}"].to_numpy() for p in probes])
+    df["K_max_ratio"] = np.where(u.any(axis=1), np.nanmin(np.where(u, kr, np.nan), axis=1), np.nan)
+    df["epsilon_T_resolved"] = df["K_max_ratio"] >= cfg["epsilon_T"]["k_max_ratio_min"]
     df["kB"] = combine(np.column_stack([df[f"kB_{p}"].to_numpy() for p in probes]), u, cfg["combine"])
     nf = cfg["noise_floor"]
     at_floor = (np.isfinite(df["chi"]) & (df["chi"] < nf["factor"] * df["chi_floor"])).to_numpy()
@@ -207,7 +216,8 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
 
 def agreement(df: pd.DataFrame, shear: pd.DataFrame, hyd: pd.DataFrame) -> pd.DataFrame:
     """epsilon_T vs shear epsilon where both are kept and shear is above its floor."""
-    m = df[["profile_file", "window", "P_mean", "nu", "epsilon_T", "chi", "keep", "at_floor"]].merge(
+    m = df[["profile_file", "window", "P_mean", "nu", "epsilon_T", "chi", "keep", "at_floor",
+            "epsilon_T_resolved", "K_max_ratio"]].merge(
         shear[["profile_file", "window", "epsilon_shear", "at_floor", "keep"]].rename(
             columns={"at_floor": "shear_at_floor", "keep": "shear_keep"}), on=["profile_file", "window"]).merge(
         hyd[["profile_file", "window", "N2", "Turner"]], on=["profile_file", "window"], how="left")
@@ -227,7 +237,7 @@ def agreement_figure(results: dict, path: Path, foot: str) -> None:
     fig, axes = plt.subplots(2, len(results), figsize=(6.4 * len(results), 10.5), squeeze=False)
     for j, (name, r) in enumerate(results.items()):
         m = r["agree"]
-        deep = m[m["P_mean"] > 150]
+        deep = m[(m["P_mean"] > 150) & m["epsilon_T_resolved"]]
         ax = axes[0, j]
         for (lab, lo, hi), c in zip(REGIMES, (ps.MUTED, ps.BLUE, ps.ORANGE)):
             s = deep[(deep["Turner"] > lo) & (deep["Turner"] <= hi)]
@@ -243,7 +253,7 @@ def agreement_figure(results: dict, path: Path, foot: str) -> None:
         ax.set_ylim(lim)
         ax.set_xlabel(r"$\epsilon_{shear}$ (above floor, W kg$^{-1}$)")
         ax.set_ylabel(r"$\epsilon_T$ (Kraichnan fit, W kg$^{-1}$)")
-        ax.set_title(f"{name}: windows below 150 dbar", fontsize=10)
+        ax.set_title(f"{name}: below 150 dbar, roll-off resolved (K_max/kB >= threshold)", fontsize=10)
         ax.legend(fontsize=7.5, loc="upper left", markerscale=4)
         ax = axes[1, j]
         bins = [-1, 0.5, 1, 1.5, 2, 3, 7]
@@ -331,6 +341,12 @@ def run(ctx: dict) -> None:
         counts["snr_median_below_150"] = {p: float(deep[f"snr_{p}"].median()) for p in data["probes"]}
         counts["probe_ratio_median_below_150"] = float(np.nanmedian(deep.loc[deep["n_probes"] == 2, "probe_ratio"])) \
             if "probe_ratio" in deep else None
+        counts["epsilon_T_resolved_fraction_below_150"] = round(float(deep["epsilon_T_resolved"].mean()), 4)
+        ar = ad[ad["epsilon_T_resolved"]]
+        counts["epsilon_T_vs_shear_below_150_resolved"] = {
+            lab: {"n": int(((ar["Turner"] > lo) & (ar["Turner"] <= hi)).sum()),
+                  "median_ratio": float(10 ** ar.loc[(ar["Turner"] > lo) & (ar["Turner"] <= hi), "log_ratio"].median())}
+            for lab, lo, hi in REGIMES}
         counts["epsilon_T_vs_shear_below_150"] = {
             lab: {"n": int(((ad["Turner"] > lo) & (ad["Turner"] <= hi)).sum()),
                   "median_ratio": float(10 ** ad.loc[(ad["Turner"] > lo) & (ad["Turner"] <= hi), "log_ratio"].median()),
@@ -343,7 +359,11 @@ def run(ctx: dict) -> None:
         print(f"  {name}: {counts['windows']} windows, kept {counts['kept']}; probe estimates removed "
               f"{counts['probe_estimates_removed']}; probes disagree {counts['probe_disagree']}; "
               f"below 150 dbar: chi median {counts['chi_median_below_150']:.1e}, at floor "
-              f"{counts['at_floor_fraction_below_150']:.0%}; epsilon_T/shear "
+              f"{counts['at_floor_fraction_below_150']:.0%}; epsilon_T resolved "
+              f"{counts['epsilon_T_resolved_fraction_below_150']:.0%}, epsilon_T/shear where resolved "
+              + ", ".join(f"{k} {v['median_ratio']:.2f} (n={v['n']})"
+                          for k, v in counts["epsilon_T_vs_shear_below_150_resolved"].items())
+              + "; all windows "
               + ", ".join(f"{k} {v['median_ratio']:.2f} (n={v['n']})" for k, v in er.items()))
     agreement_figure(results, out / "figures" / "epsilon_T_vs_shear.png", foot)
     for name, r in results.items():
