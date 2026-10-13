@@ -300,7 +300,7 @@ def main() -> int:
         "profiles": {"vmp5500": int(len(v55)), "vmp250": int(len(v250))},
         "noise_median": {"vmp5500": round(float(v55["noise"].median()), 4),
                          "vmp250": round(float(v250["noise"].median()), 4)},
-        "noise_ratio": round(float(v55["noise"].median() / v250["noise"].median()), 0),
+        "noise_ratio": int(round(float(v55["noise"].median() / v250["noise"].median()))),
         "spike_fraction_median": {"vmp5500": round(float(v55["spike_fraction"].median()), 3),
                                   "vmp250": round(float(v250["spike_fraction"].median()), 3)},
         "offset_median": {"vmp5500": round(float(v55["offset"].median()), 3),
