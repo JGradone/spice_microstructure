@@ -449,7 +449,7 @@ def main() -> int:
         "fig1_ship_hours": float(m["hours"]),
         "sbe4": {"serial": "4076", "cal_date": "2026-02-19"},
         "response": {
-            "casts": int(len(rd)), "excluded": [b[:7] for b in broken],
+            "casts": int(len(rd)), "excluded": " and ".join(b[:7] for b in broken) or "none",
             "separation_m": round(ms_off - ct_off, 2),
             "sbe3_tau_median": float(rd["sbe3_tau"].median()),
             "sbe3_tau_iqr": [float(rd["sbe3_tau"].quantile(.25)), float(rd["sbe3_tau"].quantile(.75))],
