@@ -161,3 +161,11 @@ Dated record of methods choices and why they were made. Newest entries at the bo
 * The raw 64 Hz conductivity is very spiky (excess kurtosis of the high-passed signal about 77), and the filters replace 13-18% of samples. The results do not change: 1 m salinity noise 0.0729 -> 0.0727 g/kg, offset +0.153 g/kg, N2 <= 0 in 44.6% (ship CTD 1.5%), N2 ratio to ship 3.05.
 * Reason: each 1 m bin already averages about 80 samples, so sample-level spikes average out. The problem lies at metre and longer scales (noise about 0.07 g/kg plus the systematic offset), which point despiking cannot reach. This points to the cell's response in the water rather than electronic glitches.
 * Decision: no conductivity despiking. A Lueck and Picklo (1990) thermal-mass correction is the only untested candidate for the metre-scale spikes at interfaces; it would not address the offset. VMP5500 salinity stays sourced from the ship CTD T-S relation.
+
+## 2026-10-13: Thermal-mass correction of VMP5500 conductivity
+
+* Tested the Lueck and Picklo (1990) correction (Sea-Bird celltm recursion, applied at 64 Hz to the aligned SBC1) on 42 casts against the ship CTD, 150-550 m. Parameters: Sea-Bird default (alpha 0.03, tau 7 s); Morison et al. (1994) flow-dependent values for V = 0.81 m/s (alpha 0.046, tau 10.2 s); a small grid; and a wrong-sign control.
+* Noise is unchanged: 1 m noise 0.073 g/kg in every case, and N2 <= 0 goes from 44.6% to 43.7-44.4% (ship CTD 1.5%).
+* The offset falls by 10-20% (+0.153 to +0.125-0.145 g/kg), and the wrong-sign control raises it (+0.166). Thermal mass is a real but minor part of the bias.
+* The noise is about 3x larger at sharp temperature gradients (0.111 vs 0.037 g/kg) and the VMP250 does not show it, so it is a sensor mismatch rather than real structure. Fixed C-T lag, T response matching, despiking and thermal-mass correction all fail to remove it. This is consistent with variable flushing or partial blockage of the unpumped SBE4 cell, which no fixed correction can undo.
+* Decision: no thermal-mass correction is applied. Correcting a channel that is not used would add complexity for no benefit. VMP5500 salinity stays sourced from the ship CTD T-S relation.
