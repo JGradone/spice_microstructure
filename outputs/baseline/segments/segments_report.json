@@ -1,0 +1,78 @@
+{
+  "applied": false,
+  "thresholds": {
+    "enabled": false,
+    "drop_top_m": 10,
+    "drop_bottom_m": 5,
+    "min_fall_speed_m_s": 0.2,
+    "max_fall_speed_m_s": 1.5,
+    "terminal_speed_below_m": 30,
+    "speed_cv_max": 0.05,
+    "vibration_highpass_hz": 1.0,
+    "vibration_factor": 3.0
+  },
+  "instruments": {
+    "vmp250": {
+      "windows": 6002,
+      "profiles": 131,
+      "kept": 5736,
+      "removed": 266,
+      "removed_fraction": 0.0443,
+      "flagged_by_criterion": {
+        "excluded_cast": 0,
+        "near_surface": 127,
+        "bottom_approach": 12,
+        "speed_range": 0,
+        "unsteady_speed": 233,
+        "vibration": 60,
+        "towyo": 371
+      },
+      "removed_sequentially": {
+        "excluded_cast": 0,
+        "near_surface": 127,
+        "bottom_approach": 12,
+        "speed_range": 0,
+        "unsteady_speed": 94,
+        "vibration": 33
+      },
+      "probe_exclusions_windows": {
+        "sh1": 0,
+        "sh2": 0,
+        "T1": 0,
+        "T2": 0
+      },
+      "terminal_speed_median_m_s": 0.686
+    },
+    "vmp5500": {
+      "windows": 6749,
+      "profiles": 46,
+      "kept": 6592,
+      "removed": 157,
+      "removed_fraction": 0.0233,
+      "flagged_by_criterion": {
+        "excluded_cast": 0,
+        "near_surface": 45,
+        "bottom_approach": 1,
+        "speed_range": 0,
+        "unsteady_speed": 89,
+        "vibration": 101,
+        "towyo": 0
+      },
+      "removed_sequentially": {
+        "excluded_cast": 0,
+        "near_surface": 45,
+        "bottom_approach": 1,
+        "speed_range": 0,
+        "unsteady_speed": 44,
+        "vibration": 67
+      },
+      "probe_exclusions_windows": {
+        "sh1": 312,
+        "sh2": 0,
+        "T1": 0,
+        "T2": 157
+      },
+      "terminal_speed_median_m_s": 0.813
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-12T22:48:51+00:00",
-  "config_sha256": "e6ac693c1c4ee9f87d79323a9a7d6d4bd4d33a0bb063feac9e39771f78d3c439",
-  "git_commit": "34219db41840a89678531a9c99c4cc86a653c1c6",
+  "created_utc": "2026-10-13T00:31:41+00:00",
+  "config_sha256": "25e8e7ce3405afef95fce227747f8fa708868b956403af8fcbef2b763a65f9bc",
+  "git_commit": "013f4a049181307935c987209ca1e4f0bc0e402d",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -17,9 +17,7 @@
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
   "config_path": "config/config.yaml",
   "steps": [
-    "convert",
-    "compare_archive",
-    "figures"
+    "segments"
   ],
   "manifests_verified": true
 }
