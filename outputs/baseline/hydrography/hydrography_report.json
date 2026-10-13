@@ -30,11 +30,11 @@
       "profiles_with_ship_ctd": 44,
       "sensor_offsets_m": {
         "ct": -1.57,
-        "microstructure": 0.0
+        "microstructure": 0.3
       },
       "windows": 6749,
       "windows_without_stratification": 3344,
-      "windows_N2_nonpositive": 250,
+      "windows_N2_nonpositive": 247,
       "validation_150_550m": {
         "estimates": 1804,
         "N2_nonpositive_fraction": 0.071,

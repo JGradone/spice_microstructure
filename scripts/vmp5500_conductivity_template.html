@@ -107,7 +107,7 @@ a { color: var(--accent); }
 
   <figure>
     <img src="{{FIG6}}" alt="Measured, ideal and lagged-ideal conductivity for one cast, and per-cast conductivity bias against its rate of change">
-    <figcaption><b>The cell reads a slowed version of the true signal.</b> Left: SPC_033, 150–300 m. The measured conductivity trails the ideal signal and matches it once the ideal is lagged. Right: each cast's bias against how fast conductivity was changing during the descent (per-cast correlation {{n:response.corr_bias_rate}}). Late casts (aqua) crossed gradients about 2.6× steeper, and their bias is correspondingly larger, with the same lag. The lag explains the offset but leaves the metre-scale noise, so a response-matched salinity is right on average and still too noisy for gradients. Excluded as broken: {{n:response.excluded}}.</figcaption>
+    <figcaption><b>The cell reads a slowed version of the true signal.</b> Left: SPC_033, 150–300 m. The measured conductivity trails the ideal signal and matches its trend once the ideal is lagged. The extra spikes in the measured trace sit at the staircase interfaces, where the true conductivity steps sharply: the cell overshoots at steps in a way a first-order lag does not reproduce, which is where the unexplained noise comes from. Right: each cast's bias against how fast conductivity was changing during the descent (per-cast correlation {{n:response.corr_bias_rate}}). Late casts (aqua) crossed gradients about 2.6× steeper, and their bias is correspondingly larger, with the same lag. The lag explains the offset but leaves the metre-scale noise, so a response-matched salinity is right on average and still too noisy for gradients. Excluded as broken: {{n:response.excluded}}.</figcaption>
   </figure>
 
   <figure>
