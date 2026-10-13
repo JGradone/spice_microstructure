@@ -411,3 +411,40 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   | 0.5 K_max | 0.88 / 1.01 | 0.71 / 0.85 |
 
 * **Decision:** keep perturb's K_max. There is no noise-based criterion for a lower limit, and pulling it in would just fit a different part of a non-Nasmyth shape. Carry it as a structural uncertainty in low-epsilon shear estimates: about 5% (VMP250) and 10–20% (VMP5500), in the direction of lower epsilon.
+
+## 2026-10-13: FFT and dissipation length sensitivity runs (fft2_diss16, fft2_diss8)
+
+* **Mechanism:** `--sensitivity NAME` (`src/run_pipeline.py`, every step) applies a `sensitivity_runs` entry's dotted-key overrides to a copy of the config. Output goes to `outputs/NAME/`, and the hash covers the config file plus the overrides.
+* **Runs** (chi windows set to match the epsilon windows; both ran cast_log through epsilon_shear without errors, about 12–15 min each):
+
+  | Run | FFT / diss | FFTs per window | Goodman factor | Window extent |
+  |---|---|---|---|---|
+  | baseline | 4 s / 16 s | 7 | 1.41 | 11–13 m |
+  | `fft2_diss16` | 2 s / 16 s | 15 | 1.16 | 11–13 m |
+  | `fft2_diss8` | 2 s / 8 s | 7 | 1.41 | ~6 m |
+
+  `fft2_diss8` has 12206 (VMP250) and 13562 (VMP5500) windows.
+* **Comparison** (`scripts/compare_runs.py`; `outputs/comparisons/window_lengths/`). Paired per-profile 25 m bin means, 150–550 dbar, relative to baseline (median [IQR]):
+
+  | | VMP250 epsilon | VMP250 chi | VMP5500 epsilon | VMP5500 chi |
+  |---|---|---|---|---|
+  | `fft2_diss16` | 1.03 [1.00, 1.07] | 1.01 [0.94, 1.08] | 1.02 [0.95, 1.09] | 1.00 [0.93, 1.10] |
+  | `fft2_diss8` | 1.01 [0.96, 1.06] | 1.01 [0.91, 1.13] | 0.97 [0.87, 1.08] | 1.01 [0.86, 1.16] |
+
+  * Averaged epsilon and chi do not depend on these choices once the 1 Hz refit is applied.
+  * The refit's effect does depend on them: refit/perturb median 0.66 (VMP250) and 0.74 (VMP5500) with 4 s FFTs, but 0.80–0.91 with 2 s FFTs. perturb's own epsilon depends on the FFT length through the energy below 1 Hz, and the refit removes that dependence.
+  * The Goodman correction (1.41 vs 1.16) does not change the averaged result.
+* **Other metrics** below 150 dbar:
+
+  | | VMP250 baseline / diss16 / diss8 | VMP5500 baseline / diss16 / diss8 |
+  |---|---|---|
+  | Median floor (W/kg) | 1.4e-10 / 1.7e-10 / 1.4e-10 | 1.1e-11 / 1.3e-11 / 1.0e-11 |
+  | At floor | 9% / 15% / 9% | 10% / 12% / 10% |
+  | FM > 1.15 | 13% / 29% / 6% | 63% / 75% / 50% |
+
+  * Probe disagreement is unchanged (VMP250 6–7%, VMP5500 19–21%).
+  * FM rates depend strongly on the settings, so an FM threshold does not transfer between settings.
+* **Interfaces:** 8 s windows resolve the staircase.
+  * SPC_031: chi about 1e-10 in the 301–318 dbar layer against 3e-8 at the 290–297 dbar interface. The 16 s windows give about 1e-9 to 1e-8 for both.
+  * data_0133_prof003: chi about 2e-9 in the 222–240 dbar mixed layer at 8 s against 1e-8 to 5e-8 at 16 s, with the interface near 220 dbar at about 1e-7.
+* **Recommendation, not yet adopted:** use the 2 s / 8 s settings for the regime classification and the interface/layer double-diffusion test. Report them as a difference from the baseline, which keeps the shipboard 4 s / 16 s.

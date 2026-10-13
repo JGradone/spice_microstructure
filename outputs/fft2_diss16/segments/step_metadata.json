@@ -1,0 +1,21 @@
+{
+  "step": "segments",
+  "created_utc": "2026-10-13T18:22:09+00:00",
+  "config_sha256": "bfc12c412439bd439759cd26421bcf1057a224b5488e946584efe0ac5a5335e5",
+  "git_commit": "3a1e282b80baec81a71fb28115a5de9f11295356",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "manifests_verified": true,
+  "applied": false
+}
