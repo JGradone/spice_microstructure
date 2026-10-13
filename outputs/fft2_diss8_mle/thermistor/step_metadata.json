@@ -1,8 +1,8 @@
 {
   "step": "thermistor",
-  "created_utc": "2026-10-13T19:49:11+00:00",
-  "config_sha256": "8f7e4d40ccb97b2504a9fdc0e2b6185b8269f5742f177f30f9220b4b291657a6",
-  "git_commit": "597767a804df078fa2128a6ce45fda9aa3433301",
+  "created_utc": "2026-10-13T21:02:43+00:00",
+  "config_sha256": "c899d48d5bf5e1d2bfff8fa378c2afee2d9760846eb9f49c4b26fd3cab910624",
+  "git_commit": "480fad004c92a79af1200dd9d51f743e40769e69",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -16,6 +16,6 @@
   },
   "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
-  "manifests_verified": false,
+  "manifests_verified": true,
   "segments_applied": false
 }

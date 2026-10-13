@@ -551,3 +551,28 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Inspect the spectral fits visually; perturb-diag is the package's tool, and this pipeline has its own galleries.
   * Pat considers epsilon validated against the SCOR160/ATOMIX benchmarks (within 2%). He described chi and the mixing parameters as still under review at the time.
 * **Caching:** `perturb run` reuses unchanged stages and supports `--jobs`. The `convert` step's `rmtree` defeats the reuse (docs/package_issues.md #6 retracted).
+
+## 2026-10-13: Probe exclusions from perturb's warnings; perturb cache reuse
+
+* **Exclusions (user approved; `instruments.vmp250.exclude_probes`).** Keys may now name a single profile (`data_0123_prof004`) as well as a whole file. Median shear epsilon at 40–200 dbar against neighbouring casts decided which probe was bad:
+
+  | Exclusion | sh1 (W/kg) | sh2 (W/kg) | Neighbours (W/kg) |
+  |---|---|---|---|
+  | data_0112 sh2 (whole file; test casts with M3463) | 7–8e-10 (normal) | 3.6–3.9e-9 (5× high) | — |
+  | data_0123 profile 4 and data_0124 sh2 | 6.0–6.4e-10 (normal) | 1.3–2.3e-10 (3–5× low) | 4–9e-10 |
+
+  Sargassum was logged for data_0124, so the sh2 response was probably damped. A first version excluded sh1 there and was corrected the same day.
+* **Lessons:**
+  * The `min` rule on probe disagreement assumes contamination only raises epsilon. A damaged or damped probe reads low, and `min` then picks it. Persistent per-cast disagreements need checking against neighbouring casts, not just the rule.
+  * The quietest-windows noise floor is sensitive to a low-reading probe. Before the exclusion, 176 of 232 of sh2's quietest windows came from data_0112, data_0123 and data_0124, and sh2's noise level at 2–5 Hz was 6.5e-7 instead of 2.3e-6.
+* **Result** (VMP250, `fft2_diss8_mle`, below 150 dbar):
+  * Median floor 1.4e-10 → 2.0e-10 W/kg.
+  * Windows near the floor 9% → 39%, consistent with the QC explorer's earlier note that VMP250 epsilon below 150 m sits within about 2× of its floor.
+  * Median epsilon 4.4 → 4.5e-10.
+  * epsilon_T/shear where resolved: 0.87, 0.94 and 1.21 by Turner regime.
+  * VMP5500 unchanged.
+* **perturb cache** (email from Pat Welch):
+  * `convert` no longer deletes perturb's output tree (`conversion.reuse_cache: true`). After each run it records the stage directories that match the config via perturb's own resolver (`odas_tpw.perturb.resolve.stage_dir`, strict) in `convert/stage_dirs_<instrument>.json`, which `common.single_dir` reads.
+  * `patch` reuses its files when the raw files, the edits and the package version are unchanged, so file times do not invalidate perturb's per-file cache.
+  * `conversion.jobs: 0` (one worker per core).
+  * Test on `fft2_diss8_mle`: diss and chi reused (`diss_00`, `chi_00`). The combo stages moved to `_01`, because cast_log rewrites the GPS track file. A patch-plus-convert rerun took about 3 min.

@@ -37,7 +37,7 @@
       },
       "probe_exclusions_windows": {
         "sh1": 0,
-        "sh2": 0,
+        "sh2": 592,
         "T1": 0,
         "T2": 0
       },
@@ -70,7 +70,7 @@
         "sh1": 626,
         "sh2": 0,
         "T1": 0,
-        "T2": 315
+        "T2": 6680
       },
       "terminal_speed_median_m_s": 0.813
     }
