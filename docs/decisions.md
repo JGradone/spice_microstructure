@@ -210,3 +210,23 @@ Grid over the extra lag (0–10 s) and delay (0–1 s), 40 casts with a ship CTD
 * 6 s / 0.25 s are the SBE4 response-fit cruise medians. They give the same offset as the FP07 method (+0.022) without using FP07 data.
 
 The constants are cruise-wide, not per cast; the per-cast fits used the FP07 as reference. The pipeline still uses ship CTD T–S salinity for VMP5500 gradients (unchanged).
+
+## 2026-10-13: Source of the VMP5500 salinity noise; the cast's own T–S relation as a fix
+
+Exploratory tests (session scratch scripts, not yet in the pipeline), 42 casts with a ship CTD match, 150–550 m:
+
+* Temperature is not the problem. The 1 m high-pass noise is 0.006 °C for both the SBE3 and the FP07, below the ship CTD's 0.011.
+* The salinity noise is in the conductivity. The residual from expected C (FP07 T plus ship T–S) is 0.077 mS/cm at 1 m. It is not coherent with fall speed, tilt or dT/dt.
+* At 64 Hz in SPC_031 (280–322 m), the FP07 shows sharp steps and flat layers. Inside those layers, the SBE3 wanders by 0.02–0.04 °C and the conductivity (as a temperature equivalent) by 0.05–0.1 °C, with a 4–5 s rhythm, while fall speed is steady (0.82 ± 0.003 m/s). A sensor lag can only smooth, not add structure, so the CT pair, 1.9 m up the body, is sampling water stirred and carried by the vehicle, with irregular flushing of the unpumped cell.
+* No response correction removes the noise:
+  * a fixed lag (grid over 0–10 s lag and 0–1 s delay): noise unchanged at 0.066 g/kg;
+  * a lag refitted in 10 s windows to minimise spiking: worse (0.081).
+* The cast's own T–S relation does work. Fit SA against SBE3 CT from the 6 s matched salinity in 0.5 °C CT bins with a 3-bin running mean (about 1.5 °C), then evaluate it at FP07 CT. Compared with measured C plus SBE3 T:
+  * 1 m noise 0.0019 g/kg (was 0.067);
+  * offset from ship T–S +0.025 g/kg;
+  * N2 <= 0 in 10 m fits 16% (was 39%);
+  * median R_rho 1.69 (ship 1.59).
+  * Narrower bins stay noisy: 0.1 °C bins give 0.020 g/kg, 0.25 °C bins 0.006 g/kg.
+* The remaining 10 m inversions come from FP07 temperature inversions (13% of 10 m fits; VMP250 7% in its casts reaching 400 m), likely real intrusions.
+* Caveat: with T–S derived salinity, S_z, R_rho and the Turner angle follow the T–S slope at about 1.5 °C resolution and are not independent measurements. The same is true of the current ship CTD T–S method. Compared with the ship CTD method, the cast's own T–S needs no ship match and also covers depths below 550 m.
+* Status: proposed for the hydrography step (`salinity_source: own_ts`); not yet adopted.
