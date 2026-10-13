@@ -70,10 +70,12 @@ Before sending, recheck each Likely or Question entry against the current upstre
 * Reproduce: `outputs/fft2_diss8/thermistor/figures/spectra_gallery_<instrument>.png` (observed against `spec_noise`).
 * decisions.md: 2026-10-13, thermistor step (pending).
 
-## 5. epsilon_T from the iterative Kraichnan fit about 1.6–1.8× shear epsilon (Question, pending MLE comparison)
+## 5. epsilon_T about 1.8× shear epsilon outside finger water, with either fit method (Question)
 
 * With `chi.use_epsilon: false` and `fit_method: iterative`, epsilon_T exceeds shear epsilon (shear above its noise floor, below 150 dbar) by a median 1.6–1.8×. That holds even where the fit ends at the noise floor, and outside finger-favourable water (Turner < 45°: 2.0 VMP-250, 1.9 VMP-5500).
-* The larger excesses (up to 4–9×) are in finger-favourable windows and may be physical (finger-scale variance). The baseline offset is the part to check against the MLE fit (`fit_method: mle`) before raising it.
+* The larger excesses (up to 4–9×) are in finger-favourable windows and may be physical (finger-scale variance).
+* MLE (`fit_method: mle`, 2 s / 8 s windows) changes little against iterative, as median MLE/iterative ratios: chi 1.07–1.08, epsilon_T 0.94–0.97, kB 0.99. The offset persists: epsilon_T/shear outside finger water is 1.86 (VMP-250) and 1.80 (VMP-5500).
+* Since epsilon_T is proportional to kB⁴, a ~16% kB bias explains 1.8×. The next suspect is the FP07 response correction (`fp07_model: single_pole` with the speed-dependent `lueck` tau); test run `fft2_diss8_mle_dp` uses `double_pole` with tau 3 ms.
 * Reproduce: `python src/steps/thermistor.py --config config/config.yaml --sensitivity fft2_diss8`.
 * decisions.md: 2026-10-13, thermistor step (pending).
 

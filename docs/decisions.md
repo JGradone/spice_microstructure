@@ -453,3 +453,41 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
 
 * Decision (user): regime classification and the double-diffusion tests use 2 s FFT / 8 s dissipation windows (for epsilon and chi). The baseline keeps the shipboard 4 s / 16 s, and analysis results are reported as differences from it. Reason: averaged epsilon and chi are unchanged (previous entry), and 8 s windows separate staircase interfaces from layers.
 * The analysis run `fft2_diss8_mle` also fits chi by maximum likelihood (`perturb.chi.fit_method: mle`, Ruddick et al. 2000), the method in CLAUDE.md step 5 and the first planned change after the baseline. The iterative fit (`fft2_diss8`) is kept for comparison.
+
+## 2026-10-13: thermistor step; T3304 excluded; MLE vs iterative chi; epsilon_T vs shear
+
+* **Step:** `src/steps/thermistor.py` (config `chi_qc`) post-processes perturb's per-probe chi and epsilon_T (Kraichnan fits, `use_epsilon: false`).
+  * Per probe: exclusions; K_max/kB ≥ 0.5 (applied); fom outside [1/1.15, 1.15] (flagged only).
+  * A noise floor from perturb's FP07 noise spectrum; windows near it are kept and flagged.
+  * Probe pair: limit 2.77, policy `min`. Geometric mean of the usable probes.
+  * epsilon_T is compared with shear epsilon (shear above its floor) by Turner regime and Re_b, and a spectra gallery is drawn.
+  * Chi and epsilon windows are identical (checked).
+* **VMP5500 T2 (T3304) excluded for SPC_012–SPC_039.**
+  * chi_T1/chi_T2 was 0.4–0.8 per cast from SPC_012 (0.95 on SPC_004). At signal/noise above 100 it is 0.58, so the cause is a gain error, not noise.
+  * After the swap, T1 against T3301 gives 0.98 at high signal/noise; T1 (T3303) is the same probe throughout.
+  * T3304 flat-lined on SPC_040 and was replaced. Added to `exclude_probes`.
+* **Noise and fit-quality results.**
+  * Below 150 dbar, few windows are near perturb's FP07 noise floor: 0% (VMP250) and 4% (VMP5500).
+  * The temperature-gradient spectra on both instruments carry an unmodelled plateau at about 30–200 cpm, 1–2 decades above `spec_noise`. Floors computed from `spec_noise` are therefore optimistic at high k (docs/package_issues.md #4).
+  * perturb's own soft QC found no passing probe in 23% (VMP250) and 15% (VMP5500) of windows.
+* **MLE vs iterative**, paired windows below 150 dbar, `fft2_diss8_mle` against `fft2_diss8`:
+
+  | Quantity | VMP250 MLE/iterative | VMP5500 MLE/iterative |
+  |---|---|---|
+  | chi | 1.07 | 1.08 |
+  | epsilon_T | 0.94 | 0.97 |
+  | kB | 0.99 | 0.99 |
+
+  The fit method is a minor effect. MLE stays in the analysis run, as specified.
+* **epsilon_T vs shear epsilon** (MLE, shear above its floor, below 150 dbar), median epsilon_T/epsilon_shear:
+
+  | Turner angle | VMP250 | VMP5500 |
+  |---|---|---|
+  | Tu < 45° | 1.86 | 1.80 |
+  | 45–72° | 1.33 | 1.86 |
+  | 72–90° | 2.05 | 3.25 |
+
+  * The ratio is highest at low Re_b.
+  * Within the iterative run, windows whose spectrum at K_max is still well above the high-k floor have 4–9× ratios, mostly in strong-finger water, which is consistent with finger-scale variance read as turbulence.
+  * The ~1.8× offset outside finger water is not a fit-method effect. Epsilon_T scales as kB⁴, so a ~16% kB error (for example from the FP07 response correction) would explain it. Test run `fft2_diss8_mle_dp`: double-pole FP07 response with a fixed 3 ms tau (Goto et al. 2016).
+* epsilon_T is not used to replace shear epsilon until this offset is understood.
