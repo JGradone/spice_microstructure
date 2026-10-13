@@ -233,7 +233,17 @@ def data_records_identical(raw: Path, patched: Path, header_bound: int = 65536) 
 # --------------------------------------------------------------------------
 
 def single_dir(root: Path, prefix: str) -> Path:
-    """The one <prefix>_NN directory perturb wrote under root."""
+    """The <prefix>_NN directory perturb wrote under root (convert/<instrument>).
+
+    convert records the stage directories that match the current perturb config in
+    convert/stage_dirs_<instrument>.json (perturb keeps older parameter sets in
+    other _NN directories); without that record exactly one directory must exist."""
+    root = Path(root)
+    record = root.parent / f"stage_dirs_{root.name}.json"
+    if record.exists():
+        dirs = json.loads(record.read_text())
+        if prefix in dirs:
+            return root / dirs[prefix]
     found = sorted(Path(root).glob(f"{prefix}_[0-9][0-9]"))
     if len(found) != 1:
         raise RuntimeError(f"Expected one {prefix}_NN directory in {root}, found {found}")

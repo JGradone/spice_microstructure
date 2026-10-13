@@ -9,7 +9,7 @@ probe on the same windows as shear epsilon. This step decides which probe
 estimates to use and how close each window is to the FP07 noise.
 
 Per probe and window:
-  * Probe exclusions: instruments.<name>.exclude_probes.
+  * Probe exclusions: instruments.<name>.exclude_probes (file name or profile stem).
   * K_max / kB < chi_qc.k_max_ratio.min: chi mostly extrapolated beyond the
     resolved band; flagged, dropped if `apply`.
   * fom (observed / model variance over the fit band) outside
@@ -148,7 +148,9 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
     for p in probes:
         chi = df[f"chi_{p}"].to_numpy()
         ok = base & np.isfinite(chi)
-        excl = stem.map(lambda s, p=p: p in exclude.get(f"{s}.P", exclude.get(f"{s}.p", []))).to_numpy(bool)
+        prof = df["profile_file"].str[:-3]
+        excl = (stem.map(lambda s, p=p: p in exclude.get(f"{s}.P", exclude.get(f"{s}.p", [])))
+                | prof.map(lambda s, p=p: p in exclude.get(s, []))).to_numpy(bool)
         stage["probe_exclusion"] += int((ok & excl).sum())
         ok &= ~excl
         kr_bad = df[f"K_max_ratio_{p}"].to_numpy() < kc["min"]

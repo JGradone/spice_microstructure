@@ -29,6 +29,8 @@ import sys
 from pathlib import Path
 
 import yaml
+from odas_tpw.perturb import config as perturb_cfg
+from odas_tpw.perturb.resolve import stage_dir as perturb_stage_dir
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import common  # noqa: E402
@@ -92,11 +94,14 @@ def run(ctx: dict) -> None:
         if not files:
             raise RuntimeError(f"No patched files for {name} in {patched}; run the patch step")
         output = out / name
-        # perturb suffixes output dirs by a parameter hash (diss_00, diss_01, ...);
-        # start clean so one run never mixes two parameter sets.
-        if output.exists():
+        # perturb versions each stage directory by a parameter signature
+        # (diss_00, diss_01, ...) and only reprocesses stages whose parameters
+        # or inputs changed. With conversion.reuse_cache the tree is kept and the
+        # directories matching this config are resolved after the run
+        # (stage_dirs_<instrument>.json, read by common.single_dir).
+        if output.exists() and not config["conversion"]["reuse_cache"]:
             shutil.rmtree(output)
-        output.mkdir()
+        output.mkdir(exist_ok=True)
         cfg_path = out / f"perturb_config_{name}.yaml"
         cfg_path.write_text(yaml.safe_dump(
             perturb_config(config, name, inst, patched, output, track, prov), sort_keys=False))
@@ -110,7 +115,16 @@ def run(ctx: dict) -> None:
         if run_log:
             warnings = sum(1 for line in run_log.read_text().splitlines()
                            if re.search(r"\bWARNING\b", line))
-        report[name] = {"files": len(files), "exit_code": result.returncode,
+        stage_dirs = {}
+        if result.returncode == 0:
+            pcfg = perturb_cfg.load_config(cfg_path)
+            for stage in sorted(perturb_cfg.STAGES):
+                try:
+                    stage_dirs[stage] = perturb_stage_dir(pcfg, stage, output, strict=True).name
+                except FileNotFoundError:
+                    continue
+            common.write_json(out / f"stage_dirs_{name}.json", stage_dirs)
+        report[name] = {"stage_dirs": stage_dirs, "files": len(files), "exit_code": result.returncode,
                         "perturb_summary": summary, "perturb_log": str(run_log),
                         "warnings_in_log": warnings, "outputs": inventory(output)}
         print(f"  {name}: exit {result.returncode}; {summary.splitlines()[0] if summary else ''}")

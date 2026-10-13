@@ -26,7 +26,9 @@ Flag bits (`flags` column; `keep` = no exclusion bit set):
                          a steady fall faster or slower than terminal is not flagged)
    32  vibration         accelerometer rms > vibration_factor x profile median
    64  towyo             tow-yo profile (information only, not an exclusion)
-Probe exclusions from the config are separate columns (exclude_sh1, ...).
+Probe exclusions from the config are separate columns (exclude_sh1, ...); keys of
+instruments.<name>.exclude_probes are a file name (whole file) or a profile stem
+such as data_0123_prof004 (that profile only).
 """
 
 from __future__ import annotations
@@ -150,7 +152,7 @@ def run(ctx: dict) -> None:
     prov = common.provenance(ctx["config_hash"])
     report = {"applied": bool(seg["enabled"]), "thresholds": seg, "instruments": {}}
 
-    for name, _ in common.instruments(config):
+    for name, inst in common.instruments(config):
         root = ctx["run_dir"] / "convert" / name
         diss_dir, prof_dir = common.single_dir(root, "diss"), common.single_dir(root, "profiles")
         casts = pd.read_csv(ctx["run_dir"] / "cast_log" / f"casts_{name}.csv")
@@ -161,6 +163,10 @@ def run(ctx: dict) -> None:
             stem = diss_file.name.split("_prof")[0]
             win = profile_windows(diss_file, prof_dir / diss_file.name, seg)
             win = flag(win, seg, casts.loc[stem])
+            # Profile-level exclusions: exclude_probes keys may name one profile
+            # (e.g. data_0123_prof004) instead of a whole file.
+            for probe in (inst.get("exclude_probes") or {}).get(diss_file.stem, []):
+                win[f"exclude_{probe}"] = True
             win.insert(0, "profile_file", diss_file.name)
             win.insert(0, "file", casts.loc[stem, "file"])
             frames.append(win)

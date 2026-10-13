@@ -20,6 +20,7 @@ also compared with the shipboard patched file, as information only.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
@@ -95,10 +96,6 @@ def run(ctx: dict) -> None:
         casts = pd.read_csv(cast_dir / f"casts_{name}.csv", dtype=str).set_index("file")
         files = common.raw_files(inst)
         dest = out / name
-        if dest.exists():
-            shutil.rmtree(dest)     # derived output; regenerated in full each run
-        dest.mkdir()
-
         # Group files by identical edits; one patch-config call per group.
         groups: dict[str, list[Path]] = {}
         edits_of = {}
@@ -106,9 +103,24 @@ def run(ctx: dict) -> None:
             edits_of[f.name] = common.file_edits(inst, files, f)
             if edits_of[f.name]:
                 groups.setdefault(json.dumps(edits_of[f.name], sort_keys=True), []).append(f)
-        for i, (key, members) in enumerate(groups.items()):
+        # Reuse the patched files when the raw files, the edits and the package
+        # version are unchanged: rewriting them changes their mtimes, which makes
+        # perturb reprocess everything (its per-file cache keys on size and mtime).
+        key = hashlib.sha256(json.dumps(
+            {"edits": edits_of, "raw": {f.name: f.stat().st_size for f in files},
+             "microstructure_tpw": [common.package_version("microstructure-tpw"),
+                                    common.package_commit("microstructure-tpw")]},
+            sort_keys=True).encode()).hexdigest()
+        key_file = dest / ".patch_key"
+        reuse = (key_file.exists() and key_file.read_text() == key
+                 and all((dest / f.name).exists() or (dest / f.name).is_symlink() for f in files))
+        if not reuse:
+            if dest.exists():
+                shutil.rmtree(dest)     # derived output; regenerated in full
+            dest.mkdir()
+        for i, (key_g, members) in enumerate(groups.items() if not reuse else []):
             spec_path = out / "edits" / f"{name}_{i:02d}.yaml"
-            spec_path.write_text(yaml.safe_dump(edit_spec(json.loads(key), inst, prov),
+            spec_path.write_text(yaml.safe_dump(edit_spec(json.loads(key_g), inst, prov),
                                                 sort_keys=False))
             common.run_cmd([common.tool("rsi-tpw"), "patch-config", *members,
                             "--edits", spec_path, "--batch-cal", "--out", dest], log)
@@ -118,16 +130,17 @@ def run(ctx: dict) -> None:
         rows = []
         for f in files:
             target = dest / f.name
-            status = "patched"
-            if not target.exists():
+            if not target.exists() and not target.is_symlink():
                 os.symlink(f.resolve(), target)
-                status = "linked_to_raw" if not edits_of[f.name] else "already_matched_linked"
+            status = ("patched" if not target.is_symlink() else
+                      "linked_to_raw" if not edits_of[f.name] else "already_matched_linked")
             row = {"file": f.name, "status": status,
                    "edited": ", ".join(f"{ch}.{k}" for ch, kv in
                                        edits_of[f.name].get("channels", {}).items() for k in kv)}
             row.update(verify(target, f, edits_of[f.name], casts.loc[f.name],
                               Path(inst["archive_patched"]) / f.name, log))
             rows.append(row)
+        key_file.write_text(key)
         df = pd.DataFrame(rows)
         df.to_csv(out / f"patch_report_{name}.csv", index=False)
         report[name] = {
@@ -135,6 +148,7 @@ def run(ctx: dict) -> None:
             "patched": int((df["status"] == "patched").sum()),
             "linked_to_raw": int((df["status"] != "patched").sum()),
             "edit_groups": len(groups),
+            "reused_existing_patched_files": reuse,
             "verification_failures": df.loc[~df["verified"], ["file", "problems"]]
                                      .to_dict("records"),
             "files_differing_from_archive": int((df["differs_from_archive"] != "").sum()),
