@@ -1,0 +1,84 @@
+{
+  "segments_applied": false,
+  "shear_qc": {
+    "noise_floor": {
+      "method": "quietest_windows",
+      "quantile": 0.02,
+      "factor": 2.0,
+      "policy": "clamp"
+    },
+    "figure_of_merit": {
+      "max": 1.15,
+      "apply": false
+    },
+    "var_resolved": {
+      "min": 0.5,
+      "apply": true
+    },
+    "probe_pair": {
+      "limit": 2.7718585822512662,
+      "policy": "min"
+    },
+    "combine": "geometric",
+    "gallery": {
+      "per_panel": 5,
+      "seed": 1
+    }
+  },
+  "instruments": {
+    "vmp250": {
+      "windows": 6002,
+      "after_segment_qc": 6002,
+      "probe_estimates_removed": {
+        "probe_exclusion": 0,
+        "var_resolved": 274,
+        "figure_of_merit": 0
+      },
+      "no_usable_probe": 117,
+      "probe_disagree": 361,
+      "kept": 5885,
+      "kept_at_floor": 387,
+      "kept_at_floor_fraction": 0.0658,
+      "kept_fm_high_fraction": 0.7184,
+      "noise_windows": {
+        "sh1": 115,
+        "sh2": 115
+      },
+      "noise_window_epsilon_max": {
+        "sh1": 4.0926615039442193e-10,
+        "sh2": 2.955244319623648e-10
+      },
+      "floor_median_w_kg": 2.1377422519925442e-10,
+      "floor_median_below_150dbar_w_kg": 2.351101088760118e-10,
+      "at_floor_fraction_below_150dbar": 0.1266,
+      "epsilon_median_below_150dbar_w_kg": 7.137521992131955e-10
+    },
+    "vmp5500": {
+      "windows": 6749,
+      "after_segment_qc": 6749,
+      "probe_estimates_removed": {
+        "probe_exclusion": 312,
+        "var_resolved": 51,
+        "figure_of_merit": 0
+      },
+      "no_usable_probe": 21,
+      "probe_disagree": 1238,
+      "kept": 6728,
+      "kept_at_floor": 804,
+      "kept_at_floor_fraction": 0.1195,
+      "kept_fm_high_fraction": 0.8809,
+      "noise_windows": {
+        "sh1": 126,
+        "sh2": 126
+      },
+      "noise_window_epsilon_max": {
+        "sh1": 2.254607623109551e-11,
+        "sh2": 3.862227009642273e-11
+      },
+      "floor_median_w_kg": 2.263158213471379e-11,
+      "floor_median_below_150dbar_w_kg": 2.2816583945758372e-11,
+      "at_floor_fraction_below_150dbar": 0.1401,
+      "epsilon_median_below_150dbar_w_kg": 1.1368760335391132e-10
+    }
+  }
+}

@@ -306,3 +306,29 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   * Pooling neighbouring casts was not tried: casts are 20–30 km and about 6 h apart, so pooling would blend the spice variability under study.
 * Accepted: VMP5500 R_rho from its own T–S is unbiased (median own/ship 1.01–1.04) but noisier per 10 m window (interquartile range 0.82–1.29). Use averaged R_rho, such as the 25 m and profile averages of the double-diffusion test, rather than single windows for classification.
 * Parked here (user, 2026-10-13); next work is the microstructure processing.
+
+## 2026-10-13: epsilon_shear step (baseline)
+
+`src/steps/epsilon_shear.py` post-processes perturb's per-probe shear epsilon (config `shear_qc`). Dissipation and FFT lengths stay at the shipboard 16 s and 4 s for the baseline. An 8 s dissipation window is the planned sensitivity run before the regimes step, because 16 s windows (11–13 m) span the 5–8 m staircase steps.
+
+* **Noise floor, independent of FM.**
+  * Method: the noise spectrum is the median frequency spectrum of the quietest 2% of segment-QC-passed windows, per probe. For each window, floor = epsilon × ∫noise / ∫observed over 0 < k ≤ K_max at that window's speed.
+  * It is an upper bound on the noise, since the quietest windows hold some signal.
+  * Windows with epsilon < 2 × floor are flagged `at_floor` and kept. `epsilon_shear_bounded` = max(epsilon, floor) is the upper-bound value for the double-diffusion test.
+  * Median floor below 150 dbar: 2.4e-10 W/kg (VMP250) and 2.3e-11 (VMP5500), consistent with the QC explorer's 3e-10 and 3e-11.
+  * At floor below 150 dbar: 13% (VMP250, rising to 20–40% below 250 dbar) and 14% (VMP5500, rising to about 50% near 1000 dbar).
+* **VMP5500 vibration comb.**
+  * Narrow, evenly spaced peaks at 13–39 Hz (about 10–150 cpm) in about 65% of VMP5500 windows, at all depths and in all casts.
+  * Not removed by the Goodman cleaning, but mostly above K_max at low epsilon (integration to about 8 Hz).
+  * Replacing peaks with the local median lowers the integrated variance below K_max to 0.81–0.92 of the original, versus 0.85–0.92 on the VMP250, which has no comb. So it has a negligible effect on epsilon.
+* **ATOMIX FM.** The spectra gallery (`figures/spectra_gallery_<instrument>.png`) shows that FM > 1.15 and FM > 1.5 spectra follow the Nasmyth curves below K_max about as well as FM < 1.15. On the VMP5500 a high FM mostly reflects the vibration comb entering the fit range. FM stays a flag (`apply: false`).
+* **var_resolved < 0.5:** applied; removes 274 (VMP250) and 51 (VMP5500) probe estimates.
+* **Probe pairs** (limit 2.77, policy `min`).
+  * VMP250 probes agree: median log10(e1/e2) 0.01; 6% of windows disagree.
+  * VMP5500: sh2 reads higher, median ratio about 1.5; 18% of windows disagree, 81% of them with sh2 higher.
+  * Not calibration: the sh2/sh1 spectral ratio is 1.04–1.06 at 1–4 Hz, which carries most of the low-epsilon variance, and about 1.5 below 1 Hz and above 4 Hz.
+  * It varies by cast from 0.3 to 2.2 with the same probes installed. It falls below 1 at SPC_059–061, before sh1 M3461 was replaced by M3456 at SPC_062.
+  * So one probe is intermittently noisier, and the smaller estimate is kept on disagreement.
+* **Segment QC** follows `segments.enabled` (false in the baseline).
+* **Kept:** 5885 of 6002 VMP250 windows and 6728 of 6749 VMP5500 windows; the rest have no usable probe.
+* **Outputs:** `outputs/baseline/epsilon_shear/` (window table, noise spectra, report, figures).
