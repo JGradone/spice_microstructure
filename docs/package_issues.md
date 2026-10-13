@@ -22,12 +22,28 @@ Before sending, recheck each Likely or Question entry against the current upstre
 * Reproduce: `perturb.fp07.min_corr: 0.5` in `config/config.yaml`, run `convert`, compare `T1` with `SBT1` on any VMP-5500 profile, for example SPC_033.
 * decisions.md: 2026-10-12, "compare_archive finding: VMP5500 FP07 left uncalibrated by the new version".
 
-## 2. perturb window-scale N2 and dTdz disagree with TEOS-10 on the VMP-5500 (Likely, cause not traced)
+## 2. perturb window-scale N2 and dTdz are biased by Thorpe sorting when salinity is noisy (Confirmed mechanism)
 
-* For SPC_033 at 150–250 m, perturb's per-window `N2` is about 4.5× and `dTdz` about 0.43× the values from TEOS-10 on the same profile's CT and SA. The VMP-250 values agree with TEOS-10. The shipboard archive (0.3.1) has identical values.
-* The N2 error could come from the VMP-5500's noisy salinity (an instrument problem). The dTdz error cannot: it uses temperature only, so it points at the stratification calculation, its channel choice or its units for this instrument.
-* Settings: `perturb.stratification: {enable: true, window: 2.0}`; VMP-5500 CT channels `SBT1`/`SBC1` via `perturb_overrides`.
-* Reproduce: compare `N2` and `dTdz` in `outputs/baseline/convert/vmp5500/diss_00/SPC_033_prof001.nc` with `outputs/baseline/hydrography/windows_vmp5500.csv`.
+* For SPC_033 at 150–250 m, perturb's per-window `N2` is about 4.5× and `dTdz` about 0.43× the values from TEOS-10 on the same profile's CT and SA. The VMP-250 values agree. The shipboard archive (0.3.1) has identical values.
+* **Mechanism**, traced in `odas_tpw/processing/mixing.py` (`profile_stratification` calling `_stable_window`, `perturb.stratification.window: 2.0`):
+  * In each 2 dbar window, conservative temperature is reordered by density rank (`CT_stable = CTw[argsort(sigma)]`) before the dT/dz fit.
+  * N² is taken from the sorted density halves.
+  * With the VMP-5500's noisy salinity (an unpumped SBE4; instrument problem, not package), density order is set by salinity noise. Temperature is scrambled, so dT/dz is biased low, and sorting the noise into a monotonic density profile inflates N².
+* **Reproduced with the package function** on SPC_033, 150–250 dbar, against a linear fit of CT on depth (dCT/dz = −0.070 K/m):
+
+  | Salinity input | Mean dT/dz (K/m) | Mean N² (s⁻²) |
+  |---|---|---|
+  | Measured SBC1 salinity | −0.044 | 9.4e-4 |
+  | Constant 35 PSU | −0.084 | 1.7e-4 |
+
+  Even with clean (constant) salinity, sorting makes the 2 dbar gradients about 19% steeper than the linear fit, as sorting noise always does.
+* Not a coding error, but a silent bias with no guard. These values feed perturb's `K_T`, `Gamma` and `K_rho`.
+* Suggestions:
+  * an option to sort by temperature only, or not to sort;
+  * a larger default window;
+  * a warning when the within-window Thorpe displacements are large relative to the window;
+  * a note in the docs that sorted N² is biased high on noisy profiles.
+* Reproduce: `profile_stratification(P, SBT1, S=SP_from_C(SBC1, SBT1, P), window=2.0)` against `S=35.0` on `outputs/baseline/convert/vmp5500/profiles_00/SPC_033_prof001.nc`.
 * decisions.md: 2026-10-12, "QC exploration (QC explorer page)".
 
 ## 3. Shear epsilon integrates from the lowest wavenumber; result depends on FFT length (Question)
