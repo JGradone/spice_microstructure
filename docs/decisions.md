@@ -96,3 +96,16 @@ Dated record of methods choices and why they were made. Newest entries at the bo
 * Decision: set `fp07.min_corr: 0`, which disables the gate as in 0.3.1, for the baseline. Also set the VMP5500 `fp07.reference_interval` to 1/64 s (SBT1 is a native 64 Hz channel), which silences the "interval unknown" warning. Tested on SPC_033: T1 - SBT1 = -0.02 degC median (5-95%: -0.32 to +0.10). Setting the interval alone did not help, because the correlation is genuinely below 0.5 on these deep casts. Why the lag correlation is low on the VMP5500 is worth understanding before relying on the FP07 calibration in later runs.
 * This corrects the earlier note that `fp07.min_corr` has no off switch.
 * Also found: only about 65% of 1 m bins hold a value in both runs, with equal counts new-only and archive-only. This is consistent with dissipation windows shifted by the new `epsilon.anchor`; values agree where windows align. Ratio-versus-depth plots therefore use 10 m bands.
+
+## 2026-10-12: Segment QC (step 2) flags; applied in the `segqc` run, not the baseline
+
+* The `segments` step flags every 16 s dissipation window. Epsilon and chi share one window grid, checked on all 177 profiles. Window i covers fast samples [i x 4096, i x 4096 + 8192), checked against perturb's P_mean and speed. The flags are computed in every run. The baseline does not apply them (`segments.enabled: false`), because the shipboard run had no segment QC. Applying them is the `segqc` run, reported as a difference from the baseline.
+* Thresholds come from the baseline data and are all sensitivity parameters:
+  * `drop_top_m: 10`. Epsilon is 1e-5 to 1e-4 at 5-10 m, speed is still accelerating there, and VMP5500 vibration is about 10x its deep value.
+  * `drop_bottom_m: 5`.
+  * Speed between 0.2 and 1.5 m/s.
+  * Within-window speed std/mean <= 0.05. This is 0.12-0.16 in the top 10 m and has a 99th percentile of about 0.05 below 20 m on both instruments.
+  * Accelerometer rms (1 Hz high-pass) <= 3x the profile median.
+* A first version flagged deviation from terminal speed (|speed/terminal - 1| > 0.10). It mostly removed VMP250 windows at 20-50 m that fall steadily about 8% fast, which is not a data problem: epsilon accounts for speed and the flow is well above 0.2 m/s. The test was replaced by within-window variability, which measures acceleration. The speed ratio stays in the output as information.
+* Result: 4.4% of VMP250 windows (266 of 6002) and 2.3% of VMP5500 windows (157 of 6749) are flagged. Counts by criterion, alone and in sequence, are in `segments_report.json`.
+* Open: VMP250 epsilon decays from about 1e-5 at 10 m to background by about 30 m. Ship wake and real mixed-layer turbulence cannot be told apart here. This is above the staircase depths of interest, so `drop_top_m` stays 10 m as a sensitivity parameter.

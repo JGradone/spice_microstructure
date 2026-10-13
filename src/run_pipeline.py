@@ -27,7 +27,7 @@ STEPS = [
     "cast_log",       # 0. cast table and ship track from the Sealog export
     "patch",          # 0. regenerate patched .p files from raw (per-cast edits)
     "convert",        # 1. perturb run: profiles, epsilon, chi, CTD, binning
-    "segments",       # 2. select clean segments
+    "segments",       # 2. per-window QC flags (applied when segments.enabled)
     "hydrography",    # 3. background hydrography
     "epsilon_shear",  # 4. epsilon from shear (QC and noise floor on perturb output)
     "thermistor",     # 5. chi and epsilon from FP07 (refits on perturb output)

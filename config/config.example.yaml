@@ -225,14 +225,24 @@ perturb:
   stratification: {enable: true, window: 2.0, salinity: null}
 
 segments:
-  # Extra segment QC applied after perturb (CLAUDE.md step 2). The shipboard
-  # run had none beyond perturb's profile detection (P_min, W_min, no top or
-  # bottom trim), so the baseline leaves it off.
+  # Per-window QC on the perturb dissipation windows (epsilon and chi share
+  # one window grid). Flags are always computed and reported; `enabled`
+  # decides whether later steps drop flagged windows. The shipboard run had
+  # no segment QC, so the baseline leaves it off; the `segqc` run applies it.
+  # First choices from the baseline data (decisions.md 2026-10-12); all are
+  # sensitivity parameters.
   enabled: false
-  min_fall_speed_m_s: null
-  max_fall_speed_m_s: null
-  drop_top_m: null
-  drop_bottom_m: null
+  drop_top_m: 10                  # ship wake / launch: epsilon 1e-5 to 1e-4 and VMP5500
+                                  # vibration ~10x deep values above 10 m
+  drop_bottom_m: 5                # window centres within 5 m of the profile's max pressure
+  min_fall_speed_m_s: 0.2         # shear probes need > 0.2 m/s flow (Rockland)
+  max_fall_speed_m_s: 1.5         # sanity bound
+  terminal_speed_below_m: 30      # terminal speed = median window speed below this depth
+                                  # (reported as speed_ratio; information only)
+  speed_cv_max: 0.05              # within-window speed std/mean: 0.12-0.16 in the top 10 m,
+                                  # p99 ~0.05 below 20 m (both instruments)
+  vibration_highpass_hz: 1.0      # accelerometer high-pass before the per-window rms
+  vibration_factor: 3.0           # flag rms > 3 x the profile median (99th pct ~3-5x)
 
 shear_qc:
   # Explicit noise floor test, independent of the figure of merit. Not applied
@@ -305,6 +315,8 @@ uncertainty:
 
 sensitivity_runs:
   # Each entry is its own run, reported as a difference from the baseline.
+  - name: segqc                   # planned change: apply segment QC
+    set: {segments.enabled: true}
   - name: bin10m
     set: {double_diffusion.depth_bin_m: 10}
 
