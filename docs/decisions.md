@@ -332,3 +332,23 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
 * **Segment QC** follows `segments.enabled` (false in the baseline).
 * **Kept:** 5885 of 6002 VMP250 windows and 6728 of 6749 VMP5500 windows; the rest have no usable probe.
 * **Outputs:** `outputs/baseline/epsilon_shear/` (window table, noise spectra, report, figures).
+
+## 2026-10-13: Correction — high FM marks a systematic low-wavenumber bias in shear epsilon
+
+`scripts/explain_fm.py` (figures `epsilon_shear/figures/fm_explained_<instrument>.png`) shows ln(observed/Nasmyth) along the fitted range for windows with epsilon 1e-10–1e-9 W/kg. This corrects the previous entry's statement that high-FM spectra fit Nasmyth about as well as low-FM spectra.
+
+* **The misfit is the same shape in every FM bin.**
+  * The lowest wavenumbers (k < ~0.15 K_max, about 0.3–1.5 cpm or f < ~1 Hz) are 3–5× above Nasmyth.
+  * Across the middle of the range the observed spectrum sits below Nasmyth: by about 1.8× at FM < 1.15, about 2.5× at FM 1.15–1.5, and 3–5× at FM > 1.5.
+  * On the VMP5500 the spectrum rises again toward K_max, where the vibration hump begins.
+  * Per-window misfit is mostly bias (mean ln ratio −0.2 to −0.7 on the VMP250), not random scatter. FM measures how strong this shape is.
+* **Interpretation:** low-frequency energy (vehicle motion or other non-turbulent shear below ~1 Hz; also where VMP5500 sh2 exceeds sh1 by about 1.6×) adds variance to the integral. The fitted Nasmyth is then too high, so epsilon is biased high.
+* **Size of the bias:** refitting the stored spectra over 1 Hz to K_max (Nasmyth variance matched over the same range; every third profile, below 150 dbar, epsilon 1e-11–1e-8) gives median eps(refit)/eps(perturb):
+
+  | FM bin | VMP250 | VMP5500 |
+  |---|---|---|
+  | < 1.15 | 0.73 | 0.78 |
+  | 1.15–1.5 | 0.58 | 0.70 |
+  | > 1.5 | 0.45 | 0.75 |
+
+* **Consequence:** the QC explorer's FM cut raised the chi ratio (VMP250 3.5 → 6.8) because it removed the most biased windows. Correcting the bias with a low-wavenumber cutoff is preferable to discarding windows. Not yet adopted; it needs a decision and goes into the epsilon_shear step as a config option.
