@@ -157,6 +157,11 @@ def main() -> int:
         match = ship.match(p["lat"], p["lon"], p["t0"])
         near = nearest_vmp250(p, v250)
         grid = (zgrid, hydro["CT"].values[row[name]], hydro["SA_used"].values[row[name]])
+        k = row[name]
+        on_ship = hydro["SA_from_ship"].values[k][(zgrid > STATS_DEPTHS[0]) & (zgrid < STATS_DEPTHS[1])]
+        ts_source = ("ship T–S throughout (bad conductivity)" if bool(hydro["ts_ship_only"].values[k])
+                     else "own T–S (no ship check)" if not np.isfinite(hydro["ts_bad_fraction"].values[k])
+                     else f"own T–S; {np.nanmean(on_ship > 0.5):.0%} of 150–500 m on ship values")
         stats_r = cast_stats(*grid, ship, match)
         png = out / f"{name}.png"
         figure(name, p, grid, ship, match, near, v250, png, foot)
@@ -171,7 +176,7 @@ def main() -> int:
                                       "hours": round(near[2], 1)} if near else None,
             "noiseR": None if stats_r["noise"] is None else round(stats_r["noise"], 3),
             "offsetR": None if stats_r["offset"] is None else round(stats_r["offset"], 3),
-            "notes": note, "flags": flag,
+            "tsSource": ts_source, "notes": note, "flags": flag,
             "img": "data:image/png;base64," + base64.b64encode(png.read_bytes()).decode(),
         })
 

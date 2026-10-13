@@ -63,7 +63,7 @@ select { min-width: 0; max-width: 100%; }
 
 <div class="wrap">
   <h1>VMP5500 cast comparisons</h1>
-  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. Noise and offset are measured over 150–500 m. VMP5500 temperature is the nose FP07 at the probe tips' depth. Salinity comes from the cast's own T–S relation, fitted to the Sea-Bird conductivity and temperature and smoothed over about 1.5 °C, and evaluated at the FP07 temperature. This is the hydrography step's 1 m grid. The Sea-Bird pair samples water stirred by the vehicle, so its salinity is too noisy to use directly. Salinity in temperature inversions follows the T–S curve and misses the compensation of real intrusions, so the pipeline flags those windows. The scatter that remains is unexplained noise, largest at staircase interfaces.</p>
+  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. Noise and offset are measured over 150–500 m. VMP5500 temperature is the nose FP07 at the probe tips' depth. Salinity comes from the cast's own T–S relation, fitted to the Sea-Bird conductivity and temperature and smoothed over about 1.5 °C, and evaluated at the FP07 temperature. This is the hydrography step's 1 m grid. The Sea-Bird pair samples water stirred by the vehicle, so its salinity is too noisy to use directly. Salinity in temperature inversions follows the T–S curve and misses the compensation of real intrusions, so the pipeline flags those windows. Where the cast's T–S differs from the matched ship cast by more than 0.15 g/kg, the ship's relation replaces it; casts with bad conductivity throughout use the ship's relation and stop at its 550 m reach. The scatter that remains is unexplained noise, largest at staircase interfaces.</p>
 
   <div class="bar" role="toolbar" aria-label="Step through casts">
     <button type="button" id="prev" aria-label="Previous cast">← Previous</button>
@@ -85,6 +85,7 @@ select { min-width: 0; max-width: 100%; }
       <div class="row"><span class="k">VMP250</span><span class="v" id="v250"></span></div>
       <div class="row"><span class="k">S noise</span><span class="v" id="noiseR"></span></div>
       <div class="row"><span class="k">S offset</span><span class="v" id="offsetR"></span></div>
+      <div class="row"><span class="k">Salinity</span><span class="v" id="tsSource"></span></div>
       <div class="notes" id="notesBox"><span class="k">Sealog notes and flags</span><span id="notes"></span></div>
       <p class="guide">For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
     </aside>
@@ -119,6 +120,7 @@ const META = /*__META__*/null;
     $("ship").textContent = c.ship ? `${c.ship.cast} · ${c.ship.hours} h · ${c.ship.km} km` : "none within 15 km, 6 h";
     $("v250").textContent = c.vmp250 ? `${c.vmp250.profile.slice(0, 9)} · ${c.vmp250.hours} h · ${c.vmp250.km} km` : "none within 15 km, 12 h";
     $("noiseR").textContent = c.noiseR === null ? "–" : `${c.noiseR.toFixed(3)} g/kg`;
+    $("tsSource").textContent = c.tsSource;
     $("offsetR").textContent = c.offsetR === null ? "–" : `${fmt(c.offsetR, 3)} g/kg`;
     const chips = [];
     if (c.station) chips.push(`<span class="chip">Process station</span>`);
