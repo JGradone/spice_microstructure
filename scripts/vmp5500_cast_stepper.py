@@ -4,7 +4,7 @@
 For every VMP5500 profile: conservative temperature and absolute salinity
 against depth, plus the T-S diagram, compared with the nearest ship CTD cast
 (within the hydrography step's match limits) and the nearest VMP250 profile
-(within 15 km and 12 h). Writes one PNG per cast, casts.json and a stepper
+(within 15 km and 12 h, reaching at least 100 m). Writes one PNG per cast, casts.json and a stepper
 page built from scripts/vmp5500_cast_stepper_template.html to
 <run_dir>/diagnostics/vmp5500_conductivity/casts/.
 
@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 TEMPLATE = REPO / "scripts" / "vmp5500_cast_stepper_template.html"
 VMP250_MAX_KM, VMP250_MAX_HOURS = 15.0, 12.0
+VMP250_MIN_DEPTH = 100.0        # skip false starts (some files begin with a few-metre profile)
 STATS_DEPTHS = (150, 500)
 
 
@@ -45,7 +46,7 @@ def km(lat1, lon1, lat2, lon2):
 def nearest_vmp250(p, v250):
     best = None
     for name, q in v250.items():
-        if not np.isfinite(q["lat"]):
+        if not np.isfinite(q["lat"]) or np.nanmax(q["z"]) < VMP250_MIN_DEPTH:
             continue
         d = km(p["lat"], p["lon"], q["lat"], q["lon"])
         h = abs((q["t0"] - p["t0"]).total_seconds()) / 3600
@@ -107,8 +108,9 @@ def figure(name, p, ship, match, near250, v250, path, foot):
     if match and zmax > 560:
         for ax in axes[:2]:
             ax.axhspan(550, zmax, color=ps.GRID, alpha=0.5, lw=0)
-        axes[0].text(0.98, 0.985, "below ship CTD reach", transform=axes[0].transAxes, ha="right",
-                     va="top", fontsize=7, color=ps.TEXT_2)
+        axes[0].text(0.98, 558, "below ship CTD reach (550 m)",
+                     transform=axes[0].get_yaxis_transform(), ha="right", va="top", fontsize=7,
+                     color=ps.TEXT_2)
     handles = [plt.Line2D([], [], color=c, lw=2, label=l) for c, l in lines]
     axes[2].legend(handles=handles, loc="lower right", fontsize=7.5)
     fig.suptitle(f"{name[:7]}, {p['t0']:%d %b %H:%M} UTC, {p['lat']:.3f}°N {-p['lon']:.3f}°W",
