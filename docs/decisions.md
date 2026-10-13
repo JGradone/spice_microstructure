@@ -142,3 +142,15 @@ Dated record of methods choices and why they were made. Newest entries at the bo
   * Fit scale 5-25 m changes the pooled ratio by at most about 35%.
 * With stratification fixed, the epsilon choice that moves the ratio most is the ATOMIX FM cut: the VMP250 ratio goes from 3.5 to 6.8 and the VMP5500's from 1.5 to 1.9, with about half the windows removed. Spectra must be inspected before any FM threshold is adopted; this is the next QC question. The noise-floor clamp and segment QC barely move the ratio.
 * All of this is preliminary: interface/layer classification, epsilon spectral QC and bootstrap uncertainty are not done.
+
+## 2026-10-12: VMP5500 conductivity: what the data show
+
+* Compared with the ship CTD at the same CT (T-S comparison, insensitive to heave), 150-500 m, 44 profiles:
+  * VMP5500 salinity reads +0.15 g/kg high (median). The per-profile offset ranges from +0.04 to +0.51 g/kg.
+  * Its 1 m noise is 0.073 g/kg, about 30x the VMP250's 0.0025. 10% of its 1 m bins are more than 0.1 g/kg off their local median, against none for the VMP250.
+  * The VMP250 offset is +0.006 g/kg.
+* Both noise and offset grow through the cruise: noise about 0.02-0.05 and offset +0.04-0.1 in the first casts (SPC_004 to SPC_018), against 0.06-0.15 and +0.2-0.5 from about SPC_044 (2026-08-24) on. They are barely related to fall speed (r = 0.23).
+* Calibration is ruled out as the cause. The setup.cfg coefficients for SBE4 C #4076 (cal 2026-02-19) and SBE3 T #5621 (cal 2026-03-25) match Sea-Bird's .cal files exactly.
+* Interpretation: the conductivity measurement degraded during the deployment. Contamination, fouling, damage or poor flushing of the unpumped cell are all consistent. Fouling usually biases salinity fresh, so the salty offset is unusual, and the data cannot separate these causes. Temperature gradients from the SBE3 agree with the ship CTD (T_z ratio 0.999 at 25 m fits). The SBE3's absolute temperature could not be checked independently; it is also the FP07 calibration reference.
+* Consequences: the VMP5500 salinity is not used (the hydrography step uses the ship CTD T-S relation). perturb's VMP5500 N2, which uses this conductivity, is not used either.
+* Recommended: a post-cruise Sea-Bird calibration of SBE4 #4076, and a visual inspection of the cell, to confirm.
