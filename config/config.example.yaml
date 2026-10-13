@@ -101,6 +101,9 @@ instruments:
     sensor_offsets_m:             # sensor depth minus pressure-sensor depth (+ = deeper)
       ct: -1.57                   # SBE3/SBE4 1.57 m above the pressure sensor (user, 2026-10-13)
       microstructure: 0.30        # shear/FP07 probe tips ~1 ft below the pressure sensor (user, 2026-10-13)
+    ct_match:                     # SBE3 temperature slowed to match the SBE4 cell before computing salinity (diagnostics)
+      delay_s: 0.25               # SBE4 delay relative to SBE3 (cruise median of the response fit)
+      tau_s: 6.0                  # extra first-order lag on SBE3 T (s); zeroes the T-S offset vs ship CTD
     archive_raw: /path/to/SPICE_turbulence/vmp6000_raw
     archive_patched: /path/to/SPICE_turbulence/vmp6000_patched
     archive_processed: /path/to/SPICE_turbulence/vmp6000_processed

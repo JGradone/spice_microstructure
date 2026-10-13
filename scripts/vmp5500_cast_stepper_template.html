@@ -63,7 +63,7 @@ select { min-width: 0; max-width: 100%; }
 
 <div class="wrap">
   <h1>VMP5500 cast comparisons</h1>
-  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. VMP5500 CT data sit at the CT sensor's depth, 1.57 m above the pressure sensor. Noise and offset are measured over 150–500 m. VMP5500 temperature and salinity are corrected for the Sea-Bird response lag: temperature is the nose FP07 moved to the CT sensor, and salinity uses the measured conductivity with that temperature slowed to match the SBE4 cell (time constant fitted per cast, about 6 s). The scatter that remains is unexplained noise, largest at staircase interfaces.</p>
+  <p class="lede">Every VMP5500 cast against the nearest ship CTD cast and the nearest VMP250 profile reaching 100 m, if one is within 15 km and 12 h. Depth profiles show heave between casts; the T–S panel does not, so judge salinity there. VMP5500 CT data sit at the CT sensor's depth, 1.57 m above the pressure sensor. Noise and offset are measured over 150–500 m. VMP5500 temperature is the Sea-Bird SBE3. Salinity uses the SBE4 conductivity with that temperature delayed 0.25 s and slowed by a 6 s lag, so the two sensors respond alike; no FP07 data are used. The scatter that remains is unexplained noise, largest at staircase interfaces.</p>
 
   <div class="bar" role="toolbar" aria-label="Step through casts">
     <button type="button" id="prev" aria-label="Previous cast">← Previous</button>
@@ -85,7 +85,7 @@ select { min-width: 0; max-width: 100%; }
       <div class="row"><span class="k">VMP250</span><span class="v" id="v250"></span></div>
       <div class="row"><span class="k">S noise</span><span class="v" id="noiseR"></span></div>
       <div class="row"><span class="k">S offset</span><span class="v" id="offsetR"></span></div>
-      <div class="row"><span class="k">SBE4 τ, delay</span><span class="v" id="respParams"></span></div>
+      <div class="row"><span class="k">T→C match</span><span class="v" id="respParams"></span></div>
       <div class="notes" id="notesBox"><span class="k">Sealog notes and flags</span><span id="notes"></span></div>
       <p class="guide">For reference, the VMP250's median 1 m salinity noise is 0.0025 g/kg and its offset from the ship CTD +0.006 g/kg.</p>
     </aside>
@@ -121,7 +121,7 @@ const META = /*__META__*/null;
     $("v250").textContent = c.vmp250 ? `${c.vmp250.profile.slice(0, 9)} · ${c.vmp250.hours} h · ${c.vmp250.km} km` : "none within 15 km, 12 h";
     $("noiseR").textContent = c.noiseR === null ? "–" : `${c.noiseR.toFixed(3)} g/kg`;
     $("offsetR").textContent = c.offsetR === null ? "–" : `${fmt(c.offsetR, 3)} g/kg`;
-    $("respParams").textContent = `${c.response.tau} s, ${c.response.delay} s` + (c.response.fitted ? " (fitted)" : c.brokenFit ? " (fit failed; cruise median)" : " (cruise median)");
+    $("respParams").textContent = `lag ${c.response.tau} s, delay ${c.response.delay} s`;
     const chips = [];
     if (c.station) chips.push(`<span class="chip">Process station</span>`);
     if (c.noiseR !== null) chips.push(c.noiseR > 0.05 ? `<span class="chip bad">Noisy salinity</span>` : `<span class="chip ok">Noise under 0.05</span>`);

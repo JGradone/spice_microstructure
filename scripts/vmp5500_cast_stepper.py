@@ -4,10 +4,10 @@
 For every VMP5500 profile: conservative temperature and absolute salinity
 against depth, plus the T-S diagram, compared with the nearest ship CTD cast
 (within the hydrography step's match limits) and the nearest VMP250 profile
-(within 15 km and 12 h, reaching at least 100 m), plus VMP5500
-temperature and salinity corrected for the Sea-Bird response lag (nose FP07
-temperature moved to the CT sensor; salinity from the measured conductivity
-with that temperature passed through the SBE4's fitted response). Writes one PNG per cast, casts.json and a stepper
+(within 15 km and 12 h, reaching at least 100 m). VMP5500 temperature is
+the Sea-Bird SBE3; salinity is computed from the SBE4 conductivity with that
+temperature delayed and slowed to match the cell (config
+instruments.vmp5500.ct_match). Writes one PNG per cast, casts.json and a stepper
 page built from scripts/vmp5500_cast_stepper_template.html to
 <run_dir>/diagnostics/vmp5500_conductivity/casts/.
 
@@ -35,8 +35,8 @@ sys.path.insert(0, str(REPO / "src" / "steps"))
 import common  # noqa: E402
 import plotstyle as ps  # noqa: E402
 from hydrography import ShipCTD, bin_profile  # noqa: E402
-from diagnose_vmp5500_conductivity import (SBE4_DEFAULT, SHIP_COLOR, highpass, read_profile,  # noqa: E402
-                                           response_analysis, response_corrected)
+from diagnose_vmp5500_conductivity import (SHIP_COLOR, highpass, read_profile,  # noqa: E402
+                                           response_corrected)
 import matplotlib.pyplot as plt  # noqa: E402
 
 TEMPLATE = REPO / "scripts" / "vmp5500_cast_stepper_template.html"
@@ -102,7 +102,7 @@ def figure(name, p, ship, match, near250, v250, path, foot):
     s = ts_sel(zc)
     axes[1].plot(sa_r, zc, color=ps.ORANGE, lw=1.0, zorder=3)
     axes[2].scatter(sa_r[s], ct_r[s], s=6, color=ps.ORANGE, linewidths=0, zorder=3)
-    lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (lag-corrected)"))
+    lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (Sea-Bird T matched to C)"))
     axes[0].set_xlabel("Θ (°C)")
     axes[1].set_xlabel(r"$S_A$ (g kg$^{-1}$)")
     axes[2].set_xlabel(r"$S_A$ (g kg$^{-1}$), 100–550 m")
@@ -147,7 +147,8 @@ def main() -> int:
     v55, v250 = load("vmp5500"), load("vmp250")
     offs = config["instruments"]["vmp5500"].get("sensor_offsets_m", {})
     ct_off = float(offs.get("ct", 0.0))
-    sep = float(offs.get("microstructure", 0.0)) - ct_off      # probe tips to CT sensors (m)
+    match_cfg = config["instruments"]["vmp5500"]["ct_match"]
+    params = {"delay": float(match_cfg["delay_s"]), "tau": float(match_cfg["tau_s"])}
     casts55 = pd.read_csv(run_dir / "cast_log" / "casts_vmp5500.csv").set_index("file")
 
     entries = []
@@ -158,11 +159,8 @@ def main() -> int:
         match = ship.match(p["lat"], p["lon"], p["t0"])
         near = nearest_vmp250(p, v250)
         edges = np.arange(0, np.nanmax(p["z"]) + 1, 1.0)
-        fit = response_analysis(p, ship, sep, ct_off)
-        params = ({"delay": fit["sbe4_delay"], "tau": fit["sbe4_tau"], "fitted": True}
-                  if fit and abs(fit["bias_ideal"]) <= 1.0 else {**SBE4_DEFAULT, "fitted": False})
-        corr = response_corrected(p, sep, ct_off, params["delay"], params["tau"])
-        p["SA_resp"], p["CT_resp"], p["resp_params"] = corr["SA"], corr["CT"], params
+        corr = response_corrected(p, ct_off, params["delay"], params["tau"])
+        p["SA_resp"], p["CT_resp"] = corr["SA"], corr["CT"]
         stats = cast_stats(p, ship, match, edges)
         stats_r = cast_stats(p, ship, match, edges, sa_key="SA_resp", ct_key="CT_resp")
         png = out / f"{name}.png"
@@ -181,7 +179,6 @@ def main() -> int:
             "noiseR": None if stats_r["noise"] is None else round(stats_r["noise"], 3),
             "offsetR": None if stats_r["offset"] is None else round(stats_r["offset"], 3),
             "response": params,
-            "brokenFit": bool(fit and abs(fit["bias_ideal"]) > 1.0),
             "notes": note, "flags": flag,
             "img": "data:image/png;base64," + base64.b64encode(png.read_bytes()).decode(),
         })

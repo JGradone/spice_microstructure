@@ -167,19 +167,15 @@ def fill(x: np.ndarray) -> np.ndarray:
     return out
 
 
-SBE4_DEFAULT = {"delay": 0.25, "tau": 6.0}   # cruise medians, for casts that cannot be fitted
-
-
-def response_corrected(p: dict, separation_m: float, ct_offset_m: float, delay_s: float, tau_s: float) -> dict:
-    """True temperature at the CT sensor (nose FP07 delayed by the probe-to-CT
-    separation) and salinity from the measured conductivity with that temperature
-    passed through the cell's response (delay_s, tau_s). CT uses the true temperature."""
-    v = float(np.nanmedian(p["W"][p["z"] > 20]))
-    t_true = delay(fill(p["T1"]), int(round(separation_m / v * FS_SLOW)))
-    t_cell = lowpass(delay(t_true, int(round(delay_s * FS_SLOW))), tau_s)
+def response_corrected(p: dict, ct_offset_m: float, delay_s: float, tau_s: float) -> dict:
+    """Salinity from the measured conductivity with the co-located SBE3 temperature
+    delayed (delay_s) and slowed by a first-order lag (tau_s) to match the SBE4 cell.
+    CT is the Sea-Bird temperature itself. No FP07 input."""
+    t = fill(p["T"])
+    t_cell = lowpass(delay(t, int(round(delay_s * FS_SLOW))), tau_s)
     p_ct = p["P"] + ct_offset_m
     sa = gsw.SA_from_SP(gsw.SP_from_C(fill(p["C"]), t_cell, p_ct), p_ct, p["lon"], p["lat"])
-    return {"SA": sa, "CT": gsw.CT_from_t(sa, t_true, p_ct)}
+    return {"SA": sa, "CT": gsw.CT_from_t(sa, t, p_ct)}
 
 
 def response_analysis(p: dict, ship: ShipCTD, separation_m: float, ct_offset_m: float):

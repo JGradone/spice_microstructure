@@ -197,3 +197,16 @@ Dated record of methods choices and why they were made. Newest entries at the bo
 * Decision: no spike treatment in the pipeline; VMP5500 gradients keep the ship CTD T-S salinity. A running median is acceptable for display only, labelled as such.
 
 * 2026-10-13 follow-up: the display-only 5 m running median was tried in the cast stepper and dropped; it did not make the casts easier to judge. The stepper shows the unsmoothed lag-corrected salinity.
+
+## 2026-10-13: VMP5500 salinity matches the Sea-Bird temperature to the cell, not the FP07
+
+The response-corrected VMP5500 salinity previously used the nose FP07, moved 1.87 m to the CT sensor, as the "true" temperature. That made salinity depend on the FP07 calibration and the sensor geometry. Salinity now uses only the co-located Sea-Bird pair: SBE3 temperature delayed by 0.25 s and passed through a 6 s first-order lag (config `instruments.vmp5500.ct_match`), then `SP_from_C` with the SBE4 conductivity. Temperature (Θ) is the SBE3 itself.
+
+Grid over the extra lag (0–10 s) and delay (0–1 s), 40 casts with a ship CTD match, 150–550 m, 1 m bins:
+
+* Noise does not change with the matching filter (0.065–0.068 g/kg everywhere). The metre-scale scatter is not a T–C response mismatch. For the same reason, minimising noise cannot choose the filter.
+* The median offset from the ship CTD T–S relation falls steadily with lag: +0.130 (no match), +0.057 (4 s), +0.020 (6 s, 0.25 s delay), −0.009 (8 s).
+* A lead-lag using the FP07-fitted SBE3 τ ≈ 2 s and SBE4 τ ≈ 6 s left +0.063, so the SBE3's response relative to the cell is effectively faster than that 2 s fit.
+* 6 s / 0.25 s are the SBE4 response-fit cruise medians. They give the same offset as the FP07 method (+0.022) without using FP07 data.
+
+The constants are cruise-wide, not per cast; the per-cast fits used the FP07 as reference. The pipeline still uses ship CTD T–S salinity for VMP5500 gradients (unchanged).
