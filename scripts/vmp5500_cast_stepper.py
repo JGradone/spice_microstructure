@@ -105,10 +105,7 @@ def figure(name, p, ship, match, near250, v250, path, foot):
     s = ts_sel(zc)
     axes[1].plot(sa_r, zc, color=ps.ORANGE, lw=1.0, zorder=3)
     axes[2].scatter(sa_r[s], ct_r[s], s=6, color=ps.ORANGE, linewidths=0, zorder=3)
-    rp = p["resp_params"]
-    lines.append((ps.ORANGE, f"VMP5500 {name[:7]}, response-corrected (SBE4 τ {rp['tau']:g} s, "
-                             f"delay {rp['delay']:g} s{'' if rp['fitted'] else ', cruise median'}); "
-                             f"S {DISPLAY_MEDIAN_M} m median"))
+    lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (lag-corrected; S {DISPLAY_MEDIAN_M} m median)"))
     axes[0].set_xlabel("Θ (°C)")
     axes[1].set_xlabel(r"$S_A$ (g kg$^{-1}$)")
     axes[2].set_xlabel(r"$S_A$ (g kg$^{-1}$), 100–550 m")
