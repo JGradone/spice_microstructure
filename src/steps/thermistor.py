@@ -80,7 +80,7 @@ def load(chi_dir: Path) -> dict:
     probes = None
     for f in sorted(chi_dir.glob("*_prof*.nc")):
         with netCDF4.Dataset(f) as d:
-            probes = [str(p) for p in d["probe"][:]]
+            probes = [str(p).split("_")[0] for p in d["probe"][:]]   # "T1_dT1" -> "T1"
             chi, epsT, kB, kmax, fom, kr = (read_var(d, k) for k in
                                             ("chi", "epsilon_T", "kB", "K_max_T", "fom", "K_max_ratio"))
             s, m, n, K = (read_var(d, k) for k in ("spec_gradT", "spec_batch", "spec_noise", "K"))
@@ -126,6 +126,7 @@ def combine(values: np.ndarray, use: np.ndarray, how: str) -> np.ndarray:
 
 
 def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dict) -> tuple[pd.DataFrame, dict]:
+    fl = floors(data)                                   # also adds snr_<probe> to data["df"]
     df = data["df"].merge(seg[["profile_file", "window", "keep"]].rename(columns={"keep": "segment_keep"}),
                           on=["profile_file", "window"], how="left", validate="one_to_one")
     if df["segment_keep"].isna().any():
@@ -134,7 +135,6 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
     stem = df["profile_file"].str.split("_prof").str[0]
     seg_keep = df["segment_keep"].to_numpy(bool)
     base = seg_keep if seg_enabled else np.ones(len(df), bool)
-    fl = floors(data)
     kc, fc, pair = cfg["k_max_ratio"], cfg["fom"], cfg["probe_pair"]
     counts = {"windows": len(df), "after_segment_qc": int(base.sum())}
     stage = {"probe_exclusion": 0, "k_max_ratio": 0, "fom": 0}
