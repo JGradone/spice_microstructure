@@ -55,11 +55,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run the processing chain.")
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--steps", nargs="+", choices=STEPS, default=STEPS)
+    parser.add_argument("--sensitivity", metavar="NAME",
+                        help="Run as sensitivity run NAME (config sensitivity_runs); output in its own run directory.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Check config and print the plan without running steps.")
     args = parser.parse_args()
 
     config, config_hash = common.load_config(args.config)
+    if args.sensitivity:
+        config, config_hash = common.apply_sensitivity(config, config_hash, args.sensitivity)
     todos = common.find_todos(config)
     run_name = config["run"]["name"]
     run_dir = common.run_dir_of(config)
@@ -80,6 +84,7 @@ def main() -> int:
     run_dir.mkdir(parents=True, exist_ok=True)
     common.write_json(run_dir / "run_metadata.json", {
         **common.provenance(config_hash), "config_path": str(args.config),
+        "run": config["run"],
         "steps": args.steps, "manifests_verified": True})
 
     ctx = {"config": config, "config_hash": config_hash, "run_dir": run_dir}

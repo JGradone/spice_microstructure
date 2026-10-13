@@ -9,6 +9,7 @@ Rockland .p file, and resolving per-file patch edits from the config.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import shlex
@@ -32,6 +33,28 @@ KEY_PACKAGES = ["microstructure-tpw", "thermohalinesteps", "gsw", "numpy", "scip
 def load_config(path: Path) -> tuple[dict, str]:
     raw = Path(path).read_bytes()
     return yaml.safe_load(raw), hashlib.sha256(raw).hexdigest()
+
+
+def apply_sensitivity(config: dict, config_hash: str, name: str) -> tuple[dict, str]:
+    """Config of sensitivity run `name`: its `set` overrides (dotted keys, which must
+    exist) applied to a copy, run.name = name, and a hash of the file plus overrides."""
+    runs = {r["name"]: r for r in config.get("sensitivity_runs", [])}
+    if name not in runs:
+        sys.exit(f"No sensitivity run {name!r}; defined: {', '.join(runs)}")
+    cfg = copy.deepcopy(config)
+    for key, value in runs[name]["set"].items():
+        node, parts = cfg, key.split(".")
+        for p in parts[:-1]:
+            if not isinstance(node, dict) or p not in node:
+                sys.exit(f"Sensitivity run {name!r}: {key} is not a config key")
+            node = node[p]
+        if parts[-1] not in node:
+            sys.exit(f"Sensitivity run {name!r}: {key} is not a config key")
+        node[parts[-1]] = value
+    cfg["run"]["name"] = name
+    cfg["run"]["sensitivity"] = {"of": config["run"]["name"], "set": runs[name]["set"]}
+    digest = hashlib.sha256((config_hash + json.dumps(runs[name]["set"], sort_keys=True)).encode())
+    return cfg, digest.hexdigest()
 
 
 def git_commit() -> str | None:
@@ -303,8 +326,12 @@ def step_main(step: str, run_fn) -> int:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--skip-verify", action="store_true",
                         help="Skip archive manifest verification (recorded in step metadata).")
+    parser.add_argument("--sensitivity", metavar="NAME",
+                        help="Run as sensitivity run NAME (config sensitivity_runs).")
     args = parser.parse_args()
     config, config_hash = load_config(args.config)
+    if args.sensitivity:
+        config, config_hash = apply_sensitivity(config, config_hash, args.sensitivity)
     todos = find_todos(config)
     if todos:
         sys.exit("Fill all TODO values in the config before running: " + ", ".join(todos))

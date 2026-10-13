@@ -386,6 +386,11 @@ sensitivity_runs:
     set: {hydrography.gradient_smoothing_m: 5}
   - name: strat25m
     set: {hydrography.gradient_smoothing_m: 25}
+  - name: fft2_diss16             # 2 s FFT, 16 s windows: 15 FFTs per window (Goodman factor 1.16 vs 1.41)
+    set: {perturb.epsilon.fft_sec: 2.0, perturb.chi.fft_sec: 2.0}
+  - name: fft2_diss8              # 2 s FFT, 8 s windows (~6 m): resolves staircase interfaces, 7 FFTs as baseline
+    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
+          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0}
 
 products:
   # Final exported products for use outside this repository. Layout and
