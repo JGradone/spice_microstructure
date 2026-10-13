@@ -185,3 +185,13 @@ Dated record of methods choices and why they were made. Newest entries at the bo
 * A slow cell on a steady descent through decreasing conductivity reads high, which is the salty offset. With a response-matched temperature, the salinity offset falls from +0.153 to +0.024 g/kg. Its growth late in the cruise matches steeper gradients (rate of change of C 0.009 vs 0.024 mS/cm/s, bias 0.10 vs 0.27 mS/cm, the same lag; per-cast correlation 0.42).
 * The metre-scale noise is not explained. Response-matched salinity still gives N2 <= 0 in 41% (10 m fits) and 29% (25 m fits), against 1.5% and 0.1% for the ship CTD. The extra spikes sit at staircase interfaces, where the cell overshoots sharp steps.
 * Decision: VMP5500 salinity stays sourced from the ship CTD T-S relation. The response analysis is in `scripts/diagnose_vmp5500_conductivity.py` (figure 6 of the memo). Open question for the instrument experts: why the unpumped SBE3/SBE4 respond so slowly (2 and 6 s, against about 0.07 s pumped), and what causes the overshoot at steps.
+
+## 2026-10-13: Removing the VMP5500 salinity spikes
+
+* After the response-lag correction, the remaining salinity spikes sit at staircase interfaces where the SBE4 overshoots sharp steps. Two remedies were tested on 40 casts against the ship CTD, 150-550 m:
+  * A learned linear response: a 12 s FIR filter from ideal to measured conductivity, at 8 Hz, ridge regularised, fitted leave-one-cast-out so no cast is corrected with its own comparison data.
+  * A 5 m running median on the corrected 1 m salinity.
+* Results:
+  * The learned response does not help. Noise is unchanged at 0.069 g/kg, the offset grows to +0.092 g/kg, and N2 <= 0 reaches 46%. The spikes are not a consistent linear response, which is consistent with flushing of the unpumped cell that varies with the flow.
+  * The running median removes the spikes visually (1 m scatter 0.069 -> 0.036 g/kg, partly by construction) but not the gradient problem. N2 <= 0 stays at 41% (10 m fits) and 30% (25 m fits), against 1.6% and 0.1% for the ship CTD, and R_rho stays near 1 against the ship's 1.67. A slower salinity wander over 5-20 m, not the spikes, is what corrupts N2.
+* Decision: no spike treatment in the pipeline; VMP5500 gradients keep the ship CTD T-S salinity. A running median is acceptable for display only, labelled as such.
