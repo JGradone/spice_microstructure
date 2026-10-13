@@ -121,7 +121,7 @@ def figure(name, p, ship, match, near250, v250, path, foot):
                      transform=axes[0].get_yaxis_transform(), ha="right", va="top", fontsize=7,
                      color=ps.TEXT_2)
     handles = [plt.Line2D([], [], color=c, lw=2, label=l) for c, l in lines]
-    axes[2].legend(handles=handles, loc="lower right", fontsize=7.5)
+    axes[2].legend(handles=handles, loc="upper left", fontsize=7.5)
     fig.suptitle(f"{name[:7]}, {p['t0']:%d %b %H:%M} UTC, {p['lat']:.3f}°N {-p['lon']:.3f}°W",
                  x=0.01, ha="left")
     fig.tight_layout()
