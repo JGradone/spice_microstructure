@@ -96,12 +96,12 @@ instruments:
     model: VMP-5500
     serial: "010"
     sealog_platform: VMP5500
-    salinity_source: ship_ctd_ts  # SBC1 conductivity too noisy for gradients; salinity
-                                  # from the nearest ship CTD T-S relation at the VMP's CT
+    salinity_source: own_ts       # SBC1 conductivity too noisy for gradients; salinity from
+                                  # the cast's own T-S relation at FP07 temperature (hydrography.own_ts)
     sensor_offsets_m:             # sensor depth minus pressure-sensor depth (+ = deeper)
       ct: -1.57                   # SBE3/SBE4 1.57 m above the pressure sensor (user, 2026-10-13)
       microstructure: 0.30        # shear/FP07 probe tips ~1 ft below the pressure sensor (user, 2026-10-13)
-    ct_match:                     # SBE3 temperature slowed to match the SBE4 cell before computing salinity (diagnostics)
+    ct_match:                     # SBE3 temperature slowed to match the SBE4 cell before computing salinity (own_ts)
       delay_s: 0.25               # SBE4 delay relative to SBE3 (cruise median of the response fit)
       tau_s: 6.0                  # extra first-order lag on SBE3 T (s); zeroes the T-S offset vs ship CTD
     archive_raw: /path/to/SPICE_turbulence/vmp6000_raw
@@ -278,6 +278,12 @@ hydrography:
     match_max_km: 15
     match_max_hours: 6
     ts_bin_degC: 0.05             # ship T-S relation: median SA in CT bins
+  own_ts:                         # salinity_source own_ts (decisions.md 2026-10-13)
+    sbe_temperature: SBT1         # Sea-Bird T and C used to fit the cast's T-S relation
+    sbe_conductivity: SBC1
+    fp07: T1                      # temperature the relation is evaluated at (probe-tip depth)
+    bin_degC: 0.5                 # median SA in CT bins; 0.25 still noisy (0.006 g/kg at 1 m)
+    smooth_bins: 3                # running mean over bins (~1.5 degC); sets the R_rho resolution
   # Perturb's window-scale N2 and dTdz are not used: for the VMP5500 they are
   # ~4.5x and ~0.4x the TEOS-10 values.
 

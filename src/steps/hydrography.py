@@ -18,9 +18,21 @@ Salinity source per instrument (instruments.<name>.salinity_source):
                is too noisy for gradients; undefined below the ship CTD's
                deepest (coldest) data, about 550 m, where values are NaN and
                flagged.
+  own_ts       SA from the profile's own T-S relation, evaluated at the FP07
+               temperature on the microstructure probes' depth grid. The
+               relation is fitted to salinity from the Sea-Bird conductivity
+               with the co-located SBE3 temperature matched to the cell
+               (instruments.<name>.ct_match), as the median SA in CT bins of
+               hydrography.own_ts.bin_degC smoothed over smooth_bins bins.
+               The CT pair samples water disturbed by the vehicle (decisions.md
+               2026-10-13), so measured salinity is too noisy for gradients;
+               the T-S relation averages that out while the FP07 keeps the
+               native vertical resolution. S_z, R_rho and Turner then follow
+               the T-S slope and are not independent of T_z.
 perturb's window-scale N2 and dTdz are not used (wrong for the VMP5500).
 
-Reads:  <run_dir>/convert/<instrument>/profiles_NN/*.nc (P, CT, SA, lat, lon),
+Reads:  <run_dir>/convert/<instrument>/profiles_NN/*.nc (P, CT, SA, lat, lon;
+          own_ts also the Sea-Bird T and C, the FP07 and t_slow),
         <run_dir>/segments/segments_<instrument>.csv (window centres),
         paths.ship_ctd
 Writes: <run_dir>/hydrography/
@@ -42,6 +54,7 @@ import netCDF4
 import numpy as np
 import pandas as pd
 import xarray as xr
+from scipy.signal import lfilter
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import common  # noqa: E402
@@ -97,6 +110,56 @@ def bin_profile(depth, x, edges):
     n = np.bincount(idx[ok], minlength=len(edges) - 1)
     with np.errstate(invalid="ignore"):
         return np.where(n > 0, s / np.maximum(n, 1), np.nan)
+
+
+# --------------------------------------------------------------------------
+# Salinity from the profile's own T-S relation (salinity_source own_ts)
+# --------------------------------------------------------------------------
+
+def fill(x: np.ndarray) -> np.ndarray:
+    ok = np.isfinite(x)
+    out = x.copy()
+    out[~ok] = np.interp(np.flatnonzero(~ok), np.flatnonzero(ok), x[ok])
+    return out
+
+
+def match_to_cell(t: np.ndarray, fs: float, delay_s: float, tau_s: float) -> np.ndarray:
+    """Temperature delayed by delay_s and passed through a first-order lag tau_s."""
+    n = int(round(delay_s * fs))
+    out = np.r_[np.full(n, t[0]), t[:len(t) - n]] if n > 0 else t.copy()
+    if tau_s > 0:
+        a = np.exp(-1.0 / (fs * tau_s))
+        out = lfilter([1 - a], [1, -a], out - out[0]) + out[0]
+    return out
+
+
+def ts_relation(ct: np.ndarray, sa: np.ndarray, bin_degc: float, smooth_bins: int):
+    """(CT, SA) nodes: median SA in CT bins, then a running mean over smooth_bins bins."""
+    ok = np.isfinite(ct) & np.isfinite(sa)
+    tab = pd.DataFrame({"b": np.floor(ct[ok] / bin_degc), "ct": ct[ok], "sa": sa[ok]}) \
+        .groupby("b").median().rolling(smooth_bins, center=True, min_periods=1).mean()
+    return tab["ct"].to_numpy(), tab["sa"].to_numpy()
+
+
+def own_ts_profile(d, lat: float, lon: float, ct_off: float, ms_off: float,
+                   inst: dict, cfg: dict) -> dict:
+    """Native-rate FP07 CT and SA from the profile's own T-S relation, at probe-tip pressure."""
+    g = lambda n: np.ma.filled(d[n][:].astype(float), np.nan)  # noqa: E731
+    t_s = g("t_slow")
+    fs = 1.0 / float(np.nanmedian(np.diff(t_s)))
+    P = g("P")
+    t_sbe, c_sbe, t_fp = fill(g(cfg["sbe_temperature"])), fill(g(cfg["sbe_conductivity"])), fill(g(cfg["fp07"]))
+    m = inst["ct_match"]
+    p_ct, p_tip = P + ct_off, P + ms_off
+    t_cell = match_to_cell(t_sbe, fs, float(m["delay_s"]), float(m["tau_s"]))
+    sa_m = gsw.SA_from_SP(gsw.SP_from_C(c_sbe, t_cell, p_ct), p_ct, lon, lat)
+    nodes = ts_relation(gsw.CT_from_t(sa_m, t_sbe, p_ct), sa_m, cfg["bin_degC"], cfg["smooth_bins"])
+    interp = lambda ct: np.interp(ct, *nodes, left=np.nan, right=np.nan)  # noqa: E731
+    ct = gsw.CT_from_t(np.nanmedian(sa_m), t_fp, p_tip)
+    for _ in range(2):                                # SA depends weakly on CT_from_t's SA
+        sa = interp(ct)
+        ct = gsw.CT_from_t(np.where(np.isfinite(sa), sa, np.nanmedian(sa_m)), t_fp, p_tip)
+    return {"P_tip": p_tip, "CT": ct, "SA": interp(ct), "fs": fs}
 
 
 # --------------------------------------------------------------------------
@@ -258,10 +321,12 @@ def run(ctx: dict) -> None:
                 P, CT, SA = g("P"), g("CT"), g("SA")
                 lat, lon = float(np.ma.filled(d["lat"][...], np.nan)), float(np.ma.filled(d["lon"][...], np.nan))
                 t0 = pd.Timestamp(float(d["stime"][...]), unit="s", tz="UTC")
-            latu = lat if np.isfinite(lat) else 12.0
+                latu = lat if np.isfinite(lat) else 12.0
+                own = (own_ts_profile(d, latu, lon if np.isfinite(lon) else -50.0, ct_off, ms_off,
+                                      inst, hc["own_ts"]) if source == "own_ts" else None)
             depth = -gsw.z_from_p(P, latu) + ct_off      # depth of the CT sensor
-            zmax = max(zmax, float(np.nanmax(depth)))
-            raw.append((f, P, CT, SA, depth, lat, lon, latu, t0))
+            zmax = max(zmax, float(np.nanmax(depth)) + max(ms_off - ct_off, 0.0))
+            raw.append((f, P, CT, SA, depth, lat, lon, latu, t0, own))
 
         edges = np.arange(0.0, np.ceil(zmax) + bin_m, bin_m)
         zc = (edges[:-1] + edges[1:]) / 2
@@ -272,7 +337,7 @@ def run(ctx: dict) -> None:
         meta = {"profile_file": [], "ship_cast": [], "ship_km": [], "ship_hours": [],
                 "lat": [], "lon": [], "stime": []}
         win_frames = []
-        for i, (f, P, CT, SA, depth, lat, lon, latu, t0) in enumerate(raw):
+        for i, (f, P, CT, SA, depth, lat, lon, latu, t0, own) in enumerate(raw):
             ct = bin_profile(depth, CT, edges)
             sa_own = bin_profile(depth, SA, edges)
             p = gsw.p_from_z(-zc, latu)
@@ -281,6 +346,9 @@ def run(ctx: dict) -> None:
                 sa = sa_own
             elif source == "ship_ctd_ts":
                 sa = ship.ts_salinity(m["index"], ct) if m else np.full(nz, np.nan)
+            elif source == "own_ts":                     # FP07 CT on the probe-tip depth grid
+                tip = -gsw.z_from_p(own["P_tip"], latu)
+                ct, sa = bin_profile(tip, own["CT"], edges), bin_profile(tip, own["SA"], edges)
             else:
                 raise ValueError(f"Unknown salinity_source {source!r} for {name}")
             st = stratification(zc, ct, sa, p, scale, bin_m, min_frac)
@@ -329,6 +397,11 @@ def run(ctx: dict) -> None:
             ds[k].attrs["units"] = u
         ds["T_z"].attrs["comment"] = ds["S_z"].attrs["comment"] = "z positive upward"
         ds["SA_used"].attrs["comment"] = f"salinity_source={source}"
+        ds["SA_own"].attrs["comment"] = "profiler CT-sensor salinity (perturb), at the CT sensor's depth"
+        if source == "own_ts":
+            ds["CT"].attrs["comment"] = f"FP07 {hc['own_ts']['fp07']} at the probe tips' depth"
+            ds.attrs.update({f"own_ts_{k}": str(v) for k, v in hc["own_ts"].items()})
+            ds.attrs.update({f"ct_match_{k}": v for k, v in inst["ct_match"].items()})
         ds.attrs.update({"instrument": name, "gradient_smoothing_m": scale,
                          "ct_offset_m": ct_off, "microstructure_offset_m": ms_off,
                          "salinity_source": source, "provenance": foot})
