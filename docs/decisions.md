@@ -282,3 +282,27 @@ Result:
   | Ship bins | 1.66 (1.66) | 0.93 |
 
 Remaining issue: the slope of the own T–S relation is noisy from cast to cast. In 9 casts with a VMP250 profile nearby, the 10.5–13 °C slope dSA/dCT was 0.12–0.29 (median 0.158) for the cast's own relation, against 0.14–0.17 (median 0.166) for the ship. The VMP250 median, 0.167, agrees with the ship. R_rho depends directly on this slope, so own-relation R_rho carries roughly ±30% per-cast scatter even where offsets pass the check.
+
+## 2026-10-13: VMP5500 salinity uses its own CT wherever usable; ship T–S only for bad cells
+
+User preference: use the VMP5500 CT data and avoid the ship T–S relation unless the VMP5500 data are not worth using. The per-bin ship replacement is removed.
+
+* Bad-cell check, ship-free (`hydrography.own_ts.bad_cell_check`): each profile's T–S relation is compared with the median of all VMP5500 profiles over 5.5–8 °C.
+  * Spread across the cruise there is small (median absolute deviation 0.009–0.024 g/kg).
+  * SPC_041 (+0.26 g/kg) and SPC_045 (+0.18 g/kg) exceed the 0.1 threshold; the next largest is SPC_050 (+0.07).
+  * Only these two use the matched ship cast's T–S, and they are NaN below its reach. The two 12 m second profiles (SPC_018_prof002, SPC_049_prof002) have no usable data and take the same path.
+* Ship check, flag only: `SA_ship_diff` (grid and windows) and the window flag `ts_disagrees_with_ship` (> 0.15 g/kg; 438 of 6749 windows, mostly in the thermocline above about 150 m). Nothing is replaced.
+* Tests that did not justify a change. All are scored as R_rho own/ship within ±30% at 10 m, T_z > 0, 150–550 m; the VMP250 baseline is 88%, interquartile range 0.92–1.06.
+
+  | Variant | Within ±30% | Median own/ship |
+  |---|---|---|
+  | Current (0.5 °C bins × 3) | 54–55% | 1.03 |
+  | 1.0 °C × 3 | 62% | 1.09 |
+  | 1.0 °C × 5 | 62% | 1.12 |
+  | Per-cast dT/dt (lag) regression | 55% | 1.02 |
+  | dT/dt regression + 1.0 °C × 3 | 63% | 1.07 |
+
+  * Wider smoothing reduces scatter only by biasing R_rho high.
+  * Pooling neighbouring casts was not tried: casts are 20–30 km and about 6 h apart, so pooling would blend the spice variability under study.
+* Accepted: VMP5500 R_rho from its own T–S is unbiased (median own/ship 1.01–1.04) but noisier per 10 m window (interquartile range 0.82–1.29). Use averaged R_rho, such as the 25 m and profile averages of the double-diffusion test, rather than single windows for classification.
+* Parked here (user, 2026-10-13); next work is the microstructure processing.

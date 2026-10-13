@@ -11,7 +11,7 @@
   "vmp250": null,
   "noiseR": 0.0,
   "offsetR": null,
-  "tsSource": "own T\u2013S (no ship check)",
+  "tsSource": "own T\u2013S (no ship cast to check)",
   "notes": "Before first test dive to 500 meters | Test dive to 500 m",
   "flags": "ballast tuning: 0.4 m/s, spiking"
  },
@@ -32,7 +32,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": 0.033,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "Not sure about this timestamp. Forgot to log it at the moment.",
   "flags": "ballast tuning: 1.0 m/s, vibration noise"
  },
@@ -51,9 +51,9 @@
    "hours": 2.86
   },
   "vmp250": null,
-  "noiseR": 0.001,
-  "offsetR": -0.028,
-  "tsSource": "own T\u2013S; 36% of 150\u2013500 m on ship values",
+  "noiseR": 0.002,
+  "offsetR": -0.08,
+  "tsSource": "own T\u2013S; 32% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "full charge",
   "flags": "ballast tuning: 0.85 m/s, vibration noise"
  },
@@ -73,8 +73,8 @@
   },
   "vmp250": null,
   "noiseR": 0.0,
-  "offsetR": -0.006,
-  "tsSource": "own T\u2013S; 7% of 150\u2013500 m on ship values",
+  "offsetR": -0.008,
+  "tsSource": "own T\u2013S; 6% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": "ballast tuning: 0.81 m/s, vibration noise"
  },
@@ -93,9 +93,9 @@
    "hours": 2.69
   },
   "vmp250": null,
-  "noiseR": 0.002,
-  "offsetR": -0.005,
-  "tsSource": "own T\u2013S; 10% of 150\u2013500 m on ship values",
+  "noiseR": 0.003,
+  "offsetR": -0.008,
+  "tsSource": "own T\u2013S; 9% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -114,9 +114,9 @@
    "hours": 2.66
   },
   "vmp250": null,
-  "noiseR": 0.002,
-  "offsetR": -0.001,
-  "tsSource": "own T\u2013S; 6% of 150\u2013500 m on ship values",
+  "noiseR": 0.003,
+  "offsetR": -0.01,
+  "tsSource": "own T\u2013S; 5% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -136,8 +136,8 @@
   },
   "vmp250": null,
   "noiseR": 0.001,
-  "offsetR": -0.005,
-  "tsSource": "own T\u2013S; 11% of 150\u2013500 m on ship values",
+  "offsetR": -0.011,
+  "tsSource": "own T\u2013S; 10% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "Lost red flag but overcast and raining so strobe is on",
   "flags": ""
  },
@@ -156,9 +156,9 @@
    "hours": 2.83
   },
   "vmp250": null,
-  "noiseR": 0.001,
-  "offsetR": 0.041,
-  "tsSource": "own T\u2013S; 12% of 150\u2013500 m on ship values",
+  "noiseR": 0.004,
+  "offsetR": 0.062,
+  "tsSource": "own T\u2013S; 15% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -178,8 +178,8 @@
   },
   "vmp250": null,
   "noiseR": 0.002,
-  "offsetR": 0.044,
-  "tsSource": "own T\u2013S; 33% of 150\u2013500 m on ship values",
+  "offsetR": 0.094,
+  "tsSource": "own T\u2013S; 15% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -198,9 +198,9 @@
    "hours": 2.86
   },
   "vmp250": null,
-  "noiseR": 0.001,
-  "offsetR": -0.003,
-  "tsSource": "own T\u2013S; 9% of 150\u2013500 m on ship values",
+  "noiseR": 0.002,
+  "offsetR": -0.005,
+  "tsSource": "own T\u2013S; 9% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -219,9 +219,9 @@
    "hours": 2.76
   },
   "vmp250": null,
-  "noiseR": 0.001,
-  "offsetR": 0.041,
-  "tsSource": "own T\u2013S; 27% of 150\u2013500 m on ship values",
+  "noiseR": 0.005,
+  "offsetR": 0.058,
+  "tsSource": "own T\u2013S; 23% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -237,7 +237,7 @@
   "vmp250": null,
   "noiseR": 0.008,
   "offsetR": null,
-  "tsSource": "own T\u2013S (no ship check)",
+  "tsSource": "own T\u2013S (no ship cast to check)",
   "notes": "Delayed because we had to reattach one of the screws that attaches the cable to the release body.",
   "flags": ""
  },
@@ -257,8 +257,8 @@
   },
   "vmp250": null,
   "noiseR": 0.001,
-  "offsetR": 0.057,
-  "tsSource": "own T\u2013S; 4% of 150\u2013500 m on ship values",
+  "offsetR": 0.058,
+  "tsSource": "own T\u2013S; 4% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "~16.34V initial",
   "flags": ""
  },
@@ -282,8 +282,8 @@
    "hours": 0.3
   },
   "noiseR": 0.001,
-  "offsetR": 0.026,
-  "tsSource": "own T\u2013S; 32% of 150\u2013500 m on ship values",
+  "offsetR": 0.055,
+  "tsSource": "own T\u2013S; 28% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "Co-located with VMP250",
   "flags": ""
  },
@@ -303,8 +303,8 @@
   },
   "vmp250": null,
   "noiseR": 0.0,
-  "offsetR": 0.028,
-  "tsSource": "own T\u2013S; 13% of 150\u2013500 m on ship values",
+  "offsetR": 0.04,
+  "tsSource": "own T\u2013S; 13% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -325,7 +325,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": 0.015,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -346,7 +346,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": 0.001,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -367,7 +367,7 @@
   "vmp250": null,
   "noiseR": 0.002,
   "offsetR": 0.018,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -390,9 +390,9 @@
    "km": 0.3,
    "hours": 4.4
   },
-  "noiseR": 0.002,
+  "noiseR": 0.004,
   "offsetR": 0.017,
-  "tsSource": "own T\u2013S; 8% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 6% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -417,7 +417,7 @@
   },
   "noiseR": 0.001,
   "offsetR": 0.018,
-  "tsSource": "own T\u2013S; 2% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 1% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -437,8 +437,8 @@
   },
   "vmp250": null,
   "noiseR": 0.0,
-  "offsetR": 0.066,
-  "tsSource": "own T\u2013S; 10% of 150\u2013500 m on ship values",
+  "offsetR": 0.088,
+  "tsSource": "own T\u2013S; 10% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": "short file (31 min); check whether the cast completed"
  },
@@ -459,7 +459,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": 0.003,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -480,7 +480,7 @@
   "vmp250": null,
   "noiseR": 0.006,
   "offsetR": 0.025,
-  "tsSource": "own T\u2013S; 2% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 1% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -501,7 +501,7 @@
   "vmp250": null,
   "noiseR": 0.029,
   "offsetR": 0.004,
-  "tsSource": "ship T\u2013S throughout (bad conductivity)",
+  "tsSource": "ship T\u2013S (bad conductivity cell)",
   "notes": "",
   "flags": ""
  },
@@ -522,7 +522,7 @@
   "vmp250": null,
   "noiseR": 0.002,
   "offsetR": null,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S (no ship cast to check)",
   "notes": "",
   "flags": ""
  },
@@ -543,7 +543,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": 0.007,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -562,9 +562,9 @@
    "hours": 2.11
   },
   "vmp250": null,
-  "noiseR": 0.0,
-  "offsetR": 0.045,
-  "tsSource": "own T\u2013S; 30% of 150\u2013500 m on ship values",
+  "noiseR": 0.004,
+  "offsetR": 0.091,
+  "tsSource": "own T\u2013S; 29% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -585,7 +585,7 @@
   "vmp250": null,
   "noiseR": 0.002,
   "offsetR": -0.0,
-  "tsSource": "ship T\u2013S throughout (bad conductivity)",
+  "tsSource": "ship T\u2013S (bad conductivity cell)",
   "notes": "",
   "flags": ""
  },
@@ -604,9 +604,9 @@
    "hours": 2.44
   },
   "vmp250": null,
-  "noiseR": 0.0,
-  "offsetR": -0.002,
-  "tsSource": "own T\u2013S; 6% of 150\u2013500 m on ship values",
+  "noiseR": 0.003,
+  "offsetR": -0.003,
+  "tsSource": "own T\u2013S; 5% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -625,9 +625,9 @@
    "hours": 1.63
   },
   "vmp250": null,
-  "noiseR": 0.001,
-  "offsetR": -0.021,
-  "tsSource": "own T\u2013S; 27% of 150\u2013500 m on ship values",
+  "noiseR": 0.005,
+  "offsetR": -0.077,
+  "tsSource": "own T\u2013S; 27% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -646,9 +646,9 @@
    "hours": 0.89
   },
   "vmp250": null,
-  "noiseR": 0.003,
-  "offsetR": 0.023,
-  "tsSource": "own T\u2013S; 27% of 150\u2013500 m on ship values",
+  "noiseR": 0.005,
+  "offsetR": 0.112,
+  "tsSource": "own T\u2013S; 23% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -667,9 +667,9 @@
    "hours": 2.49
   },
   "vmp250": null,
-  "noiseR": 0.0,
-  "offsetR": 0.052,
-  "tsSource": "own T\u2013S; 12% of 150\u2013500 m on ship values",
+  "noiseR": 0.001,
+  "offsetR": 0.06,
+  "tsSource": "own T\u2013S; 7% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -690,7 +690,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": 0.014,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -710,8 +710,8 @@
   },
   "vmp250": null,
   "noiseR": 0.001,
-  "offsetR": 0.049,
-  "tsSource": "own T\u2013S; 39% of 150\u2013500 m on ship values",
+  "offsetR": 0.117,
+  "tsSource": "own T\u2013S; 29% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -732,7 +732,7 @@
   "vmp250": null,
   "noiseR": 0.001,
   "offsetR": -0.001,
-  "tsSource": "own T\u2013S; 4% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 3% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -755,9 +755,9 @@
    "km": 0.1,
    "hours": 9.2
   },
-  "noiseR": 0.002,
-  "offsetR": 0.03,
-  "tsSource": "own T\u2013S; 18% of 150\u2013500 m on ship values",
+  "noiseR": 0.003,
+  "offsetR": 0.079,
+  "tsSource": "own T\u2013S; 18% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -782,7 +782,7 @@
   },
   "noiseR": 0.001,
   "offsetR": 0.061,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -806,8 +806,8 @@
    "hours": 6.9
   },
   "noiseR": 0.001,
-  "offsetR": 0.015,
-  "tsSource": "own T\u2013S; 26% of 150\u2013500 m on ship values",
+  "offsetR": 0.063,
+  "tsSource": "own T\u2013S; 17% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -830,9 +830,9 @@
    "km": 0.5,
    "hours": 5.8
   },
-  "noiseR": 0.001,
+  "noiseR": 0.002,
   "offsetR": 0.013,
-  "tsSource": "own T\u2013S; 7% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 5% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -857,7 +857,7 @@
   },
   "noiseR": 0.0,
   "offsetR": 0.022,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -882,7 +882,7 @@
   },
   "noiseR": 0.0,
   "offsetR": 0.028,
-  "tsSource": "own T\u2013S; 2% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 2% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -902,8 +902,8 @@
   },
   "vmp250": null,
   "noiseR": 0.002,
-  "offsetR": 0.034,
-  "tsSource": "own T\u2013S; 3% of 150\u2013500 m on ship values",
+  "offsetR": 0.013,
+  "tsSource": "own T\u2013S; 3% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -922,9 +922,9 @@
    "hours": 2.37
   },
   "vmp250": null,
-  "noiseR": 0.001,
+  "noiseR": 0.002,
   "offsetR": 0.024,
-  "tsSource": "own T\u2013S; 7% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 7% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  },
@@ -945,7 +945,7 @@
   "vmp250": null,
   "noiseR": 0.002,
   "offsetR": 0.05,
-  "tsSource": "own T\u2013S; 0% of 150\u2013500 m on ship values",
+  "tsSource": "own T\u2013S; 0% of 150\u2013500 m differs from ship by > 0.15 g/kg",
   "notes": "",
   "flags": ""
  }
