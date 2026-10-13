@@ -11,13 +11,14 @@
   "vmp250": null,
   "noise": 0.015,
   "offset": null,
-  "noiseTM": 0.015,
-  "offsetTM": null,
-  "thermalMass": {
-   "speed": 0.4,
-   "alpha": 0.0801,
-   "tau": 11.57
+  "noiseR": 0.02,
+  "offsetR": null,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": false
   },
+  "brokenFit": false,
   "notes": "Before first test dive to 500 meters | Test dive to 500 m",
   "flags": "ballast tuning: 0.4 m/s, spiking"
  },
@@ -38,13 +39,14 @@
   "vmp250": null,
   "noise": 0.051,
   "offset": 0.158,
-  "noiseTM": 0.05,
-  "offsetTM": 0.147,
-  "thermalMass": {
-   "speed": 1.0,
-   "alpha": 0.0399,
-   "tau": 9.94
+  "noiseR": 0.028,
+  "offsetR": 0.023,
+  "response": {
+   "delay": 3.0,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "Not sure about this timestamp. Forgot to log it at the moment.",
   "flags": "ballast tuning: 1.0 m/s, vibration noise"
  },
@@ -65,13 +67,14 @@
   "vmp250": null,
   "noise": 0.019,
   "offset": 0.041,
-  "noiseTM": 0.018,
-  "offsetTM": 0.029,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.028,
+  "offsetR": -0.013,
+  "response": {
+   "delay": 0.5,
+   "tau": 2.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "full charge",
   "flags": "ballast tuning: 0.85 m/s, vibration noise"
  },
@@ -92,13 +95,14 @@
   "vmp250": null,
   "noise": 0.046,
   "offset": 0.106,
-  "noiseTM": 0.046,
-  "offsetTM": 0.097,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.041,
+  "offsetR": -0.014,
+  "response": {
+   "delay": 0.5,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": "ballast tuning: 0.81 m/s, vibration noise"
  },
@@ -119,13 +123,14 @@
   "vmp250": null,
   "noise": 0.066,
   "offset": 0.098,
-  "noiseTM": 0.066,
-  "offsetTM": 0.088,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.066,
+  "offsetR": 0.019,
+  "response": {
+   "delay": 0.25,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -146,13 +151,14 @@
   "vmp250": null,
   "noise": 0.05,
   "offset": 0.104,
-  "noiseTM": 0.049,
-  "offsetTM": 0.095,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.05,
+  "offsetR": 0.039,
+  "response": {
+   "delay": 0.25,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -173,13 +179,14 @@
   "vmp250": null,
   "noise": 0.034,
   "offset": 0.082,
-  "noiseTM": 0.034,
-  "offsetTM": 0.072,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0459,
-   "tau": 10.24
+  "noiseR": 0.035,
+  "offsetR": -0.054,
+  "response": {
+   "delay": 0.0,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "Lost red flag but overcast and raining so strobe is on",
   "flags": ""
  },
@@ -200,13 +207,14 @@
   "vmp250": null,
   "noise": 0.093,
   "offset": 0.195,
-  "noiseTM": 0.092,
-  "offsetTM": 0.186,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.096,
+  "offsetR": 0.016,
+  "response": {
+   "delay": 0.75,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -227,13 +235,14 @@
   "vmp250": null,
   "noise": 0.102,
   "offset": 0.215,
-  "noiseTM": 0.103,
-  "offsetTM": 0.203,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.103,
+  "offsetR": 0.041,
+  "response": {
+   "delay": 0.0,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -254,13 +263,14 @@
   "vmp250": null,
   "noise": 0.045,
   "offset": 0.063,
-  "noiseTM": 0.045,
-  "offsetTM": 0.058,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.057,
+  "offsetR": -0.033,
+  "response": {
+   "delay": 1.0,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -281,13 +291,14 @@
   "vmp250": null,
   "noise": 0.087,
   "offset": 0.128,
-  "noiseTM": 0.088,
-  "offsetTM": 0.122,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.25
+  "noiseR": 0.092,
+  "offsetR": 0.021,
+  "response": {
+   "delay": 0.0,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -303,13 +314,14 @@
   "vmp250": null,
   "noise": 0.098,
   "offset": null,
-  "noiseTM": 0.098,
-  "offsetTM": null,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.101,
+  "offsetR": null,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": false
   },
+  "brokenFit": false,
   "notes": "Delayed because we had to reattach one of the screws that attaches the cable to the release body.",
   "flags": ""
  },
@@ -330,13 +342,14 @@
   "vmp250": null,
   "noise": 0.06,
   "offset": 0.109,
-  "noiseTM": 0.059,
-  "offsetTM": 0.105,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.054,
+  "offsetR": -0.007,
+  "response": {
+   "delay": 0.75,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "~16.34V initial",
   "flags": ""
  },
@@ -361,13 +374,14 @@
   },
   "noise": 0.069,
   "offset": 0.109,
-  "noiseTM": 0.069,
-  "offsetTM": 0.104,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0457,
-   "tau": 10.22
+  "noiseR": 0.072,
+  "offsetR": -0.024,
+  "response": {
+   "delay": 0.0,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "Co-located with VMP250",
   "flags": ""
  },
@@ -388,13 +402,14 @@
   "vmp250": null,
   "noise": 0.053,
   "offset": 0.11,
-  "noiseTM": 0.053,
-  "offsetTM": 0.104,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0463,
-   "tau": 10.25
+  "noiseR": 0.055,
+  "offsetR": 0.02,
+  "response": {
+   "delay": 0.0,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -415,13 +430,14 @@
   "vmp250": null,
   "noise": 0.047,
   "offset": 0.055,
-  "noiseTM": 0.048,
-  "offsetTM": 0.052,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.25
+  "noiseR": 0.054,
+  "offsetR": -0.023,
+  "response": {
+   "delay": 1.25,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -442,13 +458,14 @@
   "vmp250": null,
   "noise": 0.053,
   "offset": 0.05,
-  "noiseTM": 0.053,
-  "offsetTM": 0.046,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.054,
+  "offsetR": -0.048,
+  "response": {
+   "delay": 1.25,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -469,13 +486,14 @@
   "vmp250": null,
   "noise": 0.075,
   "offset": 0.073,
-  "noiseTM": 0.074,
-  "offsetTM": 0.068,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0457,
-   "tau": 10.23
+  "noiseR": 0.066,
+  "offsetR": 0.003,
+  "response": {
+   "delay": 1.0,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -500,13 +518,14 @@
   },
   "noise": 0.071,
   "offset": 0.109,
-  "noiseTM": 0.071,
-  "offsetTM": 0.102,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.24
+  "noiseR": 0.074,
+  "offsetR": 0.013,
+  "response": {
+   "delay": 0.25,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -531,13 +550,14 @@
   },
   "noise": 0.047,
   "offset": 0.101,
-  "noiseTM": 0.046,
-  "offsetTM": 0.094,
-  "thermalMass": {
-   "speed": 0.83,
-   "alpha": 0.0452,
-   "tau": 10.2
+  "noiseR": 0.048,
+  "offsetR": 0.028,
+  "response": {
+   "delay": 0.5,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -558,13 +578,14 @@
   "vmp250": null,
   "noise": 0.075,
   "offset": 0.163,
-  "noiseTM": 0.076,
-  "offsetTM": 0.158,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.24
+  "noiseR": 0.081,
+  "offsetR": 0.056,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": "short file (31 min); check whether the cast completed"
  },
@@ -585,13 +606,14 @@
   "vmp250": null,
   "noise": 0.058,
   "offset": 0.074,
-  "noiseTM": 0.057,
-  "offsetTM": 0.068,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.057,
+  "offsetR": -0.014,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -612,13 +634,14 @@
   "vmp250": null,
   "noise": 0.079,
   "offset": 0.102,
-  "noiseTM": 0.079,
-  "offsetTM": 0.096,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0462,
-   "tau": 10.25
+  "noiseR": 0.075,
+  "offsetR": -0.005,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -639,13 +662,14 @@
   "vmp250": null,
   "noise": 0.151,
   "offset": 0.472,
-  "noiseTM": 0.151,
-  "offsetTM": 0.464,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.154,
+  "offsetR": 0.317,
+  "response": {
+   "delay": 0.0,
+   "tau": 10.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -666,13 +690,14 @@
   "vmp250": null,
   "noise": 0.065,
   "offset": NaN,
-  "noiseTM": 0.064,
-  "offsetTM": NaN,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.25
+  "noiseR": 0.065,
+  "offsetR": NaN,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": false
   },
+  "brokenFit": true,
   "notes": "",
   "flags": ""
  },
@@ -693,13 +718,14 @@
   "vmp250": null,
   "noise": 0.037,
   "offset": 0.082,
-  "noiseTM": 0.037,
-  "offsetTM": 0.076,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.043,
+  "offsetR": -0.014,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -720,13 +746,14 @@
   "vmp250": null,
   "noise": 0.112,
   "offset": 0.244,
-  "noiseTM": 0.111,
-  "offsetTM": 0.226,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.111,
+  "offsetR": 0.071,
+  "response": {
+   "delay": 0.0,
+   "tau": 8.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -747,13 +774,14 @@
   "vmp250": null,
   "noise": 0.14,
   "offset": 0.53,
-  "noiseTM": 0.14,
-  "offsetTM": 0.524,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.146,
+  "offsetR": 0.444,
+  "response": {
+   "delay": 0.0,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -774,13 +802,14 @@
   "vmp250": null,
   "noise": 0.073,
   "offset": 0.144,
-  "noiseTM": 0.073,
-  "offsetTM": 0.131,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0462,
-   "tau": 10.25
+  "noiseR": 0.076,
+  "offsetR": 0.025,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -801,13 +830,14 @@
   "vmp250": null,
   "noise": 0.09,
   "offset": 0.101,
-  "noiseTM": 0.09,
-  "offsetTM": 0.088,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.089,
+  "offsetR": 0.042,
+  "response": {
+   "delay": 0.0,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -828,13 +858,14 @@
   "vmp250": null,
   "noise": 0.138,
   "offset": 0.244,
-  "noiseTM": 0.138,
-  "offsetTM": 0.228,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.25
+  "noiseR": 0.13,
+  "offsetR": 0.144,
+  "response": {
+   "delay": 0.75,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -855,13 +886,14 @@
   "vmp250": null,
   "noise": 0.101,
   "offset": 0.244,
-  "noiseTM": 0.101,
-  "offsetTM": 0.227,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0462,
-   "tau": 10.25
+  "noiseR": 0.101,
+  "offsetR": 0.084,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -882,13 +914,14 @@
   "vmp250": null,
   "noise": 0.069,
   "offset": 0.176,
-  "noiseTM": 0.069,
-  "offsetTM": 0.16,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.25
+  "noiseR": 0.069,
+  "offsetR": 0.11,
+  "response": {
+   "delay": 0.25,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -909,13 +942,14 @@
   "vmp250": null,
   "noise": 0.115,
   "offset": 0.289,
-  "noiseTM": 0.114,
-  "offsetTM": 0.273,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.114,
+  "offsetR": 0.143,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -936,13 +970,14 @@
   "vmp250": null,
   "noise": 0.066,
   "offset": 0.153,
-  "noiseTM": 0.066,
-  "offsetTM": 0.139,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0458,
-   "tau": 10.23
+  "noiseR": 0.069,
+  "offsetR": 0.04,
+  "response": {
+   "delay": 0.5,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -967,13 +1002,14 @@
   },
   "noise": 0.092,
   "offset": 0.246,
-  "noiseTM": 0.092,
-  "offsetTM": 0.231,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.096,
+  "offsetR": 0.148,
+  "response": {
+   "delay": 0.5,
+   "tau": 4.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -998,13 +1034,14 @@
   },
   "noise": 0.094,
   "offset": 0.232,
-  "noiseTM": 0.093,
-  "offsetTM": 0.216,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.088,
+  "offsetR": 0.089,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1029,13 +1066,14 @@
   },
   "noise": 0.097,
   "offset": 0.236,
-  "noiseTM": 0.096,
-  "offsetTM": 0.22,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0457,
-   "tau": 10.22
+  "noiseR": 0.098,
+  "offsetR": 0.101,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1060,13 +1098,14 @@
   },
   "noise": 0.097,
   "offset": 0.18,
-  "noiseTM": 0.097,
-  "offsetTM": 0.16,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0459,
-   "tau": 10.23
+  "noiseR": 0.093,
+  "offsetR": 0.037,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1091,13 +1130,14 @@
   },
   "noise": 0.066,
   "offset": 0.168,
-  "noiseTM": 0.066,
-  "offsetTM": 0.153,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0461,
-   "tau": 10.25
+  "noiseR": 0.065,
+  "offsetR": 0.104,
+  "response": {
+   "delay": 0.25,
+   "tau": 2.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1122,13 +1162,14 @@
   },
   "noise": 0.079,
   "offset": 0.18,
-  "noiseTM": 0.079,
-  "offsetTM": 0.166,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.046,
-   "tau": 10.24
+  "noiseR": 0.083,
+  "offsetR": 0.27,
+  "response": {
+   "delay": 0.5,
+   "tau": 1.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1149,13 +1190,14 @@
   "vmp250": null,
   "noise": 0.124,
   "offset": 0.374,
-  "noiseTM": 0.123,
-  "offsetTM": 0.347,
-  "thermalMass": {
-   "speed": 0.81,
-   "alpha": 0.0459,
-   "tau": 10.24
+  "noiseR": 0.118,
+  "offsetR": 0.011,
+  "response": {
+   "delay": 0.25,
+   "tau": 6.0,
+   "fitted": false
   },
+  "brokenFit": true,
   "notes": "",
   "flags": ""
  },
@@ -1176,13 +1218,14 @@
   "vmp250": null,
   "noise": 0.062,
   "offset": 0.174,
-  "noiseTM": 0.062,
-  "offsetTM": 0.158,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0459,
-   "tau": 10.24
+  "noiseR": 0.067,
+  "offsetR": 0.009,
+  "response": {
+   "delay": 0.0,
+   "tau": 6.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  },
@@ -1203,13 +1246,14 @@
   "vmp250": null,
   "noise": 0.094,
   "offset": 0.211,
-  "noiseTM": 0.094,
-  "offsetTM": 0.194,
-  "thermalMass": {
-   "speed": 0.82,
-   "alpha": 0.0459,
-   "tau": 10.24
+  "noiseR": 0.08,
+  "offsetR": -0.08,
+  "response": {
+   "delay": 0.75,
+   "tau": 10.0,
+   "fitted": true
   },
+  "brokenFit": false,
   "notes": "",
   "flags": ""
  }
