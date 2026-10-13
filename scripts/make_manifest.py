@@ -4,8 +4,8 @@
 Standard library only, so it runs before the project environment exists.
 
 Usage:
-    python scripts/make_manifest.py write  DATA_DIR MANIFEST.csv
-    python scripts/make_manifest.py verify DATA_DIR MANIFEST.csv
+    python scripts/make_manifest.py write  DATA_DIR_OR_FILE MANIFEST.csv
+    python scripts/make_manifest.py verify DATA_DIR_OR_FILE MANIFEST.csv
 
 The manifest is a CSV with columns: relative_path, size_bytes, sha256.
 Paths are relative to DATA_DIR and sorted, so the file is stable across runs
@@ -33,6 +33,9 @@ def sha256_of(path: Path) -> str:
 
 
 def scan(data_dir: Path) -> dict:
+    if data_dir.is_file():
+        # A single file is its own manifest entry, keyed by its name.
+        return {data_dir.name: (data_dir.stat().st_size, sha256_of(data_dir))}
     entries = {}
     for root, dirs, files in os.walk(data_dir):
         dirs.sort()
@@ -95,8 +98,8 @@ def main() -> int:
     parser.add_argument("manifest", type=Path)
     args = parser.parse_args()
 
-    if not args.data_dir.is_dir():
-        print(f"Not a directory: {args.data_dir}", file=sys.stderr)
+    if not args.data_dir.exists():
+        print(f"Not found: {args.data_dir}", file=sys.stderr)
         return 2
     if args.action == "write":
         if args.manifest.exists():

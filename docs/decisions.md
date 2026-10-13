@@ -119,3 +119,15 @@ Dated record of methods choices and why they were made. Newest entries at the bo
   * **Noise floors:** about 3e-10 (VMP250) and 3e-11 W/kg (VMP5500). VMP250 epsilon below 150 m is within about 2x of its floor, so treat it as near an upper bound. Excluding below-floor windows biases means high (VMP5500 +24%). If a floor is applied, values below it are set to the floor and flagged, never dropped.
   * **ATOMIX FM > 1.15** removes 41-77% of windows in every epsilon decade, including high epsilon. The threshold likely does not suit these spectra (4 s FFT, 16 s windows). It is not adopted until spectra are inspected (`epsilon.spectral_qc` stays false).
   * **Segment QC** changes the 150-600 m mean epsilon by under 3%; variance-resolved and probe-pair rules change means by under 1%.
+
+## 2026-10-12: Hydrography step; VMP5500 salinity from the ship CTD T-S relation
+
+* The `hydrography` step computes TEOS-10 CT, SA, N2, T_z, S_z (z positive up), alpha, beta, R_rho and Turner angle on a 1 m grid per profile and at every dissipation window centre. Gradients are linear fits over `gradient_smoothing_m` (baseline 10 m; sensitivity runs at 5 and 25 m). The Turner angle follows Ruddick (1983), atan2(aT_z + bS_z, aT_z - bS_z): fingers 45-90 deg, R_rho = -tan(Tu + 45 deg). perturb's window-scale N2 and dTdz are no longer used.
+* Diagnosis of the VMP5500 salinity: its scatter at 1 m scale (0.06 g/kg, 16x the VMP250's) comes from the SBC1 conductivity (0.04-0.08 g/kg), not from temperature (0.008) or from C-T lag or response mismatch, which a grid search over lags and T filters could not reduce. The VMP250's JAC salinity is already aligned (best lag about 0).
+* Validation reference: the ship CTD (SBE 911, `paths.ship_ctd`, manifested; 103 casts to 550 m). A cast lies within 15 km and 6 h of 37/38 VMP250 and 42/45 VMP5500 casts, including 10 at the process station.
+* Methods compared against the ship CTD at 150-550 m: own salinity, median-despiked salinity, local T-S fit, and SA from the nearest ship CTD T-S relation evaluated at the profiler's CT.
+  * VMP250 own salinity agrees with the ship CTD: N2 median ratio 0.99, 83% within 2x at 10 m, 97% at 25 m; R_rho 1.71 vs 1.71.
+  * VMP5500 own salinity fails: N2 <= 0 in 35-47% of estimates (ship CTD 0-8%), and R_rho is wrong.
+  * Ship-CTD T-S salinity fixes the VMP5500: N2 <= 0 in 7% at 10 m (ship 1%), N2 ratio 1.08, R_rho 1.67 vs 1.58. It is not circular: on the VMP250 it reproduces the instrument's own N2 (median ratio 1.00-1.02) and R_rho (1.71-1.76 vs 1.68-1.75).
+* Decision: `salinity_source: own` for the VMP250 and `ship_ctd_ts` for the VMP5500. Below the ship CTD's 550 m reach the VMP5500 has no usable salinity; those windows carry `no_stratification` and are excluded from anything that needs N2.
+* Result at the process station: R_rho about 1.5-2 and Turner angle about 70-80 deg from 150 to 550 m, strongly finger favourable.

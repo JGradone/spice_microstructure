@@ -15,6 +15,9 @@ paths:
   sealog_file: FKt260806_sealog_export.csv
   # Rockland shear probe calibration sheets and FP07 production reports (read only)
   probe_calsheets: /path/to/SPICE_turbulence/SpiceProbeCalSheets
+  # Ship CTD (SBE 911, 103 casts, 1 m grid to 550 m), read only. Reference for
+  # VMP stratification and the salinity source for the VMP5500.
+  ship_ctd: /path/to/SPICE_ctd/SPICE_2026_08_FKt260806_CTD_v1_20260901.nc
   # Where this pipeline writes its outputs. Relative paths are inside this
   # repository; .gitignore decides what is committed. Never point this at the
   # data directories (archives, or the earlier shipboard-era code and figures).
@@ -23,6 +26,7 @@ paths:
 manifests:
   sealog: manifests/sealog.sha256.csv
   probe_calsheets: manifests/probe_calsheets.sha256.csv
+  ship_ctd: manifests/ship_ctd.sha256.csv
   verify_before_run: true         # instrument archive manifests are listed per instrument
 
 cast_log:
@@ -47,6 +51,7 @@ instruments:
     model: VMP-250IR
     serial: "537"
     sealog_platform: VMP250       # event_option.platform value in the Sealog
+    salinity_source: own          # JAC CT salinity agrees with the ship CTD (decisions.md)
     archive_raw: /path/to/SPICE_turbulence/vmp250_raw
     archive_patched: /path/to/SPICE_turbulence/vmp250_patched
     archive_processed: /path/to/SPICE_turbulence/vmp250_processed
@@ -88,6 +93,8 @@ instruments:
     model: VMP-5500
     serial: "010"
     sealog_platform: VMP5500
+    salinity_source: ship_ctd_ts  # SBC1 conductivity too noisy for gradients; salinity
+                                  # from the nearest ship CTD T-S relation at the VMP's CT
     archive_raw: /path/to/SPICE_turbulence/vmp6000_raw
     archive_patched: /path/to/SPICE_turbulence/vmp6000_patched
     archive_processed: /path/to/SPICE_turbulence/vmp6000_processed
@@ -250,10 +257,20 @@ shear_qc:
   noise_floor_w_kg: null
 
 hydrography:
-  # Background gradients (T_z, S_z, N2, R_rho, Turner) for the double
-  # diffusion steps. Baseline matches perturb stratification.window (2 dbar);
-  # key sensitivity parameter.
-  gradient_smoothing_m: 2.0
+  # Background stratification per profile (TEOS-10): CT, SA, N2, T_z, S_z,
+  # R_rho, Turner angle on a 1 m grid and at every dissipation window centre.
+  # Gradients are linear fits over gradient_smoothing_m (z positive up).
+  # Validated against the ship CTD (decisions.md 2026-10-12).
+  gradient_smoothing_m: 10        # key sensitivity parameter (runs strat5m, strat25m)
+  bin_m: 1.0
+  min_fit_fraction: 0.6           # fraction of bins needed within the fit window
+  ship_ctd:
+    sensor: 1                     # temp1/salt1 (sensor 2 for a check)
+    match_max_km: 15
+    match_max_hours: 6
+    ts_bin_degC: 0.05             # ship T-S relation: median SA in CT bins
+  # Perturb's window-scale N2 and dTdz are not used: for the VMP5500 they are
+  # ~4.5x and ~0.4x the TEOS-10 values.
 
 regimes:
   turner_finger_min_deg: 45
@@ -319,6 +336,10 @@ sensitivity_runs:
     set: {segments.enabled: true}
   - name: bin10m
     set: {double_diffusion.depth_bin_m: 10}
+  - name: strat5m
+    set: {hydrography.gradient_smoothing_m: 5}
+  - name: strat25m
+    set: {hydrography.gradient_smoothing_m: 25}
 
 products:
   # Final exported products for use outside this repository. Layout and

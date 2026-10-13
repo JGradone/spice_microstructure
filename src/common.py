@@ -275,7 +275,8 @@ def verify_manifests(config: dict) -> None:
     if not manifests.get("verify_before_run", False):
         return
     pairs = [(config["paths"]["sealog_dir"], manifests.get("sealog")),
-             (config["paths"]["probe_calsheets"], manifests.get("probe_calsheets"))]
+             (config["paths"]["probe_calsheets"], manifests.get("probe_calsheets")),
+             (config["paths"]["ship_ctd"], manifests.get("ship_ctd"))]
     for _, inst in instruments(config):
         for kind in ("raw", "patched", "processed"):
             pairs.append((inst[f"archive_{kind}"], inst["manifests"].get(kind)))
