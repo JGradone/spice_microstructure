@@ -57,12 +57,13 @@ a { color: var(--accent); }
 <div class="wrap">
 <article>
   <p class="eyebrow">SPICE FKt260806 · R/V Falkor (too) · VMP-5500 SN 010</p>
-  <h1>VMP5500 conductivity: salinity is noisy, biased salty, and worsens through the cruise</h1>
+  <h1>VMP5500 conductivity: a slow sensor response explains the salty bias; metre-scale noise remains</h1>
   <p class="meta">Sea-Bird SBE4 conductivity cell #<span class="num">{{n:sbe4.serial}}</span> (cal <span class="num">{{n:sbe4.cal_date}}</span>) with SBE3 thermometer #<span class="num">{{n:sbe3.serial}}</span> (cal <span class="num">{{n:sbe3.cal_date}}</span>), unpumped, on a free-falling VMP-5500. Compared with the VMP-250IR's JFE (JAC) CT sensor and the ship's SBE 911 CTD.</p>
 
   <div class="bottomline">
     <p><strong>Bottom line.</strong> Across <span class="num">{{n:profiles.vmp5500}}</span> VMP5500 casts, salinity from the SBE4 is about <span class="num">{{n:noise_ratio}}×</span> noisier than the VMP250's at 1 m scale (<span class="num">{{n:noise_median.vmp5500}}</span> vs <span class="num">{{n:noise_median.vmp250}}</span> g/kg) and reads <span class="num">+{{n:offset_median.vmp5500}}</span> g/kg salty of the ship CTD (median; the VMP250 is <span class="num">+{{n:offset_median.vmp250}}</span>). Both get worse after about 24 August.</p>
-    <p>The error is in the conductivity channel. A conductivity–temperature timing mismatch, the calibration coefficients and the temperature channel's sampling have been checked and ruled out. Physical trouble with the cell during the deployment fits best, but the salty sign is unusual for fouling, and we would like a second opinion.</p>
+    <p>The <strong>salty bias</strong> is explained by response time. Measured against the nose FP07, the SBE4 behaves like a first-order sensor with a time constant of about <span class="num">{{n:response.sbe4_tau_median}}</span> s (about 5 m of fall), and the SBE3 about <span class="num">{{n:response.sbe3_tau_median}}</span> s. A slow cell descending through water whose conductivity keeps falling reads high. Modelling that lag removes the bias, and the bias grows late in the cruise because those casts crossed steeper gradients, with the same lag.</p>
+    <p>The <strong>metre-scale noise</strong> is not explained. Timing, response matching, thermal-mass correction and despiking all leave it in place, and it is what makes VMP5500 salinity unusable for gradients. Calibration coefficients and the temperature channel's sampling are fine. We would like a second opinion on both.</p>
   </div>
 
   <h2>How the comparison works</h2>
@@ -90,6 +91,25 @@ a { color: var(--accent); }
     <figcaption><b>It is in the conductivity channel, and it is not a timing problem.</b> Left: salinity noise when conductivity is shifted against temperature by up to ±0.375 s. The VMP250 has a clear minimum near zero lag (<span class="num">{{n:lag_curve_range.vmp250.0}}</span> g/kg), as a working CT pair should. The VMP5500 is flat (<span class="num">{{n:lag_curve_range.vmp5500.0}}–{{n:lag_curve_range.vmp5500.1}}</span>), so no realignment helps. Right: each cast's salinity noise split into the part contributed by conductivity and the part from temperature (median <span class="num">{{n:split_median.C}}</span> vs <span class="num">{{n:split_median.T}}</span> g/kg).</figcaption>
   </figure>
 
+  <h2>Slow sensor response explains the offset</h2>
+  <p>The FP07 thermistors on the nose respond in milliseconds and sit <span class="num">{{n:response.separation_m}}</span> m below the Sea-Bird sensors (0.30 m below the pressure sensor, which is 1.57 m below the CT pair). Delaying the FP07 temperature by that distance gives the true temperature at the CT sensors, and with the ship CTD's T–S relation, the conductivity an ideal cell would read. Each Sea-Bird channel is then fitted as a delay plus a first-order lag of its ideal signal (<span class="num">{{n:response.casts}}</span> casts, 100–500 dbar).</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Quantity</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>SBE3 time constant</td><td class="n">{{n:response.sbe3_tau_median}} s (IQR {{n:response.sbe3_tau_iqr.0}}–{{n:response.sbe3_tau_iqr.1}})</td></tr>
+      <tr><td>SBE4 time constant, extra delay</td><td class="n">{{n:response.sbe4_tau_median}} s (IQR {{n:response.sbe4_tau_iqr.0}}–{{n:response.sbe4_tau_iqr.1}}), {{n:response.sbe4_delay_median}} s</td></tr>
+      <tr><td>Conductivity misfit, ideal → lagged ideal</td><td class="n">{{n:response.misfit.0}} → {{n:response.misfit.1}} mS/cm</td></tr>
+      <tr><td>Conductivity bias, ideal → lagged ideal</td><td class="n">{{n:response.bias.0}} → {{n:response.bias.1}} mS/cm</td></tr>
+      <tr><td>Salinity offset with a response-matched temperature</td><td class="n">{{n:offset_median.vmp5500}} → {{n:response.offset_matched_median}} g/kg</td></tr>
+      <tr><td>Early vs late casts: rate of change of C, bias</td><td class="n">{{n:response.early.dCdt}} vs {{n:response.late.dCdt}} mS/cm/s; {{n:response.early.bias}} vs {{n:response.late.bias}} mS/cm</td></tr>
+    </tbody>
+  </table></div>
+
+  <figure>
+    <img src="{{FIG6}}" alt="Measured, ideal and lagged-ideal conductivity for one cast, and per-cast conductivity bias against its rate of change">
+    <figcaption><b>The cell reads a slowed version of the true signal.</b> Left: SPC_033, 150–300 m. The measured conductivity trails the ideal signal and matches it once the ideal is lagged. Right: each cast's bias against how fast conductivity was changing during the descent (per-cast correlation {{n:response.corr_bias_rate}}). Late casts (aqua) crossed gradients about 2.6× steeper, and their bias is correspondingly larger, with the same lag. The lag explains the offset but leaves the metre-scale noise, so a response-matched salinity is right on average and still too noisy for gradients. Excluded as broken: {{n:response.excluded}}.</figcaption>
+  </figure>
+
   <figure>
     <img src="{{FIG5}}" alt="Buoyancy frequency from the VMP5500 against the ship CTD, using the VMP5500's own salinity and using ship CTD T-S salinity">
     <figcaption><b>Why it matters.</b> Squared buoyancy frequency N² over <span class="num">{{n:gradient_scale_m}}</span> m at 150–550 m against the nearest ship CTD. With its own salinity the VMP5500 gives N² ≤ 0 in <span class="num">{{n:n2_nonpositive_pct.own}}</span> of estimates (ship CTD: <span class="num">{{n:n2_nonpositive_pct.ship}}</span>), and the rest scatter widely. Taking salinity from the ship CTD's T–S relation at the VMP5500's own Θ brings this to <span class="num">{{n:n2_nonpositive_pct.ts}}</span> and onto the 1:1 line; the same method reproduces the VMP250's own N². This is what the processing now uses for the VMP5500, so the microstructure results do not depend on this cell. It also means the shipboard VMP5500 N² is unreliable.</figcaption>
@@ -100,7 +120,10 @@ a { color: var(--accent); }
     <thead><tr><th>Possible cause</th><th>Check</th><th>Result</th></tr></thead>
     <tbody>
       <tr><td>Wrong or old calibration</td><td>setup.cfg coefficients against Sea-Bird .cal files</td><td>Identical for SBE4 #4076 and SBE3 #5621, both calibrated Feb–Mar 2026</td></tr>
-      <tr><td>C–T timing or response mismatch</td><td>Shift C by ±0.375 s, low-pass T</td><td>No improvement (flat curve, figure 4)</td></tr>
+      <tr><td>Short C–T timing mismatch</td><td>Shift C by ±0.375 s, low-pass T up to 0.8 s</td><td>No improvement in noise (figure 4)</td></tr>
+      <tr><td>Slow sensor response (seconds)</td><td>Fit delay and first-order lag against the FP07</td><td>Explains the offset, not the noise (figure 6)</td></tr>
+      <tr><td>Conductivity spikes</td><td>Hampel filter and running median at 64 Hz before 1 m averaging</td><td>No change: spikes already average out within 1 m</td></tr>
+      <tr><td>Cell thermal mass</td><td>Lueck and Picklo (1990), Morison et al. (1994) parameters</td><td>Noise unchanged; offset reduced slightly</td></tr>
       <tr><td>Temperature channel sampling</td><td>Fraction of 64 Hz samples repeating the previous value</td><td class="n">{{n:T_repeat_range.0}}–{{n:T_repeat_range.1}} in every cast</td></tr>
       <tr><td>Fall speed</td><td>Noise against median fall speed, per cast</td><td class="n">r = {{n:noise_speed_corr}}</td></tr>
       <tr><td>Heave between casts</td><td>Compare along the T–S curve, not by depth</td><td>Offset and spread remain</td></tr>
@@ -110,9 +133,9 @@ a { color: var(--accent); }
 
   <h2>Questions for you</h2>
   <ol class="ask">
-    <li>Does a salty bias that grows over a few weeks, with growing small-scale noise, match anything you have seen from an unpumped SBE4 on a free-falling profiler? We expected fouling to bias it fresh.</li>
-    <li>Could anything mechanical (a crack, debris or sargassum in the cell, a connector) produce this pattern?</li>
-    <li>Would you recommend a post-cruise calibration of SBE4 #4076, or another test, to confirm before we write it off?</li>
+    <li>Is a time constant of about {{n:response.sbe4_tau_median}} s plausible for an unpumped SBE4 on a VMP-5500 falling at 0.8 m/s, and is there a duct or pump arrangement that would explain it? The SBE3 at about {{n:response.sbe3_tau_median}} s is also far slower than its pumped specification.</li>
+    <li>What could cause metre-scale conductivity noise of about 0.07 g/kg in salinity that no timing or response correction removes? Could flushing that varies with the flow around the instrument produce it?</li>
+    <li>Would you recommend a post-cruise calibration of SBE4 #4076, a flow or flushing check, or another test before we decide whether the sensor or its mounting is at fault?</li>
   </ol>
 
   <h2>Method notes</h2>

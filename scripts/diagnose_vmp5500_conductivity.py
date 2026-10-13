@@ -27,6 +27,7 @@ import netCDF4
 import numpy as np
 import pandas as pd
 from scipy.ndimage import median_filter
+from scipy.signal import lfilter
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
@@ -51,6 +52,7 @@ def read_profile(path: Path, inst: str, ct_offset_m: float = 0.0) -> dict:
     with netCDF4.Dataset(path) as d:
         g = lambda n: np.ma.filled(d[n][:].astype(float), np.nan)  # noqa: E731
         out = {"P": g("P"), "CT": g("CT"), "SA": g("SA"), "T": g(T), "C": g(C), "W": g("W_slow"),
+               "T1": g("T1"),
                "lat": float(np.ma.filled(d["lat"][...], np.nan)),
                "lon": float(np.ma.filled(d["lon"][...], np.nan)),
                "t0": pd.Timestamp(float(d["stime"][...]), unit="s", tz="UTC")}
@@ -134,6 +136,84 @@ def n2_against_ship(p: dict, ship: ShipCTD, scale: float, cfg: dict) -> pd.DataF
         a, b = np.argmin(np.abs(zc - zv)), np.argmin(np.abs(ship.z - zv))
         rows.append({"depth": zv, "own": own["N2"][a], "ts": ts["N2"][a], "ship": ref["N2"][b]})
     return pd.DataFrame(rows)
+
+
+FS_SLOW = 64.0
+SBE3_TAUS = [0.5, 1, 1.5, 2, 3, 4, 6, 8]
+SBE4_DELAYS = np.arange(0, 4.01, 0.25)
+SBE4_TAUS = [0, 0.5, 1, 2, 3, 4, 6, 8, 10]
+
+
+def lowpass(x: np.ndarray, tau: float) -> np.ndarray:
+    """First-order sensor response with time constant tau (s) at the slow rate."""
+    if tau <= 0:
+        return x
+    a = np.exp(-1 / (FS_SLOW * tau))
+    return lfilter([1 - a], [1, -a], x - x[0]) + x[0]
+
+
+def delay(x: np.ndarray, n: int) -> np.ndarray:
+    if n <= 0:
+        return x.copy()
+    out = np.empty_like(x)
+    out[:n], out[n:] = x[0], x[:-n]
+    return out
+
+
+def fill(x: np.ndarray) -> np.ndarray:
+    ok = np.isfinite(x)
+    out = x.copy()
+    out[~ok] = np.interp(np.flatnonzero(~ok), np.flatnonzero(ok), x[ok])
+    return out
+
+
+def response_analysis(p: dict, ship: ShipCTD, separation_m: float, ct_offset_m: float):
+    """Fit the SBE3 and SBE4 responses against the nose FP07 temperature.
+
+    The FP07 (fast, at the probe tips) is delayed by the probe-to-CT separation
+    to give the true temperature at the CT sensor. The ideal conductivity there
+    follows from that temperature and the ship CTD's T-S relation. Each Sea-Bird
+    channel is then modelled as a pure delay plus a first-order low-pass of its
+    ideal signal. Returns per-cast numbers and series for plotting, or None."""
+    m = (p["P"] > 100) & (p["P"] < 500)
+    if m.sum() < 5000 or not np.isfinite(p["lat"]):
+        return None
+    match = ship.match(p["lat"], p["lon"], p["t0"])
+    if not match:
+        return None
+    T1, SB, C = fill(p["T1"]), fill(p["T"]), fill(p["C"])
+    i0, i1 = np.flatnonzero(m)[[0, -1]]
+    v = float(np.nanmedian(p["W"][m]))
+    t_true = delay(T1, int(round(separation_m / v * FS_SLOW)))
+    p_ct = p["P"] + ct_offset_m
+    sbe3_tau = min(SBE3_TAUS, key=lambda t: np.nanstd((SB - lowpass(t_true, t))[i0:i1]))
+    sa_guess = gsw.SA_from_SP(np.full_like(p_ct, 35.5), p_ct, p["lon"], p["lat"])
+    ct_true = gsw.CT_from_t(sa_guess, t_true, p_ct)
+    sa_ideal = ship.ts_salinity(match["index"], ct_true)
+    c_ideal = fill(gsw.C_from_SP(gsw.SP_from_SA(sa_ideal, p_ct, p["lon"], p["lat"]), t_true, p_ct))
+    best = None
+    for d_s in SBE4_DELAYS:
+        x = delay(c_ideal, int(round(d_s * FS_SLOW)))
+        for tau in SBE4_TAUS:
+            r = (C - lowpass(x, tau))[i0:i1]
+            rms = float(np.sqrt(np.mean((r - np.median(r)) ** 2)))
+            if best is None or rms < best["rms"]:
+                best = {"rms": rms, "delay": float(d_s), "tau": float(tau), "bias": float(np.median(r))}
+    r0 = (C - c_ideal)[i0:i1]
+    c_lagged = lowpass(delay(c_ideal, int(round(best["delay"] * FS_SLOW))), best["tau"])
+    # Salinity from the measured C with a temperature matched to the cell's response
+    t_matched = lowpass(delay(t_true, int(round(best["delay"] * FS_SLOW))), best["tau"])
+    sa_matched = gsw.SA_from_SP(gsw.SP_from_C(C, t_matched, p_ct), p_ct, p["lon"], p["lat"])
+    ct_ok = gsw.CT_from_t(sa_matched, t_true, p_ct)
+    edges = np.arange(DEPTHS[0], DEPTHS[1] + 1, 1.0)
+    sab, ctb = bin_profile(p["z"], sa_matched, edges), bin_profile(p["z"], ct_ok, edges)
+    off_matched = float(np.nanmedian(sab - ship.ts_salinity(match["index"], ctb)))
+    rate = float(np.median(-np.gradient(lowpass(c_ideal, 1.0))[i0:i1] * FS_SLOW))
+    return {"sbe3_tau": float(sbe3_tau), "sbe4_delay": best["delay"], "sbe4_tau": best["tau"],
+            "misfit_ideal": float(np.sqrt(np.mean((r0 - np.median(r0)) ** 2))), "misfit_lagged": best["rms"],
+            "bias_ideal": float(np.median(r0)), "bias_lagged": best["bias"], "dCdt": rate,
+            "offset_matched": off_matched, "z": p["z"], "C": C, "c_ideal": c_ideal, "c_lagged": c_lagged,
+            "t0": p["t0"]}
 
 
 def save(fig, path: Path, foot: str) -> None:
@@ -297,6 +377,43 @@ def main() -> int:
                  f"(ship N² ≤ 0 in {ship_neg:.0%})", x=0.01, ha="left")
     save(fig, out / "fig5_n2.png", foot)
 
+    # ---- Figure 6: slow sensor response explains the salty offset
+    offsets = config["instruments"]["vmp5500"].get("sensor_offsets_m", {})
+    ct_off, ms_off = float(offsets.get("ct", 0.0)), float(offsets.get("microstructure", 0.0))
+    resp = {n: r for n, r in ((n, response_analysis(p, ship, ms_off - ct_off, ct_off))
+                              for n, p in profs["vmp5500"].items()) if r is not None}
+    resp_df = pd.DataFrame({n: {k: v for k, v in r.items() if np.isscalar(v)} for n, r in resp.items()}).T
+    for c in resp_df.columns:
+        if c != "t0":
+            resp_df[c] = pd.to_numeric(resp_df[c])
+    broken = resp_df.index[np.abs(resp_df["bias_ideal"]) > 1.0].tolist()   # e.g. SPC_061
+    rd = resp_df.drop(index=broken)
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 5), gridspec_kw={"width_ratios": [1, 1.2]})
+    ex = resp["SPC_033_prof001"]
+    sel = (ex["z"] > 150) & (ex["z"] < 300)
+    ax = axes[0]
+    ax.plot(ex["c_ideal"][sel], ex["z"][sel], color=SHIP_COLOR, lw=1.2, label="ideal (FP07 T + ship T–S)")
+    ax.plot(ex["C"][sel], ex["z"][sel], color=ps.ORANGE, lw=0.7, label="measured SBC1")
+    ax.plot(ex["c_lagged"][sel], ex["z"][sel], color=ps.AQUA, lw=1.4, ls="--",
+            label=f"ideal, lagged (τ {resp_df.loc['SPC_033_prof001', 'sbe4_tau']:.0f} s)")
+    ax.set_ylim(300, 150)
+    ax.set_xlabel("conductivity (mS cm$^{-1}$)")
+    ax.set_ylabel("CT sensor depth (m)")
+    ax.set_title("SPC_033: the cell reads like a slowed version of the ideal signal", loc="left", fontsize=9)
+    ax.legend(loc="lower right", fontsize=7.5)
+    ax = axes[1]
+    early_r = rd[rd.index < f"{DEGRADED_FROM}_prof001"]
+    late_r = rd[rd.index >= f"{DEGRADED_FROM}_prof001"]
+    for g, color, lab in ((early_r, ps.BLUE, "SPC_004–043"), (late_r, ps.AQUA, f"{DEGRADED_FROM}–SPC_063")):
+        ax.scatter(g["dCdt"], g["bias_ideal"], s=24, color=color, edgecolors=ps.SURFACE, linewidths=0.8, label=lab)
+    ax.axhline(0, color=ps.TEXT_2, lw=0.8)
+    ax.set_xlabel("rate of change of ideal conductivity on descent (mS cm$^{-1}$ s$^{-1}$)")
+    ax.set_ylabel("measured − ideal conductivity (mS cm$^{-1}$)")
+    ax.set_title("Per cast: bias grows with how fast conductivity is changing", loc="left", fontsize=9)
+    ax.legend(loc="upper left", fontsize=7.5)
+    fig.suptitle("A slow conductivity response explains the salty offset", x=0.01, ha="left")
+    save(fig, out / "fig6_response.png", foot)
+
     # ---- numbers and page
     numbers = {
         "provenance": foot, "created_utc": prov["created_utc"],
@@ -331,11 +448,27 @@ def main() -> int:
         "ts_cast_offsets": {n[:7]: round(float(o), 2) for n, o in ts_rows},
         "fig1_ship_hours": float(m["hours"]),
         "sbe4": {"serial": "4076", "cal_date": "2026-02-19"},
+        "response": {
+            "casts": int(len(rd)), "excluded": [b[:7] for b in broken],
+            "separation_m": round(ms_off - ct_off, 2),
+            "sbe3_tau_median": float(rd["sbe3_tau"].median()),
+            "sbe3_tau_iqr": [float(rd["sbe3_tau"].quantile(.25)), float(rd["sbe3_tau"].quantile(.75))],
+            "sbe4_tau_median": float(rd["sbe4_tau"].median()),
+            "sbe4_tau_iqr": [float(rd["sbe4_tau"].quantile(.25)), float(rd["sbe4_tau"].quantile(.75))],
+            "sbe4_delay_median": float(rd["sbe4_delay"].median()),
+            "misfit": [round(float(rd["misfit_ideal"].median()), 2), round(float(rd["misfit_lagged"].median()), 2)],
+            "bias": [round(float(rd["bias_ideal"].median()), 3), round(float(rd["bias_lagged"].median()), 3)],
+            "offset_matched_median": round(float(rd["offset_matched"].median()), 3),
+            "early": {"dCdt": round(float(early_r["dCdt"].median()), 4), "bias": round(float(early_r["bias_ideal"].median()), 2)},
+            "late": {"dCdt": round(float(late_r["dCdt"].median()), 4), "bias": round(float(late_r["bias_ideal"].median()), 2)},
+            "corr_bias_rate": round(float(np.corrcoef(rd["bias_ideal"], rd["dCdt"])[0, 1]), 2),
+        },
         "sbe3": {"serial": "5621", "cal_date": "2026-03-25"},
     }
     (out / "numbers.json").write_text(json.dumps(numbers, indent=2))
     html = TEMPLATE.read_text()
-    for i, name in enumerate(["fig1_profiles", "fig2_ts", "fig3_timeseries", "fig4_attribution", "fig5_n2"], 1):
+    for i, name in enumerate(["fig1_profiles", "fig2_ts", "fig3_timeseries", "fig4_attribution", "fig5_n2",
+                              "fig6_response"], 1):
         b64 = base64.b64encode((out / f"{name}.png").read_bytes()).decode()
         html = html.replace(f"{{{{FIG{i}}}}}", f"data:image/png;base64,{b64}")
     html = html.replace("{{NUMBERS}}", json.dumps(numbers))
