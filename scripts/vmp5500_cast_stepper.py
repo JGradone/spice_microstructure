@@ -122,13 +122,14 @@ def figure(name, p, ship, match, near250, v250, path, foot):
         lines.append((ps.BLUE, f"VMP250 {near250[0][:9]} ({near250[2]:.1f} h, {near250[1]:.1f} km)"))
     ct, sa = bin_profile(p["z"], p["CT"], edges), bin_profile(p["z"], p["SA"], edges)
     axes[0].plot(ct, zc, color=ps.ORANGE, lw=0.9)
-    axes[1].plot(sa, zc, color=ps.ORANGE, lw=0.9)
+    axes[1].plot(sa, zc, color=ps.ORANGE, lw=0.9, zorder=3)
     s = ts_sel(zc)
-    axes[2].scatter(sa[s], ct[s], s=5, color=ps.ORANGE, linewidths=0)
+    axes[2].scatter(sa[s], ct[s], s=5, color=ps.ORANGE, linewidths=0, zorder=3)
     lines.append((ps.ORANGE, f"VMP5500 {name[:7]} (SBE3/SBE4)"))
     sa_tm = bin_profile(p["z"], p["SA_tm"], edges)
-    axes[1].plot(sa_tm, zc, color=ps.AQUA, lw=0.9)
-    axes[2].scatter(sa_tm[s], ct[s], s=4, color=ps.AQUA, linewidths=0)
+    # Drawn under the uncorrected series (wider, lower zorder) so both stay visible
+    axes[1].plot(sa_tm, zc, color=ps.AQUA, lw=2.2, zorder=1)
+    axes[2].scatter(sa_tm[s], ct[s], s=14, color=ps.AQUA, linewidths=0, zorder=1)
     tm = p["tm_params"]
     lines.append((ps.AQUA, f"VMP5500 thermal-mass corrected (α {tm['alpha']:.3f}, τ {tm['tau']:.1f} s)"))
     axes[0].set_xlabel("Θ (°C)")
