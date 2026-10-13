@@ -12,6 +12,7 @@
       "windows": 6002,
       "windows_without_stratification": 0,
       "windows_N2_nonpositive": 140,
+      "windows_ts_salinity_invalid": 0,
       "validation_150_550m": {
         "estimates": 5494,
         "N2_nonpositive_fraction": 0.012,
@@ -35,6 +36,7 @@
       "windows": 6749,
       "windows_without_stratification": 736,
       "windows_N2_nonpositive": 843,
+      "windows_ts_salinity_invalid": 857,
       "validation_150_550m": {
         "estimates": 1804,
         "N2_nonpositive_fraction": 0.169,

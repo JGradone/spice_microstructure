@@ -230,3 +230,30 @@ Exploratory tests (session scratch scripts, not yet in the pipeline), 42 casts w
 * The remaining 10 m inversions come from FP07 temperature inversions (13% of 10 m fits; VMP250 7% in its casts reaching 400 m), likely real intrusions.
 * Caveat: with T–S derived salinity, S_z, R_rho and the Turner angle follow the T–S slope at about 1.5 °C resolution and are not independent measurements. The same is true of the current ship CTD T–S method. Compared with the ship CTD method, the cast's own T–S needs no ship match and also covers depths below 550 m.
 * Status: proposed for the hydrography step (`salinity_source: own_ts`); not yet adopted.
+
+## 2026-10-13: own_ts adopted for VMP5500 hydrography; temperature inversions flagged
+
+`salinity_source: own_ts` is now in the hydrography step and set for the VMP5500 (config `hydrography.own_ts`: SBT1/SBC1 fit, FP07 T1, 0.5 °C bins, 3-bin smoothing; `instruments.vmp5500.ct_match` 0.25 s / 6 s). The CT grid is FP07 temperature at the probe tips' depth. The cast stepper now plots this grid. The response-corrected salinity helper in the diagnostics script is removed.
+
+Baseline run, 150–550 m, compared with the matched ship CTD cast at 10 m smoothing:
+
+* Salinity noise at 1 m: 0.002 g/kg (measured C 0.067).
+* N2 <= 0: 17% (ship 1%; previous ship_ctd_ts at SBE3 CT 7%). N2 within a factor 2 of the ship: 56% (was 63%). R_rho 1.72 (ship 1.58).
+* Where T_z > 0: N2 <= 0 is 6.8%, within factor 2 is 56–60%, and R_rho is 1.75 (ship 1.63–1.68).
+* Why there are more inversions:
+  * Temperature inversions in 10 m fits: FP07 T1 13.8% and T2 13.8% (the two agree), ship CTD 11.8%, SBE3 only 6.5%. The FP07 inversions are real, and the SBE3 smooths about half of them away.
+  * The ship's N2 <= 0 is only 1.8%, so the inversions are mostly density-compensated intrusions, which a T–S relation cannot represent.
+  * The previous method's 7% was low only because the SBE3 hid inversions.
+* New window flag `ts_salinity_invalid` (T_z <= 0 with a T–S salinity source): 857 of 6749 VMP5500 windows. It is a flag, not an exclusion.
+* Accuracy of the own T–S relation, as the median |own_ts − ship T–S| per cast, by CT band. Part of this is real spatial and temporal difference from the ship cast.
+
+  | CT band | Median (g/kg) | Casts > 0.05 |
+  |---|---|---|
+  | < 10 °C | 0.027 | 25% |
+  | 10–13 °C | 0.050 | 45% |
+  | 13–16 °C | 0.062 | 52% |
+  | > 16 °C | 0.133 | 95% |
+
+  * It is worst in the main thermocline, where the cell's errors across steep gradients bias the bin medians (SPC_031: ~0.8 g/kg too fresh at 18–20 °C).
+  * SPC_041 and SPC_045 (and partly SPC_044) have bad conductivity throughout (0.26–0.64 g/kg off).
+* Open: a per-cast or per-band QC flag against the ship T–S, or a ship_ctd_ts fallback for bad casts. Not yet decided.
