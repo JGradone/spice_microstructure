@@ -8,8 +8,8 @@ numeric values equal within --rtol (NaN equal to NaN). Provenance fields
 and are ignored, as are logs and step metadata. Writes a report and prints a
 summary; exit status 1 if anything differs beyond tolerance.
 
-Usage:
-    python scripts/check_reproduction.py --a outputs/baseline --b outputs/repro_baseline
+Usage (B is a fresh run of A's settings, e.g. a sensitivity_runs entry with `set: {}`):
+    python scripts/check_reproduction.py --a outputs/baseline --b outputs/<fresh run>
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-SKIP_DIRS = {"convert", "patch", "comparisons", "qc_explorer", "diagnostics"}
+SKIP_DIRS = {"convert", "patch", "comparisons"}
 IGNORE_COLS = {"time", "created_utc", "git_commit", "config_sha256", "run_name", "overrides", "provenance",
                "control_group", "source", "path"}
 

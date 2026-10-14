@@ -89,8 +89,9 @@ Existing pieces:
   * Sensitivity runs: config `sensitivity_runs`, run with `--sensitivity NAME`. Entries can chain (`base`); runs whose perturb settings are unchanged link the base run's patched files and perturb output (`reuse_convert_from`, checked).
 * Scripts:
   * `make_manifest.py`, `record_environment.py`;
-  * diagnostics: `diagnose_vmp5500_conductivity.py`, `vmp5500_cast_stepper.py`, `build_qc_explorer.py`, `explain_fm.py`, `test_shear_fmin.py`, `test_shear_kmax.py`, `test_staircase_thresholds.py`;
-  * run comparisons: `compare_runs.py`, `compare_sensitivity.py`, `check_reproduction.py`.
+  * results: `publish_recommended.py` (outputs/recommended/), `write_run_summaries.py`;
+  * run comparisons: `compare_runs.py`, `compare_sensitivity.py`, `check_reproduction.py` (rerun from the raw files into a fresh run directory and compare).
+  * One-off diagnostics (FM explainer, f_min and K_max tests, staircase threshold grid, VMP5500 conductivity, QC explorer) and the `repro_baseline` run were removed on 2026-10-14 to keep the repository to what reproduces the outputs; they remain in git history at commit `cd55806`.
 * `config/config.example.yaml` lists every parameter; `config/config.yaml` is the local copy with real paths.
 * Docs:
   * `docs/decisions.md`: every methods choice, dated.

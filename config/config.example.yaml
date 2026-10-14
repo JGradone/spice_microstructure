@@ -298,9 +298,6 @@ shear_qc:
     enabled: true                 # false = perturb's epsilon (integration from the lowest wavenumber)
     f_min_hz: 1.0                 # below ~1 Hz the spectra sit 3-5x above Nasmyth; tested 0.5, 1, 2 Hz
     min_points: 5                 # wavenumber points needed in the refit range, else no estimate
-    test_f_min_hz: [0.0, 0.5, 1.0, 2.0]   # scripts/test_shear_fmin.py; 0.0 must reproduce perturb
-    test_noise_ratio: [2.0, 3.0]  # scripts/test_shear_kmax.py: upper limit where spectrum < ratio x noise
-    test_white_band_hz: [20.0, 40.0]   # flat noise level = median of the quiet-window spectrum in this band
   noise_floor:
     method: quietest_windows      # noise spectrum = median frequency spectrum of the quietest windows
     quantile: 0.02                # quietest 2% of windows (per instrument and probe, segment-QC passed)
@@ -423,7 +420,7 @@ regimes:
       # (GPL-3.0). Mixed layers flagged by temperature only (FP07 resolves steps).
       # Tuned: ml_grad 0.002 (published 0.0005) captures the visually evident
       # steps whose layers keep a weak residual gradient; ml_density_difference
-      # has no effect over 0.005-0.04 (scripts/test_staircase_thresholds.py).
+      # has no effect over 0.005-0.04.
       grid_dbar: 1.0                         # input must be evenly spaced in pressure
       ml_grad: 0.002                         # kg m-3 dbar-1 (published 0.0005; sensitivity run stair_mlgrad001)
       ml_density_difference: 0.005           # kg m-3
@@ -431,9 +428,6 @@ regimes:
       interface_max_height: 30               # dbar
       layer_height_ratio: 1                  # max mixed layer / gradient layer height ratio
       temp_flag_only: true
-    test_grid:                    # scripts/test_staircase_thresholds.py (rollo2022 settings otherwise)
-      ml_grad: [0.0005, 0.001, 0.002]
-      ml_density_difference: [0.005, 0.01, 0.02, 0.04]
     ml:
       # Labels from an external machine learning classifier (intern project),
       # read from a file and compared with the published methods. Expected
@@ -498,8 +492,6 @@ sensitivity_runs:
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle}
-  - name: repro_baseline          # reproduction check: baseline settings, fresh run directory (re-patch and
-    set: {}                       # re-convert from the raw files); compared with outputs/baseline
   # Analysis-run sensitivity runs: `base` inherits the analysis run's overrides; runs whose
   # perturb settings are unchanged reuse its patched files and perturb output
   # (`reuse_convert_from`, checked in the convert step).
