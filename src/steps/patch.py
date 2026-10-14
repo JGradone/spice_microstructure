@@ -92,6 +92,25 @@ def run(ctx: dict) -> None:
     prov = common.provenance(ctx["config_hash"])
     report = {}
 
+    src_run = config["run"].get("reuse_convert_from")
+    if src_run:                        # identical perturb inputs: link the source run's patched files
+        src = common.REPO_ROOT / config["paths"]["output_root"] / src_run / STEP
+        for name, _inst in common.instruments(config):
+            dest = out / name
+            if dest.is_symlink() or dest.exists():
+                if dest.is_symlink():
+                    dest.unlink()
+                else:
+                    shutil.rmtree(dest)
+            if not (src / name).exists():
+                raise RuntimeError(f"reuse_convert_from={src_run}: {src / name} missing; run that run's patch step")
+            os.symlink((src / name).resolve(), dest)
+            report[name] = {"reused_from_run": src_run}
+        common.write_json(out / "patch_report.json", report)
+        common.write_step_metadata(out, STEP, ctx, reused_from_run=src_run)
+        print(f"  patched files linked from run {src_run}")
+        return
+
     for name, inst in common.instruments(config):
         casts = pd.read_csv(cast_dir / f"casts_{name}.csv", dtype=str).set_index("file")
         files = common.raw_files(inst)

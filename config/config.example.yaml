@@ -498,19 +498,36 @@ sensitivity_runs:
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle}
-  - name: stair_mlgrad001          # rollo2022 mixed-layer gradient threshold 0.001, on the analysis settings
-    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
-          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
-          perturb.chi.fit_method: mle, regimes.staircase.rollo2022.ml_grad: 0.001}
-  - name: stair_av100              # staircase background window 100 dbar (alpha/beta only), on the analysis settings
-    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
-          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
-          perturb.chi.fit_method: mle, regimes.staircase.vdb2021.av_window: 100,
-          regimes.staircase.rollo2022.av_window: 100}
-  - name: fft2_diss8_mle_dp        # FP07 response test: double-pole transfer, fixed tau 3 ms (Goto et al. 2016)
-    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
-          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
-          perturb.chi.fit_method: mle, perturb.chi.fp07_model: double_pole}
+  # Analysis-run sensitivity runs: `base` inherits the analysis run's overrides; runs whose
+  # perturb settings are unchanged reuse its patched files and perturb output
+  # (`reuse_convert_from`, checked in the convert step).
+  - name: an_strat5m              # background gradients over 5 m
+    base: fft2_diss8_mle
+    reuse_convert_from: fft2_diss8_mle
+    set: {hydrography.gradient_smoothing_m: 5}
+  - name: an_strat25m             # background gradients over 25 m
+    base: fft2_diss8_mle
+    reuse_convert_from: fft2_diss8_mle
+    set: {hydrography.gradient_smoothing_m: 25}
+  - name: an_bin10m               # 10 m depth bins for averages
+    base: fft2_diss8_mle
+    reuse_convert_from: fft2_diss8_mle
+    set: {double_diffusion.depth_bin_m: 10}
+  - name: an_mlgrad001            # tuned staircase threshold 0.001 (published 0.0005, tuned 0.002)
+    base: fft2_diss8_mle
+    reuse_convert_from: fft2_diss8_mle
+    set: {regimes.staircase.rollo2022.ml_grad: 0.001}
+  - name: an_av100                # staircase alpha/beta background window 100 dbar
+    base: fft2_diss8_mle
+    reuse_convert_from: fft2_diss8_mle
+    set: {regimes.staircase.vdb2021.av_window: 100, regimes.staircase.rollo2022.av_window: 100}
+  - name: an_epsT                 # thermistor epsilon (resolved roll-off only) in chi_expected
+    base: fft2_diss8_mle
+    reuse_convert_from: fft2_diss8_mle
+    set: {double_diffusion.epsilon_source: thermistor}
+  - name: fft2_diss8_mle_dp       # FP07 double-pole response, tau 3 ms (Goto et al. 2016); own perturb run
+    base: fft2_diss8_mle
+    set: {perturb.chi.fp07_model: double_pole}
 
 products:
   # Final exported products for use outside this repository. Layout and

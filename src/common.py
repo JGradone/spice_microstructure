@@ -41,8 +41,20 @@ def apply_sensitivity(config: dict, config_hash: str, name: str) -> tuple[dict, 
     runs = {r["name"]: r for r in config.get("sensitivity_runs", [])}
     if name not in runs:
         sys.exit(f"No sensitivity run {name!r}; defined: {', '.join(runs)}")
+    # `base` chains: the base run's overrides first, then this run's
+    chain, r = [], runs[name]
+    while True:
+        chain.insert(0, r)
+        if not r.get("base"):
+            break
+        if r["base"] not in runs or len(chain) > 10:
+            sys.exit(f"Sensitivity run {name!r}: unknown or circular base {r['base']!r}")
+        r = runs[r["base"]]
+    overrides = {}
+    for r in chain:
+        overrides.update(r.get("set", {}))
     cfg = copy.deepcopy(config)
-    for key, value in runs[name]["set"].items():
+    for key, value in overrides.items():
         node, parts = cfg, key.split(".")
         for p in parts[:-1]:
             if not isinstance(node, dict) or p not in node:
@@ -52,8 +64,11 @@ def apply_sensitivity(config: dict, config_hash: str, name: str) -> tuple[dict, 
             sys.exit(f"Sensitivity run {name!r}: {key} is not a config key")
         node[parts[-1]] = value
     cfg["run"]["name"] = name
-    cfg["run"]["sensitivity"] = {"of": config["run"]["name"], "set": runs[name]["set"]}
-    digest = hashlib.sha256((config_hash + json.dumps(runs[name]["set"], sort_keys=True)).encode())
+    cfg["run"]["sensitivity"] = {"of": config["run"]["name"], "set": overrides,
+                                 "base": runs[name].get("base")}
+    if runs[name].get("reuse_convert_from"):
+        cfg["run"]["reuse_convert_from"] = runs[name]["reuse_convert_from"]
+    digest = hashlib.sha256((config_hash + json.dumps(overrides, sort_keys=True)).encode())
     return cfg, digest.hexdigest()
 
 

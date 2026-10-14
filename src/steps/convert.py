@@ -23,6 +23,8 @@ the provenance string in the NetCDF `comment` attribute.
 from __future__ import annotations
 
 import copy
+import json
+import os
 import re
 import shutil
 import sys
@@ -87,6 +89,35 @@ def run(ctx: dict) -> None:
     prov = common.provenance(ctx["config_hash"])
     track = ctx["run_dir"] / "cast_log" / "track.csv"
     report = {}
+
+    src_run = config["run"].get("reuse_convert_from")
+    if src_run:
+        # Identical perturb settings: link the source run's perturb output after checking that the
+        # generated perturb configs agree on everything except paths and provenance text.
+        src = common.REPO_ROOT / config["paths"]["output_root"] / src_run / STEP
+        volatile = ("files", "netcdf", "gps")
+        for name, inst in common.instruments(config):
+            patched = ctx["run_dir"] / "patch" / name
+            track = ctx["run_dir"] / "cast_log" / "track.csv"
+            mine = perturb_config(config, name, inst, patched, out / name, track, prov)
+            theirs = yaml.safe_load((src / f"perturb_config_{name}.yaml").read_text())
+            diff = sorted(k for k in set(mine) | set(theirs)
+                          if k not in volatile and mine.get(k) != theirs.get(k))
+            if diff:
+                raise RuntimeError(f"reuse_convert_from={src_run}: perturb settings differ in {diff}")
+            dest = out / name
+            if dest.is_symlink():
+                dest.unlink()
+            elif dest.exists():
+                shutil.rmtree(dest)
+            os.symlink((src / name).resolve(), dest)
+            shutil.copy(src / f"stage_dirs_{name}.json", out / f"stage_dirs_{name}.json")
+            (out / f"perturb_config_{name}.yaml").write_text(yaml.safe_dump(mine, sort_keys=False))
+            report[name] = {"reused_from_run": src_run, "stage_dirs": json.loads((out / f"stage_dirs_{name}.json").read_text())}
+        common.write_json(out / "convert_report.json", report)
+        common.write_step_metadata(out, STEP, ctx, reused_from_run=src_run)
+        print(f"  perturb output linked from run {src_run} (perturb settings identical)")
+        return
 
     for name, inst in common.instruments(config):
         patched = ctx["run_dir"] / "patch" / name
