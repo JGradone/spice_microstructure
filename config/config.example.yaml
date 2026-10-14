@@ -498,6 +498,8 @@ sensitivity_runs:
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle}
+  - name: repro_baseline          # reproduction check: baseline settings, fresh run directory (re-patch and
+    set: {}                       # re-convert from the raw files); compared with outputs/baseline
   # Analysis-run sensitivity runs: `base` inherits the analysis run's overrides; runs whose
   # perturb settings are unchanged reuse its patched files and perturb output
   # (`reuse_convert_from`, checked in the convert step).
