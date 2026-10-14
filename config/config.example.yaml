@@ -518,7 +518,7 @@ products:
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
   product_version: "0.1"          # bump on any change to variables or methods
-  depth_bin_m: 1.0                # binned profiles; matches shipboard binning
+  depth_bin_m: 5.0                # binned profiles; 8 s windows are ~6 m tall and step ~3 m (1 m bins would be mostly empty)
   creator_name: "Joe Gradone"
   creator_email: "joe@gradone.com"
   institution: "Rutgers University"
