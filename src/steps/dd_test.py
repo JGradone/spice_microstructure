@@ -17,8 +17,15 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     `transect`) x instrument x tow-yo / free fall (tow-yo profiles are never
     pooled with free-fall casts). With pool_free_fall, all free-fall casts of an
     instrument in the selected groups are also tested together ("all free fall").
-  * Control: clearly non-finger water, -90 < Tu < control_max_turner_deg (25 m
-    Turner angle), away from the 45 deg finger boundary.
+  * Control: doubly stable water, -45 < Tu < control_max_turner_deg (25 m Turner
+    angle, away from the 45 deg finger boundary and excluding diffusive
+    convection), T_z > 0 at the window scale (no temperature inversion, which
+    marks intrusions), taken over control_depth_range_dbar (which reaches above
+    the shallow salinity maximum). Finger and other regime sets use
+    depth_range_dbar.
+  * Re_b: R is also computed in buoyancy Reynolds number bins (re_b_bins) for
+    finger-favourable windows and for the control, so the two are compared at
+    matched turbulence intensity (Gamma = 0.2 is an active-turbulence value).
   * Regimes: Turner class (from the regimes step) x staircase label, one set per
     staircase method; interfaces and layers are never pooled.
   * Uncertainty: bootstrap over profiles (uncertainty.bootstrap_samples, seed).
@@ -78,9 +85,11 @@ def regime_sets(df: pd.DataFrame, method: str) -> dict[str, pd.Series]:
     tc = df["turner_class"]
     out = {}
     tu = df["Turner_smooth"]
-    for tname, tsel in (("all_turner", pd.Series(True, index=df.index)), ("finger_any", tc.isin(FINGER)),
-                        ("strong_finger", tc == "strong_finger"), ("not_finger", tc == "not_finger"),
-                        ("control", (tu > -90) & (tu < df.attrs.get("control_max", 30)))):
+    t = df["in_test"]
+    control = (tu > -45) & (tu < df.attrs.get("control_max", 30)) & (df["T_z"] > 0) & df["in_control_range"]
+    for tname, tsel in (("all_turner", t), ("finger_any", t & tc.isin(FINGER)),
+                        ("strong_finger", t & (tc == "strong_finger")), ("not_finger", t & (tc == "not_finger")),
+                        ("control", control)):
         for sname in ("all", "interface", "layer", "straddles", "none"):
             ssel = pd.Series(True, index=df.index) if sname == "all" else (lab == sname)
             out[(tname, sname)] = tsel & ssel
@@ -128,12 +137,15 @@ def prepare(ctx, name, config) -> pd.DataFrame:
     else:
         raise ValueError(f"Unknown double_diffusion.epsilon_source {dd['epsilon_source']!r}")
     lo, hi = dd["depth_range_dbar"][name]
+    clo, chi_ = dd["control_depth_range_dbar"][name]
     ok = (df["shear_keep"].fillna(False).astype(bool) & df["chi_keep"].fillna(False).astype(bool)
           & (df["N2"] > 0) & np.isfinite(df["T_z"]) & np.isfinite(eps) & np.isfinite(df["chi"])
           & ~df["ts_salinity_invalid"].fillna(False).astype(bool)
-          & (df["P_mean"] >= lo) & (df["P_mean"] < hi))
+          & (df["P_mean"] >= min(lo, clo)) & (df["P_mean"] < max(hi, chi_)))
     df = df[ok].copy()
     df["epsilon_used"] = eps[ok]
+    df["in_test"] = (df["P_mean"] >= lo) & (df["P_mean"] < hi)
+    df["in_control_range"] = (df["P_mean"] >= clo) & (df["P_mean"] < chi_)
     df["chi_obs"] = df["chi"]
     df["chi_exp"] = 2 * dd["flux_coefficient"] * df["epsilon_used"] / df["N2"] * df["T_z"] ** 2
     b = dd["depth_bin_m"]
@@ -269,6 +281,34 @@ def rrho_figure(prep, groups, method, gamma, path, foot):
     plt.close(fig)
 
 
+def reb_figure(reb, groups, path, foot):
+    gs = [g for g in groups if g in set(reb["instrument_group"])]
+    if not gs:
+        return
+    fig, axes = plt.subplots(1, len(gs), figsize=(4.6 * len(gs), 4.6), squeeze=False)
+    for ax, g in zip(axes[0], gs):
+        for (tname, grad), c, ls in ((("finger_any", "finescale"), ps.ORANGE, "-"), (("control", "finescale"), ps.BLUE, "-"),
+                                     (("finger_any", "background"), ps.ORANGE, ":"), (("control", "background"), ps.BLUE, ":")):
+            s = reb[(reb["instrument_group"] == g) & (reb["turner"] == tname) & (reb["gradients"] == grad)]
+            if not len(s):
+                continue
+            x = np.sqrt(s["Re_b_lo"].clip(lower=0.3) * s["Re_b_hi"].clip(upper=3000))
+            ax.errorbar(x, s["ratio"], yerr=[s["ratio"] - s["ratio_lo"], s["ratio_hi"] - s["ratio"]], color=c, ls=ls,
+                        marker="o", ms=4, capsize=2, label=f"{'finger' if tname == 'finger_any' else 'control'}, {grad}")
+        ax.axhline(1, color="k", lw=0.8)
+        ax.set_xscale("log")
+        ax.set_yscale("log")
+        ax.set_ylim(0.05, 300)
+        ax.set_xlabel("Re_b (shear, bounded)")
+        ax.set_ylabel(r"$\langle\chi_{obs}\rangle / \langle\chi_{exp}\rangle$")
+        ax.set_title(g, fontsize=9)
+        ax.legend(fontsize=6.5)
+    fig.tight_layout()
+    ps.footer(fig, foot)
+    fig.savefig(path, dpi=100)
+    plt.close(fig)
+
+
 def run(ctx: dict) -> None:
     config = ctx["config"]
     dd = config["double_diffusion"]
@@ -315,6 +355,27 @@ def run(ctx: dict) -> None:
                         for zb, db in dv.groupby("depth_bin"):
                             bins_rows.append({**base, "depth_bin": zb,
                                               **ratio_stats(db, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
+    # Ratio in Re_b bins: finger-favourable windows vs control, matched turbulence intensity
+    reb_rows = []
+    edges = dd["re_b_bins"]
+    for g in groups:
+        dg = prep[prep["instrument_group"] == g]
+        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        sets = regime_sets(dg, methods[-1])
+        for tname in ("finger_any", "control"):
+            d = dg[sets[(tname, "all")]]
+            for lo_b, hi_b in zip(edges[:-1], edges[1:]):
+                db = d[(d["Re_b_shear"] >= lo_b) & (d["Re_b_shear"] < hi_b)]
+                for grad, dv in (("background", db), ("finescale", db.assign(chi_exp=db["chi_exp_fine"])
+                                                         [np.isfinite(db["chi_exp_fine"])])):
+                    if len(dv) >= 5:
+                        reb_rows.append({"instrument_group": g, "turner": tname, "gradients": grad,
+                                         "Re_b_lo": lo_b, "Re_b_hi": hi_b,
+                                         **ratio_stats(dv, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
+    reb = pd.DataFrame(reb_rows)
+    reb.to_csv(out / "dd_re_b.csv", index=False, float_format="%.6g")
+    reb_figure(reb, groups, out / "figures" / "ratio_vs_re_b.png", foot)
+
     bins = pd.DataFrame(bins_rows)
     pooled = pd.DataFrame(pooled_rows)
     for t in (bins, pooled):

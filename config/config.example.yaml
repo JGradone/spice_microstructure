@@ -452,7 +452,11 @@ double_diffusion:
   exclude_weakest_n2_percent: 10  # robustness check: repeat with the weakest N2 decile removed
   station_groups: [process_station, transect]   # cast_log station names; casts outside a station are `transect`
   pool_free_fall: true            # also test all free-fall casts of an instrument together ("all free fall")
-  control_max_turner_deg: 30      # control: -90 < Tu < 30 (clearly non-finger, away from the 45 deg boundary)
+  control_max_turner_deg: 30      # control: -45 < Tu < 30 (doubly stable, away from the 45 deg finger boundary)
+  control_depth_range_dbar:       # control windows (also need T_z > 0); reaches above the salinity maximum (~105 dbar)
+    vmp250: [20, 300]
+    vmp5500: [20, 1000]
+  re_b_bins: [0, 3, 10, 30, 100, 1000000]   # Re_b bins for the finger vs control comparison
   depth_range_dbar:               # windows tested (P_mean), per instrument; above ~150 dbar is not staircase water
     vmp250: [150, 300]            # to the bottom of the casts (~180-270 dbar)
     vmp5500: [150, 1000]          # full deep casts (was 550: ship CTD validation depth, not a physical limit)
