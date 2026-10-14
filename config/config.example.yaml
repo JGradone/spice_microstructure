@@ -424,6 +424,9 @@ regimes:
       interface_max_height: 30               # dbar
       layer_height_ratio: 1                  # max mixed layer / gradient layer height ratio
       temp_flag_only: true
+    test_grid:                    # scripts/test_staircase_thresholds.py (rollo2022 settings otherwise)
+      ml_grad: [0.0005, 0.001, 0.002]
+      ml_density_difference: [0.005, 0.01, 0.02, 0.04]
     ml:
       # Labels from an external machine learning classifier (intern project),
       # read from a file and compared with the published methods. Expected
