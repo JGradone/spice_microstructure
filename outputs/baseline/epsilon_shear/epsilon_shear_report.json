@@ -10,6 +10,14 @@
         0.5,
         1.0,
         2.0
+      ],
+      "test_noise_ratio": [
+        2.0,
+        3.0
+      ],
+      "test_white_band_hz": [
+        20.0,
+        40.0
       ]
     },
     "noise_floor": {
@@ -41,16 +49,16 @@
       "windows": 6002,
       "after_segment_qc": 6002,
       "probe_estimates_removed": {
-        "probe_exclusion": 0,
-        "var_resolved": 273,
+        "probe_exclusion": 286,
+        "var_resolved": 272,
         "figure_of_merit": 0
       },
-      "no_usable_probe": 119,
-      "probe_disagree": 373,
-      "kept": 5883,
-      "kept_at_floor": 283,
-      "kept_at_floor_fraction": 0.0481,
-      "kept_fm_high_fraction": 0.2781,
+      "no_usable_probe": 125,
+      "probe_disagree": 150,
+      "kept": 5877,
+      "kept_at_floor": 1132,
+      "kept_at_floor_fraction": 0.1926,
+      "kept_fm_high_fraction": 0.2496,
       "refit": {
         "enabled": true,
         "num_ffts": 7,
@@ -66,17 +74,17 @@
         }
       },
       "noise_windows": {
-        "sh1": 115,
-        "sh2": 115
+        "sh1": 110,
+        "sh2": 110
       },
       "noise_window_epsilon_max": {
-        "sh1": 2.7432314562414597e-10,
-        "sh2": 1.7481918251894817e-10
+        "sh1": 2.7267056124383517e-10,
+        "sh2": 2.219072557867711e-10
       },
-      "floor_median_w_kg": 1.2203424717937775e-10,
-      "floor_median_below_150dbar_w_kg": 1.377508557520496e-10,
-      "at_floor_fraction_below_150dbar": 0.0852,
-      "epsilon_median_below_150dbar_w_kg": 4.588186221053526e-10
+      "floor_median_w_kg": 1.913018273641059e-10,
+      "floor_median_below_150dbar_w_kg": 2.0962176830910523e-10,
+      "at_floor_fraction_below_150dbar": 0.395,
+      "epsilon_median_below_150dbar_w_kg": 4.646172846298763e-10
     },
     "vmp5500": {
       "windows": 6749,

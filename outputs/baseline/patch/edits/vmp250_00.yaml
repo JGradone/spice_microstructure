@@ -1,5 +1,5 @@
-note: spice_microstructure patch step; spice_microstructure git 0d02b25e896a10912928c03540db7bf4a2ca5448;
-  config sha256 84e7d72bc9cb; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)
+note: spice_microstructure patch step; spice_microstructure git 073d8c927ac297c78efc83f49fdd9cbdfdcd3135;
+  config sha256 923fe62d4d74; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)
 author: Joe
 channels:
   T1:

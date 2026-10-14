@@ -850,3 +850,13 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * **Reading for the objectives:**
   * RO2a/b: K_S is well constrained by the processing apart from the FP07 response (factor ~2) and γ (factor 1.4).
   * The finger attribution (finger fraction) remains baseline- and scale-dependent and should be reported as a range. Its 10 m central values are not robust on their own.
+
+## 2026-10-14: Full-chain reproduction from the raw files
+
+* The baseline was run through every step: cast_log to export, including compare_archive and figures.
+* Run `repro_baseline` (baseline settings, no overrides, fresh run directory) then rebuilt everything from the raw files:
+  * all files re-patched (38 VMP250, 44 VMP5500 plus 1 link to an unedited raw file);
+  * perturb processed every file (0 skipped as up to date);
+  * no links to other runs.
+* `scripts/check_reproduction.py` compared all 51 CSV tables and NetCDF products under the step directories (logs, provenance fields, perturb working trees and patched copies excluded): 0 differ beyond relative tolerance 1e-9, and none missing. Report: `outputs/repro_baseline/reproduction_check.json`.
+* The chain from raw .p files to exported products is reproducible with one command (`python src/run_pipeline.py --config config/config.yaml [--sensitivity NAME]`).

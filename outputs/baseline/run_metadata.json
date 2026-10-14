@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-13T16:08:10+00:00",
-  "config_sha256": "b2d3f9107c3349ee8425cd1ebf6a206fdd0cfa76e7ef6eefec92e64bbfffbdbd",
-  "git_commit": "aa1fe94f703ef3bfba0a6c4beb27a6ccf7adfd56",
+  "created_utc": "2026-10-14T18:12:26+00:00",
+  "config_sha256": "923fe62d4d7471dac21e2d7eb8902db0429b846ac98db5e200f46d33151f79ea",
+  "git_commit": "b421273e7c636ef95987eba1030ffbe5c0530766",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -16,8 +16,29 @@
   "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
   "config_path": "config/config.yaml",
+  "run": {
+    "name": "baseline",
+    "notes": "Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.",
+    "instruments": [
+      "vmp250",
+      "vmp5500"
+    ]
+  },
   "steps": [
-    "hydrography"
+    "cast_log",
+    "patch",
+    "convert",
+    "segments",
+    "hydrography",
+    "epsilon_shear",
+    "thermistor",
+    "regimes",
+    "dd_test",
+    "diffusivities",
+    "uncertainty",
+    "compare_archive",
+    "figures",
+    "export"
   ],
   "manifests_verified": true
 }

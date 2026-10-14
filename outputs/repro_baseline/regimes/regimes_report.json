@@ -1,0 +1,180 @@
+{
+  "regimes": {
+    "turner_finger_min_deg": 45,
+    "turner_finger_strong_deg": 72,
+    "turner_smoothing_m": 25,
+    "window_label_fraction": 0.667,
+    "examples": [
+      [
+        "vmp5500",
+        "SPC_031_prof001",
+        250,
+        450
+      ],
+      [
+        "vmp5500",
+        "SPC_033_prof001",
+        150,
+        550
+      ],
+      [
+        "vmp250",
+        "data_0133_prof002",
+        150,
+        255
+      ]
+    ],
+    "staircase": {
+      "methods": [
+        "vdb2021",
+        "rollo2022"
+      ],
+      "vdb2021": {
+        "grid_dbar": 1.0,
+        "ml_grad": 0.0005,
+        "ml_density_difference": 0.005,
+        "av_window": 200,
+        "interface_max_height": 30,
+        "layer_height_ratio": 1,
+        "temp_flag_only": false
+      },
+      "rollo2022": {
+        "grid_dbar": 1.0,
+        "ml_grad": 0.002,
+        "ml_density_difference": 0.005,
+        "av_window": 200,
+        "interface_max_height": 30,
+        "layer_height_ratio": 1,
+        "temp_flag_only": true
+      },
+      "test_grid": {
+        "ml_grad": [
+          0.0005,
+          0.001,
+          0.002
+        ],
+        "ml_density_difference": [
+          0.005,
+          0.01,
+          0.02,
+          0.04
+        ]
+      },
+      "ml": {
+        "enabled": false,
+        "labels_path": null
+      }
+    }
+  },
+  "instruments": {
+    "vmp250": {
+      "windows": 6002,
+      "windows_below_150": 2734,
+      "turner_class_below_150": {
+        "strong_finger": 1964,
+        "finger": 685,
+        "not_finger": 62,
+        "diffusive": 12,
+        "unstable": 11
+      },
+      "turner_class_10m_vs_smooth_agree_below_150": 0.804,
+      "staircase_vdb2021_below_150": {
+        "none": 2722,
+        "layer": 5,
+        "straddles": 4,
+        "interface": 3
+      },
+      "profiles_with_interfaces_vdb2021": 5,
+      "staircase_rollo2022_below_150": {
+        "none": 2400,
+        "layer": 148,
+        "straddles": 145,
+        "interface": 41
+      },
+      "profiles_with_interfaces_rollo2022": 72,
+      "methods_agree_below_150": 0.88,
+      "methods_confusion_below_150": {
+        "interface": {
+          "interface": 0,
+          "layer": 0,
+          "none": 41,
+          "straddles": 0
+        },
+        "layer": {
+          "interface": 0,
+          "layer": 5,
+          "none": 141,
+          "straddles": 2
+        },
+        "none": {
+          "interface": 0,
+          "layer": 0,
+          "none": 2400,
+          "straddles": 0
+        },
+        "straddles": {
+          "interface": 3,
+          "layer": 0,
+          "none": 140,
+          "straddles": 2
+        }
+      },
+      "Re_b_shear_median_below_150": 9.761379661643819
+    },
+    "vmp5500": {
+      "windows": 6749,
+      "windows_below_150": 5738,
+      "turner_class_below_150": {
+        "finger": 2631,
+        "strong_finger": 1728,
+        "not_finger": 648,
+        "unstable": 469,
+        "undefined": 219,
+        "diffusive": 43
+      },
+      "turner_class_10m_vs_smooth_agree_below_150": 0.846,
+      "staircase_vdb2021_below_150": {
+        "none": 5123,
+        "straddles": 301,
+        "layer": 243,
+        "interface": 71
+      },
+      "profiles_with_interfaces_vdb2021": 44,
+      "staircase_rollo2022_below_150": {
+        "none": 4120,
+        "straddles": 829,
+        "layer": 687,
+        "interface": 102
+      },
+      "profiles_with_interfaces_rollo2022": 44,
+      "methods_agree_below_150": 0.738,
+      "methods_confusion_below_150": {
+        "interface": {
+          "interface": 26,
+          "layer": 0,
+          "none": 75,
+          "straddles": 1
+        },
+        "layer": {
+          "interface": 2,
+          "layer": 178,
+          "none": 434,
+          "straddles": 73
+        },
+        "none": {
+          "interface": 16,
+          "layer": 64,
+          "none": 3921,
+          "straddles": 119
+        },
+        "straddles": {
+          "interface": 27,
+          "layer": 1,
+          "none": 693,
+          "straddles": 108
+        }
+      },
+      "Re_b_shear_median_below_150": 5.5730795608607915
+    }
+  }
+}
