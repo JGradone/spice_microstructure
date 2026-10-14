@@ -376,42 +376,54 @@ hydrography:
   # ~4.5x and ~0.4x the TEOS-10 values.
 
 regimes:
+  # regimes step (CLAUDE.md step 6; decisions.md 2026-10-14). Labels every
+  # dissipation window: Turner class, staircase position per detection method,
+  # buoyancy Reynolds number. Interfaces and layers are never pooled downstream.
   turner_finger_min_deg: 45
   turner_finger_strong_deg: 72
+  turner_smoothing_m: 25          # Turner class from linear fits over this scale (hydrography 10 m values kept);
+                                  # VMP5500 10 m R_rho is unbiased but noisy (decisions.md 2026-10-13)
+  window_label_fraction: 0.667    # window is interface (layer) when this fraction of its extent is interface
+                                  # (layer); in a staircase but below it for both: straddles
+  examples:                       # profiles drawn in the label figure: instrument, profile stem, p range (dbar)
+    - [vmp5500, SPC_031_prof001, 250, 450]
+    - [vmp5500, SPC_033_prof001, 150, 550]
+    - [vmp250, data_0133_prof003, 150, 255]
   staircase:
     # Interface/layer labels from each method are kept side by side in the
     # products and compared; none is privileged until the comparison is done.
+    # Both published methods run through Rollo's implementation
+    # (thermohalinesteps.detect_staircases.classify_staircase, pinned in
+    # requirements.txt); keys below are its arguments. Its defaults equal the
+    # van der Boog et al. (2021) values. av_window only sets the 200 dbar running
+    # mean used for alpha and beta (density units for the mixed-layer test); the
+    # Turner angle that classifies steps uses a 50 dbar mean hardcoded in the
+    # package. For the VMP5500 (salinity from its own T-S relation) the two
+    # methods give identical labels.
     methods: [vdb2021, rollo2022]
     vdb2021:
-      # van der Boog et al. (2021), ESSD 13, 43-61, doi:10.5194/essd-13-43-2021.
-      # Values from the paper text (Sects. 2-3, Table 2). Its 200 dbar
-      # background window and 100 dbar end trims assume deep profiles; VMP250
-      # casts reach ~180-270 m, so apply to the VMP5500, or to the VMP250 only
-      # with the background taken from a co-located deep profile.
+      # van der Boog et al. (2021), ESSD 13, 43-61, doi:10.5194/essd-13-43-2021:
+      # mixed layers must pass the temperature, salinity and density criteria.
+      # Paper parameters without a counterpart in the code (not applied):
+      # interface_max_extrema 2, min_interfaces 2, sigma_reference 1000 dbar (code uses sigma1).
       grid_dbar: 1.0
-      background_window_dbar: 200
-      turner_window_dbar: 50
-      sigma_reference_dbar: 1000
-      ml_max_gradient_kg_m3_dbar: 0.0005     # applied to (alpha/rho0) T_p, (beta/rho0) S_p, sigma1_p
-      ml_max_density_range_kg_m3: 0.005
-      interface_max_height_dbar: 30
-      interface_max_extrema: 2               # local extrema of CT and SA per interface
-      min_interfaces: 2
+      ml_grad: 0.0005                        # kg m-3 dbar-1
+      ml_density_difference: 0.005           # kg m-3
+      av_window: 200                         # dbar; alpha/beta background only (sensitivity run stair_av100)
+      interface_max_height: 30               # dbar
+      layer_height_ratio: 1
+      temp_flag_only: false
     rollo2022:
       # Rollo et al. (2022), Geosci. Instrum. Method. Data Syst. 11, 359-373,
       # doi:10.5194/gi-11-359-2022. Code: github.com/callumrollo/thermohaline-steps
-      # (GPL-3.0), pinned in requirements.txt. Keys are the arguments of
-      # thermohalinesteps.detect_staircases.classify_staircase; defaults and
-      # units checked in the code (commit 976a4fe). The code defaults equal the
-      # van der Boog values; the paper's glider run used ml_grad 0.001 and
-      # ml_density_difference 0.01 (its "kg m-4" units are a typo).
+      # (GPL-3.0). Mixed layers flagged by temperature only (FP07 resolves steps).
       grid_dbar: 1.0                         # input must be evenly spaced in pressure
       ml_grad: 0.0005                        # kg m-3 dbar-1
       ml_density_difference: 0.005           # kg m-3
-      av_window: 200                         # dbar; background profiles. Too long for VMP250 casts (~180-270 m)
+      av_window: 200                         # dbar
       interface_max_height: 30               # dbar
       layer_height_ratio: 1                  # max mixed layer / gradient layer height ratio
-      temp_flag_only: true                   # mixed layers flagged by temperature only (FP07 resolves steps)
+      temp_flag_only: true
     ml:
       # Labels from an external machine learning classifier (intern project),
       # read from a file and compared with the published methods. Expected
@@ -452,6 +464,11 @@ sensitivity_runs:
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle}
+  - name: stair_av100              # staircase background window 100 dbar (alpha/beta only), on the analysis settings
+    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
+          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
+          perturb.chi.fit_method: mle, regimes.staircase.vdb2021.av_window: 100,
+          regimes.staircase.rollo2022.av_window: 100}
   - name: fft2_diss8_mle_dp        # FP07 response test: double-pole transfer, fixed tau 3 ms (Goto et al. 2016)
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
