@@ -646,3 +646,27 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * There is almost no non-finger water at the station for a control (2 and 10 windows).
   * VMP250 free fall and tow-yo differ (5.5 against 2.8) and are not pooled.
   * Stratification scale (10 m) runs `strat5m` and `strat25m`, the staircase threshold run `stair_mlgrad001`, `epsilon_source: thermistor` and γ are pending sensitivity runs.
+
+## 2026-10-14: dd_test depth range extended; interface-local and finescale gradients
+
+* **Depth range per instrument** (`double_diffusion.depth_range_dbar`): VMP250 150–300 dbar (to the bottom of its casts), VMP5500 150–1000 dbar. The earlier 550 dbar limit was the ship CTD validation depth, not a physical limit.
+* **Three gradient choices for chi_expected**, all reported:
+  * **background:** 10 m linear fits.
+  * **interface_local:** windows labelled interface only. T_z and S_z are the detected interface's CT and SA range over its thickness (median 3 m), and N² is computed from them.
+  * **finescale:** every window. T_z² is replaced by the mean squared 1 m temperature gradient over the window; N² stays the background value.
+* **Why it matters:** below about 600 dbar the background version gave R ≈ 12–19, and 17 for VMP5500 non-finger windows (114, mostly 800–1000 dbar near the AAIW salinity minimum). That would contradict the shear-turbulence expectation of about 1.
+  * Not noise. An empirical FP07 chi floor from the quietest 2% of windows (about 1e-11 K²/s) matches perturb's floor. Deep chi is 15–40× above it, and only 2–10% of deep windows are near it.
+  * Instead, the 1 m gradient variance exceeds the background T_z² (median 1.3–1.9×, much more in some windows). The ratio of averages is dominated by those intrusive-finestructure windows, a direct case of the Osborn–Cox caveat (chi produced by gradients the background fit does not represent).
+* **Process station, finger-favourable, rollo2022**, R [95% CI]:
+
+  | Group | Gradients | All | Interface | Layer | Non-finger control |
+  |---|---|---|---|---|---|
+  | VMP5500 | background | 2.9 | 6.8 | 1.7 | 16.9 [6.9, 23] |
+  | VMP5500 | interface_local | — | 5.2 [3.9, 8.6] | — | — |
+  | VMP5500 | finescale | 1.9 [1.6, 2.1] | 4.1 [3.2, 6.2] | 0.93 [0.69, 1.31] | 1.4 [0.2, 9.9] |
+  | VMP250 tow-yo | background | 2.8 | 5.4 | 0.33 | — |
+  | VMP250 tow-yo | interface_local | — | 4.6 | — | — |
+  | VMP250 tow-yo | finescale | 2.0 | 3.1 [2.7, 3.7] | 0.91 | — |
+  | VMP250 free fall | background / finescale | 5.5 / 3.6 | — | — | — |
+
+* **Reading:** under every gradient choice, staircase interfaces exceed the shear-turbulence expectation (R 3–7, near the finger prediction of about 4). Layers are about 1 with finescale gradients. With finescale gradients the non-finger control recovers about 1, which supports the finescale version as the more consistent estimate. Background-gradient ratios overstate R where intrusive finestructure is present, and deep (> 600 dbar) background ratios should not be interpreted. Gradient choice is a key methods decision for the paper; all three are carried.
