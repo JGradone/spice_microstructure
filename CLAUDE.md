@@ -49,7 +49,7 @@ This repository holds code, config, environment files, documentation, and this a
 ```
 config/       # config.example.yaml (committed); config.yaml (local copy with real paths)
 src/          # run_pipeline.py, common.py, steps/<name>.py
-scripts/      # utilities: checksum manifests, environment snapshots
+scripts/      # utilities, diagnostics and run comparisons
 manifests/    # committed checksum manifests of data directories
 docs/         # shipboard_processing.md, decisions.md, products.md; private/ (gitignored)
 outputs/      # <run.name>/<step>/ results and figures (bulky files gitignored)
@@ -61,15 +61,43 @@ Keep this analysis separate from the earlier work. Never write into the data dir
 
 Existing pieces:
 
-* `src/run_pipeline.py` is the single entry point. It loads the config, refuses to run while any value is `TODO`, verifies the archive manifests, writes `run_metadata.json` (config hash, git commit, package versions), and dispatches steps in order. Each step is `src/steps/<name>.py` with `run(ctx)`, and can also run on its own: `python src/steps/<name>.py --config config/config.yaml`. Steps without a module raise `NotImplementedError`.
-* `src/common.py` holds shared helpers: provenance, `run_cmd` (every CLI call is appended with its output to the step's `commands.log`), parsing of `rsi-tpw config` output, and per-file patch edits from the config.
-* Implemented steps:
-  * `cast_log`: cast table, Sealog matching and ship track.
-  * `patch`: per-cast `rsi-tpw patch-config`, with every output verified.
-  * `convert`: one `perturb run` per instrument. perturb's stage subcommands each run the whole pipeline, so epsilon and chi are computed here, and the `epsilon_shear` and `thermistor` steps post-process perturb's output.
-* `scripts/make_manifest.py` writes and verifies SHA-256 manifests (standard library only; refuses to overwrite an existing manifest).
-* `scripts/record_environment.py` snapshots Python and package versions to JSON.
-* `config/config.example.yaml` lists every parameter; values marked `TODO` must be filled from `docs/shipboard_processing.md`.
+* `src/run_pipeline.py` is the single entry point. It loads the config, refuses to run while any value is `TODO`, verifies the archive manifests, writes `run_metadata.json` (config hash, git commit, package versions, run settings), and dispatches steps in order. Each step is `src/steps/<name>.py` with `run(ctx)`. A step can also run on its own: `python src/steps/<name>.py --config config/config.yaml [--sensitivity NAME]`.
+* `src/common.py` holds shared helpers:
+  * provenance;
+  * `run_cmd` (every CLI call is appended with its output to the step's `commands.log`);
+  * parsing of `rsi-tpw config` output;
+  * per-file patch edits;
+  * `apply_sensitivity`;
+  * `single_dir`, which resolves perturb stage directories through `convert/stage_dirs_<instrument>.json`.
+* Steps, in order (all implemented):
+  * `cast_log`: cast table, Sealog matching, ship track.
+  * `patch`: per-cast `rsi-tpw patch-config`, every output verified. Reuses its files when the raw files, edits and package version are unchanged.
+  * `convert`: one `perturb run` per instrument, with perturb's cache kept (`conversion.reuse_cache`) and `--jobs`. perturb computes epsilon and chi here; later steps post-process its output.
+  * `segments`: per-window QC flags.
+  * `hydrography`: TEOS-10 stratification on a 1 m grid. VMP5500 salinity uses `own_ts`, the cast's own T–S relation at FP07 temperature, with a ship-free bad-cell check.
+  * `epsilon_shear`: probe QC, 1 Hz low-wavenumber refit, noise floor per window, combined epsilon.
+  * `thermistor`: chi and epsilon_T QC, FP07 noise floor, `epsilon_T_resolved`.
+  * `regimes`: Turner class (25 m), staircase labels (vdb2021 published, rollo2022 tuned), Re_b.
+  * `dd_test`: ratio of averages; the baseline ladder (theory, Garrett–Munk, Re_b-matched control, internal contrasts); three gradient choices.
+  * `diffusivities`: K_T, K_S (γ range), K_S_eps, K_rho, K_GM; attribution; per-cast metrics.
+  * `uncertainty`: checks the profile bootstrap.
+  * `compare_archive`, `figures`: baseline-only comparisons with the shipboard archive.
+  * `export`: products in `outputs/<run>/products/` (docs/products.md).
+* Runs:
+  * `baseline`: shipboard settings, 4 s FFT / 16 s windows.
+  * The analysis run `fft2_diss8_mle`: 2 s / 8 s windows, chi by MLE. All science results come from it and are reported as differences from the baseline.
+  * Sensitivity runs: config `sensitivity_runs`, run with `--sensitivity NAME`. Entries can chain (`base`); runs whose perturb settings are unchanged link the base run's patched files and perturb output (`reuse_convert_from`, checked).
+* Scripts:
+  * `make_manifest.py`, `record_environment.py`;
+  * diagnostics: `diagnose_vmp5500_conductivity.py`, `vmp5500_cast_stepper.py`, `build_qc_explorer.py`, `explain_fm.py`, `test_shear_fmin.py`, `test_shear_kmax.py`, `test_staircase_thresholds.py`;
+  * run comparisons: `compare_runs.py`, `compare_sensitivity.py`, `check_reproduction.py`.
+* `config/config.example.yaml` lists every parameter; `config/config.yaml` is the local copy with real paths.
+* Docs:
+  * `docs/decisions.md`: every methods choice, dated.
+  * `docs/products.md`: product specification.
+  * `docs/package_issues.md`: possible microstructure-tpw problems for Pat Welch. Keep it updated as issues appear.
+  * `docs/shipboard_processing.md`.
+  * `docs/private/` (gitignored): shell history, collaborator questions and email drafts. Never commit collaborator correspondence or drafts.
 
 ## Cruise event log (read only)
 
@@ -102,6 +130,23 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 * The regenerated patched files cannot match `vmp250_patched` byte for byte (the patch header embeds a timestamp and source path). Compare them on the non-comment config lines and the data records.
 * Every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from the baseline.
 * Upgrading the pinned commit later starts a new baseline. Record why in `docs/decisions.md` and rerun.
+
+## Current state (2026-10-14; details and reasons in docs/decisions.md)
+
+* **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response.
+* **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
+* **epsilon_T:** used only where K_max/kB ≥ 1.6. It tends to absorb the finger signal, so shear epsilon is primary.
+* **Probe exclusions:**
+  * VMP5500 T2 (T3304), SPC_012–040: gain error.
+  * VMP250 sh2 for data_0112 (test casts) and for data_0123_prof004 and data_0124 (fouled).
+* **Double diffusion:** report the ladder of baselines and the three gradient choices.
+  * Robust: interfaces carry the most chi and layers the least at matched Re_b, and R rises with R_ρ.
+  * Not robust: the finger fraction. It depends on the baseline and on the stratification scale (5 vs 25 m), and is reported as a range.
+* **Diffusivities:** K_S is robust to processing choices except the FP07 response model (about 2×) and γ (1.4×).
+* **Open:**
+  * replies from Bieito (baseline, gradient scale, γ) and Pat (package questions);
+  * ADCP for a finescale Richardson number and a shear-based Garrett–Munk estimate;
+  * ML staircase labels.
 
 ## Documentation habits
 
