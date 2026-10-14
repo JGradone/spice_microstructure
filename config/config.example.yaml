@@ -450,6 +450,8 @@ double_diffusion:
   min_profiles_per_average: 3     # bins with fewer profiles are reported, flagged
   depth_bin_m: 25                 # baseline; 10 m in the bin10m sensitivity run
   exclude_weakest_n2_percent: 10  # robustness check: repeat with the weakest N2 decile removed
+  station_groups: [process_station]   # cast_log station names to test (add more groups later)
+  depth_range_dbar: [150, 550]    # windows tested (P_mean); above ~150 dbar is not staircase water
 
 uncertainty:
   bootstrap_samples: 1000
