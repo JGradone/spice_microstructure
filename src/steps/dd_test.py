@@ -25,8 +25,17 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     R > 1 means "not explainable by shear-driven turbulence with Gamma = 0.2".
   * Robustness: everything repeated with the weakest exclude_weakest_n2_percent
     of N2 (per group) removed.
+  * Gradients: chi_expected uses the hydrography step's background gradients
+    (linear fits over hydrography.gradient_smoothing_m), which at a thin
+    interface average the interface with the layers around it. For windows
+    labelled interface, a second estimate uses the interface's own gradients
+    from the regimes step table: T_z = CT range / thickness, S_z = SA range /
+    thickness (signs of the background), N2 = g (alpha T_z - beta S_z), from
+    the detected interface overlapping the window most. Reported as
+    gradients = interface_local next to gradients = background.
+  * Depth range per instrument: double_diffusion.depth_range_dbar.
 
-Reads:  <run_dir>/regimes/regimes_<instrument>.csv, <run_dir>/cast_log/casts_<instrument>.csv
+Reads:  <run_dir>/regimes/{regimes,steps}_<instrument>.csv, <run_dir>/cast_log/casts_<instrument>.csv
 Writes: <run_dir>/dd_test/
           dd_bins.csv        group x method x regime x depth bin
           dd_pooled.csv      group x method x regime over the whole depth range
@@ -38,6 +47,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import gsw
 import numpy as np
 import pandas as pd
 
@@ -104,7 +114,7 @@ def prepare(ctx, name, config) -> pd.DataFrame:
         eps = df["epsilon_T"].where(df["epsilon_T_resolved"].fillna(False).astype(bool))
     else:
         raise ValueError(f"Unknown double_diffusion.epsilon_source {dd['epsilon_source']!r}")
-    lo, hi = dd["depth_range_dbar"]
+    lo, hi = dd["depth_range_dbar"][name]
     ok = (df["shear_keep"].fillna(False).astype(bool) & df["chi_keep"].fillna(False).astype(bool)
           & (df["N2"] > 0) & np.isfinite(df["T_z"]) & np.isfinite(eps) & np.isfinite(df["chi"])
           & ~df["ts_salinity_invalid"].fillna(False).astype(bool)
@@ -117,6 +127,32 @@ def prepare(ctx, name, config) -> pd.DataFrame:
     df["depth_bin"] = np.floor(df["P_mean"] / b) * b + b / 2
     df["group"] = df["station"].where(df["station"] != "", "other") + np.where(df["towyo"], " tow-yo", " free fall")
     df.insert(0, "instrument_group", name + " " + df["group"])
+
+    # Interface-local gradients for windows labelled interface, per staircase method
+    steps = pd.read_csv(rd / "regimes" / f"steps_{name}.csv")
+    half = df["speed"] * float(config["perturb"]["epsilon"]["diss_sec"]) / 2
+    pc = gsw.p_from_z(-df["depth"].to_numpy(), 12.0)
+    for m in config["regimes"]["staircase"]["methods"]:
+        ifc = steps[(steps["method"] == m) & (steps["kind"] == "interface")]
+        by_prof = {k: g for k, g in ifc.groupby("profile_file")}
+        tz, sz = np.full(len(df), np.nan), np.full(len(df), np.nan)
+        lab = df[f"staircase_{m}"].to_numpy()
+        for k, (pf, p, h, tzb, szb) in enumerate(zip(df["profile_file"], pc, half, df["T_z"], df["S_z"])):
+            if lab[k] != "interface" or pf not in by_prof:
+                continue
+            g = by_prof[pf]
+            ov = (np.minimum(g["p_end"], p + h) - np.maximum(g["p_start"], p - h)).to_numpy()
+            if not (ov > 0).any():
+                continue
+            r = g.iloc[int(np.argmax(ov))]
+            hgt = max(float(r["layer_height"]), float(config["regimes"]["staircase"][m]["grid_dbar"]))
+            tz[k] = np.sign(tzb) * r["ct_range"] / hgt
+            sz[k] = np.sign(szb) * r["sa_range"] / hgt
+        n2 = 9.81 * (df["alpha"] * tz - df["beta"] * sz)
+        df[f"T_z_iface_{m}"], df[f"S_z_iface_{m}"], df[f"N2_iface_{m}"] = tz, sz, n2
+        with np.errstate(invalid="ignore", divide="ignore"):
+            df[f"chi_exp_iface_{m}"] = np.where(n2 > 0, 2 * dd["flux_coefficient"] * df["epsilon_used"] / n2 * tz ** 2,
+                                                np.nan)
     return df
 
 
@@ -127,8 +163,13 @@ def prepare(ctx, name, config) -> pd.DataFrame:
 def depth_figure(bins, pooled, groups, method, path, foot):
     fig, axes = plt.subplots(1, len(groups), figsize=(5.4 * len(groups), 7), squeeze=False)
     for ax, g in zip(axes[0], groups):
-        b = bins[(bins["instrument_group"] == g) & (bins["method"] == method) & (bins["turner"] == "finger_any")
-                 & (bins["n2_filter"] == "all")]
+        b_all = bins[(bins["instrument_group"] == g) & (bins["method"] == method) & (bins["turner"] == "finger_any")
+                     & (bins["n2_filter"] == "all")]
+        b = b_all[b_all["gradients"] == "background"]
+        loc = b_all[(b_all["gradients"] == "interface_local")].sort_values("depth_bin")
+        if len(loc):
+            ax.scatter(loc["ratio"], loc["depth_bin"] - 2, marker="D", s=22, facecolors="none",
+                       edgecolors=ps.ORANGE, label="interface, local gradients", zorder=3)
         for lab in ("all", "interface", "layer", "straddles"):
             s = b[b["staircase"] == lab].sort_values("depth_bin")
             if not len(s):
@@ -145,12 +186,13 @@ def depth_figure(bins, pooled, groups, method, path, foot):
         ax.plot(a["finger_prediction"], a["depth_bin"], color=ps.RED, lw=1.5, ls="--", label="finger model (γ)")
         ax.axvline(1, color="k", lw=0.8)
         ax.set_xscale("log")
-        ax.set_xlim(0.1, 300)
+        ax.set_xlim(0.05, 300)
         ax.invert_yaxis()
         ax.set_xlabel(r"$\langle\chi_{obs}\rangle / \langle\chi_{exp}\rangle$ (95% bootstrap)")
         ax.set_ylabel("pressure (dbar)")
         p = pooled[(pooled["instrument_group"] == g) & (pooled["method"] == method)
-                   & (pooled["turner"] == "finger_any") & (pooled["staircase"] == "all") & (pooled["n2_filter"] == "all")]
+                   & (pooled["turner"] == "finger_any") & (pooled["staircase"] == "all") & (pooled["n2_filter"] == "all")
+                   & (pooled["gradients"] == "background")]
         txt = f"pooled {p['ratio'].iloc[0]:.1f} [{p['ratio_lo'].iloc[0]:.1f}, {p['ratio_hi'].iloc[0]:.1f}]" if len(p) else ""
         ax.set_title(f"{g}\nfinger-favourable, {method}\n{txt}", fontsize=9)
         ax.legend(fontsize=7.5, loc="lower right")
@@ -218,12 +260,19 @@ def run(ctx: dict) -> None:
                     d = dsel[sel]
                     if len(d) == 0:
                         continue
-                    base = {"instrument_group": g, "method": m, "turner": tname, "staircase": sname, "n2_filter": n2f,
-                            "min_profiles": dd["min_profiles_per_average"]}
-                    pooled_rows.append({**base, **ratio_stats(d, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
-                    for zb, db in d.groupby("depth_bin"):
-                        bins_rows.append({**base, "depth_bin": zb,
-                                          **ratio_stats(db, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
+                    variants = [("background", d)]
+                    if sname == "interface":
+                        dl = d.assign(chi_exp=d[f"chi_exp_iface_{m}"], T_z=d[f"T_z_iface_{m}"], S_z=d[f"S_z_iface_{m}"])
+                        variants.append(("interface_local", dl[np.isfinite(dl["chi_exp"])]))
+                    for grad, dv in variants:
+                        if not len(dv):
+                            continue
+                        base = {"instrument_group": g, "method": m, "turner": tname, "staircase": sname,
+                                "gradients": grad, "n2_filter": n2f, "min_profiles": dd["min_profiles_per_average"]}
+                        pooled_rows.append({**base, **ratio_stats(dv, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
+                        for zb, db in dv.groupby("depth_bin"):
+                            bins_rows.append({**base, "depth_bin": zb,
+                                              **ratio_stats(db, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
     bins = pd.DataFrame(bins_rows)
     pooled = pd.DataFrame(pooled_rows)
     for t in (bins, pooled):
@@ -239,7 +288,7 @@ def run(ctx: dict) -> None:
     for g in groups:
         p = pooled[(pooled["instrument_group"] == g) & (pooled["n2_filter"] == "all")]
         report["groups"][g] = {
-            f"{r.method} {r.turner} {r.staircase}": {"ratio": round(r.ratio, 2),
+            f"{r.method} {r.turner} {r.staircase} {r.gradients}": {"ratio": round(r.ratio, 2),
                                                     "ci95": [round(r.ratio_lo, 2), round(r.ratio_hi, 2)],
                                                     "finger_prediction": round(r.finger_prediction, 2),
                                                     "R_rho": round(r.R_rho_bin, 2), "n_windows": int(r.n_windows),
@@ -248,7 +297,7 @@ def run(ctx: dict) -> None:
             for r in p.itertuples() if r.turner in ("finger_any", "not_finger", "all_turner")}
         print(f"  {g}:")
         for r in p[(p["turner"] == "finger_any")].itertuples():
-            print(f"    {r.method:9s} finger {r.staircase:9s} R={r.ratio:6.2f} [{r.ratio_lo:5.2f},{r.ratio_hi:6.2f}]"
+            print(f"    {r.method:9s} finger {r.staircase:9s} {r.gradients[:10]:10s} R={r.ratio:6.2f} [{r.ratio_lo:5.2f},{r.ratio_hi:6.2f}]"
                   f"  finger model {r.finger_prediction:4.1f} (R_rho {r.R_rho_bin:.2f})  n={r.n_windows} windows,"
                   f" {r.n_profiles} profiles, at floor {r.at_floor_fraction:.0%}")
     for m in methods:
