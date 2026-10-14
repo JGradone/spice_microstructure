@@ -1,5 +1,5 @@
 {
-  "sealog_file": "/Users/joegradone/SynologyDrive/Rutgers/Research/data/SPICE/SPICE_turbulence/sealog/FKt260806_sealog_export.csv",
+  "sealog_file": "FKt260806_sealog_export.csv",
   "track_points": 6838,
   "track_median_spacing_s": 300.0,
   "track_gaps_longer_than_gps_max_time_diff": [

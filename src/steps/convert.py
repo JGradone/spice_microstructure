@@ -50,13 +50,20 @@ def merge(base: dict, override: dict) -> dict:
     return out
 
 
+def config_dir_path(path: Path, cfg_dir: Path) -> str:
+    """Path written relative to the perturb config's own directory (perturb's
+    <CONFIG_DIR> token), so the generated configs hold no absolute paths."""
+    return "<CONFIG_DIR>/" + Path(os.path.relpath(path, cfg_dir)).as_posix()
+
+
 def perturb_config(config: dict, name: str, inst: dict, patched: Path, output: Path,
                    track: Path, prov: dict) -> dict:
     conv, prod = config["conversion"], config["products"]
+    cfg_dir = output.parent  # perturb_config_<instrument>.yaml is written next to the output tree
     pc = merge(config["perturb"], inst.get("perturb_overrides", {}))
-    pc["files"] = {"p_file_root": str(patched), "p_file_pattern": inst["file_pattern"],
-                   "output_root": str(output), "force_trim": False, "merge": False}
-    pc["gps"] = {"source": conv["gps_source"], "lat": None, "lon": None, "file": str(track),
+    pc["files"] = {"p_file_root": config_dir_path(patched, cfg_dir), "p_file_pattern": inst["file_pattern"],
+                   "output_root": config_dir_path(output, cfg_dir), "force_trim": False, "merge": False}
+    pc["gps"] = {"source": conv["gps_source"], "lat": None, "lon": None, "file": config_dir_path(track, cfg_dir),
                  "time_col": "t", "lat_col": "lat", "lon_col": "lon",
                  "max_time_diff": conv["gps_max_time_diff_s"]}
     pc["hotel"] = {"enable": False}
@@ -156,7 +163,7 @@ def run(ctx: dict) -> None:
                     continue
             common.write_json(out / f"stage_dirs_{name}.json", stage_dirs)
         report[name] = {"stage_dirs": stage_dirs, "files": len(files), "exit_code": result.returncode,
-                        "perturb_summary": summary, "perturb_log": str(run_log),
+                        "perturb_summary": summary, "perturb_log": common.portable_path(run_log) if run_log else None,
                         "warnings_in_log": warnings, "outputs": inventory(output)}
         print(f"  {name}: exit {result.returncode}; {summary.splitlines()[0] if summary else ''}")
         if result.returncode != 0:

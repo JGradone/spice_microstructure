@@ -56,7 +56,7 @@ def main() -> int:
             sys.exit(f"{dest} exists but was not created by this script; refusing to replace it")
         shutil.rmtree(dest)
     dest.mkdir(parents=True)
-    (dest / MARKER).write_text(f"built from {src}\n")
+    (dest / MARKER).write_text(f"built from {common.portable_path(src)}\n")
     for f in sorted(src.iterdir()):
         if f.is_file() and f.suffix in (".nc", ".csv"):
             shutil.copy2(f, dest / f.name)

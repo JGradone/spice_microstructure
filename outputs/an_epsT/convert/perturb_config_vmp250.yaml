@@ -123,16 +123,16 @@ stratification:
   window: 2.0
   salinity: null
 files:
-  p_file_root: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/an_epsT/patch/vmp250
+  p_file_root: <CONFIG_DIR>/../patch/vmp250
   p_file_pattern: data_*.p
-  output_root: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/an_epsT/convert/vmp250
+  output_root: <CONFIG_DIR>/vmp250
   force_trim: false
   merge: false
 gps:
   source: csv
   lat: null
   lon: null
-  file: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/an_epsT/cast_log/track.csv
+  file: <CONFIG_DIR>/../cast_log/track.csv
   time_col: t
   lat_col: lat
   lon_col: lon

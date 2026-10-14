@@ -16,7 +16,7 @@
     "files": 38,
     "exit_code": 0,
     "perturb_summary": "Pipeline complete: no errors.",
-    "perturb_log": "/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/repro_baseline/convert/vmp250/logs/run_20261014T182622Z.log",
+    "perturb_log": "outputs/repro_baseline/convert/vmp250/logs/run_20261014T182622Z.log",
     "warnings_in_log": 0,
     "outputs": {
       ".cache": 0,
@@ -51,7 +51,7 @@
     "files": 45,
     "exit_code": 0,
     "perturb_summary": "Pipeline complete: no errors.",
-    "perturb_log": "/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/repro_baseline/convert/vmp5500/logs/run_20261014T182707Z.log",
+    "perturb_log": "outputs/repro_baseline/convert/vmp5500/logs/run_20261014T182707Z.log",
     "warnings_in_log": 0,
     "outputs": {
       ".cache": 0,

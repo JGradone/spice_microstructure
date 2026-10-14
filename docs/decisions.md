@@ -877,3 +877,10 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   | Interface finger fraction across baselines | 0.43–0.77 | 0.34–0.65 |
 
   The directory is rebuilt from scratch each time and refuses to replace a directory it did not create.
+
+## 2026-10-14: No absolute paths in committed files
+
+* **Why:** the repository should hold only what is needed to reproduce the outputs on any machine; local paths belong in `config/config.yaml` (not committed).
+* **Generated perturb configs** (`convert/perturb_config_<instrument>.yaml`) now write `p_file_root`, `output_root` and `gps.file` with perturb's `<CONFIG_DIR>` token, relative to the config file. perturb's cache signatures include these strings, so the first rerun of each run on this machine recomputes its perturb stages once (new `*_NN` stage directories; older ones can then be deleted).
+* **Reports** record paths with `common.portable_path`: relative to the repository when inside it, otherwise only the name (external inputs are located through the config). This covers `cast_log_report.json` (Sealog file), `compare_report.json` (archive), `convert_report.json` (perturb log) and `outputs/recommended/.recommended_products`.
+* **Existing committed outputs** were rewritten to the same form without rerunning (only path strings changed; the token paths expand to the same files that were used). Remaining absolute paths are local only: gitignored command logs, symlinks to the raw files, and the source path rsi-tpw embeds in each patched file header. `docs/shipboard_pip_freeze.txt` keeps the conda build paths of the verbatim shipboard `pip freeze`.

@@ -194,7 +194,7 @@ def run(ctx: dict) -> None:
             checks["data_0112_e_2_expected_ratio"] = round((0.1134 / 0.1079) ** 2, 4)
             checks["data_0112_e_2_observed_median_ratios"] = rows["e_2_median_ratio"].round(4).tolist()
             checks["data_0112_e_1_observed_median_ratios"] = rows["e_1_median_ratio"].round(4).tolist()
-        report[name] = {"archive": str(arc_root), "archive_generation": gen,
+        report[name] = {"archive": common.portable_path(arc_root), "archive_generation": gen,
                         "summary": summary.to_dict("records"), "checks": checks}
         eps = summary.set_index("variable").loc["epsilonMean"]
         chi = summary.set_index("variable").loc["chiMean"]

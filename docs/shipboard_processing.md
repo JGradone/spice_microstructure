@@ -6,7 +6,7 @@ Exact reproduction of these outputs with the shipboard software version has been
 
 ## Archived directories
 
-All three live under `/Users/joegradone/SynologyDrive/Rutgers/Research/data/SPICE/SPICE_turbulence/`. At sea they were at `~/Desktop/SPICE_turbulence/` and were moved to SynologyDrive by 2026-09-30. Paths embedded in the at-sea outputs and patched files still point at the Desktop location.
+All three live under `SPICE_turbulence/` in the local data area (paths are set in `config/config.yaml`). At sea they were at `~/Desktop/SPICE_turbulence/` and were moved to SynologyDrive by 2026-09-30. Paths embedded in the at-sea outputs and patched files still point at the Desktop location.
 
 | Directory | Contents | Files (manifest entries) | Size | Manifest |
 |---|---|---|---|---|

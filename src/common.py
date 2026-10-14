@@ -128,6 +128,16 @@ def run_dir_of(config: dict) -> Path:
     return (root if root.is_absolute() else REPO_ROOT / root) / config["run"]["name"]
 
 
+def portable_path(path) -> str:
+    """A path for recorded outputs: relative to the repository when inside it,
+    otherwise only its name (external inputs are located through the config)."""
+    p = Path(path).resolve()
+    try:
+        return p.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return p.name
+
+
 def instruments(config: dict) -> list[tuple[str, dict]]:
     return [(name, config["instruments"][name]) for name in config["run"]["instruments"]]
 

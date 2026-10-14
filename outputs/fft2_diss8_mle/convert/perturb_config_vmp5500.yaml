@@ -123,16 +123,16 @@ stratification:
   window: 2.0
   salinity: null
 files:
-  p_file_root: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8_mle/patch/vmp5500
+  p_file_root: <CONFIG_DIR>/../patch/vmp5500
   p_file_pattern: SPC_*.P
-  output_root: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8_mle/convert/vmp5500
+  output_root: <CONFIG_DIR>/vmp5500
   force_trim: false
   merge: false
 gps:
   source: csv
   lat: null
   lon: null
-  file: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8_mle/cast_log/track.csv
+  file: <CONFIG_DIR>/../cast_log/track.csv
   time_col: t
   lat_col: lat
   lon_col: lon

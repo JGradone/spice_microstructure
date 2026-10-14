@@ -3,7 +3,7 @@
     "files": 38,
     "exit_code": 0,
     "perturb_summary": "Pipeline complete: no errors.",
-    "perturb_log": "/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8/convert/vmp250/logs/run_20261013T182725Z.log",
+    "perturb_log": "outputs/fft2_diss8/convert/vmp250/logs/run_20261013T182725Z.log",
     "warnings_in_log": 883,
     "outputs": {
       ".cache": 0,
@@ -25,7 +25,7 @@
     "files": 45,
     "exit_code": 0,
     "perturb_summary": "Pipeline complete: no errors.",
-    "perturb_log": "/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8/convert/vmp5500/logs/run_20261013T183139Z.log",
+    "perturb_log": "outputs/fft2_diss8/convert/vmp5500/logs/run_20261013T183139Z.log",
     "warnings_in_log": 429,
     "outputs": {
       ".cache": 0,

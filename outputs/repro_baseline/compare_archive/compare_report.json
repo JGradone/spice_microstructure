@@ -1,6 +1,6 @@
 {
   "vmp250": {
-    "archive": "/Users/joegradone/SynologyDrive/Rutgers/Research/data/SPICE/SPICE_turbulence/vmp250_processed",
+    "archive": "vmp250_processed",
     "archive_generation": "01",
     "summary": [
       {
@@ -239,7 +239,7 @@
     }
   },
   "vmp5500": {
-    "archive": "/Users/joegradone/SynologyDrive/Rutgers/Research/data/SPICE/SPICE_turbulence/vmp6000_processed",
+    "archive": "vmp6000_processed",
     "archive_generation": "00",
     "summary": [
       {

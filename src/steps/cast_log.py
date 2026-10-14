@@ -170,7 +170,7 @@ def run(ctx: dict) -> None:
     dt = track["t"].diff()
     gaps = [{"from": str(track["time_utc"][i - 1]), "to": str(track["time_utc"][i]),
              "hours": round(dt[i] / 3600, 2)} for i in track.index[dt > max_gap]]
-    report = {"sealog_file": str(sealog_path), "track_points": len(track),
+    report = {"sealog_file": common.portable_path(sealog_path), "track_points": len(track),
               "track_median_spacing_s": float(dt.median()),
               "track_gaps_longer_than_gps_max_time_diff": gaps, "instruments": {}}
 
