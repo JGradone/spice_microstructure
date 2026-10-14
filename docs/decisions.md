@@ -763,3 +763,38 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * internal contrasts (interfaces vs layers vs non-staircase finger water at matched Re_b).
 
   The robust conclusion is what holds on every rung: interfaces carry the most chi at a given Re_b, layers the least, interface K_T is several times GM, and R rises with R_ρ as fingers predict. The absolute size of the double-diffusive excess depends on the baseline and is given as a range.
+
+## 2026-10-14: Scope and the diffusivities step
+
+* **Scope (user):** this repository is only the microstructure workflow. Nitrate, productivity and grazing analyses (RO1–RO3) use the exported products elsewhere.
+* **What the products are designed around:**
+  * **RO2a/b:** diffusivity profiles including K_S, the diffusivity relevant to nitrate in fingering, from 20 dbar through the salinity-maximum cap.
+  * **RO2a:** the finger attribution ladder.
+  * **RO1:** per-cast finger metrics.
+* **Why the excess tests matter:** only for attribution (the finger fraction). Total K_T comes from chi alone. Further refinement of the low-Re_b excess is not pursued; the spread across baselines is reported as uncertainty.
+* **Step `src/steps/diffusivities.py`** (config `diffusivities`), built from the dd_test window table:
+  * K_T for each gradient choice, R_rho, K_S = R_ρ K_T/γ for γ = 0.5, 0.65 and 0.7, K_S_eps, K_rho (flagged invalid in finger sets) and K_GM.
+  * 95% profile bootstrap.
+  * K_S only where 1 < R_ρ ≤ 4 (`k_s_max_r_rho`): approaching the AAIW salinity minimum R_ρ reaches 3–17, where fingers are weak and R_ρ K_T/γ would grow regardless.
+* **Whole cruise, all free fall, finger-favourable water, finescale gradients** (m²/s):
+
+  | Quantity | VMP5500 | VMP250 |
+  |---|---|---|
+  | K_T | 5.1e-6 [4.2, 6.0] | 5.0e-6 [3.9, 6.2] |
+  | K_S (γ 0.65) | 1.6e-5 [1.4, 1.9] | 1.4e-5 [1.1, 1.8] |
+  | K_S_eps | 2.2e-5 | 2.9e-5 |
+  | Interface K_S | 1.8e-5 | 1.9e-5 |
+  | K_GM | 2.4e-6 | 2.7e-6 |
+  | Control K_T | 2.0e-6 | 2.4e-6 |
+
+  K_S_eps agrees with K_S within a factor of 2.
+* **Finger fraction** (1 − 1/E, finescale gradients, matched control / GM / Γ = 0.2 theory):
+
+  | Set | Matched control | GM | Γ = 0.2 theory |
+  |---|---|---|---|
+  | VMP5500 interfaces | 0.43 [0.17, 0.62] | 0.63 | 0.77 |
+  | VMP250 interfaces | 0.34 | 0.65 | 0.62 |
+  | VMP5500 all finger water | 0.23 (CI includes 0) | 0.52 | 0.63 |
+
+  With interface-local gradients, interfaces are 0.60–0.85.
+* **Outputs:** `diffusivity_bins.csv`, `attribution.csv`, `cast_metrics_<instrument>.csv`, figures. The `export` step will write them as products (docs/products.md, sections 4–6).

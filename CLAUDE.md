@@ -4,6 +4,8 @@ This repository is the main processing workflow for all Rockland VMP microstruct
 
 ## Outputs are the interface
 
+Scope: this repository is only the microstructure processing workflow. Nitrate, productivity, grazing and other datasets are combined with the exported products elsewhere; they do not enter this repository. The products are designed to serve those analyses: diffusivity profiles including K_S (the diffusivity relevant to nitrate in fingering) from 20 dbar down, the finger attribution ladder, and per-cast finger metrics for mesoscale comparisons (decisions.md 2026-10-14).
+
 * Analyses outside this repository read only the exported products (`export` step, specified in `docs/products.md`), never intermediate step outputs.
 * Products carry full provenance (config hash, git commit, package versions, product version) and keep every exclusion and caution as a flag, not as silently missing data.
 * Any change to product variables, units, or methods bumps `products.product_version` and gets a dated entry in `docs/decisions.md`.

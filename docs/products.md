@@ -2,7 +2,7 @@
 
 The `export` step writes the products below to `<output_root>/<run.name>/products/`. These files are the interface to analyses done outside this repository. Everything upstream of them is internal and may change between runs; the products change only with a `products.product_version` bump, recorded in `docs/decisions.md`.
 
-Status: specification. Nothing is written yet; refine this as the steps are implemented.
+Status: specification; the diffusivity, attribution and cast-metric tables exist as step outputs (CSV) and are converted by the `export` step (not yet written). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
 
 ## Common to every file
 
@@ -35,16 +35,24 @@ The segment variables averaged into depth bins of `products.depth_bin_m` per pro
 
 ## 4. Diffusivities: `diffusivity_<instrument>.nc`
 
-Bin-averaged over profiles, by regime (Turner class x interface or layer), depth bin, and station group:
+From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over windows and profiles, never per window. One record per station group (process station, transect, all free fall; tow-yo separate) × staircase method × Turner set (finger-favourable, strong finger, doubly stable control, all) × staircase label (interface, layer, straddles, none, all) × gradient choice (background 10 m fits, finescale 1 m gradient variance, interface_local for interfaces) × depth bin (`double_diffusion.depth_bin_m`, and pooled). Depth range: from 20 dbar (control) and 150 dbar (finger sets) to the bottom of each instrument's casts.
 
-* `chi_observed`, `chi_expected` (2 K_rho T_z^2 with K_rho = 0.2 epsilon / N2) and their ratio of averages
-* `K_T` = <chi> / (2 <T_z^2>)
-* `K_S` = R_rho K_T / gamma, and the independent check `K_S_eps` = epsilon (R_rho - 1) / [N2 (1 - gamma)]
-* `K_rho` = 0.2 <epsilon> / <N2>, provided only where the regime is not finger dominated
-* Each with bootstrap confidence intervals over profiles (`*_ci_low`, `*_ci_high`, `bootstrap_samples`, `random_seed`) and the number of profiles and segments in the average
-* The epsilon source (shear or thermistor), gamma, and the regime and staircase thresholds used, as attributes
+* `K_T` = <chi> / (2 <T_z^2>) (Osborn and Cox; needs no epsilon)
+* `R_rho` = <alpha T_z> / <beta S_z> for the bin
+* `K_S_g<gamma>` = R_rho K_T / gamma for each gamma in `diffusivities.gammas` (0.5, 0.65, 0.7), only where finger-favourable and 1 < R_rho <= `k_s_max_r_rho` (`K_S_applicable`). K_S is the diffusivity relevant to nitrate and other low-diffusivity solutes in fingering.
+* `K_S_eps_g<gamma>` = <epsilon> (R_rho - 1) / (<N2> (1 - gamma)), the independent finger check
+* `K_rho` = 0.2 <epsilon> / <N2>, with `K_rho_valid` false in finger-favourable sets
+* `K_GM`, the canonical Garrett-Munk level at the bin's N and latitude (reference only)
+* 95% bootstrap intervals over profiles (`*_ci_low`, `*_ci_high`) for K_T, R_rho, K_rho and K_S at the configured gamma; `n_windows`, `n_profiles`, `min_profiles_ok`
+* Attributes: epsilon source, gammas, flux coefficient, staircase thresholds, gradient choice
 
-Sensitivity runs (different gamma, smoothing scale, epsilon source, and so on) write the same files under their own `run.name`, so downstream code can compare runs by swapping one directory.
+## 5. Finger attribution: `attribution_<instrument>.csv`
+
+The finger fraction of the heat-variance budget, f = 1 - 1/E, for finger-favourable water (all, interfaces, layers, non-staircase) against each baseline of the ladder: Gamma = 0.2 theory, the Garrett-Munk level, and the Re_b-matched doubly stable control, with 95% intervals. The spread across baselines is the baseline uncertainty and is part of the result (decisions.md 2026-10-14).
+
+## 6. Per-cast finger metrics: `cast_metrics_<instrument>.csv`
+
+One row per profile, for comparison with mesoscale fields: time and position, salinity maximum depth and value, finger-favourable fraction, R_rho median, depth range of finger water, staircase fraction per method, number of interfaces and median interface temperature and salinity jumps and thickness, median layer thickness, K_T in finger water and at interfaces (finescale) and their ratio to K_GM, mean epsilon and chi.
 
 ## Caveats carried as metadata
 
