@@ -704,3 +704,34 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Most of the earlier "R > 1" is this low-Re_b effect, not fingers. Median Re_b is about 5–10 in finger water.
   * The finger-specific signal is the excess over the control at matched Re_b: about 1.5× for the VMP5500 at Re_b < 10, and small or absent for the VMP250 except at Re_b 30–100.
   * The staircase-interface excess must be re-evaluated against the Re_b-matched control before any claim.
+
+## 2026-10-14: Excess over the Re_b-matched control (dd_excess.csv)
+
+* **Method:** the control's ratio in each Re_b bin, R_c(b), calibrates the Γ = 0.2 expectation empirically.
+  * For a set of finger-favourable windows, E = Σ chi_obs / Σ (chi_exp × R_c(b_window)), with the control from the instrument's whole-cruise free-fall casts (doubly stable, no inversions, from 20 dbar).
+  * E = 1 means indistinguishable from doubly stable water at the same Re_b.
+  * 95% bootstrap resamples target and control profiles independently.
+* **Result, whole cruise free fall, E [95% CI]** (finescale / background / interface_local gradients):
+
+  | Set | Labels | Finescale | Background | Interface-local | Raw R (finescale) | Median Re_b |
+  |---|---|---|---|---|---|---|
+  | VMP5500 interfaces | rollo2022 | 1.75 [1.21, 2.62] | 2.37 [1.51, 3.64] | 2.74 [1.89, 3.97] | 4.3 | 3.4 |
+  | VMP5500 interfaces | vdb2021 | 1.51 [1.08, 2.13] | 2.21 | 2.75 [1.89, 4.17] | — | — |
+  | VMP5500 layers | rollo2022 | 0.62 [0.42, 0.95] | — | — | — | — |
+  | VMP5500 layers | vdb2021 | 0.23 | — | — | — | — |
+  | VMP5500 all finger water | — | 1.29 [0.94, 1.78] | 1.43 | — | — | — |
+  | VMP250 interfaces (119 profiles) | rollo2022 | 1.52 [1.01, 2.10] | 2.45 [1.39, 3.97] | 2.51 [1.56, 3.65] | — | — |
+  | VMP250 tow-yo interfaces | rollo2022 | 1.71 [1.41, 2.08] | — | 2.53 | — | — |
+  | VMP250 layers | rollo2022 | 0.67–0.73 | — | — | — | — |
+  | VMP250 all finger water | — | 1.13–1.26 | — | — | — | — |
+
+  * VMP5500 process station alone (4 profiles): interfaces 1.41 [0.94, 2.36] finescale, 1.84 [1.23, 3.18] interface-local.
+* **Reading:**
+  * Staircase interfaces carry 1.5–2.8× more temperature variance than doubly stable water at the same Re_b. This holds for both instruments, both staircase labellings and every gradient choice, and the 95% interval excludes 1 everywhere except the VMP250 finescale case (lower bound 1.01) and the 4-profile process station.
+  * Layers carry less than the control (well mixed).
+  * Finger-favourable water as a whole is not clearly distinguishable from the control. The double-diffusive signal is concentrated at interfaces.
+  * The earlier raw interface ratios (4–9) were mostly the low-Re_b effect (interface median Re_b about 3.4); the finger-attributable factor is about 1.5–2.8.
+* **Caveats:**
+  * The control is mostly 20–150 dbar, above the salinity maximum; the interfaces are 150–1000 dbar. Different depths, water masses and internal-wave environments are matched only in Re_b.
+  * Low-Re_b behaviour (Γ, epsilon near its floor) is not understood.
+  * The FP07 response model scales chi in both target and control alike (cancels to first order in E).

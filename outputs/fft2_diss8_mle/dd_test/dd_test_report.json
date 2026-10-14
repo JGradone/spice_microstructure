@@ -31,6 +31,8 @@
       100,
       1000000
     ],
+    "excess_control_group": "all free fall",
+    "excess_min_control_windows": 10,
     "depth_range_dbar": {
       "vmp250": [
         150,
