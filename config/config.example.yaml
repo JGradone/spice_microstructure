@@ -388,7 +388,7 @@ regimes:
   examples:                       # profiles drawn in the label figure: instrument, profile stem, p range (dbar)
     - [vmp5500, SPC_031_prof001, 250, 450]
     - [vmp5500, SPC_033_prof001, 150, 550]
-    - [vmp250, data_0133_prof003, 150, 255]
+    - [vmp250, data_0133_prof002, 150, 255]
   staircase:
     # Interface/layer labels from each method are kept side by side in the
     # products and compared; none is privileged until the comparison is done.

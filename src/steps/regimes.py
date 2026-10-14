@@ -217,7 +217,12 @@ def examples_figure(ctx, config, results, path, foot):
         lat = float(hyd["lat"].values[i]) if np.isfinite(hyd["lat"].values[i]) else 12.0
         pz = gsw.p_from_z(-hyd["depth"].values, lat)
         axT = axes[0, 3 * e]
-        axT.plot(hyd["CT"].values[i], pz, color="k", lw=0.9)
+        ctp = hyd["CT"].values[i]
+        axT.plot(ctp, pz, color="k", lw=0.9)
+        inr = (pz >= p0) & (pz <= p1) & np.isfinite(ctp)
+        if inr.any():                                   # temperature range of the plotted depths only
+            pad = 0.05 * (ctp[inr].max() - ctp[inr].min())
+            axT.set_xlim(ctp[inr].min() - pad, ctp[inr].max() + pad)
         s = steps[(steps["profile_file"] == f"{prof}.nc") & (steps["method"] == methods[-1])] if len(steps) else steps
         for _, r in s.iterrows():
             axT.axhspan(r["p_start"], r["p_end"], color=LABEL_COLOR["layer" if r["kind"] == "layer" else "interface"],
