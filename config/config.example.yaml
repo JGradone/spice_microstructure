@@ -537,6 +537,9 @@ products:
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
   product_version: "0.1"          # bump on any change to variables or methods
+  recommended_run: fft2_diss8_mle # run whose products are published to outputs/<recommended_dir>/ (scripts/publish_recommended.py)
+  recommended_dir: recommended
+  recommended_sensitivity_label: sensitivity   # outputs/comparisons/<label>/ used for the uncertainty ranges
   depth_bin_m: 5.0                # binned profiles; 8 s windows are ~6 m tall and step ~3 m (1 m bins would be mostly empty)
   creator_name: "Joe Gradone"
   creator_email: "joe@gradone.com"
