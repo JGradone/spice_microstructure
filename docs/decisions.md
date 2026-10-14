@@ -576,3 +576,42 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * `patch` reuses its files when the raw files, the edits and the package version are unchanged, so file times do not invalidate perturb's per-file cache.
   * `conversion.jobs: 0` (one worker per core).
   * Test on `fft2_diss8_mle`: diss and chi reused (`diss_00`, `chi_00`). The combo stages moved to `_01`, because cast_log rewrites the GPS track file. A patch-plus-convert rerun took about 3 min.
+
+## 2026-10-14: regimes step; staircase thresholds (published vs tuned)
+
+* **Step:** `src/steps/regimes.py` (config `regimes`), run on the analysis run `fft2_diss8_mle`.
+  * **Turner class** from 25 m fits (`turner_smoothing_m`; the 10 m class is kept alongside): not_finger, finger (45–72°), strong_finger (72–90°), diffusive, unstable.
+  * **Staircase labels per method** from `thermohalinesteps.classify_staircase` on each profile's 1 dbar grid. A window (P ± speed·diss_sec/2, probe-tip depth) is interface or layer when at least 2/3 of its extent is; straddles when the two together reach 2/3; none otherwise.
+  * **Re_b** from bounded shear epsilon and from resolved epsilon_T.
+  * **Outputs:** `regimes_<instrument>.csv`, `steps_<instrument>.csv`, figures.
+* **Background window:** `av_window` only sets the 200 dbar running mean for α and β, which put the mixed-layer test in density units. The Turner angle that classifies steps uses a 50 dbar mean hardcoded in the package. The 200 dbar window is kept for both instruments; `stair_av100` is the sensitivity run.
+* **Thresholds:**
+  * With the published `ml_grad` 0.0005 kg m⁻³ dbar⁻¹, most visually evident steps were missed, because the layers keep a weak residual gradient.
+  * `scripts/test_staircase_thresholds.py` (`regimes/threshold_test/`). Staircase share of profile depth below 150 dbar, temperature-only test:
+
+    | ml_grad | VMP5500 | VMP250 |
+    |---|---|---|
+    | 0.0005 | 14% | 7% |
+    | 0.001 | 29% | 10% |
+    | 0.002 | 37–38% | 14% |
+
+  * `ml_density_difference` (0.005–0.04) has almost no effect.
+  * At 0.002 the example profiles (SPC_031, SPC_033) are labelled over most of their visible steps. The VMP250 upper thermocline (data_0133) has step-like structure on a strong background gradient and stays mostly unlabelled, which is appropriate.
+* **Decision (user):**
+  * `vdb2021` keeps the published values: `ml_grad` 0.0005, and mixed layers must pass the temperature, salinity and density tests.
+  * `rollo2022` is tuned: temperature-only, `ml_grad` 0.002.
+  * Sensitivity run `stair_mlgrad001` (0.001).
+  * Results are reported under both labellings. The ML labels, when available, are an independent check.
+  * The published thresholds, and the staircase percentages they produce in other datasets, are a reference, not a benchmark for this dataset.
+* **Result below 150 dbar:**
+
+  | | VMP250 | VMP5500 |
+  |---|---|---|
+  | rollo2022 windows (interface / layer / straddles) | 143 / 385 / 207 | 511 / 1623 / 1295 |
+  | Profiles with interfaces (rollo2022) | 72 | 44 |
+  | vdb2021 windows (interface / layer / straddles) | 9 / 15 / 5 | 287 / 630 / 441 |
+  | Methods agree | 87% | 73% |
+  | Median Re_b (shear) | 9.6 | 5.1 |
+
+  Turner classes are mostly finger and strong_finger on both instruments.
+* **Bug fixed (hydrography):** the T–S relations (own_ts and ship) stopped at the end bins' median CT. That left salinity NaN for the last ~0.25 °C of each cast, about 100 m at depth, and 1573 VMP5500 windows had no Turner class. Relations now extend linearly to the observed CT range. 465 undefined windows remain, mostly SPC_041 and SPC_045 below the ship's 550 m reach (bad-cell casts on the ship relation).
