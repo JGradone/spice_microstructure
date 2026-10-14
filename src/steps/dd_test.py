@@ -33,6 +33,12 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     thickness (signs of the background), N2 = g (alpha T_z - beta S_z), from
     the detected interface overlapping the window most. Reported as
     gradients = interface_local next to gradients = background.
+    A third estimate, gradients = finescale, applies to every window: T_z^2 is
+    replaced by the mean squared temperature gradient on the hydrography 1 m
+    grid over the window's extent (N2 stays the background value). Intrusive
+    finestructure makes the 1 m gradient variance much larger than the
+    background T_z^2 in some windows, and the ratio of averages is dominated by
+    them (decisions.md 2026-10-14).
   * Depth range per instrument: double_diffusion.depth_range_dbar.
 
 Reads:  <run_dir>/regimes/{regimes,steps}_<instrument>.csv, <run_dir>/cast_log/casts_<instrument>.csv
@@ -50,6 +56,7 @@ from pathlib import Path
 import gsw
 import numpy as np
 import pandas as pd
+import xarray as xr
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import common  # noqa: E402
@@ -128,6 +135,22 @@ def prepare(ctx, name, config) -> pd.DataFrame:
     df["group"] = df["station"].where(df["station"] != "", "other") + np.where(df["towyo"], " tow-yo", " free fall")
     df.insert(0, "instrument_group", name + " " + df["group"])
 
+    # Finescale (1 m grid) temperature-gradient variance over each window
+    hyd = xr.open_dataset(rd / "hydrography" / f"hydrography_{name}.nc")
+    zc = hyd["depth"].values
+    row = {f: k for k, f in enumerate(hyd["profile_file"].values)}
+    hw = df["speed"] * float(config["perturb"]["epsilon"]["diss_sec"]) / 2
+    fine = np.full(len(df), np.nan)
+    grads = {}
+    for k, (pf, dep, h) in enumerate(zip(df["profile_file"], df["depth"], hw)):
+        if pf not in grads:
+            grads[pf] = -np.gradient(hyd["CT"].values[row[pf]], zc)        # z up
+        sel = (zc >= dep - h) & (zc <= dep + h)
+        if sel.any():
+            fine[k] = np.nanmean(grads[pf][sel] ** 2)
+    df["T_z2_fine"] = fine
+    df["chi_exp_fine"] = 2 * dd["flux_coefficient"] * df["epsilon_used"] / df["N2"] * df["T_z2_fine"]
+
     # Interface-local gradients for windows labelled interface, per staircase method
     steps = pd.read_csv(rd / "regimes" / f"steps_{name}.csv")
     half = df["speed"] * float(config["perturb"]["epsilon"]["diss_sec"]) / 2
@@ -182,6 +205,10 @@ def depth_figure(bins, pooled, groups, method, path, foot):
                         label=lab, alpha=1.0)
             ax.scatter(s.loc[~ok, "ratio"], s.loc[~ok, "depth_bin"] + off, s=40, facecolors="none",
                        edgecolors="r", linewidths=1)
+        fs = b_all[(b_all["gradients"] == "finescale") & (b_all["staircase"] == "all")].sort_values("depth_bin")
+        if len(fs):
+            ax.plot(fs["ratio"], fs["depth_bin"], color="k", lw=1, ls=":", marker="s", ms=3,
+                    label="all, finescale gradients")
         a = b[b["staircase"] == "all"].sort_values("depth_bin")
         ax.plot(a["finger_prediction"], a["depth_bin"], color=ps.RED, lw=1.5, ls="--", label="finger model (γ)")
         ax.axvline(1, color="k", lw=0.8)
@@ -260,7 +287,8 @@ def run(ctx: dict) -> None:
                     d = dsel[sel]
                     if len(d) == 0:
                         continue
-                    variants = [("background", d)]
+                    variants = [("background", d),
+                                ("finescale", d.assign(chi_exp=d["chi_exp_fine"])[np.isfinite(d["chi_exp_fine"])])]
                     if sname == "interface":
                         dl = d.assign(chi_exp=d[f"chi_exp_iface_{m}"], T_z=d[f"T_z_iface_{m}"], S_z=d[f"S_z_iface_{m}"])
                         variants.append(("interface_local", dl[np.isfinite(dl["chi_exp"])]))

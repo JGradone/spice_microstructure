@@ -1,8 +1,8 @@
 {
   "step": "dd_test",
-  "created_utc": "2026-10-14T14:30:40+00:00",
-  "config_sha256": "c5669e34bc0ae601e9167788a0669ade81546ba638ca222fc11350dcdeed143a",
-  "git_commit": "e9da578cfe38d0d157c5288e68e1cf0658acdb07",
+  "created_utc": "2026-10-14T14:45:34+00:00",
+  "config_sha256": "8980011fa56d1bf81c0322cd9bb0a587bb670bef73754e3dc5ad878bd11ae8c3",
+  "git_commit": "325ad3e8b9d7504bc6d534310aa464d36b3bff1b",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
