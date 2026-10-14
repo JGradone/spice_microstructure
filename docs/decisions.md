@@ -468,7 +468,7 @@ User preference: use the VMP5500 CT data and avoid the ship T–S relation unles
   * T3304 flat-lined on SPC_040 and was replaced. Added to `exclude_probes`.
 * **Noise and fit-quality results.**
   * Below 150 dbar, few windows are near perturb's FP07 noise floor: 0% (VMP250) and 4% (VMP5500).
-  * The temperature-gradient spectra on both instruments carry an unmodelled plateau at about 30–200 cpm, 1–2 decades above `spec_noise`. Floors computed from `spec_noise` are therefore optimistic at high k (docs/package_issues.md #4).
+  * The temperature-gradient spectra on both instruments carry an unmodelled plateau at about 30–200 cpm, 1–2 decades above `spec_noise`. Floors computed from `spec_noise` are therefore optimistic at high k (docs/private/package_issues.md #4).
   * perturb's own soft QC found no passing probe in 23% (VMP250) and 15% (VMP5500) of windows.
 * **MLE vs iterative**, paired windows below 150 dbar, `fft2_diss8_mle` against `fft2_diss8`:
 
@@ -550,7 +550,7 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Keep the original files untouched.
   * Inspect the spectral fits visually; perturb-diag is the package's tool, and this pipeline has its own galleries.
   * Pat considers epsilon validated against the SCOR160/ATOMIX benchmarks (within 2%). He described chi and the mixing parameters as still under review at the time.
-* **Caching:** `perturb run` reuses unchanged stages and supports `--jobs`. The `convert` step's `rmtree` defeats the reuse (docs/package_issues.md #6 retracted).
+* **Caching:** `perturb run` reuses unchanged stages and supports `--jobs`. The `convert` step's `rmtree` defeats the reuse (docs/private/package_issues.md #6 retracted).
 
 ## 2026-10-13: Probe exclusions from perturb's warnings; perturb cache reuse
 

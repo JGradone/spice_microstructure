@@ -95,7 +95,7 @@ Existing pieces:
 * Docs:
   * `docs/decisions.md`: every methods choice, dated.
   * `docs/products.md`: product specification.
-  * `docs/package_issues.md`: possible microstructure-tpw problems for Pat Welch. Keep it updated as issues appear.
+  * `docs/private/package_issues.md` (gitignored): possible microstructure-tpw problems for Pat Welch. Keep it updated as issues appear.
   * `docs/shipboard_processing.md`.
   * `docs/private/` (gitignored): shell history, collaborator questions and email drafts. Never commit collaborator correspondence or drafts.
 

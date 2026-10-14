@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Figures illustrating the possible microstructure-tpw issues in docs/package_issues.md.
+"""Figures illustrating the possible microstructure-tpw issues in docs/private/package_issues.md.
 
   1. epsilon_T / shear epsilon against K_max/kB (roll-off resolution), for the
      single-pole and double-pole FP07 response runs (items 5 and 8).
