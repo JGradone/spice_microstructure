@@ -4,13 +4,13 @@
     "stage_dirs": {
       "chi": "chi_00",
       "chi_binned": "chi_binned_00",
-      "chi_combo": "chi_combo_02",
-      "combo": "combo_02",
+      "chi_combo": "chi_combo_03",
+      "combo": "combo_03",
       "ctd": "ctd_00",
-      "ctd_combo": "ctd_combo_02",
+      "ctd_combo": "ctd_combo_03",
       "diss": "diss_00",
       "diss_binned": "diss_binned_00",
-      "diss_combo": "diss_combo_02",
+      "diss_combo": "diss_combo_03",
       "profiles": "profiles_00",
       "profiles_binned": "profiles_binned_00"
     }
@@ -20,13 +20,13 @@
     "stage_dirs": {
       "chi": "chi_00",
       "chi_binned": "chi_binned_00",
-      "chi_combo": "chi_combo_02",
-      "combo": "combo_02",
+      "chi_combo": "chi_combo_03",
+      "combo": "combo_03",
       "ctd": "ctd_00",
-      "ctd_combo": "ctd_combo_02",
+      "ctd_combo": "ctd_combo_03",
       "diss": "diss_00",
       "diss_binned": "diss_binned_00",
-      "diss_combo": "diss_combo_02",
+      "diss_combo": "diss_combo_03",
       "profiles": "profiles_00",
       "profiles_binned": "profiles_binned_00"
     }

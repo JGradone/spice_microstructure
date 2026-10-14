@@ -1,13 +1,13 @@
 {
   "chi": "chi_00",
   "chi_binned": "chi_binned_00",
-  "chi_combo": "chi_combo_01",
-  "combo": "combo_01",
+  "chi_combo": "chi_combo_02",
+  "combo": "combo_02",
   "ctd": "ctd_00",
-  "ctd_combo": "ctd_combo_01",
+  "ctd_combo": "ctd_combo_02",
   "diss": "diss_00",
   "diss_binned": "diss_binned_00",
-  "diss_combo": "diss_combo_01",
+  "diss_combo": "diss_combo_02",
   "profiles": "profiles_00",
   "profiles_binned": "profiles_binned_00"
 }

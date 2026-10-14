@@ -2,7 +2,7 @@
 
 Product version 0.1. spice_microstructure git 073d8c927ac297c78efc83f49fdd9cbdfdcd3135; config sha256 923fe62d4d74; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-14T18:21:11+00:00.
 
-(This summary regenerated 2026-10-14T18:34:00Z from the run's existing reports.)
+(This summary regenerated 2026-10-14T19:18:11Z from the run's existing reports.)
 
 Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.
 

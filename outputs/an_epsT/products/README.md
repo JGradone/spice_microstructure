@@ -1,10 +1,6 @@
 # SPICE microstructure products: `an_epsT`
 
-Product version 0.1. spice_microstructure git 12bc442adbe629d2abdc2d83268f8c65b9e56674; config sha256 6b411eebd789; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-14T17:31:26+00:00.
-
-(This summary regenerated 2026-10-14T18:34:00Z from the run's existing reports.)
-
-Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.
+Product version 0.1. spice_microstructure git 7a3bde1b85e06f1cf4c3d67046a8e963eb10d279; config sha256 20bff8c15100; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-14T19:09:14+00:00.
 
 **Sensitivity run** of `baseline`, based on `fft2_diss8_mle`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `double_diffusion.epsilon_source` = thermistor.
 

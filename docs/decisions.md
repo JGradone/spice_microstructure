@@ -860,3 +860,20 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * no links to other runs.
 * `scripts/check_reproduction.py` compared all 51 CSV tables and NetCDF products under the step directories (logs, provenance fields, perturb working trees and patched copies excluded): 0 differ beyond relative tolerance 1e-9, and none missing. Report: `outputs/repro_baseline/reproduction_check.json`.
 * The chain from raw .p files to exported products is reproducible with one command (`python src/run_pipeline.py --config config/config.yaml [--sensitivity NAME]`).
+
+## 2026-10-14: Run summaries and the recommended products directory
+
+* **Run summaries:** each export writes `products/README.md`, assembled from the step reports and result tables (`src/run_summary.py`; `scripts/write_run_summaries.py` regenerates it for existing products). It holds settings, files, QC counts per instrument, headline results with intervals, uncertainty coverage, the reproduction check where present, and caveats. The JSON reports remain the machine records.
+* **Provenance after the history rewrite:** the analysis run and all sensitivity runs were rerun from cast_log to export, so every step records a commit in the rewritten history.
+* **Recommended products:** `scripts/publish_recommended.py` copies the products of `products.recommended_run` (`fft2_diss8_mle`) to `outputs/recommended/`. It adds the run summary (`RUN_SUMMARY.md`), the sensitivity comparison, and a README stating which files, variables and rows to use and the uncertainty ranges:
+
+  | | VMP5500 | VMP250 |
+  |---|---|---|
+  | K_S (γ 0.65), m²/s | 1.6e-5 | 1.4e-5 |
+  | K_S across γ 0.7–0.5 | 1.5–2.1e-5 | 1.3–1.8e-5 |
+  | K_S across processing choices | 1.6–1.7e-5 | about 1.4e-5 |
+  | K_S, double-pole FP07 factor | ×0.54 | ×0.49 |
+  | Interface excess across processing choices | 1.1–2.2 | 0.6–2.2 |
+  | Interface finger fraction across baselines | 0.43–0.77 | 0.34–0.65 |
+
+  The directory is rebuilt from scratch each time and refuses to replace a directory it did not create.
