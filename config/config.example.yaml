@@ -450,7 +450,9 @@ double_diffusion:
   min_profiles_per_average: 3     # bins with fewer profiles are reported, flagged
   depth_bin_m: 25                 # baseline; 10 m in the bin10m sensitivity run
   exclude_weakest_n2_percent: 10  # robustness check: repeat with the weakest N2 decile removed
-  station_groups: [process_station]   # cast_log station names to test (add more groups later)
+  station_groups: [process_station, transect]   # cast_log station names; casts outside a station are `transect`
+  pool_free_fall: true            # also test all free-fall casts of an instrument together ("all free fall")
+  control_max_turner_deg: 30      # control: -90 < Tu < 30 (clearly non-finger, away from the 45 deg boundary)
   depth_range_dbar:               # windows tested (P_mean), per instrument; above ~150 dbar is not staircase water
     vmp250: [150, 300]            # to the bottom of the casts (~180-270 dbar)
     vmp5500: [150, 1000]          # full deep casts (was 550: ship CTD validation depth, not a physical limit)

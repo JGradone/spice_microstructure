@@ -13,8 +13,12 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     the Batchelor roll-off is resolved.
   * Windows used: shear and chi kept, N2 > 0, finite T_z, inside depth_range_dbar,
     not ts_salinity_invalid (T-S salinity in a temperature inversion).
-  * Groups: station groups (cast_log `station`) x instrument x tow-yo / free fall
-    (tow-yo profiles are never pooled with free-fall casts).
+  * Groups: station groups (cast_log `station`; casts outside a station are
+    `transect`) x instrument x tow-yo / free fall (tow-yo profiles are never
+    pooled with free-fall casts). With pool_free_fall, all free-fall casts of an
+    instrument in the selected groups are also tested together ("all free fall").
+  * Control: clearly non-finger water, -90 < Tu < control_max_turner_deg (25 m
+    Turner angle), away from the 45 deg finger boundary.
   * Regimes: Turner class (from the regimes step) x staircase label, one set per
     staircase method; interfaces and layers are never pooled.
   * Uncertainty: bootstrap over profiles (uncertainty.bootstrap_samples, seed).
@@ -73,8 +77,10 @@ def regime_sets(df: pd.DataFrame, method: str) -> dict[str, pd.Series]:
     lab = df[f"staircase_{method}"]
     tc = df["turner_class"]
     out = {}
+    tu = df["Turner_smooth"]
     for tname, tsel in (("all_turner", pd.Series(True, index=df.index)), ("finger_any", tc.isin(FINGER)),
-                        ("strong_finger", tc == "strong_finger"), ("not_finger", tc == "not_finger")):
+                        ("strong_finger", tc == "strong_finger"), ("not_finger", tc == "not_finger"),
+                        ("control", (tu > -90) & (tu < df.attrs.get("control_max", 30)))):
         for sname in ("all", "interface", "layer", "straddles", "none"):
             ssel = pd.Series(True, index=df.index) if sname == "all" else (lab == sname)
             out[(tname, sname)] = tsel & ssel
@@ -132,7 +138,8 @@ def prepare(ctx, name, config) -> pd.DataFrame:
     df["chi_exp"] = 2 * dd["flux_coefficient"] * df["epsilon_used"] / df["N2"] * df["T_z"] ** 2
     b = dd["depth_bin_m"]
     df["depth_bin"] = np.floor(df["P_mean"] / b) * b + b / 2
-    df["group"] = df["station"].where(df["station"] != "", "other") + np.where(df["towyo"], " tow-yo", " free fall")
+    df["station"] = df["station"].where(df["station"] != "", "transect")
+    df["group"] = df["station"] + np.where(df["towyo"], " tow-yo", " free fall")
     df.insert(0, "instrument_group", name + " " + df["group"])
 
     # Finescale (1 m grid) temperature-gradient variance over each window
@@ -276,13 +283,20 @@ def run(ctx: dict) -> None:
     preps = [prepare(ctx, name, config) for name, _ in common.instruments(config)]
     prep = pd.concat(preps, ignore_index=True)
     prep = prep[prep["station"].isin(dd["station_groups"])]
+    if dd.get("pool_free_fall"):
+        ff = prep[~prep["towyo"]].copy()
+        ff["instrument_group"] = ff["instrument_group"].str.split(" ").str[0] + " all free fall"
+        prep = pd.concat([prep, ff], ignore_index=True)
+    prep.attrs["control_max"] = dd["control_max_turner_deg"]
     groups = sorted(prep["instrument_group"].unique())
     bins_rows, pooled_rows = [], []
     for g in groups:
         dg = prep[prep["instrument_group"] == g]
+        dg.attrs["control_max"] = dd["control_max_turner_deg"]
         weak = dg["N2"] <= dg["N2"].quantile(dd["exclude_weakest_n2_percent"] / 100)
         for n2f, dsel in (("all", dg), (f"drop_weakest_{dd['exclude_weakest_n2_percent']}pct", dg[~weak])):
             for m in methods:
+                dsel.attrs["control_max"] = dd["control_max_turner_deg"]
                 for (tname, sname), sel in regime_sets(dsel, m).items():
                     d = dsel[sel]
                     if len(d) == 0:
@@ -322,10 +336,11 @@ def run(ctx: dict) -> None:
                                                     "R_rho": round(r.R_rho_bin, 2), "n_windows": int(r.n_windows),
                                                     "n_profiles": int(r.n_profiles),
                                                     "at_floor_fraction": round(r.at_floor_fraction, 2)}
-            for r in p.itertuples() if r.turner in ("finger_any", "not_finger", "all_turner")}
+            for r in p.itertuples() if r.turner in ("finger_any", "not_finger", "all_turner", "control")}
         print(f"  {g}:")
-        for r in p[(p["turner"] == "finger_any")].itertuples():
-            print(f"    {r.method:9s} finger {r.staircase:9s} {r.gradients[:10]:10s} R={r.ratio:6.2f} [{r.ratio_lo:5.2f},{r.ratio_hi:6.2f}]"
+        for r in p[p["turner"].isin(["finger_any", "control"]) & p["staircase"].isin(["all", "interface", "layer"])
+                   & (p["method"] == methods[-1])].itertuples():
+            print(f"    {r.method:9s} {r.turner[:7]:7s} {r.staircase:9s} {r.gradients[:10]:10s} R={r.ratio:6.2f} [{r.ratio_lo:5.2f},{r.ratio_hi:6.2f}]"
                   f"  finger model {r.finger_prediction:4.1f} (R_rho {r.R_rho_bin:.2f})  n={r.n_windows} windows,"
                   f" {r.n_profiles} profiles, at floor {r.at_floor_fraction:.0%}")
     for m in methods:
