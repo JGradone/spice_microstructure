@@ -164,7 +164,7 @@ def write_readme(config: dict, prov: dict, run_dir: Path, out_dir: Path, caveats
              f"Product version {config['products']['product_version']}. {provenance_line}.", ""]
     if regenerated:
         lines += [f"(This summary regenerated {regenerated} from the run's existing reports.)", ""]
-    lines += [run.get("notes", "").strip(), "",
+    lines += ([run.get("notes", "").strip(), ""] if not sens else []) + [
               ("**Baseline run** (shipboard settings)." if not sens else
                f"**Sensitivity run** of `{sens.get('of')}`" + (f", based on `{sens['base']}`" if sens.get("base") else "")
                + ". Overrides: " + ", ".join(f"`{k}` = {v}" for k, v in sens.get("set", {}).items()) + "."), "",

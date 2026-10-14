@@ -1,27 +1,105 @@
-# SPICE microstructure products (an_av100)
+# SPICE microstructure products: `an_av100`
 
-Product version 0.1; spice_microstructure git 12bc442adbe629d2abdc2d83268f8c65b9e56674; config sha256 c65a148f6d3e; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); created 2026-10-14T17:27:22+00:00.
+Product version 0.1. spice_microstructure git 12bc442adbe629d2abdc2d83268f8c65b9e56674; config sha256 c65a148f6d3e; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-14T17:27:24+00:00.
 
-Run overrides: {'perturb.epsilon.fft_sec': 2.0, 'perturb.epsilon.diss_sec': 8.0, 'perturb.epsilon.overlap_sec': 4.0, 'perturb.chi.fft_sec': 2.0, 'perturb.chi.diss_sec': 8.0, 'perturb.chi.overlap_sec': 4.0, 'perturb.chi.fit_method': 'mle', 'regimes.staircase.vdb2021.av_window': 100, 'regimes.staircase.rollo2022.av_window': 100}
+(This summary regenerated 2026-10-14T18:34:00Z from the run's existing reports.)
 
-Specification: docs/products.md. Methods and decisions: docs/decisions.md.
+Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.
+
+**Sensitivity run** of `baseline`, based on `fft2_diss8_mle`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `regimes.staircase.vdb2021.av_window` = 100, `regimes.staircase.rollo2022.av_window` = 100.
+
+Specification of every variable: `docs/products.md`. Methods and the reasons behind them: `docs/decisions.md`. Rerun: `python src/run_pipeline.py --config config/config.yaml --sensitivity an_av100`.
+
+## Settings
+
+| Setting | Value |
+|---|---|
+| FFT / dissipation length | 2 s / 8 s (overlap 4 s) |
+| chi fit | mle, kraichnan, FP07 single_pole |
+| shear epsilon | refit from 1 Hz |
+| noise floors | kept, flagged below 2x floor, bounded value provided |
+| segment QC applied | False |
+| background gradients | linear fits over 10 m |
+| Turner class scale | 25 m |
+| staircase thresholds (ml_grad) | vdb2021 0.0005, rollo2022 0.002 |
+| epsilon in chi_expected | shear |
+| gamma | 0.5, 0.65, 0.7 |
+| depth bins (tests / products) | 25 m / 5 m |
 
 ## Files
 
-* `attribution_vmp250.csv`
-* `attribution_vmp5500.csv`
-* `binned_vmp250.nc`
-* `binned_vmp5500.nc`
-* `cast_metrics_vmp250.csv`
-* `cast_metrics_vmp5500.csv`
-* `casts_vmp250.csv`
-* `casts_vmp5500.csv`
-* `diffusivity_vmp250.csv`
-* `diffusivity_vmp250.nc`
-* `diffusivity_vmp5500.csv`
-* `diffusivity_vmp5500.nc`
-* `segments_vmp250.nc`
-* `segments_vmp5500.nc`
+| File | Contents |
+|---|---|
+| `attribution_vmp250.csv` | finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched control) with intervals |
+| `attribution_vmp5500.csv` | finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched control) with intervals |
+| `binned_vmp250.nc` | per profile in depth bins: window means of epsilon and chi with counts, and the hydrography |
+| `binned_vmp5500.nc` | per profile in depth bins: window means of epsilon and chi with counts, and the hydrography |
+| `cast_metrics_vmp250.csv` | per-profile finger metrics: salinity maximum, R_rho, finger fraction, staircase occurrence and geometry, K_T relative to Garrett-Munk |
+| `cast_metrics_vmp5500.csv` | per-profile finger metrics: salinity maximum, R_rho, finger fraction, staircase occurrence and geometry, K_T relative to Garrett-Munk |
+| `casts_vmp250.csv` | one row per profile: time, position, station, tow-yo, exclusions (file or profile), cautions, probe serials and sensitivities, Sealog notes |
+| `casts_vmp5500.csv` | one row per profile: time, position, station, tow-yo, exclusions (file or profile), cautions, probe serials and sensitivities, Sealog notes |
+| `diffusivity_vmp250.csv` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
+| `diffusivity_vmp250.nc` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
+| `diffusivity_vmp5500.csv` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
+| `diffusivity_vmp5500.nc` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
+| `segments_vmp250.nc` | one record per dissipation window: epsilon and chi per probe and combined, noise floors and flags, epsilon_T, background hydrography, Turner class, staircase labels per method, Re_b, QC bit flags |
+| `segments_vmp5500.nc` | one record per dissipation window: epsilon and chi per probe and combined, noise floors and flags, epsilon_T, background hydrography, Turner class, staircase labels per method, Re_b, QC bit flags |
+
+NetCDF files carry this provenance in their global attributes; `*.nc` stays out of git.
+
+## Processing summary
+
+| | vmp250 | vmp5500 |
+|---|---|---|
+| profiles | 135 | 46 |
+| dissipation windows | 12206 | 13562 |
+| segment QC flags (applied: False) | 628 (5.1%): near_surface 316, bottom_approach 157, unsteady_speed 83, vibration 72 | 322 (2.4%): near_surface 111, bottom_approach 29, unsteady_speed 45, vibration 137 |
+| probe exclusions (windows) | sh2 592 | sh1 626, T2 6680 |
+| shear: probe estimates removed | probe_exclusion 583, var_resolved 563 | probe_exclusion 626, var_resolved 110 |
+| shear: probes disagree (smaller kept) | 365 | 2862 |
+| shear: windows kept | 11940 of 12206 | 13509 of 13562 |
+| shear: at noise floor (below 150 dbar) | 39%, median floor 2.0e-10 W/kg | 10%, median floor 1.0e-11 W/kg |
+| shear: median epsilon below 150 dbar | 4.5e-10 W/kg | 7.2e-11 W/kg |
+| chi: windows kept | 11610 of 12206 | 13384 of 13562 |
+| chi: at noise floor (below 150 dbar) | 0.4% | 3.9% |
+| epsilon_T roll-off resolved (below 150 dbar) | 38% | 52% |
+| salinity source | own | own_ts |
+| N2 vs ship CTD, 150-550 m (median ratio; N2<=0) | 1.01; 1% (ship 2%) | 1.11; 16% (ship 1%) |
+| windows with T-S salinity invalid (T inversions) | 0 | 1744 |
+| Turner class below 150 dbar | strong_finger 4021, finger 1393, not_finger 127, unstable 27, diffusive 26, undefined 8 | finger 5264, strong_finger 3472, not_finger 1317, unstable 923, undefined 465, diffusive 76 |
+| staircase windows below 150 dbar (vdb2021) | none 5573, layer 15, interface 9, straddles 5; 5 profiles with interfaces | none 10150, layer 634, straddles 444, interface 289; 44 profiles with interfaces |
+| staircase windows below 150 dbar (rollo2022) | none 4859, layer 388, straddles 211, interface 144; 74 profiles with interfaces | none 8064, layer 1636, straddles 1305, interface 512; 44 profiles with interfaces |
+| median Re_b below 150 dbar (shear) | 9.6 | 5.0 |
+
+## Headline results
+
+Whole cruise, all free-fall casts, finger-favourable water, finescale gradients, staircase labels rollo2022. K in m²/s; brackets are 95% bootstrap intervals over profiles.
+
+| Group | Set | K_T | K_S (γ 0.65) | K_S_eps | K_GM | profiles |
+|---|---|---|---|---|---|---|
+| vmp250 all free fall | all | 4.9e-06 [3.9e-06, 6.3e-06] | 1.4e-05 [1.1e-05, 1.8e-05] | 2.9e-05 | 2.7e-06 | 119 |
+| vmp250 all free fall | interface | 7.4e-06 [4.5e-06, 1.1e-05] | 1.9e-05 [1.2e-05, 2.6e-05] | 2.7e-05 | 2.6e-06 | 26 |
+| vmp250 all free fall | layer | 6.9e-06 [3.6e-06, 1.2e-05] | 1.5e-05 [8.3e-06, 2.8e-05] | 6.3e-05 | 2.3e-06 | 35 |
+| vmp5500 all free fall | all | 5.1e-06 [4.2e-06, 5.9e-06] | 1.6e-05 [1.3e-05, 1.9e-05] | 2.2e-05 | 2.4e-06 | 44 |
+| vmp5500 all free fall | interface | 6.7e-06 [5e-06, 8.6e-06] | 1.8e-05 [1.4e-05, 2.3e-05] | 1.4e-05 | 2.5e-06 | 44 |
+| vmp5500 all free fall | layer | 4.3e-06 [3.5e-06, 5.4e-06] | 1.4e-05 [1.1e-05, 1.7e-05] | 6e-05 | 2.1e-06 | 44 |
+| vmp250 all free fall | doubly stable control | 2.4e-06 | – | – | 3e-06 | 120 |
+| vmp5500 all free fall | doubly stable control | 2e-06 | – | – | 3.1e-06 | 44 |
+
+Interface finger fraction 1 − 1/E by baseline (finescale gradients). The spread is part of the result; it also depends on the stratification scale (docs/decisions.md).
+
+| Group | Baseline | E | finger fraction |
+|---|---|---|---|
+| vmp250 all free fall | theory_Gamma0.2 | 2.65 [1.80, 3.56] | 0.62 |
+| vmp250 all free fall | garrett_munk | 2.87 [1.76, 4.13] | 0.65 |
+| vmp250 all free fall | matched_control | 1.52 [1.02, 2.13] | 0.34 |
+| vmp5500 all free fall | theory_Gamma0.2 | 4.29 [3.06, 5.89] | 0.77 |
+| vmp5500 all free fall | garrett_munk | 2.72 [2.02, 3.46] | 0.63 |
+| vmp5500 all free fall | matched_control | 1.75 [1.19, 2.61] | 0.43 |
+
+## Uncertainty
+
+Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 908/984 pooled estimates with intervals; dd_excess: 119/119 pooled estimates with intervals; diffusivity_bins: 413/413 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
 
 ## Caveats
 
