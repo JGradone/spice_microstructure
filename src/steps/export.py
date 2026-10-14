@@ -33,6 +33,7 @@ import xarray as xr
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common  # noqa: E402
+import run_summary  # noqa: E402
 import epsilon_shear  # noqa: E402
 import segments as segments_step  # noqa: E402
 import thermistor  # noqa: E402
@@ -266,14 +267,8 @@ def run(ctx: dict) -> None:
                         "binned_profiles": int(binned.sizes["profile"]), "diffusivity_records": int(len(di))}
         print(f"  {name}: {len(casts)} profiles, {seg.sizes['segment']} segments, {len(di)} diffusivity records")
 
-    files = sorted(p.name for p in out.iterdir() if p.is_file() and p.name != "README.md")
-    readme = [f"# SPICE microstructure products ({config['run']['name']})", "",
-              f"Product version {config['products']['product_version']}; {common.provenance_string(prov)}; "
-              f"created {prov['created_utc']}.", "",
-              f"Run overrides: {config['run'].get('sensitivity', {}).get('set', 'none (baseline settings)')}", "",
-              "Specification: docs/products.md. Methods and decisions: docs/decisions.md.", "", "## Files", ""] + \
-             [f"* `{f}`" for f in files] + ["", "## Caveats", ""] + [f"* {c}" for c in CAVEATS]
-    (out / "README.md").write_text("\n".join(readme) + "\n")
+    run_summary.write_readme(config, prov, rd, out, CAVEATS, common.provenance_string(prov)
+                             + f"; exported {prov['created_utc']}")
     common.write_json(out / "export_report.json", report)
     common.write_step_metadata(out, STEP, ctx)
 
