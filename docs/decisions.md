@@ -615,3 +615,34 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 
   Turner classes are mostly finger and strong_finger on both instruments.
 * **Bug fixed (hydrography):** the T–S relations (own_ts and ship) stopped at the end bins' median CT. That left salinity NaN for the last ~0.25 °C of each cast, about 100 m at depth, and 1573 VMP5500 windows had no Turner class. Relations now extend linearly to the observed CT range. 465 undefined windows remain, mostly SPC_041 and SPC_045 below the ship's 550 m reach (bad-cell casts on the ship relation).
+
+## 2026-10-14: dd_test step; first result at the process station
+
+* **Step:** `src/steps/dd_test.py` (config `double_diffusion`, `uncertainty`).
+  * Per window, chi_exp = 2 (0.2 ε/N²) T_z² with ε = bounded shear epsilon (an upper bound near the floor, so R is a lower bound there).
+  * R = ⟨chi_obs⟩/⟨chi_exp⟩ (ratio of averages) per group × staircase method × Turner set × staircase label, in 25 m bins and pooled over 150–550 dbar.
+  * 95% bootstrap over profiles (1000 samples).
+  * Finger model Γ_finger/0.2 from each bin's R_ρ = ⟨αT_z⟩/⟨βS_z⟩, with γ = 0.65.
+  * Everything is repeated with the weakest 10% of N² removed.
+  * Windows excluded: VMP5500 temperature inversions (T–S salinity invalid), N² ≤ 0, and windows without kept shear or chi.
+  * Groups: station group (`station_groups`, process station only for now) × instrument × free fall or tow-yo, never pooled.
+* **Result, analysis run `fft2_diss8_mle`, process station, finger-favourable windows, rollo2022 labels**, pooled over 150–550 dbar, R [95% CI]:
+
+  | Group | All | Interface | Layer | Finger model |
+  |---|---|---|---|---|
+  | VMP5500 (4 profiles, 378 windows) | 2.5 [2.2, 2.9] | 6.6 [4.8, 11.2] | 1.05 [0.5, 1.8] | ~4.0 (R_ρ 1.8) |
+  | VMP250 tow-yo (8 profiles) | 2.8 [2.5, 3.1] | 5.4 [4.5, 6.3] | 0.33 [0.14, 0.63] | — |
+  | VMP250 free fall (7 profiles, 150–265 dbar) | 5.5 [2.2, 7.8] | — | — | 3.6 |
+
+  * VMP5500 straddles: 3.3. vdb2021 labels: interface 5.8, layer 0.65.
+  * VMP250 tow-yo: 89% of layer windows have shear at its floor, so 0.33 is a lower bound. Shear at floor in 31% (free fall) and 45% (tow-yo) of all windows.
+  * VMP250 free fall: no staircase labels. Its pooled value is driven by a single deep bin with fewer than 3 profiles.
+  * Removing the weakest 10% of N² changes the pooled ratios by under 0.1, except tow-yo layers (0.33 to 0.22).
+  * VMP5500 R rises with R_ρ (about 0.8 at R_ρ 1.1 to about 5 at 2.2) along the finger curve for γ 0.65–0.7.
+* **Reading:** chi exceeds the shear-turbulence expectation (Γ = 0.2) by 5–7× at staircase interfaces, at or above the finger model, while layers are consistent with about 1. This is the defensible claim: interface chi is not explainable by shear-driven turbulence with Γ = 0.2. R is a dissipation ratio, not a mixing efficiency.
+* **Caveats before interpretation:**
+  * The FP07 response model scales chi by 0.57–0.68 (double-pole against single-pole). With double-pole, interfaces would be about 3.5–4.5 and layers about 0.6.
+  * Only 4 VMP5500 profiles at the station. Many 25 m interface and layer bins have fewer than 3 profiles (flagged), so use pooled values.
+  * There is almost no non-finger water at the station for a control (2 and 10 windows).
+  * VMP250 free fall and tow-yo differ (5.5 against 2.8) and are not pooled.
+  * Stratification scale (10 m) runs `strat5m` and `strat25m`, the staircase threshold run `stair_mlgrad001`, `epsilon_source: thermistor` and γ are pending sensitivity runs.
