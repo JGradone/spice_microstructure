@@ -151,11 +151,21 @@ def match_to_cell(t: np.ndarray, fs: float, delay_s: float, tau_s: float) -> np.
 
 
 def ts_relation(ct: np.ndarray, sa: np.ndarray, bin_degc: float, smooth_bins: int):
-    """(CT, SA) nodes: median SA in CT bins, then a running mean over smooth_bins bins."""
+    """(CT, SA) nodes: median SA in CT bins, then a running mean over smooth_bins bins,
+    extended linearly (slope of the two end nodes) to the observed CT range. Without
+    the extension the relation stops at the end bins' median CT, about half a bin
+    (0.25 degC) short of the data: ~100 m of deep profile where T_z ~ 0.0025 K/m."""
     ok = np.isfinite(ct) & np.isfinite(sa)
     tab = pd.DataFrame({"b": np.floor(ct[ok] / bin_degc), "ct": ct[ok], "sa": sa[ok]}) \
         .groupby("b").median().rolling(smooth_bins, center=True, min_periods=1).mean()
-    return tab["ct"].to_numpy(), tab["sa"].to_numpy()
+    c, s = tab["ct"].to_numpy(), tab["sa"].to_numpy()
+    if len(c) >= 2:
+        lo, hi = float(ct[ok].min()), float(ct[ok].max())
+        if lo < c[0]:
+            c, s = np.r_[lo, c], np.r_[s[0] + (lo - c[0]) * (s[1] - s[0]) / (c[1] - c[0]), s]
+        if hi > c[-1]:
+            c, s = np.r_[c, hi], np.r_[s, s[-1] + (hi - c[-1]) * (s[-1] - s[-2]) / (c[-1] - c[-2])]
+    return c, s
 
 
 def own_ts_profile(d, lat: float, lon: float, ct_off: float, ms_off: float,
