@@ -467,6 +467,13 @@ double_diffusion:
     vmp250: [150, 300]            # to the bottom of the casts (~180-270 dbar)
     vmp5500: [150, 1000]          # full deep casts (was 550: ship CTD validation depth, not a physical limit)
 
+diffusivities:
+  # diffusivities step (CLAUDE.md step 8): bin averages only. K_S = R_rho K_T / gamma
+  # for each gamma (flux ratio, poorly constrained: lab and DNS ~0.5-0.7); K_S is the
+  # diffusivity relevant to nitrate and other low-diffusivity solutes in fingering.
+  gammas: [0.5, 0.65, 0.7]
+  min_windows: 5                  # bins with fewer windows are not reported
+
 uncertainty:
   bootstrap_samples: 1000
   random_seed: 20260812
