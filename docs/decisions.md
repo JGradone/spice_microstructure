@@ -735,3 +735,31 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * The control is mostly 20–150 dbar, above the salinity maximum; the interfaces are 150–1000 dbar. Different depths, water masses and internal-wave environments are matched only in Re_b.
   * Low-Re_b behaviour (Γ, epsilon near its floor) is not understood.
   * The FP07 response model scales chi in both target and control alike (cancels to first order in E).
+
+## 2026-10-14: Garrett–Munk reference level; epsilon_T as a baseline
+
+* **GM reference (user):** `dd_gm.csv` and figure `diffusivity_vs_gm.png`. K_GM = K0 L(f, N), with K0 = 5e-6 m²/s, N0 = 5.24e-3 rad/s and the latitude factor relative to 30° (Gregg 1989; Kunze et al. 2006 form; verify constants before publication). It is set beside bin-averaged K_T = ⟨χ⟩/(2⟨T_z²⟩) (background and finescale) and K_ρ = 0.2⟨ε⟩/⟨N²⟩. It is a reference level for context, not a test.
+* **Whole-cruise pooled diffusivities (m²/s):**
+
+  | Quantity | VMP5500 | VMP250 |
+  |---|---|---|
+  | K_GM | 2.4–3.2e-6 | 2.3–3.0e-6 |
+  | Shear-based K_ρ | 1.4e-6 | 2.4e-6 |
+  | Control K_T (finescale) | 2.0e-6 | 2.4e-6 |
+  | Finger-water K_T (finescale) | 5.1e-6 | 5.0e-6 |
+  | Interface K_T (finescale / background) | 6.7e-6 / 1.4e-5 | 7.3e-6 / 1.6e-5 |
+
+  * The measured turbulence and the non-finger water are both at about the GM level.
+  * Finger water is 2–3× GM, and interfaces 2.7–6× GM.
+* **epsilon_T as a baseline (user question).** Deriving ε from chi through the turbulence relations is circular: it forces R = 1. The Batchelor-fit ε_T is not circular (spectral shape, not magnitude), but in resolved windows:
+  * In finger water it gives R about 0.7–1.0 at every Re_b, consistent with finger-scale variance setting kB, so it absorbs the finger signal.
+  * In the doubly stable control it reads 5–10× below shear epsilon and raises R.
+
+  So ε_T cannot adjudicate the excess. The low-Re_b control excess is not explained by shear epsilon reading low near its floor. Shear epsilon stays primary; `epsilon_source: thermistor` stays a sensitivity run, expected to bias finger water toward R = 1.
+* **Framing:** report a ladder of baselines rather than one number:
+  * Γ = 0.2 theory (raw R);
+  * GM reference level;
+  * doubly stable control at matched Re_b (E);
+  * internal contrasts (interfaces vs layers vs non-staircase finger water at matched Re_b).
+
+  The robust conclusion is what holds on every rung: interfaces carry the most chi at a given Re_b, layers the least, interface K_T is several times GM, and R rises with R_ρ as fingers predict. The absolute size of the double-diffusive excess depends on the baseline and is given as a range.

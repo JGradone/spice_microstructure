@@ -33,6 +33,11 @@
     ],
     "excess_control_group": "all free fall",
     "excess_min_control_windows": 10,
+    "gm": {
+      "K0_m2_s": 5e-06,
+      "N0_rad_s": 0.00524,
+      "f_ref_lat_deg": 30
+    },
     "depth_range_dbar": {
       "vmp250": [
         150,
