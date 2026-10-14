@@ -23,6 +23,14 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     marks intrusions), taken over control_depth_range_dbar (which reaches above
     the shallow salinity maximum). Finger and other regime sets use
     depth_range_dbar.
+  * Excess over the Re_b-matched control (dd_excess.csv): the control's ratio in
+    each Re_b bin, R_c(b), calibrates the Gamma = 0.2 expectation empirically;
+    for a target set E = sum(chi_obs) / sum(chi_exp * R_c(b_window)). E = 1 means
+    indistinguishable from doubly stable water at the same Re_b. The control is
+    the instrument's "all free fall" control (excess_control_group); windows in
+    Re_b bins with fewer than excess_min_control_windows control windows are
+    left out (counted). 95% bootstrap resamples target and control profiles
+    independently.
   * Re_b: R is also computed in buoyancy Reynolds number bins (re_b_bins) for
     finger-favourable windows and for the control, so the two are compared at
     matched turbulence intensity (Gamma = 0.2 is an active-turbulence value).
@@ -119,6 +127,50 @@ def ratio_stats(d: pd.DataFrame, gamma: float, n_boot: int, rng) -> dict:
     else:
         r["ratio_lo"] = r["ratio_hi"] = np.nan
     return r
+
+
+def excess_stats(target: pd.DataFrame, control: pd.DataFrame, edges, min_ctrl: int, n_boot: int, rng) -> dict:
+    """Excess of target chi over the Re_b-matched control expectation, with a two-sample profile bootstrap."""
+    tb = np.digitize(target["Re_b_shear"].to_numpy(), edges) - 1
+    cb = np.digitize(control["Re_b_shear"].to_numpy(), edges) - 1
+    nb = len(edges) - 1
+
+    def calib(c_obs, c_exp, c_bin):
+        so = np.bincount(c_bin[(c_bin >= 0) & (c_bin < nb)], weights=c_obs[(c_bin >= 0) & (c_bin < nb)], minlength=nb)
+        se = np.bincount(c_bin[(c_bin >= 0) & (c_bin < nb)], weights=c_exp[(c_bin >= 0) & (c_bin < nb)], minlength=nb)
+        n = np.bincount(c_bin[(c_bin >= 0) & (c_bin < nb)], minlength=nb)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            r = so / se
+        r[n < min_ctrl] = np.nan
+        return r
+
+    def excess(t_obs, t_exp, t_bin, rc):
+        f = rc[np.clip(t_bin, 0, nb - 1)]
+        f[(t_bin < 0) | (t_bin >= nb)] = np.nan
+        ok = np.isfinite(f)
+        return (t_obs[ok].sum() / (t_exp[ok] * f[ok]).sum()) if ok.any() else np.nan, ok
+
+    rc = calib(control["chi_obs"].to_numpy(), control["chi_exp"].to_numpy(), cb)
+    e, ok = excess(target["chi_obs"].to_numpy(), target["chi_exp"].to_numpy(), tb, rc)
+    out = {"excess": float(e), "n_windows": len(target), "n_windows_matched": int(ok.sum()),
+           "n_profiles": target["profile_file"].nunique(), "n_control_windows": len(control),
+           "ratio_raw": float(target["chi_obs"].sum() / target["chi_exp"].sum()),
+           "Re_b_median": float(np.nanmedian(target["Re_b_shear"]))}
+    tp, cp = target["profile_file"].to_numpy(), control["profile_file"].to_numpy()
+    tu, cu = np.unique(tp), np.unique(cp)
+    if len(tu) >= 2 and len(cu) >= 2 and n_boot > 0:
+        t_idx = {p: np.flatnonzero(tp == p) for p in tu}
+        c_idx = {p: np.flatnonzero(cp == p) for p in cu}
+        boot = []
+        for _ in range(n_boot):
+            ti = np.concatenate([t_idx[p] for p in rng.choice(tu, len(tu))])
+            ci = np.concatenate([c_idx[p] for p in rng.choice(cu, len(cu))])
+            rcb = calib(control["chi_obs"].to_numpy()[ci], control["chi_exp"].to_numpy()[ci], cb[ci])
+            boot.append(excess(target["chi_obs"].to_numpy()[ti], target["chi_exp"].to_numpy()[ti], tb[ti], rcb)[0])
+        out["excess_lo"], out["excess_hi"] = float(np.nanpercentile(boot, 2.5)), float(np.nanpercentile(boot, 97.5))
+    else:
+        out["excess_lo"] = out["excess_hi"] = np.nan
+    return out
 
 
 def prepare(ctx, name, config) -> pd.DataFrame:
@@ -373,6 +425,39 @@ def run(ctx: dict) -> None:
                                          "Re_b_lo": lo_b, "Re_b_hi": hi_b,
                                          **ratio_stats(dv, dd["flux_ratio_gamma"], unc["bootstrap_samples"], rng)})
     reb = pd.DataFrame(reb_rows)
+
+    # Excess over the Re_b-matched control, per group x method x staircase label x gradients
+    ex_rows = []
+    for g in groups:
+        inst = g.split(" ")[0]
+        cg = prep[prep["instrument_group"] == f"{inst} {dd['excess_control_group']}"]
+        cg.attrs["control_max"] = dd["control_max_turner_deg"]
+        dg = prep[prep["instrument_group"] == g]
+        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        for m in methods:
+            ctrl_sel = regime_sets(cg, m)[("control", "all")]
+            sets = regime_sets(dg, m)
+            for sname in ("all", "interface", "layer", "straddles", "none"):
+                d = dg[sets[("finger_any", sname)]]
+                if len(d) < 5:
+                    continue
+                grads = [("background", d, cg[ctrl_sel]),
+                         ("finescale", d.assign(chi_exp=d["chi_exp_fine"])[np.isfinite(d["chi_exp_fine"])],
+                          cg[ctrl_sel].assign(chi_exp=cg.loc[ctrl_sel, "chi_exp_fine"])
+                          [np.isfinite(cg.loc[ctrl_sel, "chi_exp_fine"])])]
+                if sname == "interface":
+                    # interface windows with their own gradients; the control keeps finescale gradients
+                    dl = d.assign(chi_exp=d[f"chi_exp_iface_{m}"])[np.isfinite(d[f"chi_exp_iface_{m}"])]
+                    grads.append(("interface_local", dl, grads[1][2]))
+                for grad, dt, dc in grads:
+                    if len(dt) < 5 or len(dc) < 10:
+                        continue
+                    ex_rows.append({"instrument_group": g, "method": m, "staircase": sname, "gradients": grad,
+                                    "control_group": f"{inst} {dd['excess_control_group']}",
+                                    **excess_stats(dt, dc, dd["re_b_bins"], dd["excess_min_control_windows"],
+                                                   unc["bootstrap_samples"], rng)})
+    ex = pd.DataFrame(ex_rows)
+    ex.to_csv(out / "dd_excess.csv", index=False, float_format="%.6g")
     reb.to_csv(out / "dd_re_b.csv", index=False, float_format="%.6g")
     reb_figure(reb, groups, out / "figures" / "ratio_vs_re_b.png", foot)
 
