@@ -9,8 +9,8 @@ window (T_z and S_z approach zero):
              for gradients = background (10 m fits), finescale (1 m gradient
              variance), interface_local (detected interface's own gradients)
   R_rho    = <alpha T_z> / <beta S_z>            bin density ratio (same gradients)
-  K_S      = R_rho K_T / gamma                   finger-favourable sets only, R_rho > 1,
-                                                 for each gamma in diffusivities.gammas
+  K_S      = R_rho K_T / gamma                   finger-favourable sets only, 1 < R_rho <=
+                                                 k_s_max_r_rho, for each gamma in diffusivities.gammas
   K_S_eps  = <eps> (R_rho - 1) / (<N2> (1 - gamma))  independent finger check
   K_rho    = 0.2 <eps> / <N2>                    Osborn (1980); not valid where finger
                                                  dominated (finger_set flag)
@@ -254,9 +254,12 @@ def run(ctx: dict) -> None:
                             rows.append({**base, "depth_bin": zb,
                                          **bin_estimates(db, gammas, dd["gm"], unc["bootstrap_samples"], rng, ci_keys)})
     tab = pd.DataFrame(rows)
-    # K_S applies only to finger-favourable sets; K_rho is not valid there
+    # K_S applies only to finger-favourable sets with R_rho <= k_s_max_r_rho (fingers weaken at high
+    # R_rho and the finger formula would grow with R_rho regardless); K_rho is not valid in finger sets
+    tab["K_S_applicable"] = tab["finger_set"] & (tab["R_rho"] > 1) & (tab["R_rho"] <= dc["k_s_max_r_rho"])
     for g in gammas:
-        tab.loc[~tab["finger_set"], [f"K_S_g{g:g}", f"K_S_eps_g{g:g}"]] = np.nan
+        cols = [c for c in tab.columns if c.startswith((f"K_S_g{g:g}", f"K_S_eps_g{g:g}"))]
+        tab.loc[~tab["K_S_applicable"], cols] = np.nan
     tab["K_rho_valid"] = ~tab["finger_set"]
     tab["min_profiles_ok"] = tab["n_profiles"] >= dd["min_profiles_per_average"]
     tab["gammas"] = ",".join(f"{g:g}" for g in gammas)
