@@ -459,6 +459,10 @@ double_diffusion:
   re_b_bins: [0, 3, 10, 30, 100, 1000000]   # Re_b bins for the finger vs control comparison
   excess_control_group: all free fall   # control used to calibrate R by Re_b (per instrument)
   excess_min_control_windows: 10  # Re_b bins with fewer control windows are left out of the excess
+  gm:                             # Garrett-Munk reference level (Gregg 1989; Kunze et al. 2006 form); verify before publication
+    K0_m2_s: 5.0e-6               # canonical diffusivity at N0 and 30 deg latitude (Gamma 0.2 implied)
+    N0_rad_s: 5.24e-3             # 3 cph
+    f_ref_lat_deg: 30
   depth_range_dbar:               # windows tested (P_mean), per instrument; above ~150 dbar is not staircase water
     vmp250: [150, 300]            # to the bottom of the casts (~180-270 dbar)
     vmp5500: [150, 1000]          # full deep casts (was 550: ship CTD validation depth, not a physical limit)

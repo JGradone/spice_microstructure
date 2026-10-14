@@ -31,6 +31,14 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     Re_b bins with fewer than excess_min_control_windows control windows are
     left out (counted). 95% bootstrap resamples target and control profiles
     independently.
+  * Garrett-Munk reference level (dd_gm.csv; Gregg 1989, Kunze et al. 2006):
+    K_GM = K0 L(f, N), L = f arccosh(N/f) / (f30 arccosh(N0/f30)), the canonical
+    internal-wave diapycnal diffusivity at the bin's N and latitude (Gamma 0.2
+    implied in K0). Compared with bin-averaged K_T = <chi> / (2 <T_z^2>)
+    (Osborn and Cox; background and finescale T_z^2) and K_rho = 0.2 <eps>/<N2>,
+    per group x regime x staircase label x depth bin. A reference level for
+    context, not a test: GM is climatological, and finescale (strain-based)
+    versions are invalid inside staircases.
   * Re_b: R is also computed in buoyancy Reynolds number bins (re_b_bins) for
     finger-favourable windows and for the control, so the two are compared at
     matched turbulence intensity (Gamma = 0.2 is an active-turbulence value).
@@ -173,6 +181,26 @@ def excess_stats(target: pd.DataFrame, control: pd.DataFrame, edges, min_ctrl: i
     return out
 
 
+def k_gm(n2, lat, gm: dict) -> np.ndarray:
+    """Canonical GM diapycnal diffusivity at buoyancy frequency sqrt(n2) and latitude lat."""
+    om = 7.2921e-5
+    f = np.abs(2 * om * np.sin(np.deg2rad(lat)))
+    f30 = 2 * om * np.sin(np.deg2rad(gm["f_ref_lat_deg"]))
+    n = np.sqrt(np.clip(n2, 0, None))
+    with np.errstate(invalid="ignore", divide="ignore"):
+        lfn = f * np.arccosh(np.maximum(n / f, 1)) / (f30 * np.arccosh(gm["N0_rad_s"] / f30))
+    return gm["K0_m2_s"] * lfn
+
+
+def gm_stats(d: pd.DataFrame, gm: dict) -> dict:
+    n2 = d["N2"].mean()
+    return {"n_windows": len(d), "n_profiles": d["profile_file"].nunique(), "N2_mean": float(n2),
+            "K_T_background": float(d["chi_obs"].mean() / (2 * (d["T_z"] ** 2).mean())),
+            "K_T_finescale": float(d["chi_obs"].mean() / (2 * d["T_z2_fine"].mean())),
+            "K_rho_measured": float(0.2 * d["epsilon_used"].mean() / n2),
+            "K_GM": float(k_gm(n2, d["lat"].mean(), gm))}
+
+
 def prepare(ctx, name, config) -> pd.DataFrame:
     dd = config["double_diffusion"]
     rd = ctx["run_dir"]
@@ -220,6 +248,8 @@ def prepare(ctx, name, config) -> pd.DataFrame:
         if sel.any():
             fine[k] = np.nanmean(grads[pf][sel] ** 2)
     df["T_z2_fine"] = fine
+    lat = hyd["lat"].values
+    df["lat"] = df["profile_file"].map({f: (float(lat[k]) if np.isfinite(lat[k]) else 12.0) for f, k in row.items()})
     df["chi_exp_fine"] = 2 * dd["flux_coefficient"] * df["epsilon_used"] / df["N2"] * df["T_z2_fine"]
 
     # Interface-local gradients for windows labelled interface, per staircase method
@@ -327,6 +357,37 @@ def rrho_figure(prep, groups, method, gamma, path, foot):
         ax.set_ylabel(r"$\langle\chi_{obs}\rangle / \langle\chi_{exp}\rangle$")
         ax.set_title(f"{g} ({method})", fontsize=9)
         ax.legend(fontsize=7)
+    fig.tight_layout()
+    ps.footer(fig, foot)
+    fig.savefig(path, dpi=100)
+    plt.close(fig)
+
+
+def gm_figure(gmt, groups, path, foot):
+    gs = [g for g in groups if "all free fall" in g] or groups
+    fig, axes = plt.subplots(1, len(gs), figsize=(5.2 * len(gs), 7), squeeze=False)
+    for ax, g in zip(axes[0], gs):
+        b = gmt[(gmt["instrument_group"] == g) & (gmt["depth_bin"] != "pooled")].copy()
+        b["z"] = b["depth_bin"].astype(float)
+        for (tname, sname), c, lab in ((("finger_any", "interface"), ps.ORANGE, "K_T interfaces"),
+                                       (("finger_any", "layer"), ps.BLUE, "K_T layers"),
+                                       (("finger_any", "none"), ps.AQUA, "K_T finger, no staircase"),
+                                       (("control", "all"), ps.MUTED, "K_T control")):
+            s = b[(b["turner"] == tname) & (b["staircase"] == sname)].sort_values("z")
+            ax.plot(s["K_T_finescale"], s["z"], "o-", color=c, ms=3, lw=1, label=lab + " (finescale)")
+        a = b[(b["turner"] == "all_turner") & (b["staircase"] == "all")].sort_values("z")
+        ax.plot(a["K_rho_measured"], a["z"], color="k", lw=1, ls=":", label="K_rho = 0.2<ε>/<N²>")
+        c_ = b[(b["turner"] == "control") & (b["staircase"] == "all")].sort_values("z")
+        allz = pd.concat([a, c_]).drop_duplicates("z").sort_values("z")
+        ax.plot(allz["K_GM"], allz["z"], color=ps.RED, lw=2, label="Garrett–Munk K_GM")
+        ax.axvline(1.4e-7, color="k", lw=0.6, ls="--", label="molecular κ_T")
+        ax.set_xscale("log")
+        ax.set_xlim(1e-8, 1e-2)
+        ax.invert_yaxis()
+        ax.set_xlabel("diffusivity (m² s⁻¹), bin averages")
+        ax.set_ylabel("pressure (dbar)")
+        ax.set_title(g, fontsize=9)
+        ax.legend(fontsize=6.5, loc="lower right")
     fig.tight_layout()
     ps.footer(fig, foot)
     fig.savefig(path, dpi=100)
@@ -457,6 +518,26 @@ def run(ctx: dict) -> None:
                                     **excess_stats(dt, dc, dd["re_b_bins"], dd["excess_min_control_windows"],
                                                    unc["bootstrap_samples"], rng)})
     ex = pd.DataFrame(ex_rows)
+
+    # Garrett-Munk reference level, by group x regime x staircase label (pooled and per depth bin)
+    gm_rows = []
+    for g in groups:
+        dg = prep[prep["instrument_group"] == g]
+        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        sets = regime_sets(dg, methods[-1])
+        for (tname, sname) in [("finger_any", "all"), ("finger_any", "interface"), ("finger_any", "layer"),
+                               ("finger_any", "none"), ("control", "all"), ("all_turner", "all")]:
+            d = dg[sets[(tname, sname)]]
+            if len(d) < 5:
+                continue
+            base = {"instrument_group": g, "method": methods[-1], "turner": tname, "staircase": sname}
+            gm_rows.append({**base, "depth_bin": "pooled", **gm_stats(d, dd["gm"])})
+            for zb, db in d.groupby("depth_bin"):
+                if len(db) >= 5:
+                    gm_rows.append({**base, "depth_bin": zb, **gm_stats(db, dd["gm"])})
+    gmt = pd.DataFrame(gm_rows)
+    gmt.to_csv(out / "dd_gm.csv", index=False, float_format="%.6g")
+    gm_figure(gmt, groups, out / "figures" / "diffusivity_vs_gm.png", foot)
     ex.to_csv(out / "dd_excess.csv", index=False, float_format="%.6g")
     reb.to_csv(out / "dd_re_b.csv", index=False, float_format="%.6g")
     reb_figure(reb, groups, out / "figures" / "ratio_vs_re_b.png", foot)
