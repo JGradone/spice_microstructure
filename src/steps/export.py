@@ -121,11 +121,15 @@ def segments_product(run_dir, name) -> xr.Dataset:
     sh = pd.read_csv(run_dir / "epsilon_shear" / f"epsilon_shear_{name}.csv")
     th = pd.read_csv(run_dir / "thermistor" / f"thermistor_{name}.csv")
     sg = pd.read_csv(run_dir / "segments" / f"segments_{name}.csv")
-    sh_cols = [c for c in sh.columns if c.startswith(("epsilon_sh", "FM_sh", "var_resolved_sh", "floor_sh", "use_sh"))
-               and not c.endswith("_perturb")] + ["n_probes", "epsilon_floor", "flags"]
+    sh_cols = [c for c in sh.columns if c.startswith(("epsilon_sh1", "epsilon_sh2", "FM_sh", "var_resolved_sh",
+                                                      "floor_sh", "use_sh")) and not c.endswith("_perturb")] + \
+        ["n_probes", "flags"]
+    have = set(reg.columns)
+    sh_cols = [c for c in sh_cols if c not in have or c in ("flags", "n_probes")]
     th_cols = [c for c in th.columns if c.startswith(("chi_T", "epsilon_T_T", "kB_T", "fom_T", "K_max_ratio_T",
                                                       "snr_T", "floor_T", "use_T"))] + \
         ["n_probes", "chi_floor", "K_max_ratio", "kB", "flags", "at_floor"]
+    th_cols = [c for c in th_cols if c not in have or c in ("flags", "n_probes", "at_floor")]
     d = reg.merge(sh[keys + sh_cols].rename(columns={"flags": "shear_flags", "n_probes": "n_shear_probes"}), on=keys) \
            .merge(th[keys + th_cols].rename(columns={"flags": "chi_flags", "n_probes": "n_thermistors",
                                                      "at_floor": "chi_at_floor"}), on=keys, how="left") \
