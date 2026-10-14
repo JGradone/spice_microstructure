@@ -670,3 +670,37 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   | VMP250 free fall | background / finescale | 5.5 / 3.6 | — | — | — |
 
 * **Reading:** under every gradient choice, staircase interfaces exceed the shear-turbulence expectation (R 3–7, near the finger prediction of about 4). Layers are about 1 with finescale gradients. With finescale gradients the non-finger control recovers about 1, which supports the finescale version as the more consistent estimate. Background-gradient ratios overstate R where intrusive finestructure is present, and deep (> 600 dbar) background ratios should not be interpreted. Gradient choice is a key methods decision for the paper; all three are carried.
+
+## 2026-10-14: Whole cruise; control water; R depends on Re_b in all water
+
+* **Whole cruise:** `station_groups` [process_station, transect], plus an "all free fall" pool per instrument (tow-yo stays separate).
+  * Finger-favourable water, 1 m (finescale) gradients, with interface-gradient values in brackets:
+
+    | Instrument | Casts / profiles | Interfaces | Layers |
+    |---|---|---|---|
+    | VMP5500 | 44 casts | 4.3 [3.1, 5.9] (6.7) | 1.1 |
+    | VMP250 | 119 profiles | 2.7 (4.4) | 1.2 |
+
+* **First control (−90 < Tu < 30, ≥ 150 dbar):** not usable.
+  * VMP250: mostly intrusion water (temperature inversions at the 25 m scale, salt-stabilised), which is double-diffusively active.
+  * VMP5500: 91% at 900–1000 dbar near the AAIW salinity minimum, where its T–S-derived Turner angle is unreliable and turbulence is barely active (median Re_b 2.4).
+  * It also wrongly included diffusive convection (−90° to −45°).
+* **Control now:**
+  * −45 < Tu < 30 (doubly stable), T_z > 0 at the window scale (no inversions), from 20 dbar (`control_depth_range_dbar`).
+  * Most of it sits above the shallow salinity maximum (median about 105 dbar; S increases downward, so fingers are impossible).
+  * Pooled R: VMP250 1.36 [1.13, 1.63] (finescale; 1.96 background), 2474 windows. VMP5500 1.74 [1.19, 2.64] (2.87 background), 1160 windows.
+* **R by Re_b (`dd_re_b.csv`, figure `ratio_vs_re_b.png`), all free fall, finescale gradients**, finger-favourable vs control:
+
+  | Re_b | VMP5500 finger | VMP5500 control | VMP250 finger | VMP250 control |
+  |---|---|---|---|---|
+  | 0–3 | 7.0 | 4.7 | 2.3 | 2.0 |
+  | 3–10 | 3.9 | 2.4 | 1.9 | 1.8 |
+  | 10–30 | 2.3 | 2.3 | 1.9 | 1.7 |
+  | 30–100 | 0.94 | 0.92 | 2.3 | 1.6 |
+  | > 100 | 0.7 | 0.8 | 2.0 | 0.8 |
+
+* **Reading:**
+  * In all water, R rises as Re_b falls: about 1 at Re_b > 30, and 2–5 at Re_b < 10 even in doubly stable water. At low Re_b the Osborn model with Γ = 0.2 does not hold, or epsilon is underestimated near its floor, or chi has non-turbulent sources.
+  * Most of the earlier "R > 1" is this low-Re_b effect, not fingers. Median Re_b is about 5–10 in finger water.
+  * The finger-specific signal is the excess over the control at matched Re_b: about 1.5× for the VMP5500 at Re_b < 10, and small or absent for the VMP250 except at Re_b 30–100.
+  * The staircase-interface excess must be re-evaluated against the Re_b-matched control before any claim.

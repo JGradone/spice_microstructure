@@ -8,7 +8,28 @@
     "depth_bin_m": 25,
     "exclude_weakest_n2_percent": 10,
     "station_groups": [
-      "process_station"
+      "process_station",
+      "transect"
+    ],
+    "pool_free_fall": true,
+    "control_max_turner_deg": 30,
+    "control_depth_range_dbar": {
+      "vmp250": [
+        20,
+        300
+      ],
+      "vmp5500": [
+        20,
+        1000
+      ]
+    },
+    "re_b_bins": [
+      0,
+      3,
+      10,
+      30,
+      100,
+      1000000
     ],
     "depth_range_dbar": {
       "vmp250": [
@@ -22,12 +43,674 @@
     }
   },
   "groups": {
+    "vmp250 all free fall": {
+      "vdb2021 all_turner all background": {
+        "ratio": 2.73,
+        "ci95": [
+          2.22,
+          3.37
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 4281,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 all_turner all finescale": {
+        "ratio": 2.0,
+        "ci95": [
+          1.67,
+          2.38
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 4281,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 all_turner none background": {
+        "ratio": 2.73,
+        "ci95": [
+          2.19,
+          3.39
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 4281,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 all_turner none finescale": {
+        "ratio": 2.0,
+        "ci95": [
+          1.63,
+          2.39
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 4281,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any all background": {
+        "ratio": 2.67,
+        "ci95": [
+          2.11,
+          3.27
+        ],
+        "finger_prediction": 4.24,
+        "R_rho": 1.84,
+        "n_windows": 4174,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any all finescale": {
+        "ratio": 1.97,
+        "ci95": [
+          1.62,
+          2.37
+        ],
+        "finger_prediction": 4.24,
+        "R_rho": 1.84,
+        "n_windows": 4174,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any none background": {
+        "ratio": 2.67,
+        "ci95": [
+          2.12,
+          3.34
+        ],
+        "finger_prediction": 4.24,
+        "R_rho": 1.84,
+        "n_windows": 4174,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any none finescale": {
+        "ratio": 1.97,
+        "ci95": [
+          1.63,
+          2.37
+        ],
+        "finger_prediction": 4.24,
+        "R_rho": 1.84,
+        "n_windows": 4174,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 not_finger all background": {
+        "ratio": 21.57,
+        "ci95": [
+          13.92,
+          28.96
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 not_finger all finescale": {
+        "ratio": 4.84,
+        "ci95": [
+          3.39,
+          6.01
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 not_finger none background": {
+        "ratio": 21.57,
+        "ci95": [
+          13.87,
+          29.26
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 not_finger none finescale": {
+        "ratio": 4.84,
+        "ci95": [
+          3.37,
+          6.02
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 control all background": {
+        "ratio": 1.96,
+        "ci95": [
+          1.59,
+          2.43
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2474,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 1.36,
+        "ci95": [
+          1.15,
+          1.65
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2474,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control none background": {
+        "ratio": 1.96,
+        "ci95": [
+          1.61,
+          2.42
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2474,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 1.36,
+        "ci95": [
+          1.13,
+          1.62
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2474,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner all background": {
+        "ratio": 2.73,
+        "ci95": [
+          2.2,
+          3.34
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 4281,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 all_turner all finescale": {
+        "ratio": 2.0,
+        "ci95": [
+          1.63,
+          2.39
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 4281,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 all_turner interface background": {
+        "ratio": 5.98,
+        "ci95": [
+          3.53,
+          9.76
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.65,
+        "n_windows": 64,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 all_turner interface finescale": {
+        "ratio": 2.63,
+        "ci95": [
+          1.76,
+          3.58
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.65,
+        "n_windows": 64,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 all_turner interface interface_local": {
+        "ratio": 4.38,
+        "ci95": [
+          2.9,
+          6.08
+        ],
+        "finger_prediction": 3.73,
+        "R_rho": 1.67,
+        "n_windows": 64,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 all_turner layer background": {
+        "ratio": 0.3,
+        "ci95": [
+          0.13,
+          0.48
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 all_turner layer finescale": {
+        "ratio": 1.16,
+        "ci95": [
+          0.76,
+          1.84
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 all_turner straddles background": {
+        "ratio": 9.7,
+        "ci95": [
+          6.13,
+          12.15
+        ],
+        "finger_prediction": 3.43,
+        "R_rho": 1.59,
+        "n_windows": 102,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.41
+      },
+      "rollo2022 all_turner straddles finescale": {
+        "ratio": 3.27,
+        "ci95": [
+          2.37,
+          3.7
+        ],
+        "finger_prediction": 3.43,
+        "R_rho": 1.59,
+        "n_windows": 102,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.41
+      },
+      "rollo2022 all_turner none background": {
+        "ratio": 2.57,
+        "ci95": [
+          2.07,
+          3.2
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.87,
+        "n_windows": 4042,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 all_turner none finescale": {
+        "ratio": 1.93,
+        "ci95": [
+          1.57,
+          2.35
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.87,
+        "n_windows": 4042,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any all background": {
+        "ratio": 2.67,
+        "ci95": [
+          2.16,
+          3.33
+        ],
+        "finger_prediction": 4.24,
+        "R_rho": 1.84,
+        "n_windows": 4174,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 finger_any all finescale": {
+        "ratio": 1.97,
+        "ci95": [
+          1.6,
+          2.36
+        ],
+        "finger_prediction": 4.24,
+        "R_rho": 1.84,
+        "n_windows": 4174,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 finger_any interface background": {
+        "ratio": 5.97,
+        "ci95": [
+          3.54,
+          9.81
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.64,
+        "n_windows": 63,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any interface finescale": {
+        "ratio": 2.65,
+        "ci95": [
+          1.8,
+          3.58
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.64,
+        "n_windows": 63,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any interface interface_local": {
+        "ratio": 4.37,
+        "ci95": [
+          2.86,
+          6.36
+        ],
+        "finger_prediction": 3.73,
+        "R_rho": 1.67,
+        "n_windows": 63,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any layer background": {
+        "ratio": 0.3,
+        "ci95": [
+          0.13,
+          0.49
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 finger_any layer finescale": {
+        "ratio": 1.16,
+        "ci95": [
+          0.79,
+          1.89
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 finger_any straddles background": {
+        "ratio": 9.69,
+        "ci95": [
+          5.9,
+          12.06
+        ],
+        "finger_prediction": 3.4,
+        "R_rho": 1.58,
+        "n_windows": 101,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.42
+      },
+      "rollo2022 finger_any straddles finescale": {
+        "ratio": 3.27,
+        "ci95": [
+          2.38,
+          3.71
+        ],
+        "finger_prediction": 3.4,
+        "R_rho": 1.58,
+        "n_windows": 101,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.42
+      },
+      "rollo2022 finger_any none background": {
+        "ratio": 2.5,
+        "ci95": [
+          1.96,
+          3.13
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3937,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any none finescale": {
+        "ratio": 1.9,
+        "ci95": [
+          1.54,
+          2.34
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3937,
+        "n_profiles": 119,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 not_finger all background": {
+        "ratio": 21.57,
+        "ci95": [
+          13.5,
+          29.41
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "rollo2022 not_finger all finescale": {
+        "ratio": 4.84,
+        "ci95": [
+          3.38,
+          6.07
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "rollo2022 not_finger interface background": {
+        "ratio": 7.81,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 4.36,
+        "R_rho": 1.88,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger interface finescale": {
+        "ratio": 1.47,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 4.36,
+        "R_rho": 1.88,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger interface interface_local": {
+        "ratio": 5.31,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 4.01,
+        "R_rho": 1.76,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger straddles background": {
+        "ratio": 407.58,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger straddles finescale": {
+        "ratio": 13.95,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger none background": {
+        "ratio": 22.1,
+        "ci95": [
+          13.72,
+          29.16
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.29
+      },
+      "rollo2022 not_finger none finescale": {
+        "ratio": 5.0,
+        "ci95": [
+          3.55,
+          6.24
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.29
+      },
+      "rollo2022 control all background": {
+        "ratio": 1.96,
+        "ci95": [
+          1.59,
+          2.41
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2474,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 1.36,
+        "ci95": [
+          1.13,
+          1.63
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2474,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control layer background": {
+        "ratio": 4.48,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control layer finescale": {
+        "ratio": 3.82,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control straddles background": {
+        "ratio": 407.58,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control straddles finescale": {
+        "ratio": 13.95,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control none background": {
+        "ratio": 1.96,
+        "ci95": [
+          1.58,
+          2.4
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2471,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 1.36,
+        "ci95": [
+          1.14,
+          1.63
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2471,
+        "n_profiles": 120,
+        "at_floor_fraction": 0.01
+      }
+    },
     "vmp250 process_station free fall": {
       "vdb2021 all_turner all background": {
         "ratio": 5.53,
         "ci95": [
-          2.23,
-          7.79
+          2.14,
+          7.85
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -38,8 +721,8 @@
       "vdb2021 all_turner all finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.69,
-          4.75
+          1.65,
+          4.77
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -50,8 +733,8 @@
       "vdb2021 all_turner none background": {
         "ratio": 5.53,
         "ci95": [
-          2.18,
-          7.78
+          2.13,
+          7.86
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -63,7 +746,7 @@
         "ratio": 3.55,
         "ci95": [
           1.64,
-          4.82
+          4.75
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -74,7 +757,7 @@
       "vdb2021 finger_any all background": {
         "ratio": 5.53,
         "ci95": [
-          2.17,
+          2.14,
           7.79
         ],
         "finger_prediction": 3.6,
@@ -86,8 +769,8 @@
       "vdb2021 finger_any all finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.66,
-          4.74
+          1.63,
+          4.8
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -98,8 +781,8 @@
       "vdb2021 finger_any none background": {
         "ratio": 5.53,
         "ci95": [
-          2.23,
-          8.01
+          2.08,
+          7.83
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -110,8 +793,8 @@
       "vdb2021 finger_any none finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.66,
-          4.79
+          1.65,
+          4.65
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -119,11 +802,59 @@
         "n_profiles": 7,
         "at_floor_fraction": 0.31
       },
+      "vdb2021 control all background": {
+        "ratio": 1.9,
+        "ci95": [
+          1.29,
+          2.89
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 1.48,
+        "ci95": [
+          1.04,
+          2.06
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
+      "vdb2021 control none background": {
+        "ratio": 1.9,
+        "ci95": [
+          1.24,
+          2.86
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 1.48,
+        "ci95": [
+          1.04,
+          2.1
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
       "rollo2022 all_turner all background": {
         "ratio": 5.53,
         "ci95": [
-          2.2,
-          7.7
+          2.19,
+          7.92
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -134,8 +865,8 @@
       "rollo2022 all_turner all finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.65,
-          4.77
+          1.66,
+          4.7
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -146,8 +877,8 @@
       "rollo2022 all_turner none background": {
         "ratio": 5.53,
         "ci95": [
-          2.17,
-          7.86
+          2.15,
+          7.78
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -158,7 +889,7 @@
       "rollo2022 all_turner none finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.68,
+          1.63,
           4.74
         ],
         "finger_prediction": 3.6,
@@ -170,7 +901,7 @@
       "rollo2022 finger_any all background": {
         "ratio": 5.53,
         "ci95": [
-          2.23,
+          2.13,
           7.8
         ],
         "finger_prediction": 3.6,
@@ -182,8 +913,8 @@
       "rollo2022 finger_any all finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.69,
-          4.77
+          1.71,
+          4.82
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -194,8 +925,8 @@
       "rollo2022 finger_any none background": {
         "ratio": 5.53,
         "ci95": [
-          2.22,
-          7.76
+          2.13,
+          7.95
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
@@ -206,22 +937,70 @@
       "rollo2022 finger_any none finescale": {
         "ratio": 3.55,
         "ci95": [
-          1.65,
-          4.72
+          1.64,
+          4.77
         ],
         "finger_prediction": 3.6,
         "R_rho": 1.63,
         "n_windows": 189,
         "n_profiles": 7,
         "at_floor_fraction": 0.31
+      },
+      "rollo2022 control all background": {
+        "ratio": 1.9,
+        "ci95": [
+          1.23,
+          2.89
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 1.48,
+        "ci95": [
+          1.04,
+          2.04
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
+      "rollo2022 control none background": {
+        "ratio": 1.9,
+        "ci95": [
+          1.23,
+          2.76
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 1.48,
+        "ci95": [
+          1.04,
+          2.09
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 127,
+        "n_profiles": 7,
+        "at_floor_fraction": 0.02
       }
     },
     "vmp250 process_station tow-yo": {
       "vdb2021 all_turner all background": {
         "ratio": 2.84,
         "ci95": [
-          2.52,
-          3.1
+          2.54,
+          3.09
         ],
         "finger_prediction": 3.61,
         "R_rho": 1.63,
@@ -232,7 +1011,7 @@
       "vdb2021 all_turner all finescale": {
         "ratio": 2.0,
         "ci95": [
-          1.81,
+          1.82,
           2.17
         ],
         "finger_prediction": 3.61,
@@ -244,8 +1023,8 @@
       "vdb2021 all_turner none background": {
         "ratio": 2.84,
         "ci95": [
-          2.54,
-          3.11
+          2.53,
+          3.12
         ],
         "finger_prediction": 3.61,
         "R_rho": 1.63,
@@ -257,7 +1036,7 @@
         "ratio": 2.0,
         "ci95": [
           1.81,
-          2.16
+          2.17
         ],
         "finger_prediction": 3.61,
         "R_rho": 1.63,
@@ -268,8 +1047,8 @@
       "vdb2021 finger_any all background": {
         "ratio": 2.82,
         "ci95": [
-          2.54,
-          3.08
+          2.55,
+          3.1
         ],
         "finger_prediction": 3.59,
         "R_rho": 1.63,
@@ -280,7 +1059,7 @@
       "vdb2021 finger_any all finescale": {
         "ratio": 2.01,
         "ci95": [
-          1.81,
+          1.82,
           2.17
         ],
         "finger_prediction": 3.59,
@@ -292,7 +1071,7 @@
       "vdb2021 finger_any none background": {
         "ratio": 2.82,
         "ci95": [
-          2.53,
+          2.52,
           3.08
         ],
         "finger_prediction": 3.59,
@@ -304,7 +1083,7 @@
       "vdb2021 finger_any none finescale": {
         "ratio": 2.01,
         "ci95": [
-          1.84,
+          1.81,
           2.17
         ],
         "finger_prediction": 3.59,
@@ -361,11 +1140,59 @@
         "n_profiles": 2,
         "at_floor_fraction": 0.0
       },
+      "vdb2021 control all background": {
+        "ratio": 3.08,
+        "ci95": [
+          2.23,
+          4.04
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 158,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 2.07,
+        "ci95": [
+          1.52,
+          2.7
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 158,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control none background": {
+        "ratio": 3.08,
+        "ci95": [
+          2.27,
+          4.05
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 158,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 2.07,
+        "ci95": [
+          1.52,
+          2.78
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 158,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
       "rollo2022 all_turner all background": {
         "ratio": 2.84,
         "ci95": [
-          2.55,
-          3.1
+          2.53,
+          3.12
         ],
         "finger_prediction": 3.61,
         "R_rho": 1.63,
@@ -376,8 +1203,8 @@
       "rollo2022 all_turner all finescale": {
         "ratio": 2.0,
         "ci95": [
-          1.82,
-          2.18
+          1.81,
+          2.16
         ],
         "finger_prediction": 3.61,
         "R_rho": 1.63,
@@ -388,8 +1215,8 @@
       "rollo2022 all_turner interface background": {
         "ratio": 5.37,
         "ci95": [
-          4.61,
-          6.33
+          4.62,
+          6.34
         ],
         "finger_prediction": 3.4,
         "R_rho": 1.58,
@@ -401,7 +1228,7 @@
         "ratio": 3.11,
         "ci95": [
           2.68,
-          3.62
+          3.6
         ],
         "finger_prediction": 3.4,
         "R_rho": 1.58,
@@ -413,7 +1240,7 @@
         "ratio": 4.59,
         "ci95": [
           3.93,
-          5.33
+          5.3
         ],
         "finger_prediction": 3.55,
         "R_rho": 1.62,
@@ -425,7 +1252,7 @@
         "ratio": 0.36,
         "ci95": [
           0.17,
-          0.68
+          0.72
         ],
         "finger_prediction": 2.34,
         "R_rho": 1.34,
@@ -437,7 +1264,7 @@
         "ratio": 0.86,
         "ci95": [
           0.45,
-          1.9
+          2.1
         ],
         "finger_prediction": 2.34,
         "R_rho": 1.34,
@@ -448,8 +1275,8 @@
       "rollo2022 all_turner straddles background": {
         "ratio": 3.57,
         "ci95": [
-          2.49,
-          5.49
+          2.48,
+          5.73
         ],
         "finger_prediction": 3.06,
         "R_rho": 1.49,
@@ -461,7 +1288,7 @@
         "ratio": 1.88,
         "ci95": [
           1.3,
-          3.08
+          3.04
         ],
         "finger_prediction": 3.06,
         "R_rho": 1.49,
@@ -473,7 +1300,7 @@
         "ratio": 2.49,
         "ci95": [
           2.24,
-          2.74
+          2.73
         ],
         "finger_prediction": 3.69,
         "R_rho": 1.66,
@@ -496,8 +1323,8 @@
       "rollo2022 finger_any all background": {
         "ratio": 2.82,
         "ci95": [
-          2.53,
-          3.1
+          2.56,
+          3.08
         ],
         "finger_prediction": 3.59,
         "R_rho": 1.63,
@@ -508,8 +1335,8 @@
       "rollo2022 finger_any all finescale": {
         "ratio": 2.01,
         "ci95": [
-          1.81,
-          2.18
+          1.82,
+          2.19
         ],
         "finger_prediction": 3.59,
         "R_rho": 1.63,
@@ -520,8 +1347,8 @@
       "rollo2022 finger_any interface background": {
         "ratio": 5.37,
         "ci95": [
-          4.58,
-          6.36
+          4.6,
+          6.29
         ],
         "finger_prediction": 3.4,
         "R_rho": 1.58,
@@ -532,8 +1359,8 @@
       "rollo2022 finger_any interface finescale": {
         "ratio": 3.11,
         "ci95": [
-          2.69,
-          3.67
+          2.67,
+          3.6
         ],
         "finger_prediction": 3.4,
         "R_rho": 1.58,
@@ -544,8 +1371,8 @@
       "rollo2022 finger_any interface interface_local": {
         "ratio": 4.59,
         "ci95": [
-          4.0,
-          5.37
+          3.92,
+          5.33
         ],
         "finger_prediction": 3.55,
         "R_rho": 1.62,
@@ -557,7 +1384,7 @@
         "ratio": 0.33,
         "ci95": [
           0.14,
-          0.66
+          0.68
         ],
         "finger_prediction": 2.26,
         "R_rho": 1.32,
@@ -569,7 +1396,7 @@
         "ratio": 0.91,
         "ci95": [
           0.45,
-          2.21
+          2.43
         ],
         "finger_prediction": 2.26,
         "R_rho": 1.32,
@@ -580,8 +1407,8 @@
       "rollo2022 finger_any straddles background": {
         "ratio": 3.53,
         "ci95": [
-          2.44,
-          5.65
+          2.43,
+          5.68
         ],
         "finger_prediction": 3.07,
         "R_rho": 1.49,
@@ -592,8 +1419,8 @@
       "rollo2022 finger_any straddles finescale": {
         "ratio": 2.02,
         "ci95": [
-          1.39,
-          3.29
+          1.36,
+          3.21
         ],
         "finger_prediction": 3.07,
         "R_rho": 1.49,
@@ -604,8 +1431,8 @@
       "rollo2022 finger_any none background": {
         "ratio": 2.48,
         "ci95": [
-          2.22,
-          2.73
+          2.23,
+          2.71
         ],
         "finger_prediction": 3.67,
         "R_rho": 1.65,
@@ -696,6 +1523,1582 @@
         "n_windows": 1,
         "n_profiles": 1,
         "at_floor_fraction": 0.0
+      },
+      "rollo2022 control all background": {
+        "ratio": 3.08,
+        "ci95": [
+          2.27,
+          4.02
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 158,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 2.07,
+        "ci95": [
+          1.52,
+          2.75
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 158,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control layer background": {
+        "ratio": 1.12,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control layer finescale": {
+        "ratio": 1.48,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control straddles background": {
+        "ratio": 5.95,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 2.09,
+        "R_rho": 1.29,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control straddles finescale": {
+        "ratio": 0.58,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 2.09,
+        "R_rho": 1.29,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control none background": {
+        "ratio": 3.07,
+        "ci95": [
+          2.26,
+          3.95
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 156,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 2.12,
+        "ci95": [
+          1.62,
+          2.73
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 156,
+        "n_profiles": 8,
+        "at_floor_fraction": 0.01
+      }
+    },
+    "vmp250 transect free fall": {
+      "vdb2021 all_turner all background": {
+        "ratio": 2.47,
+        "ci95": [
+          2.08,
+          2.94
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.88,
+        "n_windows": 4092,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 all_turner all finescale": {
+        "ratio": 1.83,
+        "ci95": [
+          1.56,
+          2.14
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.88,
+        "n_windows": 4092,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 all_turner none background": {
+        "ratio": 2.47,
+        "ci95": [
+          2.03,
+          2.94
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.88,
+        "n_windows": 4092,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 all_turner none finescale": {
+        "ratio": 1.83,
+        "ci95": [
+          1.53,
+          2.12
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.88,
+        "n_windows": 4092,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any all background": {
+        "ratio": 2.39,
+        "ci95": [
+          2.02,
+          2.83
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3985,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any all finescale": {
+        "ratio": 1.79,
+        "ci95": [
+          1.49,
+          2.07
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3985,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any none background": {
+        "ratio": 2.39,
+        "ci95": [
+          2.01,
+          2.82
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3985,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 finger_any none finescale": {
+        "ratio": 1.79,
+        "ci95": [
+          1.53,
+          2.07
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3985,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 not_finger all background": {
+        "ratio": 21.57,
+        "ci95": [
+          14.2,
+          29.56
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 not_finger all finescale": {
+        "ratio": 4.84,
+        "ci95": [
+          3.32,
+          6.0
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 not_finger none background": {
+        "ratio": 21.57,
+        "ci95": [
+          13.9,
+          29.16
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 not_finger none finescale": {
+        "ratio": 4.84,
+        "ci95": [
+          3.4,
+          5.98
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "vdb2021 control all background": {
+        "ratio": 1.97,
+        "ci95": [
+          1.59,
+          2.39
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2347,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 1.35,
+        "ci95": [
+          1.13,
+          1.63
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2347,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control none background": {
+        "ratio": 1.97,
+        "ci95": [
+          1.59,
+          2.4
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2347,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 1.35,
+        "ci95": [
+          1.11,
+          1.65
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2347,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner all background": {
+        "ratio": 2.47,
+        "ci95": [
+          2.07,
+          2.93
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.88,
+        "n_windows": 4092,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 all_turner all finescale": {
+        "ratio": 1.83,
+        "ci95": [
+          1.55,
+          2.11
+        ],
+        "finger_prediction": 4.33,
+        "R_rho": 1.88,
+        "n_windows": 4092,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 all_turner interface background": {
+        "ratio": 5.98,
+        "ci95": [
+          3.52,
+          9.63
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.65,
+        "n_windows": 64,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 all_turner interface finescale": {
+        "ratio": 2.63,
+        "ci95": [
+          1.82,
+          3.44
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.65,
+        "n_windows": 64,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 all_turner interface interface_local": {
+        "ratio": 4.38,
+        "ci95": [
+          2.8,
+          6.2
+        ],
+        "finger_prediction": 3.73,
+        "R_rho": 1.67,
+        "n_windows": 64,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 all_turner layer background": {
+        "ratio": 0.3,
+        "ci95": [
+          0.13,
+          0.48
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 all_turner layer finescale": {
+        "ratio": 1.16,
+        "ci95": [
+          0.76,
+          1.75
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 all_turner straddles background": {
+        "ratio": 9.7,
+        "ci95": [
+          5.88,
+          12.23
+        ],
+        "finger_prediction": 3.43,
+        "R_rho": 1.59,
+        "n_windows": 102,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.41
+      },
+      "rollo2022 all_turner straddles finescale": {
+        "ratio": 3.27,
+        "ci95": [
+          2.4,
+          3.73
+        ],
+        "finger_prediction": 3.43,
+        "R_rho": 1.59,
+        "n_windows": 102,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.41
+      },
+      "rollo2022 all_turner none background": {
+        "ratio": 2.28,
+        "ci95": [
+          1.9,
+          2.69
+        ],
+        "finger_prediction": 4.37,
+        "R_rho": 1.89,
+        "n_windows": 3853,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 all_turner none finescale": {
+        "ratio": 1.74,
+        "ci95": [
+          1.48,
+          2.03
+        ],
+        "finger_prediction": 4.37,
+        "R_rho": 1.89,
+        "n_windows": 3853,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any all background": {
+        "ratio": 2.39,
+        "ci95": [
+          1.99,
+          2.84
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3985,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 finger_any all finescale": {
+        "ratio": 1.79,
+        "ci95": [
+          1.53,
+          2.07
+        ],
+        "finger_prediction": 4.27,
+        "R_rho": 1.85,
+        "n_windows": 3985,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 finger_any interface background": {
+        "ratio": 5.97,
+        "ci95": [
+          3.54,
+          9.75
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.64,
+        "n_windows": 63,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any interface finescale": {
+        "ratio": 2.65,
+        "ci95": [
+          1.73,
+          3.57
+        ],
+        "finger_prediction": 3.64,
+        "R_rho": 1.64,
+        "n_windows": 63,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any interface interface_local": {
+        "ratio": 4.37,
+        "ci95": [
+          2.86,
+          6.05
+        ],
+        "finger_prediction": 3.73,
+        "R_rho": 1.67,
+        "n_windows": 63,
+        "n_profiles": 25,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any layer background": {
+        "ratio": 0.3,
+        "ci95": [
+          0.13,
+          0.48
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 finger_any layer finescale": {
+        "ratio": 1.16,
+        "ci95": [
+          0.77,
+          1.83
+        ],
+        "finger_prediction": 2.9,
+        "R_rho": 1.45,
+        "n_windows": 73,
+        "n_profiles": 33,
+        "at_floor_fraction": 0.55
+      },
+      "rollo2022 finger_any straddles background": {
+        "ratio": 9.69,
+        "ci95": [
+          5.76,
+          12.11
+        ],
+        "finger_prediction": 3.4,
+        "R_rho": 1.58,
+        "n_windows": 101,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.42
+      },
+      "rollo2022 finger_any straddles finescale": {
+        "ratio": 3.27,
+        "ci95": [
+          2.5,
+          3.74
+        ],
+        "finger_prediction": 3.4,
+        "R_rho": 1.58,
+        "n_windows": 101,
+        "n_profiles": 38,
+        "at_floor_fraction": 0.42
+      },
+      "rollo2022 finger_any none background": {
+        "ratio": 2.2,
+        "ci95": [
+          1.84,
+          2.59
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 3748,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 finger_any none finescale": {
+        "ratio": 1.7,
+        "ci95": [
+          1.43,
+          1.99
+        ],
+        "finger_prediction": 4.3,
+        "R_rho": 1.86,
+        "n_windows": 3748,
+        "n_profiles": 112,
+        "at_floor_fraction": 0.32
+      },
+      "rollo2022 not_finger all background": {
+        "ratio": 21.57,
+        "ci95": [
+          14.48,
+          29.74
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "rollo2022 not_finger all finescale": {
+        "ratio": 4.84,
+        "ci95": [
+          3.49,
+          6.01
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 95,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.28
+      },
+      "rollo2022 not_finger interface background": {
+        "ratio": 7.81,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 4.36,
+        "R_rho": 1.88,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger interface finescale": {
+        "ratio": 1.47,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 4.36,
+        "R_rho": 1.88,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger interface interface_local": {
+        "ratio": 5.31,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 4.01,
+        "R_rho": 1.76,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger straddles background": {
+        "ratio": 407.58,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger straddles finescale": {
+        "ratio": 13.95,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger none background": {
+        "ratio": 22.1,
+        "ci95": [
+          13.96,
+          30.16
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.29
+      },
+      "rollo2022 not_finger none finescale": {
+        "ratio": 5.0,
+        "ci95": [
+          3.55,
+          6.23
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 24,
+        "at_floor_fraction": 0.29
+      },
+      "rollo2022 control all background": {
+        "ratio": 1.97,
+        "ci95": [
+          1.58,
+          2.43
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2347,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 1.35,
+        "ci95": [
+          1.12,
+          1.63
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2347,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control layer background": {
+        "ratio": 4.48,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control layer finescale": {
+        "ratio": 3.82,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control straddles background": {
+        "ratio": 407.58,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control straddles finescale": {
+        "ratio": 13.95,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control none background": {
+        "ratio": 1.96,
+        "ci95": [
+          1.63,
+          2.46
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2344,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 1.35,
+        "ci95": [
+          1.13,
+          1.62
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 2344,
+        "n_profiles": 113,
+        "at_floor_fraction": 0.01
+      }
+    },
+    "vmp5500 all free fall": {
+      "vdb2021 all_turner all background": {
+        "ratio": 5.09,
+        "ci95": [
+          4.29,
+          5.99
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.24,
+        "n_windows": 9118,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 all_turner all finescale": {
+        "ratio": 2.73,
+        "ci95": [
+          2.25,
+          3.26
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.24,
+        "n_windows": 9118,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 all_turner interface background": {
+        "ratio": 7.81,
+        "ci95": [
+          5.47,
+          11.57
+        ],
+        "finger_prediction": 3.96,
+        "R_rho": 1.75,
+        "n_windows": 275,
+        "n_profiles": 41,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 all_turner interface finescale": {
+        "ratio": 3.52,
+        "ci95": [
+          2.64,
+          4.8
+        ],
+        "finger_prediction": 3.96,
+        "R_rho": 1.75,
+        "n_windows": 275,
+        "n_profiles": 41,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 all_turner interface interface_local": {
+        "ratio": 6.07,
+        "ci95": [
+          4.26,
+          9.11
+        ],
+        "finger_prediction": 3.95,
+        "R_rho": 1.74,
+        "n_windows": 275,
+        "n_profiles": 41,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 all_turner layer background": {
+        "ratio": 0.66,
+        "ci95": [
+          0.4,
+          1.13
+        ],
+        "finger_prediction": 4.11,
+        "R_rho": 1.79,
+        "n_windows": 438,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 all_turner layer finescale": {
+        "ratio": 0.45,
+        "ci95": [
+          0.33,
+          0.72
+        ],
+        "finger_prediction": 4.11,
+        "R_rho": 1.79,
+        "n_windows": 438,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 all_turner straddles background": {
+        "ratio": 6.47,
+        "ci95": [
+          3.27,
+          13.16
+        ],
+        "finger_prediction": 4.1,
+        "R_rho": 1.79,
+        "n_windows": 419,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 all_turner straddles finescale": {
+        "ratio": 2.04,
+        "ci95": [
+          1.06,
+          4.17
+        ],
+        "finger_prediction": 4.1,
+        "R_rho": 1.79,
+        "n_windows": 419,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 all_turner none background": {
+        "ratio": 4.78,
+        "ci95": [
+          3.93,
+          5.76
+        ],
+        "finger_prediction": 5.27,
+        "R_rho": 2.31,
+        "n_windows": 7986,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 all_turner none finescale": {
+        "ratio": 2.79,
+        "ci95": [
+          2.32,
+          3.3
+        ],
+        "finger_prediction": 5.27,
+        "R_rho": 2.31,
+        "n_windows": 7986,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 finger_any all background": {
+        "ratio": 4.99,
+        "ci95": [
+          4.13,
+          5.97
+        ],
+        "finger_prediction": 4.82,
+        "R_rho": 2.08,
+        "n_windows": 7912,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 finger_any all finescale": {
+        "ratio": 2.73,
+        "ci95": [
+          2.19,
+          3.27
+        ],
+        "finger_prediction": 4.82,
+        "R_rho": 2.08,
+        "n_windows": 7912,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 finger_any interface background": {
+        "ratio": 7.81,
+        "ci95": [
+          5.49,
+          11.56
+        ],
+        "finger_prediction": 3.96,
+        "R_rho": 1.74,
+        "n_windows": 274,
+        "n_profiles": 41,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 finger_any interface finescale": {
+        "ratio": 3.52,
+        "ci95": [
+          2.51,
+          4.93
+        ],
+        "finger_prediction": 3.96,
+        "R_rho": 1.74,
+        "n_windows": 274,
+        "n_profiles": 41,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 finger_any interface interface_local": {
+        "ratio": 6.07,
+        "ci95": [
+          4.36,
+          8.9
+        ],
+        "finger_prediction": 3.95,
+        "R_rho": 1.74,
+        "n_windows": 274,
+        "n_profiles": 41,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 finger_any layer background": {
+        "ratio": 0.66,
+        "ci95": [
+          0.4,
+          1.19
+        ],
+        "finger_prediction": 4.1,
+        "R_rho": 1.79,
+        "n_windows": 432,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 finger_any layer finescale": {
+        "ratio": 0.45,
+        "ci95": [
+          0.33,
+          0.71
+        ],
+        "finger_prediction": 4.1,
+        "R_rho": 1.79,
+        "n_windows": 432,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 finger_any straddles background": {
+        "ratio": 6.47,
+        "ci95": [
+          3.42,
+          12.95
+        ],
+        "finger_prediction": 4.1,
+        "R_rho": 1.79,
+        "n_windows": 413,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 finger_any straddles finescale": {
+        "ratio": 2.09,
+        "ci95": [
+          1.12,
+          4.49
+        ],
+        "finger_prediction": 4.1,
+        "R_rho": 1.79,
+        "n_windows": 413,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 finger_any none background": {
+        "ratio": 4.63,
+        "ci95": [
+          3.76,
+          5.62
+        ],
+        "finger_prediction": 4.91,
+        "R_rho": 2.12,
+        "n_windows": 6793,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 finger_any none finescale": {
+        "ratio": 2.78,
+        "ci95": [
+          2.3,
+          3.31
+        ],
+        "finger_prediction": 4.91,
+        "R_rho": 2.12,
+        "n_windows": 6793,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 not_finger all background": {
+        "ratio": 18.95,
+        "ci95": [
+          9.98,
+          34.86
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1070,
+        "n_profiles": 36,
+        "at_floor_fraction": 0.31
+      },
+      "vdb2021 not_finger all finescale": {
+        "ratio": 6.13,
+        "ci95": [
+          2.19,
+          13.71
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1070,
+        "n_profiles": 36,
+        "at_floor_fraction": 0.31
+      },
+      "vdb2021 not_finger layer background": {
+        "ratio": 2.41,
+        "ci95": [
+          1.08,
+          7.61
+        ],
+        "finger_prediction": 9.09,
+        "R_rho": 47.76,
+        "n_windows": 4,
+        "n_profiles": 3,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger layer finescale": {
+        "ratio": 2.12,
+        "ci95": [
+          1.44,
+          3.24
+        ],
+        "finger_prediction": 9.09,
+        "R_rho": 47.76,
+        "n_windows": 4,
+        "n_profiles": 3,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger straddles background": {
+        "ratio": 35.72,
+        "ci95": [
+          24.99,
+          78.63
+        ],
+        "finger_prediction": 3.49,
+        "R_rho": 1.6,
+        "n_windows": 2,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger straddles finescale": {
+        "ratio": 13.3,
+        "ci95": [
+          8.81,
+          37.81
+        ],
+        "finger_prediction": 3.49,
+        "R_rho": 1.6,
+        "n_windows": 2,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger none background": {
+        "ratio": 18.95,
+        "ci95": [
+          10.23,
+          35.49
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1064,
+        "n_profiles": 36,
+        "at_floor_fraction": 0.31
+      },
+      "vdb2021 not_finger none finescale": {
+        "ratio": 6.12,
+        "ci95": [
+          2.24,
+          12.87
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1064,
+        "n_profiles": 36,
+        "at_floor_fraction": 0.31
+      },
+      "vdb2021 control all background": {
+        "ratio": 2.87,
+        "ci95": [
+          1.88,
+          4.55
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1160,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 1.74,
+        "ci95": [
+          1.2,
+          2.56
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1160,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 control straddles background": {
+        "ratio": 24.99,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 3.45,
+        "R_rho": 1.59,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control straddles finescale": {
+        "ratio": 8.81,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 3.45,
+        "R_rho": 1.59,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control none background": {
+        "ratio": 2.87,
+        "ci95": [
+          1.83,
+          4.59
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1159,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 1.74,
+        "ci95": [
+          1.18,
+          2.67
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1159,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "rollo2022 all_turner all background": {
+        "ratio": 5.09,
+        "ci95": [
+          4.27,
+          6.1
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.24,
+        "n_windows": 9118,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "rollo2022 all_turner all finescale": {
+        "ratio": 2.73,
+        "ci95": [
+          2.25,
+          3.25
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.24,
+        "n_windows": 9118,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.09
+      },
+      "rollo2022 all_turner interface background": {
+        "ratio": 8.87,
+        "ci95": [
+          6.1,
+          12.38
+        ],
+        "finger_prediction": 3.97,
+        "R_rho": 1.75,
+        "n_windows": 502,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner interface finescale": {
+        "ratio": 4.28,
+        "ci95": [
+          3.12,
+          6.14
+        ],
+        "finger_prediction": 3.97,
+        "R_rho": 1.75,
+        "n_windows": 502,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner interface interface_local": {
+        "ratio": 6.72,
+        "ci95": [
+          4.77,
+          9.29
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 502,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner layer background": {
+        "ratio": 1.86,
+        "ci95": [
+          1.33,
+          2.6
+        ],
+        "finger_prediction": 4.76,
+        "R_rho": 2.05,
+        "n_windows": 1342,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 all_turner layer finescale": {
+        "ratio": 1.13,
+        "ci95": [
+          0.78,
+          1.56
+        ],
+        "finger_prediction": 4.76,
+        "R_rho": 2.05,
+        "n_windows": 1342,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 all_turner straddles background": {
+        "ratio": 6.9,
+        "ci95": [
+          4.44,
+          10.45
+        ],
+        "finger_prediction": 4.34,
+        "R_rho": 1.88,
+        "n_windows": 1274,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 all_turner straddles finescale": {
+        "ratio": 2.4,
+        "ci95": [
+          1.56,
+          3.78
+        ],
+        "finger_prediction": 4.34,
+        "R_rho": 1.88,
+        "n_windows": 1274,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 all_turner none background": {
+        "ratio": 4.37,
+        "ci95": [
+          3.61,
+          5.29
+        ],
+        "finger_prediction": 5.42,
+        "R_rho": 2.4,
+        "n_windows": 6000,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.12
+      },
+      "rollo2022 all_turner none finescale": {
+        "ratio": 2.65,
+        "ci95": [
+          2.17,
+          3.19
+        ],
+        "finger_prediction": 5.42,
+        "R_rho": 2.4,
+        "n_windows": 6000,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.12
+      },
+      "rollo2022 finger_any all background": {
+        "ratio": 4.99,
+        "ci95": [
+          4.1,
+          5.94
+        ],
+        "finger_prediction": 4.82,
+        "R_rho": 2.08,
+        "n_windows": 7912,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "rollo2022 finger_any all finescale": {
+        "ratio": 2.73,
+        "ci95": [
+          2.21,
+          3.27
+        ],
+        "finger_prediction": 4.82,
+        "R_rho": 2.08,
+        "n_windows": 7912,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "rollo2022 finger_any interface background": {
+        "ratio": 8.87,
+        "ci95": [
+          6.14,
+          12.52
+        ],
+        "finger_prediction": 3.97,
+        "R_rho": 1.75,
+        "n_windows": 502,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 finger_any interface finescale": {
+        "ratio": 4.28,
+        "ci95": [
+          3.09,
+          5.92
+        ],
+        "finger_prediction": 3.97,
+        "R_rho": 1.75,
+        "n_windows": 502,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 finger_any interface interface_local": {
+        "ratio": 6.72,
+        "ci95": [
+          4.75,
+          9.19
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 502,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 finger_any layer background": {
+        "ratio": 1.82,
+        "ci95": [
+          1.21,
+          2.53
+        ],
+        "finger_prediction": 4.76,
+        "R_rho": 2.05,
+        "n_windows": 1330,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 finger_any layer finescale": {
+        "ratio": 1.11,
+        "ci95": [
+          0.78,
+          1.51
+        ],
+        "finger_prediction": 4.76,
+        "R_rho": 2.05,
+        "n_windows": 1330,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 finger_any straddles background": {
+        "ratio": 6.89,
+        "ci95": [
+          4.41,
+          10.6
+        ],
+        "finger_prediction": 4.34,
+        "R_rho": 1.88,
+        "n_windows": 1273,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 finger_any straddles finescale": {
+        "ratio": 2.4,
+        "ci95": [
+          1.61,
+          3.76
+        ],
+        "finger_prediction": 4.34,
+        "R_rho": 1.88,
+        "n_windows": 1273,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 finger_any none background": {
+        "ratio": 4.19,
+        "ci95": [
+          3.34,
+          5.06
+        ],
+        "finger_prediction": 5.0,
+        "R_rho": 2.17,
+        "n_windows": 4807,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 finger_any none finescale": {
+        "ratio": 2.64,
+        "ci95": [
+          2.15,
+          3.21
+        ],
+        "finger_prediction": 5.0,
+        "R_rho": 2.17,
+        "n_windows": 4807,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 not_finger all background": {
+        "ratio": 18.95,
+        "ci95": [
+          10.26,
+          35.75
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1070,
+        "n_profiles": 36,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 not_finger all finescale": {
+        "ratio": 6.13,
+        "ci95": [
+          2.05,
+          13.07
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1070,
+        "n_profiles": 36,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 not_finger layer background": {
+        "ratio": 7.54,
+        "ci95": [
+          4.62,
+          7.58
+        ],
+        "finger_prediction": 8.75,
+        "R_rho": 17.22,
+        "n_windows": 2,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger layer finescale": {
+        "ratio": 3.77,
+        "ci95": [
+          3.24,
+          3.78
+        ],
+        "finger_prediction": 8.75,
+        "R_rho": 17.22,
+        "n_windows": 2,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger none background": {
+        "ratio": 18.99,
+        "ci95": [
+          10.05,
+          34.97
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1068,
+        "n_profiles": 35,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 not_finger none finescale": {
+        "ratio": 6.13,
+        "ci95": [
+          2.13,
+          13.2
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1068,
+        "n_profiles": 35,
+        "at_floor_fraction": 0.31
+      },
+      "rollo2022 control all background": {
+        "ratio": 2.87,
+        "ci95": [
+          1.85,
+          4.63
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1160,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 1.74,
+        "ci95": [
+          1.19,
+          2.64
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1160,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "rollo2022 control none background": {
+        "ratio": 2.87,
+        "ci95": [
+          1.85,
+          4.58
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1160,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 1.74,
+        "ci95": [
+          1.2,
+          2.63
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1160,
+        "n_profiles": 44,
+        "at_floor_fraction": 0.06
       }
     },
     "vmp5500 process_station free fall": {
@@ -703,7 +3106,7 @@
         "ratio": 2.89,
         "ci95": [
           1.9,
-          4.19
+          4.18
         ],
         "finger_prediction": 5.08,
         "R_rho": 2.21,
@@ -714,8 +3117,8 @@
       "vdb2021 all_turner all finescale": {
         "ratio": 1.65,
         "ci95": [
-          1.2,
-          2.48
+          1.22,
+          2.32
         ],
         "finger_prediction": 5.08,
         "R_rho": 2.21,
@@ -739,7 +3142,7 @@
         "ratio": 3.06,
         "ci95": [
           1.48,
-          3.5
+          3.49
         ],
         "finger_prediction": 4.11,
         "R_rho": 1.8,
@@ -762,7 +3165,7 @@
       "vdb2021 all_turner layer background": {
         "ratio": 0.71,
         "ci95": [
-          0.2,
+          0.21,
           1.48
         ],
         "finger_prediction": 3.91,
@@ -787,7 +3190,7 @@
         "ratio": 4.4,
         "ci95": [
           3.17,
-          5.29
+          5.43
         ],
         "finger_prediction": 4.37,
         "R_rho": 1.89,
@@ -811,7 +3214,7 @@
         "ratio": 2.69,
         "ci95": [
           1.81,
-          4.1
+          4.09
         ],
         "finger_prediction": 5.22,
         "R_rho": 2.28,
@@ -823,7 +3226,7 @@
         "ratio": 1.63,
         "ci95": [
           1.15,
-          2.48
+          2.3
         ],
         "finger_prediction": 5.22,
         "R_rho": 2.28,
@@ -834,7 +3237,7 @@
       "vdb2021 finger_any all background": {
         "ratio": 2.93,
         "ci95": [
-          2.46,
+          2.43,
           3.83
         ],
         "finger_prediction": 4.61,
@@ -847,7 +3250,7 @@
         "ratio": 1.88,
         "ci95": [
           1.65,
-          2.13
+          2.09
         ],
         "finger_prediction": 4.61,
         "R_rho": 1.99,
@@ -859,7 +3262,7 @@
         "ratio": 5.81,
         "ci95": [
           3.29,
-          7.26
+          7.09
         ],
         "finger_prediction": 4.11,
         "R_rho": 1.8,
@@ -870,8 +3273,8 @@
       "vdb2021 finger_any interface finescale": {
         "ratio": 3.06,
         "ci95": [
-          1.47,
-          3.5
+          1.48,
+          3.49
         ],
         "finger_prediction": 4.11,
         "R_rho": 1.8,
@@ -907,7 +3310,7 @@
         "ratio": 0.53,
         "ci95": [
           0.12,
-          1.75
+          1.7
         ],
         "finger_prediction": 3.89,
         "R_rho": 1.72,
@@ -967,7 +3370,7 @@
         "ratio": 16.87,
         "ci95": [
           7.03,
-          23.62
+          23.34
         ],
         "finger_prediction": NaN,
         "R_rho": NaN,
@@ -1038,8 +3441,8 @@
       "vdb2021 not_finger none background": {
         "ratio": 16.84,
         "ci95": [
-          6.73,
-          23.22
+          6.79,
+          23.33
         ],
         "finger_prediction": NaN,
         "R_rho": NaN,
@@ -1059,11 +3462,83 @@
         "n_profiles": 4,
         "at_floor_fraction": 0.09
       },
+      "vdb2021 control all background": {
+        "ratio": 1.84,
+        "ci95": [
+          0.82,
+          7.37
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 1.14,
+        "ci95": [
+          0.6,
+          3.53
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control straddles background": {
+        "ratio": 24.99,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 3.45,
+        "R_rho": 1.59,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control straddles finescale": {
+        "ratio": 8.81,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 3.45,
+        "R_rho": 1.59,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control none background": {
+        "ratio": 1.83,
+        "ci95": [
+          0.82,
+          7.38
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 92,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 1.14,
+        "ci95": [
+          0.56,
+          3.53
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 92,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
       "rollo2022 all_turner all background": {
         "ratio": 2.89,
         "ci95": [
           1.9,
-          4.6
+          4.18
         ],
         "finger_prediction": 5.08,
         "R_rho": 2.21,
@@ -1110,8 +3585,8 @@
       "rollo2022 all_turner interface interface_local": {
         "ratio": 5.15,
         "ci95": [
-          3.92,
-          7.67
+          3.91,
+          8.57
         ],
         "finger_prediction": 4.16,
         "R_rho": 1.81,
@@ -1122,7 +3597,7 @@
       "rollo2022 all_turner layer background": {
         "ratio": 1.69,
         "ci95": [
-          1.21,
+          1.17,
           2.25
         ],
         "finger_prediction": 5.19,
@@ -1135,7 +3610,7 @@
         "ratio": 0.93,
         "ci95": [
           0.69,
-          1.21
+          1.31
         ],
         "finger_prediction": 5.19,
         "R_rho": 2.27,
@@ -1147,7 +3622,7 @@
         "ratio": 4.22,
         "ci95": [
           3.88,
-          4.46
+          4.54
         ],
         "finger_prediction": 4.75,
         "R_rho": 2.05,
@@ -1195,7 +3670,7 @@
         "ratio": 2.93,
         "ci95": [
           2.46,
-          3.83
+          3.9
         ],
         "finger_prediction": 4.61,
         "R_rho": 1.99,
@@ -1206,8 +3681,8 @@
       "rollo2022 finger_any all finescale": {
         "ratio": 1.88,
         "ci95": [
-          1.63,
-          2.09
+          1.71,
+          2.08
         ],
         "finger_prediction": 4.61,
         "R_rho": 1.99,
@@ -1242,7 +3717,7 @@
       "rollo2022 finger_any interface interface_local": {
         "ratio": 5.15,
         "ci95": [
-          3.91,
+          3.92,
           8.57
         ],
         "finger_prediction": 4.16,
@@ -1254,7 +3729,7 @@
       "rollo2022 finger_any layer background": {
         "ratio": 1.69,
         "ci95": [
-          1.21,
+          1.17,
           2.25
         ],
         "finger_prediction": 5.19,
@@ -1290,7 +3765,7 @@
       "rollo2022 finger_any straddles finescale": {
         "ratio": 1.65,
         "ci95": [
-          1.42,
+          1.39,
           2.04
         ],
         "finger_prediction": 4.75,
@@ -1326,8 +3801,8 @@
       "rollo2022 not_finger all background": {
         "ratio": 16.87,
         "ci95": [
-          6.86,
-          23.34
+          7.03,
+          23.62
         ],
         "finger_prediction": NaN,
         "R_rho": NaN,
@@ -1363,13 +3838,855 @@
         "ratio": 1.4,
         "ci95": [
           0.18,
-          10.24
+          9.91
         ],
         "finger_prediction": NaN,
         "R_rho": NaN,
         "n_windows": 114,
         "n_profiles": 4,
         "at_floor_fraction": 0.09
+      },
+      "rollo2022 control all background": {
+        "ratio": 1.84,
+        "ci95": [
+          0.82,
+          7.37
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 1.14,
+        "ci95": [
+          0.6,
+          3.53
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control none background": {
+        "ratio": 1.84,
+        "ci95": [
+          0.82,
+          7.37
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 1.14,
+        "ci95": [
+          0.56,
+          3.55
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 93,
+        "n_profiles": 4,
+        "at_floor_fraction": 0.0
+      }
+    },
+    "vmp5500 transect free fall": {
+      "vdb2021 all_turner all background": {
+        "ratio": 5.33,
+        "ci95": [
+          4.46,
+          6.34
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.25,
+        "n_windows": 8299,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 all_turner all finescale": {
+        "ratio": 2.84,
+        "ci95": [
+          2.33,
+          3.42
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.25,
+        "n_windows": 8299,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 all_turner interface background": {
+        "ratio": 7.98,
+        "ci95": [
+          5.33,
+          12.07
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 237,
+        "n_profiles": 37,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 all_turner interface finescale": {
+        "ratio": 3.55,
+        "ci95": [
+          2.59,
+          5.04
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 237,
+        "n_profiles": 37,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 all_turner interface interface_local": {
+        "ratio": 6.19,
+        "ci95": [
+          4.33,
+          9.25
+        ],
+        "finger_prediction": 3.93,
+        "R_rho": 1.74,
+        "n_windows": 237,
+        "n_profiles": 37,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 all_turner layer background": {
+        "ratio": 0.66,
+        "ci95": [
+          0.37,
+          1.25
+        ],
+        "finger_prediction": 4.13,
+        "R_rho": 1.8,
+        "n_windows": 388,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 all_turner layer finescale": {
+        "ratio": 0.44,
+        "ci95": [
+          0.32,
+          0.71
+        ],
+        "finger_prediction": 4.13,
+        "R_rho": 1.8,
+        "n_windows": 388,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.06
+      },
+      "vdb2021 all_turner straddles background": {
+        "ratio": 6.51,
+        "ci95": [
+          3.27,
+          13.65
+        ],
+        "finger_prediction": 4.08,
+        "R_rho": 1.78,
+        "n_windows": 384,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 all_turner straddles finescale": {
+        "ratio": 2.1,
+        "ci95": [
+          1.1,
+          4.46
+        ],
+        "finger_prediction": 4.08,
+        "R_rho": 1.78,
+        "n_windows": 384,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 all_turner none background": {
+        "ratio": 5.03,
+        "ci95": [
+          4.14,
+          6.02
+        ],
+        "finger_prediction": 5.27,
+        "R_rho": 2.31,
+        "n_windows": 7290,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 all_turner none finescale": {
+        "ratio": 2.93,
+        "ci95": [
+          2.43,
+          3.43
+        ],
+        "finger_prediction": 5.27,
+        "R_rho": 2.31,
+        "n_windows": 7290,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "vdb2021 finger_any all background": {
+        "ratio": 5.19,
+        "ci95": [
+          4.19,
+          6.22
+        ],
+        "finger_prediction": 4.84,
+        "R_rho": 2.09,
+        "n_windows": 7227,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 finger_any all finescale": {
+        "ratio": 2.79,
+        "ci95": [
+          2.23,
+          3.38
+        ],
+        "finger_prediction": 4.84,
+        "R_rho": 2.09,
+        "n_windows": 7227,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 finger_any interface background": {
+        "ratio": 7.98,
+        "ci95": [
+          5.34,
+          12.59
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 236,
+        "n_profiles": 37,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 finger_any interface finescale": {
+        "ratio": 3.55,
+        "ci95": [
+          2.59,
+          5.06
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 236,
+        "n_profiles": 37,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 finger_any interface interface_local": {
+        "ratio": 6.19,
+        "ci95": [
+          4.28,
+          9.48
+        ],
+        "finger_prediction": 3.93,
+        "R_rho": 1.73,
+        "n_windows": 236,
+        "n_profiles": 37,
+        "at_floor_fraction": 0.03
+      },
+      "vdb2021 finger_any layer background": {
+        "ratio": 0.65,
+        "ci95": [
+          0.38,
+          1.26
+        ],
+        "finger_prediction": 4.12,
+        "R_rho": 1.8,
+        "n_windows": 383,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 finger_any layer finescale": {
+        "ratio": 0.44,
+        "ci95": [
+          0.32,
+          0.7
+        ],
+        "finger_prediction": 4.12,
+        "R_rho": 1.8,
+        "n_windows": 383,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 finger_any straddles background": {
+        "ratio": 6.51,
+        "ci95": [
+          3.3,
+          13.11
+        ],
+        "finger_prediction": 4.08,
+        "R_rho": 1.78,
+        "n_windows": 381,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 finger_any straddles finescale": {
+        "ratio": 2.1,
+        "ci95": [
+          1.08,
+          4.53
+        ],
+        "finger_prediction": 4.08,
+        "R_rho": 1.78,
+        "n_windows": 381,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.09
+      },
+      "vdb2021 finger_any none background": {
+        "ratio": 4.84,
+        "ci95": [
+          3.94,
+          5.89
+        ],
+        "finger_prediction": 4.93,
+        "R_rho": 2.13,
+        "n_windows": 6227,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 finger_any none finescale": {
+        "ratio": 2.88,
+        "ci95": [
+          2.35,
+          3.42
+        ],
+        "finger_prediction": 4.93,
+        "R_rho": 2.13,
+        "n_windows": 6227,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 not_finger all background": {
+        "ratio": 19.18,
+        "ci95": [
+          9.15,
+          37.71
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 956,
+        "n_profiles": 32,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 not_finger all finescale": {
+        "ratio": 9.23,
+        "ci95": [
+          3.96,
+          15.6
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 956,
+        "n_profiles": 32,
+        "at_floor_fraction": 0.33
+      },
+      "vdb2021 not_finger layer background": {
+        "ratio": 1.96,
+        "ci95": [
+          1.08,
+          4.62
+        ],
+        "finger_prediction": 9.13,
+        "R_rho": 57.88,
+        "n_windows": 3,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger layer finescale": {
+        "ratio": 2.53,
+        "ci95": [
+          1.93,
+          3.24
+        ],
+        "finger_prediction": 9.13,
+        "R_rho": 57.88,
+        "n_windows": 3,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger straddles background": {
+        "ratio": 78.63,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 3.58,
+        "R_rho": 1.63,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger straddles finescale": {
+        "ratio": 37.81,
+        "ci95": [
+          NaN,
+          NaN
+        ],
+        "finger_prediction": 3.58,
+        "R_rho": 1.63,
+        "n_windows": 1,
+        "n_profiles": 1,
+        "at_floor_fraction": 0.0
+      },
+      "vdb2021 not_finger none background": {
+        "ratio": 19.18,
+        "ci95": [
+          9.59,
+          39.56
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 952,
+        "n_profiles": 32,
+        "at_floor_fraction": 0.34
+      },
+      "vdb2021 not_finger none finescale": {
+        "ratio": 9.23,
+        "ci95": [
+          3.87,
+          16.06
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 952,
+        "n_profiles": 32,
+        "at_floor_fraction": 0.34
+      },
+      "vdb2021 control all background": {
+        "ratio": 3.09,
+        "ci95": [
+          1.85,
+          4.91
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 control all finescale": {
+        "ratio": 1.87,
+        "ci95": [
+          1.23,
+          2.86
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 control none background": {
+        "ratio": 3.09,
+        "ci95": [
+          1.99,
+          5.03
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "vdb2021 control none finescale": {
+        "ratio": 1.87,
+        "ci95": [
+          1.21,
+          2.91
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 all_turner all background": {
+        "ratio": 5.33,
+        "ci95": [
+          4.46,
+          6.45
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.25,
+        "n_windows": 8299,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "rollo2022 all_turner all finescale": {
+        "ratio": 2.84,
+        "ci95": [
+          2.32,
+          3.39
+        ],
+        "finger_prediction": 5.15,
+        "R_rho": 2.25,
+        "n_windows": 8299,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.1
+      },
+      "rollo2022 all_turner interface background": {
+        "ratio": 9.09,
+        "ci95": [
+          5.92,
+          13.25
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 434,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner interface finescale": {
+        "ratio": 4.3,
+        "ci95": [
+          3.0,
+          6.15
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 434,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner interface interface_local": {
+        "ratio": 6.89,
+        "ci95": [
+          4.63,
+          10.03
+        ],
+        "finger_prediction": 3.91,
+        "R_rho": 1.73,
+        "n_windows": 434,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 all_turner layer background": {
+        "ratio": 1.87,
+        "ci95": [
+          1.28,
+          2.66
+        ],
+        "finger_prediction": 4.72,
+        "R_rho": 2.04,
+        "n_windows": 1189,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.08
+      },
+      "rollo2022 all_turner layer finescale": {
+        "ratio": 1.14,
+        "ci95": [
+          0.77,
+          1.65
+        ],
+        "finger_prediction": 4.72,
+        "R_rho": 2.04,
+        "n_windows": 1189,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.08
+      },
+      "rollo2022 all_turner straddles background": {
+        "ratio": 6.99,
+        "ci95": [
+          4.51,
+          11.0
+        ],
+        "finger_prediction": 4.31,
+        "R_rho": 1.87,
+        "n_windows": 1171,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 all_turner straddles finescale": {
+        "ratio": 2.42,
+        "ci95": [
+          1.59,
+          3.91
+        ],
+        "finger_prediction": 4.31,
+        "R_rho": 1.87,
+        "n_windows": 1171,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 all_turner none background": {
+        "ratio": 4.62,
+        "ci95": [
+          3.8,
+          5.56
+        ],
+        "finger_prediction": 5.42,
+        "R_rho": 2.4,
+        "n_windows": 5505,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.12
+      },
+      "rollo2022 all_turner none finescale": {
+        "ratio": 2.81,
+        "ci95": [
+          2.34,
+          3.44
+        ],
+        "finger_prediction": 5.42,
+        "R_rho": 2.4,
+        "n_windows": 5505,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.12
+      },
+      "rollo2022 finger_any all background": {
+        "ratio": 5.19,
+        "ci95": [
+          4.25,
+          6.3
+        ],
+        "finger_prediction": 4.84,
+        "R_rho": 2.09,
+        "n_windows": 7227,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 finger_any all finescale": {
+        "ratio": 2.79,
+        "ci95": [
+          2.28,
+          3.45
+        ],
+        "finger_prediction": 4.84,
+        "R_rho": 2.09,
+        "n_windows": 7227,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 finger_any interface background": {
+        "ratio": 9.09,
+        "ci95": [
+          6.15,
+          13.15
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 434,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 finger_any interface finescale": {
+        "ratio": 4.3,
+        "ci95": [
+          3.02,
+          6.0
+        ],
+        "finger_prediction": 3.94,
+        "R_rho": 1.74,
+        "n_windows": 434,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 finger_any interface interface_local": {
+        "ratio": 6.89,
+        "ci95": [
+          4.81,
+          9.75
+        ],
+        "finger_prediction": 3.91,
+        "R_rho": 1.73,
+        "n_windows": 434,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.01
+      },
+      "rollo2022 finger_any layer background": {
+        "ratio": 1.83,
+        "ci95": [
+          1.22,
+          2.6
+        ],
+        "finger_prediction": 4.72,
+        "R_rho": 2.03,
+        "n_windows": 1177,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.08
+      },
+      "rollo2022 finger_any layer finescale": {
+        "ratio": 1.13,
+        "ci95": [
+          0.77,
+          1.61
+        ],
+        "finger_prediction": 4.72,
+        "R_rho": 2.03,
+        "n_windows": 1177,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.08
+      },
+      "rollo2022 finger_any straddles background": {
+        "ratio": 6.99,
+        "ci95": [
+          4.63,
+          10.9
+        ],
+        "finger_prediction": 4.31,
+        "R_rho": 1.87,
+        "n_windows": 1170,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 finger_any straddles finescale": {
+        "ratio": 2.42,
+        "ci95": [
+          1.52,
+          3.96
+        ],
+        "finger_prediction": 4.31,
+        "R_rho": 1.87,
+        "n_windows": 1170,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.05
+      },
+      "rollo2022 finger_any none background": {
+        "ratio": 4.39,
+        "ci95": [
+          3.48,
+          5.43
+        ],
+        "finger_prediction": 5.02,
+        "R_rho": 2.18,
+        "n_windows": 4446,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 finger_any none finescale": {
+        "ratio": 2.74,
+        "ci95": [
+          2.2,
+          3.35
+        ],
+        "finger_prediction": 5.02,
+        "R_rho": 2.18,
+        "n_windows": 4446,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 not_finger all background": {
+        "ratio": 19.18,
+        "ci95": [
+          9.41,
+          36.98
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 956,
+        "n_profiles": 32,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 not_finger all finescale": {
+        "ratio": 9.23,
+        "ci95": [
+          4.14,
+          15.82
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 956,
+        "n_profiles": 32,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 not_finger layer background": {
+        "ratio": 7.54,
+        "ci95": [
+          4.62,
+          7.58
+        ],
+        "finger_prediction": 8.75,
+        "R_rho": 17.22,
+        "n_windows": 2,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger layer finescale": {
+        "ratio": 3.77,
+        "ci95": [
+          3.24,
+          3.78
+        ],
+        "finger_prediction": 8.75,
+        "R_rho": 17.22,
+        "n_windows": 2,
+        "n_profiles": 2,
+        "at_floor_fraction": 0.0
+      },
+      "rollo2022 not_finger none background": {
+        "ratio": 19.23,
+        "ci95": [
+          9.14,
+          37.12
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 954,
+        "n_profiles": 31,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 not_finger none finescale": {
+        "ratio": 9.25,
+        "ci95": [
+          4.09,
+          16.16
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 954,
+        "n_profiles": 31,
+        "at_floor_fraction": 0.33
+      },
+      "rollo2022 control all background": {
+        "ratio": 3.09,
+        "ci95": [
+          1.9,
+          4.95
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 control all finescale": {
+        "ratio": 1.87,
+        "ci95": [
+          1.23,
+          2.9
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 control none background": {
+        "ratio": 3.09,
+        "ci95": [
+          1.91,
+          5.05
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
+      },
+      "rollo2022 control none finescale": {
+        "ratio": 1.87,
+        "ci95": [
+          1.2,
+          2.85
+        ],
+        "finger_prediction": NaN,
+        "R_rho": NaN,
+        "n_windows": 1067,
+        "n_profiles": 40,
+        "at_floor_fraction": 0.07
       }
     }
   }
