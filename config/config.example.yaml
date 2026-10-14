@@ -392,6 +392,10 @@ regimes:
   staircase:
     # Interface/layer labels from each method are kept side by side in the
     # products and compared; none is privileged until the comparison is done.
+    # vdb2021 keeps the published thresholds; rollo2022 is tuned to these
+    # profiles (decisions.md 2026-10-14). The published values and the staircase
+    # percentages they produce elsewhere are a reference, not a benchmark for
+    # this dataset.
     # Both published methods run through Rollo's implementation
     # (thermohalinesteps.detect_staircases.classify_staircase, pinned in
     # requirements.txt); keys below are its arguments. Its defaults equal the
@@ -417,8 +421,11 @@ regimes:
       # Rollo et al. (2022), Geosci. Instrum. Method. Data Syst. 11, 359-373,
       # doi:10.5194/gi-11-359-2022. Code: github.com/callumrollo/thermohaline-steps
       # (GPL-3.0). Mixed layers flagged by temperature only (FP07 resolves steps).
+      # Tuned: ml_grad 0.002 (published 0.0005) captures the visually evident
+      # steps whose layers keep a weak residual gradient; ml_density_difference
+      # has no effect over 0.005-0.04 (scripts/test_staircase_thresholds.py).
       grid_dbar: 1.0                         # input must be evenly spaced in pressure
-      ml_grad: 0.0005                        # kg m-3 dbar-1
+      ml_grad: 0.002                         # kg m-3 dbar-1 (published 0.0005; sensitivity run stair_mlgrad001)
       ml_density_difference: 0.005           # kg m-3
       av_window: 200                         # dbar
       interface_max_height: 30               # dbar
@@ -467,6 +474,10 @@ sensitivity_runs:
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle}
+  - name: stair_mlgrad001          # rollo2022 mixed-layer gradient threshold 0.001, on the analysis settings
+    set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
+          perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
+          perturb.chi.fit_method: mle, regimes.staircase.rollo2022.ml_grad: 0.001}
   - name: stair_av100              # staircase background window 100 dbar (alpha/beta only), on the analysis settings
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
