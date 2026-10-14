@@ -1,0 +1,14 @@
+{
+  "vmp250": {
+    "profiles": 137,
+    "segments": 12206,
+    "binned_profiles": 137,
+    "diffusivity_records": 1119
+  },
+  "vmp5500": {
+    "profiles": 46,
+    "segments": 13562,
+    "binned_profiles": 46,
+    "diffusivity_records": 4750
+  }
+}

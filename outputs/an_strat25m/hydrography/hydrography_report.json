@@ -1,0 +1,67 @@
+{
+  "gradient_smoothing_m": 25,
+  "instruments": {
+    "vmp250": {
+      "salinity_source": "own",
+      "profiles": 137,
+      "profiles_with_ship_ctd": 134,
+      "sensor_offsets_m": {
+        "ct": 0.0,
+        "microstructure": 0.0
+      },
+      "windows": 12206,
+      "windows_without_stratification": 44,
+      "windows_N2_nonpositive": 40,
+      "windows_ts_salinity_invalid": 0,
+      "validation_150_550m": {
+        "estimates": 5494,
+        "N2_nonpositive_fraction": 0.001,
+        "ship_N2_nonpositive_fraction": 0.003,
+        "N2_median_ratio": 1.001,
+        "N2_within_factor2": 0.96,
+        "T_z_median_ratio": 0.995,
+        "S_z_median_ratio": 0.981,
+        "R_rho_median": 1.738,
+        "R_rho_ship_median": 1.687
+      }
+    },
+    "vmp5500": {
+      "salinity_source": "own_ts",
+      "profiles": 46,
+      "profiles_with_ship_ctd": 44,
+      "sensor_offsets_m": {
+        "ct": -1.57,
+        "microstructure": 0.3
+      },
+      "windows": 13562,
+      "windows_without_stratification": 580,
+      "windows_N2_nonpositive": 984,
+      "windows_ts_salinity_invalid": 875,
+      "profiles_ts_bad_cell": [
+        "SPC_018_prof002.nc",
+        "SPC_041_prof001.nc",
+        "SPC_045_prof001.nc",
+        "SPC_049_prof002.nc"
+      ],
+      "profiles_ts_ship_only": [
+        "SPC_018_prof002.nc",
+        "SPC_041_prof001.nc",
+        "SPC_045_prof001.nc",
+        "SPC_049_prof002.nc"
+      ],
+      "windows_ts_ship_only": 631,
+      "windows_ts_disagrees_with_ship": 948,
+      "validation_150_550m": {
+        "estimates": 1804,
+        "N2_nonpositive_fraction": 0.08,
+        "ship_N2_nonpositive_fraction": 0.001,
+        "N2_median_ratio": 1.051,
+        "N2_within_factor2": 0.731,
+        "T_z_median_ratio": 0.987,
+        "S_z_median_ratio": 0.908,
+        "R_rho_median": 1.771,
+        "R_rho_ship_median": 1.671
+      }
+    }
+  }
+}

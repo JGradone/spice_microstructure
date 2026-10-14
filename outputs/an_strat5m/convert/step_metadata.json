@@ -1,0 +1,21 @@
+{
+  "step": "convert",
+  "created_utc": "2026-10-14T17:07:36+00:00",
+  "config_sha256": "ee7abc9ccbe8d13099fd147ab76bd9b2aba1d4ad71e7d9f7aa91aa9c4a75d76f",
+  "git_commit": "625eb06951e471e53732a6dbbe955ac2f9c97368",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "manifests_verified": true,
+  "reused_from_run": "fft2_diss8_mle"
+}

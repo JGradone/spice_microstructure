@@ -1,0 +1,155 @@
+profiles:
+  P_min: 0.5
+  W_min: null
+  direction: auto
+  min_duration: 7.0
+  diagnostics: false
+fp07:
+  calibrate: true
+  order: 2
+  max_lag_seconds: 10
+  reference: SBT1
+  must_be_negative: true
+  reference_interval: 0.015625
+  min_corr: 0.0
+ct:
+  align: true
+  T_name: SBT1
+  C_name: SBC1
+bottom:
+  enable: false
+  method: vibration
+  depth_window: 4.0
+  depth_minimum: 10.0
+  speed_factor: 0.3
+  median_factor: 1.0
+  vibration_frequency: 16
+  vibration_factor: 4.0
+  proximity_bins: 2
+  height: 0.15
+  fallrate_fraction: 0.9
+  fallrate_smooth_s: 0.05
+top_trim:
+  enable: false
+  dz: 0.5
+  min_depth: 1.0
+  max_depth: 50.0
+  quantile: 0.6
+  noise_factor: 2.0
+epsilon:
+  fft_sec: 2.0
+  diss_sec: 8.0
+  overlap_sec: 4.0
+  fft_length: null
+  diss_length: null
+  overlap: null
+  anchor: top
+  bbl_diss_sec: null
+  bbl_overlap_sec: null
+  bbl_extent_sec: null
+  goodman: true
+  f_AA: 98.0
+  f_limit: null
+  fit_order: 3
+  despike_thresh: 8
+  despike_smooth: 0.5
+  salinity: null
+  epsilon_minimum: 1.0e-13
+  T_source: null
+  spectral_qc: false
+  FM_max: 1.15
+  var_resolved_min: 0.5
+  pair_policy: keep_both
+  pair_limit: 2.7718585822512662
+  fom_max: null
+  diagnostics: false
+chi:
+  enable: true
+  fft_sec: 2.0
+  diss_sec: 8.0
+  overlap_sec: 4.0
+  fft_length: null
+  diss_length: null
+  overlap: null
+  fp07_model: single_pole
+  goodman: true
+  f_AA: 98.0
+  use_epsilon: false
+  fit_method: mle
+  spectrum_model: kraichnan
+  salinity: null
+  mixing_use_qc_fallback: false
+  mixing: true
+  chi_minimum: 1.0e-13
+  fom_max: null
+  spectral_qc: true
+  diagnostics: false
+ctd:
+  enable: true
+  bin_width: 0.5
+  T_name: SBT1
+  C_name: SBC1
+  variables: null
+  method: mean
+  diagnostics: false
+speed:
+  method: pressure
+  value: null
+  hotel_var: speed
+  aoa_deg: 3.0
+  min_pitch_deg: 5.0
+  speed_cutout: 0.05
+  tau: null
+  amplitude_quantile:
+  - 1.0
+  - 99.0
+qc:
+  enable: true
+  drop_action: nan
+  epsilon_drop_from: []
+  chi_drop_from: []
+  rules: {}
+binning:
+  method: depth
+  width: 1.0
+  aggregation: mean
+  diss_width: null
+  diss_aggregation: null
+  chi_width: null
+  chi_aggregation: null
+  diagnostics: false
+stratification:
+  enable: true
+  window: 2.0
+  salinity: null
+files:
+  p_file_root: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/an_av100/patch/vmp5500
+  p_file_pattern: SPC_*.P
+  output_root: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/an_av100/convert/vmp5500
+  force_trim: false
+  merge: false
+gps:
+  source: csv
+  lat: null
+  lon: null
+  file: /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/an_av100/cast_log/track.csv
+  time_col: t
+  lat_col: lat
+  lon_col: lon
+  max_time_diff: 600
+hotel:
+  enable: false
+parallel:
+  jobs: 0
+instruments: {}
+netcdf:
+  title: SPICE FKt260806 VMP-5500 SN 010 microstructure
+  institution: Rutgers University
+  creator_name: Joe Gradone
+  creator_email: joe@gradone.com
+  license: CC-BY-4.0
+  project: SPICE
+  platform: R/V Falkor (too)
+  instrument: Rockland VMP-5500 SN 010
+  comment: spice_microstructure git 12bc442adbe629d2abdc2d83268f8c65b9e56674; config
+    sha256 c65a148f6d3e; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)

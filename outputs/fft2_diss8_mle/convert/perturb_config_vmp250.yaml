@@ -151,5 +151,5 @@ netcdf:
   project: SPICE
   platform: R/V Falkor (too)
   instrument: Rockland VMP-250IR SN 537
-  comment: spice_microstructure git f393d6ccc00ee1547a29b96d619e0606b09d6d7d; config
-    sha256 9f3de6c3cf6e; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)
+  comment: spice_microstructure git 625eb06951e471e53732a6dbbe955ac2f9c97368; config
+    sha256 570dbf7611ba; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)

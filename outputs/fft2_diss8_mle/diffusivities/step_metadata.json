@@ -1,8 +1,8 @@
 {
   "step": "diffusivities",
-  "created_utc": "2026-10-14T15:52:05+00:00",
-  "config_sha256": "d6f7c13a2ea09cab0ac8cdd75fd40457a692b1a120df52fe6ed970197c89855d",
-  "git_commit": "f8ca76215755d24e4731c8ed1c88564ce8a70287",
+  "created_utc": "2026-10-14T17:05:29+00:00",
+  "config_sha256": "570dbf7611ba5a58b636b5690e1855211bbe502c053559c1be651aebb170a2e0",
+  "git_commit": "625eb06951e471e53732a6dbbe955ac2f9c97368",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -16,5 +16,5 @@
   },
   "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
-  "manifests_verified": false
+  "manifests_verified": true
 }

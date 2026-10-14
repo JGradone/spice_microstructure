@@ -1,0 +1,120 @@
+instrument_group,method,staircase,gradients,control_group,excess,n_windows,n_windows_matched,n_profiles,n_control_windows,ratio_raw,Re_b_median,excess_lo,excess_hi
+vmp250 all free fall,vdb2021,all,background,vmp250 all free fall,1.21414,4174,4174,119,2474,2.66777,8.83442,0.947449,1.54994
+vmp250 all free fall,vdb2021,all,finescale,vmp250 all free fall,1.25752,4174,4174,119,2474,1.97049,8.83442,1.03176,1.56791
+vmp250 all free fall,vdb2021,none,background,vmp250 all free fall,1.21414,4174,4174,119,2474,2.66777,8.83442,0.942383,1.51963
+vmp250 all free fall,vdb2021,none,finescale,vmp250 all free fall,1.25752,4174,4174,119,2474,1.97049,8.83442,1.01023,1.56822
+vmp250 all free fall,rollo2022,all,background,vmp250 all free fall,1.21414,4174,4174,119,2474,2.66777,8.83442,0.939732,1.53076
+vmp250 all free fall,rollo2022,all,finescale,vmp250 all free fall,1.25752,4174,4174,119,2474,1.97049,8.83442,1.01146,1.53812
+vmp250 all free fall,rollo2022,interface,background,vmp250 all free fall,2.44959,64,64,26,2474,5.97062,9.91898,1.42994,3.95051
+vmp250 all free fall,rollo2022,interface,finescale,vmp250 all free fall,1.52049,64,64,26,2474,2.65046,9.91898,1.01818,2.12912
+vmp250 all free fall,rollo2022,interface,interface_local,vmp250 all free fall,2.49897,64,64,26,2474,4.35744,9.91898,1.59114,3.62023
+vmp250 all free fall,rollo2022,layer,background,vmp250 all free fall,0.159346,75,75,35,2474,0.304058,33.7495,0.0746744,0.247165
+vmp250 all free fall,rollo2022,layer,finescale,vmp250 all free fall,0.709796,75,75,35,2474,1.10463,33.7495,0.442221,1.20204
+vmp250 all free fall,rollo2022,straddles,background,vmp250 all free fall,4.06093,103,103,39,2474,9.55959,15.1232,2.38345,5.39182
+vmp250 all free fall,rollo2022,straddles,finescale,vmp250 all free fall,1.90567,103,103,39,2474,3.24655,15.1232,1.26991,2.33906
+vmp250 all free fall,rollo2022,none,background,vmp250 all free fall,1.14161,3932,3932,119,2474,2.50328,8.59481,0.893611,1.47874
+vmp250 all free fall,rollo2022,none,finescale,vmp250 all free fall,1.22032,3932,3932,119,2474,1.89907,8.59481,0.976301,1.54604
+vmp250 process_station free fall,vdb2021,all,background,vmp250 all free fall,2.79222,189,189,7,2474,5.52906,10.4798,0.892959,4.72223
+vmp250 process_station free fall,vdb2021,all,finescale,vmp250 all free fall,2.67777,189,189,7,2474,3.55383,10.4798,0.962748,4.38415
+vmp250 process_station free fall,vdb2021,none,background,vmp250 all free fall,2.79222,189,189,7,2474,5.52906,10.4798,0.873418,4.74468
+vmp250 process_station free fall,vdb2021,none,finescale,vmp250 all free fall,2.67777,189,189,7,2474,3.55383,10.4798,0.986085,4.46575
+vmp250 process_station free fall,rollo2022,all,background,vmp250 all free fall,2.79222,189,189,7,2474,5.52906,10.4798,0.889431,4.71193
+vmp250 process_station free fall,rollo2022,all,finescale,vmp250 all free fall,2.67777,189,189,7,2474,3.55383,10.4798,0.934456,4.33855
+vmp250 process_station free fall,rollo2022,none,background,vmp250 all free fall,2.79222,189,189,7,2474,5.52906,10.4798,0.901997,4.66494
+vmp250 process_station free fall,rollo2022,none,finescale,vmp250 all free fall,2.67777,189,189,7,2474,3.55383,10.4798,0.94521,4.32419
+vmp250 process_station tow-yo,vdb2021,all,background,vmp250 all free fall,1.14154,299,299,8,2474,2.82113,10.0728,0.974494,1.32342
+vmp250 process_station tow-yo,vdb2021,all,finescale,vmp250 all free fall,1.14177,299,299,8,2474,2.01277,10.0728,0.982451,1.32032
+vmp250 process_station tow-yo,vdb2021,none,background,vmp250 all free fall,1.14154,299,299,8,2474,2.82113,10.0728,0.966354,1.32749
+vmp250 process_station tow-yo,vdb2021,none,finescale,vmp250 all free fall,1.14177,299,299,8,2474,2.01277,10.0728,0.988092,1.32973
+vmp250 process_station tow-yo,rollo2022,all,background,vmp250 all free fall,1.14154,299,299,8,2474,2.82113,10.0728,0.96909,1.32658
+vmp250 process_station tow-yo,rollo2022,all,finescale,vmp250 all free fall,1.14177,299,299,8,2474,2.01277,10.0728,0.985766,1.31212
+vmp250 process_station tow-yo,rollo2022,interface,background,vmp250 all free fall,2.06091,25,25,7,2474,5.36742,5.34102,1.65978,2.54067
+vmp250 process_station tow-yo,rollo2022,interface,finescale,vmp250 all free fall,1.7115,25,25,7,2474,3.11446,5.34102,1.44561,2.06091
+vmp250 process_station tow-yo,rollo2022,interface,interface_local,vmp250 all free fall,2.52686,25,25,7,2474,4.58661,5.34102,2.09333,3.04642
+vmp250 process_station tow-yo,rollo2022,layer,background,vmp250 all free fall,0.209442,20,20,7,2474,0.407831,56.1834,0.0991563,0.386909
+vmp250 process_station tow-yo,rollo2022,layer,finescale,vmp250 all free fall,0.625767,20,20,7,2474,0.728585,56.1834,0.345158,1.68112
+vmp250 process_station tow-yo,rollo2022,straddles,background,vmp250 all free fall,1.42057,16,16,7,2474,3.49174,11.868,0.949017,2.3109
+vmp250 process_station tow-yo,rollo2022,straddles,finescale,vmp250 all free fall,1.2131,16,16,7,2474,2.15227,11.868,0.802671,1.82702
+vmp250 process_station tow-yo,rollo2022,none,background,vmp250 all free fall,1.00385,238,238,8,2474,2.47788,9.99781,0.849791,1.16883
+vmp250 process_station tow-yo,rollo2022,none,finescale,vmp250 all free fall,1.02941,238,238,8,2474,1.81078,9.99781,0.886986,1.18189
+vmp250 transect free fall,vdb2021,all,background,vmp250 all free fall,1.07925,3985,3985,112,2474,2.39382,8.76502,0.889195,1.28589
+vmp250 transect free fall,vdb2021,all,finescale,vmp250 all free fall,1.12551,3985,3985,112,2474,1.79376,8.76502,0.95274,1.31871
+vmp250 transect free fall,vdb2021,none,background,vmp250 all free fall,1.07925,3985,3985,112,2474,2.39382,8.76502,0.892398,1.31116
+vmp250 transect free fall,vdb2021,none,finescale,vmp250 all free fall,1.12551,3985,3985,112,2474,1.79376,8.76502,0.94661,1.33315
+vmp250 transect free fall,rollo2022,all,background,vmp250 all free fall,1.07925,3985,3985,112,2474,2.39382,8.76502,0.887721,1.30601
+vmp250 transect free fall,rollo2022,all,finescale,vmp250 all free fall,1.12551,3985,3985,112,2474,1.79376,8.76502,0.948821,1.31713
+vmp250 transect free fall,rollo2022,interface,background,vmp250 all free fall,2.44959,64,64,26,2474,5.97062,9.91898,1.48995,4.07662
+vmp250 transect free fall,rollo2022,interface,finescale,vmp250 all free fall,1.52049,64,64,26,2474,2.65046,9.91898,1.00969,2.16686
+vmp250 transect free fall,rollo2022,interface,interface_local,vmp250 all free fall,2.49897,64,64,26,2474,4.35744,9.91898,1.56579,3.631
+vmp250 transect free fall,rollo2022,layer,background,vmp250 all free fall,0.159346,75,75,35,2474,0.304058,33.7495,0.0808133,0.2537
+vmp250 transect free fall,rollo2022,layer,finescale,vmp250 all free fall,0.709796,75,75,35,2474,1.10463,33.7495,0.444219,1.12197
+vmp250 transect free fall,rollo2022,straddles,background,vmp250 all free fall,4.06093,103,103,39,2474,9.55959,15.1232,2.40032,5.43017
+vmp250 transect free fall,rollo2022,straddles,finescale,vmp250 all free fall,1.90567,103,103,39,2474,3.24655,15.1232,1.36513,2.36871
+vmp250 transect free fall,rollo2022,none,background,vmp250 all free fall,0.993421,3743,3743,112,2474,2.19953,8.51555,0.81141,1.19304
+vmp250 transect free fall,rollo2022,none,finescale,vmp250 all free fall,1.07295,3743,3743,112,2474,1.6994,8.51555,0.919689,1.24876
+vmp5500 all free fall,vdb2021,all,background,vmp5500 all free fall,1.43333,7912,7912,44,1160,4.98782,5.15246,0.954223,2.10705
+vmp5500 all free fall,vdb2021,all,finescale,vmp5500 all free fall,1.29422,7912,7912,44,1160,2.7251,5.15246,0.933155,1.80023
+vmp5500 all free fall,vdb2021,interface,background,vmp5500 all free fall,2.21329,276,276,41,1160,7.80603,4.55157,1.47038,3.34119
+vmp5500 all free fall,vdb2021,interface,finescale,vmp5500 all free fall,1.50812,276,276,41,1160,3.51761,4.55157,1.09119,2.20048
+vmp5500 all free fall,vdb2021,interface,interface_local,vmp5500 all free fall,2.75117,276,276,41,1160,6.0731,4.55157,1.93221,3.99657
+vmp5500 all free fall,vdb2021,layer,background,vmp5500 all free fall,0.24136,436,436,44,1160,0.655692,36.5182,0.129697,0.426333
+vmp5500 all free fall,vdb2021,layer,finescale,vmp5500 all free fall,0.225402,436,436,44,1160,0.447664,36.5182,0.142821,0.41186
+vmp5500 all free fall,vdb2021,straddles,background,vmp5500 all free fall,2.51077,416,416,44,1160,6.46789,6.65772,1.11587,4.22862
+vmp5500 all free fall,vdb2021,straddles,finescale,vmp5500 all free fall,1.33393,416,416,44,1160,2.09165,6.65772,0.747306,2.20069
+vmp5500 all free fall,vdb2021,none,background,vmp5500 all free fall,1.29425,6784,6784,44,1160,4.63568,4.74951,0.816404,1.9828
+vmp5500 all free fall,vdb2021,none,finescale,vmp5500 all free fall,1.27262,6784,6784,44,1160,2.78215,4.74951,0.908448,1.79498
+vmp5500 all free fall,rollo2022,all,background,vmp5500 all free fall,1.43333,7912,7912,44,1160,4.98782,5.15246,0.954814,2.08261
+vmp5500 all free fall,rollo2022,all,finescale,vmp5500 all free fall,1.29422,7912,7912,44,1160,2.7251,5.15246,0.935594,1.79643
+vmp5500 all free fall,rollo2022,interface,background,vmp5500 all free fall,2.36472,501,501,44,1160,8.85542,3.4097,1.49789,3.5633
+vmp5500 all free fall,rollo2022,interface,finescale,vmp5500 all free fall,1.75354,501,501,44,1160,4.28498,3.4097,1.18567,2.60888
+vmp5500 all free fall,rollo2022,interface,interface_local,vmp5500 all free fall,2.73266,501,501,44,1160,6.71103,3.4097,1.8717,4.06874
+vmp5500 all free fall,rollo2022,layer,background,vmp5500 all free fall,0.641842,1342,1342,44,1160,1.8351,12.1403,0.370404,1.01377
+vmp5500 all free fall,rollo2022,layer,finescale,vmp5500 all free fall,0.630325,1342,1342,44,1160,1.1204,12.1403,0.413657,0.958612
+vmp5500 all free fall,rollo2022,straddles,background,vmp5500 all free fall,2.28234,1283,1283,44,1160,6.89637,4.60827,1.30604,3.61913
+vmp5500 all free fall,rollo2022,straddles,finescale,vmp5500 all free fall,1.29903,1283,1283,44,1160,2.39529,4.60827,0.873337,1.91412
+vmp5500 all free fall,rollo2022,none,background,vmp5500 all free fall,1.17577,4786,4786,44,1160,4.19008,4.63475,0.76604,1.72577
+vmp5500 all free fall,rollo2022,none,finescale,vmp5500 all free fall,1.22309,4786,4786,44,1160,2.6396,4.63475,0.874738,1.72352
+vmp5500 process_station free fall,vdb2021,all,background,vmp5500 all free fall,0.825864,685,685,4,1160,2.92866,5.59794,0.476317,1.3494
+vmp5500 process_station free fall,vdb2021,all,finescale,vmp5500 all free fall,0.858971,685,685,4,1160,1.88244,5.59794,0.556163,1.27097
+vmp5500 process_station free fall,vdb2021,interface,background,vmp5500 all free fall,1.40563,38,38,4,1160,5.80503,5.19794,0.698817,2.12714
+vmp5500 process_station free fall,vdb2021,interface,finescale,vmp5500 all free fall,1.19163,38,38,4,1160,3.06111,5.19794,0.450721,1.8356
+vmp5500 process_station free fall,vdb2021,interface,interface_local,vmp5500 all free fall,1.8165,38,38,4,1160,4.66783,5.19794,0.762214,2.85277
+vmp5500 process_station free fall,vdb2021,layer,background,vmp5500 all free fall,0.345411,49,49,4,1160,0.711577,64.5319,0.11491,0.671728
+vmp5500 process_station free fall,vdb2021,layer,finescale,vmp5500 all free fall,0.415202,49,49,4,1160,0.531361,64.5319,0.108054,0.985395
+vmp5500 process_station free fall,vdb2021,straddles,background,vmp5500 all free fall,1.13846,32,32,4,1160,4.33118,9.30037,0.716408,1.71891
+vmp5500 process_station free fall,vdb2021,straddles,finescale,vmp5500 all free fall,0.708655,32,32,4,1160,1.59646,9.30037,0.431064,0.987873
+vmp5500 process_station free fall,vdb2021,none,background,vmp5500 all free fall,0.770986,566,566,4,1160,2.70823,5.02845,0.450088,1.28249
+vmp5500 process_station free fall,vdb2021,none,finescale,vmp5500 all free fall,0.830829,566,566,4,1160,1.79655,5.02845,0.551716,1.24524
+vmp5500 process_station free fall,rollo2022,all,background,vmp5500 all free fall,0.825864,685,685,4,1160,2.92866,5.59794,0.505454,1.38428
+vmp5500 process_station free fall,rollo2022,all,finescale,vmp5500 all free fall,0.858971,685,685,4,1160,1.88244,5.59794,0.574995,1.27125
+vmp5500 process_station free fall,rollo2022,interface,background,vmp5500 all free fall,1.55063,68,68,4,1160,6.83726,3.74646,0.962479,2.75039
+vmp5500 process_station free fall,rollo2022,interface,finescale,vmp5500 all free fall,1.40532,68,68,4,1160,4.04944,3.74646,0.944314,2.27937
+vmp5500 process_station free fall,rollo2022,interface,interface_local,vmp5500 all free fall,1.83798,68,68,4,1160,5.14949,3.74646,1.24852,3.13855
+vmp5500 process_station free fall,rollo2022,layer,background,vmp5500 all free fall,0.644806,155,155,4,1160,1.73305,15.1146,0.413265,1.02663
+vmp5500 process_station free fall,rollo2022,layer,finescale,vmp5500 all free fall,0.566682,155,155,4,1160,0.943279,15.1146,0.400276,0.845512
+vmp5500 process_station free fall,rollo2022,straddles,background,vmp5500 all free fall,1.16272,103,103,4,1160,4.22056,4.12106,0.761826,1.6708
+vmp5500 process_station free fall,rollo2022,straddles,finescale,vmp5500 all free fall,0.772383,103,103,4,1160,1.6543,4.12106,0.556202,1.05406
+vmp5500 process_station free fall,rollo2022,none,background,vmp5500 all free fall,0.684117,359,359,4,1160,2.36017,5.02684,0.402246,1.13889
+vmp5500 process_station free fall,rollo2022,none,finescale,vmp5500 all free fall,0.765896,359,359,4,1160,1.61694,5.02684,0.519181,1.17869
+vmp5500 transect free fall,vdb2021,all,background,vmp5500 all free fall,1.49467,7227,7227,40,1160,5.19147,5.09875,0.961744,2.1658
+vmp5500 transect free fall,vdb2021,all,finescale,vmp5500 all free fall,1.33188,7227,7227,40,1160,2.7949,5.09875,0.971173,1.93204
+vmp5500 transect free fall,vdb2021,interface,background,vmp5500 all free fall,2.29856,238,238,37,1160,7.9837,4.32771,1.48024,3.5323
+vmp5500 transect free fall,vdb2021,interface,finescale,vmp5500 all free fall,1.53443,238,238,37,1160,3.5518,4.32771,1.08649,2.19527
+vmp5500 transect free fall,vdb2021,interface,interface_local,vmp5500 all free fall,2.8457,238,238,37,1160,6.19349,4.32771,1.94119,4.19656
+vmp5500 transect free fall,vdb2021,layer,background,vmp5500 all free fall,0.234833,387,387,40,1160,0.650975,33.1133,0.123855,0.43599
+vmp5500 transect free fall,vdb2021,layer,finescale,vmp5500 all free fall,0.216281,387,387,40,1160,0.441252,33.1133,0.134716,0.387796
+vmp5500 transect free fall,vdb2021,straddles,background,vmp5500 all free fall,2.55313,384,384,40,1160,6.51211,6.32344,1.14532,4.3913
+vmp5500 transect free fall,vdb2021,straddles,finescale,vmp5500 all free fall,1.35033,384,384,40,1160,2.10062,6.32344,0.738129,2.28373
+vmp5500 transect free fall,vdb2021,none,background,vmp5500 all free fall,1.35009,6218,6218,40,1160,4.84586,4.703,0.853805,2.03995
+vmp5500 transect free fall,vdb2021,none,finescale,vmp5500 all free fall,1.31524,6218,6218,40,1160,2.87839,4.703,0.94508,1.86229
+vmp5500 transect free fall,rollo2022,all,background,vmp5500 all free fall,1.49467,7227,7227,40,1160,5.19147,5.09875,0.967826,2.18985
+vmp5500 transect free fall,rollo2022,all,finescale,vmp5500 all free fall,1.33188,7227,7227,40,1160,2.7949,5.09875,0.964292,1.93857
+vmp5500 transect free fall,rollo2022,interface,background,vmp5500 all free fall,2.46958,433,433,40,1160,9.07199,3.39202,1.59235,3.8477
+vmp5500 transect free fall,rollo2022,interface,finescale,vmp5500 all free fall,1.7894,433,433,40,1160,4.30523,3.39202,1.19983,2.70906
+vmp5500 transect free fall,rollo2022,interface,interface_local,vmp5500 all free fall,2.84465,433,433,40,1160,6.87976,3.39202,1.88117,4.25999
+vmp5500 transect free fall,rollo2022,layer,background,vmp5500 all free fall,0.64165,1187,1187,40,1160,1.84215,11.8263,0.38801,1.01569
+vmp5500 transect free fall,rollo2022,layer,finescale,vmp5500 all free fall,0.634961,1187,1187,40,1160,1.13424,11.8263,0.417271,0.973399
+vmp5500 transect free fall,rollo2022,straddles,background,vmp5500 all free fall,2.33183,1180,1180,40,1160,6.99411,4.63076,1.40244,3.69342
+vmp5500 transect free fall,rollo2022,straddles,finescale,vmp5500 all free fall,1.31886,1180,1180,40,1160,2.41918,4.63076,0.882468,2.02841
+vmp5500 transect free fall,rollo2022,none,background,vmp5500 all free fall,1.22932,4427,4427,40,1160,4.3967,4.61111,0.775567,1.76367
+vmp5500 transect free fall,rollo2022,none,finescale,vmp5500 all free fall,1.26901,4427,4427,40,1160,2.74482,4.61111,0.905085,1.77601

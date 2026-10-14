@@ -1,0 +1,158 @@
+{
+  "segments_applied": false,
+  "chi_qc": {
+    "k_max_ratio": {
+      "min": 0.5,
+      "apply": true
+    },
+    "fom": {
+      "band": 1.15,
+      "apply": false
+    },
+    "noise_floor": {
+      "factor": 2.0,
+      "policy": "clamp"
+    },
+    "probe_pair": {
+      "limit": 2.7718585822512662,
+      "policy": "min"
+    },
+    "combine": "geometric",
+    "epsilon_T": {
+      "k_max_ratio_min": 1.6
+    },
+    "gallery": {
+      "per_panel": 5,
+      "seed": 1
+    }
+  },
+  "fit_method": "mle",
+  "instruments": {
+    "vmp250": {
+      "windows": 12206,
+      "after_segment_qc": 12206,
+      "probe_estimates_removed": {
+        "probe_exclusion": 0,
+        "k_max_ratio": 0,
+        "fom": 0
+      },
+      "no_usable_probe": 596,
+      "probe_disagree": 43,
+      "kept": 11610,
+      "kept_at_floor_fraction": 0.0031,
+      "kept_fom_out_of_band_fraction": 0.0005,
+      "chi_median_below_150": 1.4690703218437474e-08,
+      "chi_floor_median_below_150": 4.8880332553231145e-11,
+      "at_floor_fraction_below_150": 0.0037,
+      "snr_median_below_150": {
+        "T1": 343.5210784401975,
+        "T2": 306.5537113237127
+      },
+      "probe_ratio_median_below_150": 1.0049975752928786,
+      "epsilon_T_resolved_fraction_below_150": 0.3752,
+      "epsilon_T_vs_shear_below_150_resolved": {
+        "Tu < 45 (not finger)": {
+          "n": 65,
+          "median_ratio": 0.6320146979216045
+        },
+        "Tu 45-72": {
+          "n": 403,
+          "median_ratio": 0.9609957760555587
+        },
+        "Tu 72-90": {
+          "n": 489,
+          "median_ratio": 1.1981721707138877
+        }
+      },
+      "epsilon_T_vs_shear_below_150": {
+        "Tu < 45 (not finger)": {
+          "n": 219,
+          "median_ratio": 1.816245231782076,
+          "iqr_log10": [
+            -0.07024958287166516,
+            0.4919007805630338
+          ]
+        },
+        "Tu 45-72": {
+          "n": 873,
+          "median_ratio": 1.3323702723521405,
+          "iqr_log10": [
+            -0.055515289955631174,
+            0.3253866769324791
+          ]
+        },
+        "Tu 72-90": {
+          "n": 2098,
+          "median_ratio": 2.031548591788112,
+          "iqr_log10": [
+            0.11410405047027532,
+            0.4988778413368236
+          ]
+        }
+      }
+    },
+    "vmp5500": {
+      "windows": 13562,
+      "after_segment_qc": 13562,
+      "probe_estimates_removed": {
+        "probe_exclusion": 6204,
+        "k_max_ratio": 3,
+        "fom": 0
+      },
+      "no_usable_probe": 178,
+      "probe_disagree": 547,
+      "kept": 13384,
+      "kept_at_floor_fraction": 0.0342,
+      "kept_fom_out_of_band_fraction": 0.0131,
+      "chi_median_below_150": 9.350339436155568e-10,
+      "chi_floor_median_below_150": 2.123384970368689e-11,
+      "at_floor_fraction_below_150": 0.0392,
+      "snr_median_below_150": {
+        "T1": 62.2128066219357,
+        "T2": 67.97468171389464
+      },
+      "probe_ratio_median_below_150": 1.0422646250013252,
+      "epsilon_T_resolved_fraction_below_150": 0.524,
+      "epsilon_T_vs_shear_below_150_resolved": {
+        "Tu < 45 (not finger)": {
+          "n": 757,
+          "median_ratio": 0.9141050299815494
+        },
+        "Tu 45-72": {
+          "n": 2175,
+          "median_ratio": 0.9442276526380288
+        },
+        "Tu 72-90": {
+          "n": 1201,
+          "median_ratio": 1.901361805172297
+        }
+      },
+      "epsilon_T_vs_shear_below_150": {
+        "Tu < 45 (not finger)": {
+          "n": 1387,
+          "median_ratio": 1.7468365273326216,
+          "iqr_log10": [
+            -0.19180803459608187,
+            0.6686360048918896
+          ]
+        },
+        "Tu 45-72": {
+          "n": 4024,
+          "median_ratio": 1.7917099007973585,
+          "iqr_log10": [
+            -0.2022392396183586,
+            0.6359121066336971
+          ]
+        },
+        "Tu 72-90": {
+          "n": 2808,
+          "median_ratio": 3.3315780016953065,
+          "iqr_log10": [
+            0.20179308626119022,
+            0.7969878361703696
+          ]
+        }
+      }
+    }
+  }
+}

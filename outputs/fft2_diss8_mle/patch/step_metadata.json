@@ -1,8 +1,8 @@
 {
   "step": "patch",
-  "created_utc": "2026-10-13T20:56:17+00:00",
-  "config_sha256": "9f3de6c3cf6e8ec3397f63501f5344c2efd58d4f2d2a42df981594d69b28e637",
-  "git_commit": "f393d6ccc00ee1547a29b96d619e0606b09d6d7d",
+  "created_utc": "2026-10-14T17:01:33+00:00",
+  "config_sha256": "570dbf7611ba5a58b636b5690e1855211bbe502c053559c1be651aebb170a2e0",
+  "git_commit": "625eb06951e471e53732a6dbbe955ac2f9c97368",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

@@ -37,7 +37,7 @@
       },
       "probe_exclusions_windows": {
         "sh1": 0,
-        "sh2": 0,
+        "sh2": 592,
         "T1": 0,
         "T2": 0
       },

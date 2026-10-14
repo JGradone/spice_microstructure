@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-13T19:02:39+00:00",
-  "config_sha256": "85ea6b72034525d7a122fdded221f961903fea90c1f36fec101b5241afdb59dd",
-  "git_commit": "846dec541785a9f3f9238497fad6ad8bed95df05",
+  "created_utc": "2026-10-14T17:31:32+00:00",
+  "config_sha256": "b086b8b873b5042f99763ef30dceffb538559f612d6c2e4fa1091070e495724d",
+  "git_commit": "12bc442adbe629d2abdc2d83268f8c65b9e56674",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -34,7 +34,8 @@
         "perturb.chi.overlap_sec": 4.0,
         "perturb.chi.fit_method": "mle",
         "perturb.chi.fp07_model": "double_pole"
-      }
+      },
+      "base": "fft2_diss8_mle"
     }
   },
   "steps": [
@@ -44,7 +45,12 @@
     "segments",
     "hydrography",
     "epsilon_shear",
-    "thermistor"
+    "thermistor",
+    "regimes",
+    "dd_test",
+    "diffusivities",
+    "uncertainty",
+    "export"
   ],
   "manifests_verified": true
 }

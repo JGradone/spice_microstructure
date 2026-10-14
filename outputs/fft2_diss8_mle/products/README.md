@@ -1,6 +1,6 @@
 # SPICE microstructure products (fft2_diss8_mle)
 
-Product version 0.1; spice_microstructure git 28ff6050cedf792b218c4e687d165ed6cbfd63ed; config sha256 8bce903f4574; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); created 2026-10-14T15:58:36+00:00.
+Product version 0.1; spice_microstructure git 625eb06951e471e53732a6dbbe955ac2f9c97368; config sha256 570dbf7611ba; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); created 2026-10-14T17:05:29+00:00.
 
 Run overrides: {'perturb.epsilon.fft_sec': 2.0, 'perturb.epsilon.diss_sec': 8.0, 'perturb.epsilon.overlap_sec': 4.0, 'perturb.chi.fft_sec': 2.0, 'perturb.chi.diss_sec': 8.0, 'perturb.chi.overlap_sec': 4.0, 'perturb.chi.fit_method': 'mle'}
 
@@ -20,8 +20,10 @@ Specification: docs/products.md. Methods and decisions: docs/decisions.md.
 * `diffusivity_vmp250.nc`
 * `diffusivity_vmp5500.csv`
 * `diffusivity_vmp5500.nc`
+* `export_report.json`
 * `segments_vmp250.nc`
 * `segments_vmp5500.nc`
+* `step_metadata.json`
 
 ## Caveats
 

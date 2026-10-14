@@ -1,0 +1,94 @@
+instrument_group,method,staircase,gradients,baseline,E,E_ci_low,E_ci_high,finger_fraction,finger_fraction_ci_low,finger_fraction_ci_high
+vmp250 all free fall,rollo2022,all,background,theory_Gamma0.2,2.668,2.144,3.298,0.6252,0.5337,0.6967
+vmp250 all free fall,rollo2022,all,background,garrett_munk,2.442,1.901,3.116,0.5905,0.4739,0.6791
+vmp250 all free fall,rollo2022,all,background,matched_control,1.214,0.9397,1.531,0.1764,-0.06413,0.3467
+vmp250 all free fall,rollo2022,all,finescale,theory_Gamma0.2,1.97,1.608,2.37,0.4925,0.378,0.5781
+vmp250 all free fall,rollo2022,all,finescale,garrett_munk,1.848,1.446,2.352,0.459,0.3086,0.5748
+vmp250 all free fall,rollo2022,all,finescale,matched_control,1.258,1.011,1.538,0.2048,0.01133,0.3499
+vmp250 all free fall,rollo2022,interface,background,theory_Gamma0.2,5.971,3.527,9.749,0.8325,0.7164,0.8974
+vmp250 all free fall,rollo2022,interface,background,garrett_munk,6.366,3.463,10.9,0.8429,0.7112,0.9082
+vmp250 all free fall,rollo2022,interface,background,matched_control,2.45,1.43,3.951,0.5918,0.3007,0.7469
+vmp250 all free fall,rollo2022,interface,finescale,theory_Gamma0.2,2.65,1.799,3.559,0.6227,0.4442,0.719
+vmp250 all free fall,rollo2022,interface,finescale,garrett_munk,2.867,1.764,4.128,0.6511,0.4329,0.7578
+vmp250 all free fall,rollo2022,interface,finescale,matched_control,1.52,1.018,2.129,0.3423,0.01786,0.5303
+vmp250 all free fall,rollo2022,interface,interface_local,theory_Gamma0.2,4.357,2.815,6.177,0.7705,0.6448,0.8381
+vmp250 all free fall,rollo2022,interface,interface_local,garrett_munk,2.83,1.856,3.78,0.6466,0.4613,0.7355
+vmp250 all free fall,rollo2022,interface,interface_local,matched_control,2.499,1.591,3.62,0.5998,0.3715,0.7238
+vmp250 all free fall,rollo2022,layer,background,theory_Gamma0.2,0.3041,0.1419,0.4961,-2.289,-6.049,-1.016
+vmp250 all free fall,rollo2022,layer,background,garrett_munk,1.475,0.7819,2.016,0.322,-0.2789,0.5039
+vmp250 all free fall,rollo2022,layer,background,matched_control,0.1593,0.07467,0.2472,-5.276,-12.39,-3.046
+vmp250 all free fall,rollo2022,layer,finescale,theory_Gamma0.2,1.105,0.692,1.714,0.09472,-0.4452,0.4167
+vmp250 all free fall,rollo2022,layer,finescale,garrett_munk,3.054,1.613,5.532,0.6725,0.38,0.8192
+vmp250 all free fall,rollo2022,layer,finescale,matched_control,0.7098,0.4422,1.202,-0.4089,-1.261,0.1681
+vmp250 all free fall,rollo2022,none,background,theory_Gamma0.2,2.503,1.976,3.141,0.6005,0.4941,0.6817
+vmp250 all free fall,rollo2022,none,background,garrett_munk,2.248,1.723,2.98,0.5552,0.4196,0.6644
+vmp250 all free fall,rollo2022,none,background,matched_control,1.142,0.8936,1.479,0.124,-0.1191,0.3237
+vmp250 all free fall,rollo2022,none,finescale,theory_Gamma0.2,1.899,1.539,2.314,0.4734,0.3503,0.5678
+vmp250 all free fall,rollo2022,none,finescale,garrett_munk,1.741,1.34,2.272,0.4255,0.254,0.5598
+vmp250 all free fall,rollo2022,none,finescale,matched_control,1.22,0.9763,1.546,0.1805,-0.02427,0.3532
+vmp250 process_station free fall,rollo2022,all,background,theory_Gamma0.2,5.529,2.181,7.802,0.8191,0.5415,0.8718
+vmp250 process_station free fall,rollo2022,all,background,garrett_munk,8.93,2.111,17.28,0.888,0.5263,0.9421
+vmp250 process_station free fall,rollo2022,all,background,matched_control,2.792,0.8894,4.712,0.6419,-0.1243,0.7878
+vmp250 process_station free fall,rollo2022,all,finescale,theory_Gamma0.2,3.554,1.648,4.808,0.7186,0.3932,0.792
+vmp250 process_station free fall,rollo2022,all,finescale,garrett_munk,6.534,1.641,13.06,0.8469,0.3906,0.9235
+vmp250 process_station free fall,rollo2022,all,finescale,matched_control,2.678,0.9345,4.339,0.6266,-0.07014,0.7695
+vmp250 process_station free fall,rollo2022,none,background,theory_Gamma0.2,5.529,2.132,7.802,0.8191,0.531,0.8718
+vmp250 process_station free fall,rollo2022,none,background,garrett_munk,8.93,2.159,17.6,0.888,0.5368,0.9432
+vmp250 process_station free fall,rollo2022,none,background,matched_control,2.792,0.902,4.665,0.6419,-0.1087,0.7856
+vmp250 process_station free fall,rollo2022,none,finescale,theory_Gamma0.2,3.554,1.626,4.668,0.7186,0.3848,0.7858
+vmp250 process_station free fall,rollo2022,none,finescale,garrett_munk,6.534,1.631,12.27,0.8469,0.3868,0.9185
+vmp250 process_station free fall,rollo2022,none,finescale,matched_control,2.678,0.9452,4.324,0.6266,-0.05797,0.7687
+vmp250 process_station tow-yo,rollo2022,all,background,theory_Gamma0.2,2.821,2.534,3.092,0.6455,0.6053,0.6766
+vmp250 process_station tow-yo,rollo2022,all,background,garrett_munk,2.329,1.976,2.701,0.5706,0.4938,0.6298
+vmp250 process_station tow-yo,rollo2022,all,background,matched_control,1.142,0.9691,1.327,0.124,-0.0319,0.2462
+vmp250 process_station tow-yo,rollo2022,all,finescale,theory_Gamma0.2,2.013,1.838,2.173,0.5032,0.456,0.5398
+vmp250 process_station tow-yo,rollo2022,all,finescale,garrett_munk,1.545,1.296,1.818,0.3529,0.2283,0.4501
+vmp250 process_station tow-yo,rollo2022,all,finescale,matched_control,1.142,0.9858,1.312,0.1242,-0.01444,0.2379
+vmp250 process_station tow-yo,rollo2022,interface,background,theory_Gamma0.2,5.367,4.61,6.268,0.8137,0.7831,0.8405
+vmp250 process_station tow-yo,rollo2022,interface,background,garrett_munk,2.806,2.32,3.417,0.6436,0.5689,0.7073
+vmp250 process_station tow-yo,rollo2022,interface,background,matched_control,2.061,1.66,2.541,0.5148,0.3975,0.6064
+vmp250 process_station tow-yo,rollo2022,interface,finescale,theory_Gamma0.2,3.114,2.657,3.665,0.6789,0.6236,0.7271
+vmp250 process_station tow-yo,rollo2022,interface,finescale,garrett_munk,1.634,1.344,1.97,0.3881,0.2559,0.4923
+vmp250 process_station tow-yo,rollo2022,interface,finescale,matched_control,1.712,1.446,2.061,0.4157,0.3083,0.5148
+vmp250 process_station tow-yo,rollo2022,interface,interface_local,theory_Gamma0.2,4.587,3.935,5.3,0.782,0.7458,0.8113
+vmp250 process_station tow-yo,rollo2022,interface,interface_local,garrett_munk,1.887,1.434,2.629,0.4701,0.3026,0.6196
+vmp250 process_station tow-yo,rollo2022,interface,interface_local,matched_control,2.527,2.093,3.046,0.6043,0.5223,0.6717
+vmp250 process_station tow-yo,rollo2022,layer,background,theory_Gamma0.2,0.4078,0.2029,0.7429,-1.452,-3.929,-0.3461
+vmp250 process_station tow-yo,rollo2022,layer,background,garrett_munk,1.761,0.7498,3.249,0.4322,-0.3336,0.6922
+vmp250 process_station tow-yo,rollo2022,layer,background,matched_control,0.2094,0.09916,0.3869,-3.775,-9.085,-1.585
+vmp250 process_station tow-yo,rollo2022,layer,finescale,theory_Gamma0.2,0.7286,0.4339,1.891,-0.3725,-1.305,0.4713
+vmp250 process_station tow-yo,rollo2022,layer,finescale,garrett_munk,5.665,2.557,12.78,0.8235,0.6089,0.9218
+vmp250 process_station tow-yo,rollo2022,layer,finescale,matched_control,0.6258,0.3452,1.681,-0.598,-1.897,0.4052
+vmp250 process_station tow-yo,rollo2022,none,background,theory_Gamma0.2,2.478,2.216,2.736,0.5964,0.5488,0.6345
+vmp250 process_station tow-yo,rollo2022,none,background,garrett_munk,2.167,1.846,2.578,0.5386,0.4582,0.612
+vmp250 process_station tow-yo,rollo2022,none,background,matched_control,1.004,0.8498,1.169,0.003835,-0.1768,0.1444
+vmp250 process_station tow-yo,rollo2022,none,finescale,theory_Gamma0.2,1.811,1.643,1.959,0.4478,0.3915,0.4896
+vmp250 process_station tow-yo,rollo2022,none,finescale,garrett_munk,1.509,1.245,1.88,0.3373,0.1967,0.468
+vmp250 process_station tow-yo,rollo2022,none,finescale,matched_control,1.029,0.887,1.182,0.02857,-0.1274,0.1539
+vmp250 transect free fall,rollo2022,all,background,theory_Gamma0.2,2.394,2.008,2.862,0.5823,0.502,0.6506
+vmp250 transect free fall,rollo2022,all,background,garrett_munk,2.105,1.769,2.528,0.525,0.4348,0.6044
+vmp250 transect free fall,rollo2022,all,background,matched_control,1.079,0.8877,1.306,0.07343,-0.1265,0.2343
+vmp250 transect free fall,rollo2022,all,finescale,theory_Gamma0.2,1.794,1.53,2.07,0.4425,0.3466,0.5169
+vmp250 transect free fall,rollo2022,all,finescale,garrett_munk,1.596,1.331,1.887,0.3736,0.2486,0.4701
+vmp250 transect free fall,rollo2022,all,finescale,matched_control,1.126,0.9488,1.317,0.1115,-0.05394,0.2408
+vmp250 transect free fall,rollo2022,interface,background,theory_Gamma0.2,5.971,3.589,9.823,0.8325,0.7213,0.8982
+vmp250 transect free fall,rollo2022,interface,background,garrett_munk,6.366,3.415,11.15,0.8429,0.7072,0.9103
+vmp250 transect free fall,rollo2022,interface,background,matched_control,2.45,1.49,4.077,0.5918,0.3288,0.7547
+vmp250 transect free fall,rollo2022,interface,finescale,theory_Gamma0.2,2.65,1.776,3.526,0.6227,0.4368,0.7164
+vmp250 transect free fall,rollo2022,interface,finescale,garrett_munk,2.867,1.752,4.173,0.6511,0.4293,0.7604
+vmp250 transect free fall,rollo2022,interface,finescale,matched_control,1.52,1.01,2.167,0.3423,0.009597,0.5385
+vmp250 transect free fall,rollo2022,interface,interface_local,theory_Gamma0.2,4.357,2.848,6.239,0.7705,0.6489,0.8397
+vmp250 transect free fall,rollo2022,interface,interface_local,garrett_munk,2.83,1.871,3.823,0.6466,0.4656,0.7384
+vmp250 transect free fall,rollo2022,interface,interface_local,matched_control,2.499,1.566,3.631,0.5998,0.3613,0.7246
+vmp250 transect free fall,rollo2022,layer,background,theory_Gamma0.2,0.3041,0.1337,0.4948,-2.289,-6.481,-1.021
+vmp250 transect free fall,rollo2022,layer,background,garrett_munk,1.475,0.7949,2.068,0.322,-0.2579,0.5164
+vmp250 transect free fall,rollo2022,layer,background,matched_control,0.1593,0.08081,0.2537,-5.276,-11.37,-2.942
+vmp250 transect free fall,rollo2022,layer,finescale,theory_Gamma0.2,1.105,0.6998,1.721,0.09472,-0.4289,0.4188
+vmp250 transect free fall,rollo2022,layer,finescale,garrett_munk,3.054,1.639,5.537,0.6725,0.3898,0.8194
+vmp250 transect free fall,rollo2022,layer,finescale,matched_control,0.7098,0.4442,1.122,-0.4089,-1.251,0.1087
+vmp250 transect free fall,rollo2022,none,background,theory_Gamma0.2,2.2,1.838,2.578,0.5454,0.4559,0.612
+vmp250 transect free fall,rollo2022,none,background,garrett_munk,1.892,1.585,2.262,0.4714,0.3689,0.558
+vmp250 transect free fall,rollo2022,none,background,matched_control,0.9934,0.8114,1.193,-0.006623,-0.2324,0.1618
+vmp250 transect free fall,rollo2022,none,finescale,theory_Gamma0.2,1.699,1.439,1.979,0.4116,0.3053,0.4947
+vmp250 transect free fall,rollo2022,none,finescale,garrett_munk,1.47,1.24,1.735,0.3196,0.1938,0.4236
+vmp250 transect free fall,rollo2022,none,finescale,matched_control,1.073,0.9197,1.249,0.06799,-0.08732,0.1992

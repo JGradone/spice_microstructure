@@ -817,3 +817,36 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * diffusivity: 413/413.
   * dd_pooled: 904/984 (the rest have fewer than 2 profiles; flagged).
   * Median pooled interval width 0.24–0.35 decades.
+
+## 2026-10-14: Sensitivity runs on the analysis settings
+
+* **Machinery:**
+  * Sensitivity entries can chain (`base`).
+  * Runs with unchanged perturb settings link the base run's patched files and perturb output (`reuse_convert_from`). The convert step checks that the generated perturb configs agree except for paths and provenance.
+* **Runs:** the analysis run `fft2_diss8_mle` was rerun from cast_log to export with all fixes, followed by:
+  * `an_strat5m`, `an_strat25m` (background gradient scale);
+  * `an_bin10m`;
+  * `an_mlgrad001` (staircase threshold);
+  * `an_av100`;
+  * `an_epsT` (thermistor epsilon);
+  * `fft2_diss8_mle_dp` (double-pole FP07 response).
+
+  Each is exported to `outputs/<run>/products/`. Comparison: `scripts/compare_sensitivity.py` writes `outputs/comparisons/sensitivity/`.
+* **Diffusivities are robust to processing choices.** Finger-water K_T and K_S (γ 0.65, finescale) change by under 5% across stratification scale (5/10/25 m), bin size, staircase threshold and α/β window. The exception is VMP250 interface K_S with the 0.001 threshold (2.5e-5 vs 1.9e-5; 35 vs 63 windows).
+  * The FP07 response model halves K_T and K_S (×0.48–0.55 with double-pole). It and γ (×1.4 across 0.5–0.7) are the dominant uncertainties in K_S.
+* **The interface excess is not robust to the stratification scale.** E over the Re_b-matched control:
+
+  | Scale | VMP5500 | VMP250 |
+  |---|---|---|
+  | 5 m | 2.2 | 2.2 |
+  | 10 m | 1.75 | 1.52 |
+  | 25 m | 1.10 | 0.60 |
+
+  * Internal contrasts follow: VMP5500 interface/layer 2.3 / 2.7 / 1.5 [1.0, 2.1], interface/none 1.6 / 1.4 / 1.1 [0.8, 1.6]. VMP250 interface/none 2.0 / 1.4 / 0.86.
+  * E is insensitive to the FP07 response model (1.63–1.85, which cancels), bin size, staircase threshold and av_window.
+  * The stratification scale sets N² and so Re_b, which is how interfaces are matched to the control and to other water. The 25 m scale smooths over interfaces and layers alike.
+  * Consequence: the finger fraction at interfaces against the matched control ranges from about 0 (or below, VMP250) to 0.55 across 5–25 m. The VMP5500 interface excess is > 1 at 5 and 10 m, marginal at 25 m.
+* **`an_epsT`** uses thermistor epsilon in chi_expected and keeps only windows with a resolved roll-off (VMP5500 194 interface windows instead of 502, VMP250 13). Its K_T and E describe a different subset (lower-chi windows) and are not comparable as a sensitivity on the same sample. It confirms that ε_T absorbs the finger signal (E 0.2–0.26).
+* **Reading for the objectives:**
+  * RO2a/b: K_S is well constrained by the processing apart from the FP07 response (factor ~2) and γ (factor 1.4).
+  * The finger attribution (finger fraction) remains baseline- and scale-dependent and should be reported as a range. Its 10 m central values are not robust on their own.

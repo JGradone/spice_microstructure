@@ -1,0 +1,985 @@
+instrument_group,method,turner,staircase,gradients,n2_filter,min_profiles,n_windows,n_profiles,chi_obs_mean,chi_exp_mean,ratio,at_floor_fraction,R_rho_bin,finger_prediction,ratio_lo,ratio_hi,below_min_profiles,epsilon_source,flux_coefficient,flux_ratio_gamma
+vmp250 all free fall,vdb2021,all_turner,all,background,all,3,4281,119,6.07885e-08,2.22451e-08,2.73267,0.32726,1.86181,4.29824,2.22126,3.3654,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,all,finescale,all,3,4281,119,6.07885e-08,3.03453e-08,2.00322,0.32726,1.86181,4.29824,1.66637,2.42462,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,none,background,all,3,4281,119,6.07885e-08,2.22451e-08,2.73267,0.32726,1.86181,4.29824,2.1971,3.37523,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,none,finescale,all,3,4281,119,6.07885e-08,3.03453e-08,2.00322,0.32726,1.86181,4.29824,1.6698,2.36738,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,all,background,all,3,4174,119,6.05943e-08,2.27135e-08,2.66777,0.327743,1.84082,4.24139,2.10304,3.3374,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,all,finescale,all,3,4174,119,6.05943e-08,3.07508e-08,1.97049,0.327743,1.84082,4.24139,1.6275,2.39466,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,none,background,all,3,4174,119,6.05943e-08,2.27135e-08,2.66777,0.327743,1.84082,4.24139,2.1375,3.31416,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,none,finescale,all,3,4174,119,6.05943e-08,3.07508e-08,1.97049,0.327743,1.84082,4.24139,1.61344,2.38962,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,all,background,all,3,2922,118,7.71102e-08,2.75926e-08,2.7946,0.351129,1.66729,3.71636,2.17911,3.6073,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,all,finescale,all,3,2922,118,7.71102e-08,3.77677e-08,2.0417,0.351129,1.66729,3.71636,1.63528,2.48543,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,none,background,all,3,2922,118,7.71102e-08,2.75926e-08,2.7946,0.351129,1.66729,3.71636,2.17657,3.54262,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,none,finescale,all,3,2922,118,7.71102e-08,3.77677e-08,2.0417,0.351129,1.66729,3.71636,1.64617,2.49846,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,all,background,all,3,95,24,7.06527e-08,3.27495e-09,21.5736,0.284211,,,13.8489,29.7871,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,all,finescale,all,3,95,24,7.06527e-08,1.46017e-08,4.83867,0.284211,,,3.42449,6.01181,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,none,background,all,3,95,24,7.06527e-08,3.27495e-09,21.5736,0.284211,,,13.8434,29.2529,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,none,finescale,all,3,95,24,7.06527e-08,1.46017e-08,4.83867,0.284211,,,3.37234,6.02947,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,all,background,all,3,2474,120,2.23417e-08,1.13844e-08,1.96249,0.0145513,,,1.62849,2.39419,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,all,finescale,all,3,2474,120,2.23417e-08,1.64794e-08,1.35574,0.0145513,,,1.1367,1.64658,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,none,background,all,3,2474,120,2.23417e-08,1.13844e-08,1.96249,0.0145513,,,1.61203,2.42405,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,none,finescale,all,3,2474,120,2.23417e-08,1.64794e-08,1.35574,0.0145513,,,1.13159,1.61047,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,all,background,all,3,4281,119,6.07885e-08,2.22451e-08,2.73267,0.32726,1.86181,4.29824,2.21396,3.37286,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,all,finescale,all,3,4281,119,6.07885e-08,3.03453e-08,2.00322,0.32726,1.86181,4.29824,1.66423,2.41735,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,interface,background,all,3,64,25,1.43413e-07,2.39747e-08,5.98185,0.3125,1.64619,3.645,3.46809,9.39425,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,interface,finescale,all,3,64,25,1.43413e-07,5.45572e-08,2.62868,0.3125,1.64619,3.645,1.75892,3.58942,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,interface,interface_local,all,3,64,25,1.43413e-07,3.27495e-08,4.3791,0.3125,1.6713,3.72974,2.86912,6.34359,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,layer,background,all,3,73,33,3.149e-09,1.05572e-08,0.298279,0.547945,1.4532,2.89587,0.125385,0.476688,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,layer,finescale,all,3,73,33,3.149e-09,2.7044e-09,1.1644,0.547945,1.4532,2.89587,0.760459,1.80168,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,straddles,background,all,3,102,38,1.58399e-07,1.63317e-08,9.69885,0.411765,1.58516,3.42781,6.05751,12.1889,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,straddles,finescale,all,3,102,38,1.58399e-07,4.8427e-08,3.27088,0.411765,1.58516,3.42781,2.40492,3.77662,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,none,background,all,3,4042,119,5.8058e-08,2.2578e-08,2.57144,0.321376,1.87277,4.32743,2.05398,3.16793,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,none,finescale,all,3,4042,119,5.8058e-08,3.00049e-08,1.93495,0.321376,1.87277,4.32743,1.54403,2.33077,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,all,background,all,3,4174,119,6.05943e-08,2.27135e-08,2.66777,0.327743,1.84082,4.24139,2.16112,3.31677,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,all,finescale,all,3,4174,119,6.05943e-08,3.07508e-08,1.97049,0.327743,1.84082,4.24139,1.63807,2.38731,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,interface,background,all,3,63,25,1.44066e-07,2.41474e-08,5.96612,0.31746,1.6441,3.63783,3.6398,9.56194,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,interface,finescale,all,3,63,25,1.44066e-07,5.43212e-08,2.65212,0.31746,1.6441,3.63783,1.80364,3.53519,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,interface,interface_local,all,3,63,25,1.44066e-07,3.29634e-08,4.37049,0.31746,1.67052,3.72714,2.85637,6.21597,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,layer,background,all,3,73,33,3.149e-09,1.05572e-08,0.298279,0.547945,1.4532,2.89587,0.13503,0.480728,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,layer,finescale,all,3,73,33,3.149e-09,2.7044e-09,1.1644,0.547945,1.4532,2.89587,0.753966,1.71535,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,straddles,background,all,3,101,38,1.59734e-07,1.64928e-08,9.68505,0.415842,1.57713,3.39798,6.09352,12.2653,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,straddles,finescale,all,3,101,38,1.59734e-07,4.88897e-08,3.26723,0.415842,1.57713,3.39798,2.43181,3.7403,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,none,background,all,3,3937,119,5.77804e-08,2.30755e-08,2.50397,0.321565,1.85102,4.26917,1.98802,3.12111,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,none,finescale,all,3,3937,119,5.77804e-08,3.04284e-08,1.8989,0.321565,1.85102,4.26917,1.54716,2.3246,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,all,background,all,3,2922,118,7.71102e-08,2.75926e-08,2.7946,0.351129,1.66729,3.71636,2.19924,3.60095,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,all,finescale,all,3,2922,118,7.71102e-08,3.77677e-08,2.0417,0.351129,1.66729,3.71636,1.64509,2.49901,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,interface,background,all,3,61,24,1.45776e-07,2.43341e-08,5.9906,0.311475,1.64318,3.63465,3.45791,9.61223,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,interface,finescale,all,3,61,24,1.45776e-07,5.40288e-08,2.69812,0.311475,1.64318,3.63465,1.75731,3.62346,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,interface,interface_local,all,3,61,24,1.45776e-07,3.33317e-08,4.3735,0.311475,1.67053,3.72717,2.79892,6.21251,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,layer,background,all,3,72,32,3.17146e-09,1.0676e-08,0.297065,0.541667,1.44529,2.86092,0.130811,0.479898,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,layer,finescale,all,3,72,32,3.17146e-09,2.73332e-09,1.1603,0.541667,1.44529,2.86092,0.742839,1.83215,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,straddles,background,all,3,92,33,1.7029e-07,1.75277e-08,9.71549,0.402174,1.5628,3.34398,5.69411,12.2075,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,straddles,finescale,all,3,92,33,1.7029e-07,5.22858e-08,3.25691,0.402174,1.5628,3.34398,2.31429,3.7106,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,none,background,all,3,2697,118,7.43524e-08,2.84612e-08,2.61241,0.345198,1.67216,3.73259,2.0047,3.35846,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,none,finescale,all,3,2697,118,7.43524e-08,3.78399e-08,1.96492,0.345198,1.67216,3.73259,1.54048,2.44699,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,all,background,all,3,95,24,7.06527e-08,3.27495e-09,21.5736,0.284211,,,13.8211,29.1245,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,all,finescale,all,3,95,24,7.06527e-08,1.46017e-08,4.83867,0.284211,,,3.37525,6.04412,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,interface,background,all,3,1,1,1.02291e-07,1.30992e-08,7.80897,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,interface,finescale,all,3,1,1,1.02291e-07,6.94263e-08,1.47337,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,interface,interface_local,all,3,1,1,1.02291e-07,1.92765e-08,5.30652,0,1.75875,4.00598,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,straddles,background,all,3,1,1,2.35407e-08,5.77569e-11,407.582,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,straddles,finescale,all,3,1,1,2.35407e-08,1.68765e-09,13.9488,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,none,background,all,3,93,24,7.0819e-08,3.20391e-09,22.1039,0.290323,,,13.9164,29.6697,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,none,finescale,all,3,93,24,7.0819e-08,1.4151e-08,5.00452,0.290323,,,3.53068,6.24219,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,all,background,all,3,2474,120,2.23417e-08,1.13844e-08,1.96249,0.0145513,,,1.59722,2.39776,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,all,finescale,all,3,2474,120,2.23417e-08,1.64794e-08,1.35574,0.0145513,,,1.15369,1.64609,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,layer,background,all,3,2,1,4.64032e-10,1.03484e-10,4.48408,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,layer,finescale,all,3,2,1,4.64032e-10,1.2157e-10,3.81701,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,straddles,background,all,3,1,1,2.35407e-08,5.77569e-11,407.582,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,straddles,finescale,all,3,1,1,2.35407e-08,1.68765e-09,13.9488,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,none,background,all,3,2471,120,2.23589e-08,1.13981e-08,1.96164,0.014569,,,1.6197,2.40804,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,none,finescale,all,3,2471,120,2.23589e-08,1.64986e-08,1.3552,0.014569,,,1.12735,1.63802,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,all,background,drop_weakest_10pct,3,3328,119,6.80699e-08,2.51424e-08,2.70738,0.26232,1.88925,4.37068,2.11412,3.48109,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,3328,119,6.80699e-08,3.43262e-08,1.98303,0.26232,1.88925,4.37068,1.59845,2.44911,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,none,background,drop_weakest_10pct,3,3328,119,6.80699e-08,2.51424e-08,2.70738,0.26232,1.88925,4.37068,2.1268,3.45287,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,3328,119,6.80699e-08,3.43262e-08,1.98303,0.26232,1.88925,4.37068,1.61004,2.4059,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,all,background,drop_weakest_10pct,3,3261,119,6.77458e-08,2.55616e-08,2.6503,0.261883,1.87115,4.32314,2.07363,3.29739,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,3261,119,6.77458e-08,3.46452e-08,1.95541,0.261883,1.87115,4.32314,1.5896,2.3883,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,none,background,drop_weakest_10pct,3,3261,119,6.77458e-08,2.55616e-08,2.6503,0.261883,1.87115,4.32314,2.09083,3.32231,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,3261,119,6.77458e-08,3.46452e-08,1.95541,0.261883,1.87115,4.32314,1.55934,2.36824,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,2130,118,9.13829e-08,3.26383e-08,2.79987,0.266667,1.69186,3.79724,2.16549,3.68166,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,2130,118,9.13829e-08,4.49086e-08,2.03486,0.266667,1.69186,3.79724,1.60055,2.53174,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,2130,118,9.13829e-08,3.26383e-08,2.79987,0.266667,1.69186,3.79724,2.14148,3.70599,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,2130,118,9.13829e-08,4.49086e-08,2.03486,0.266667,1.69186,3.79724,1.56679,2.56514,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,all,background,drop_weakest_10pct,3,62,21,8.26551e-08,3.64854e-09,22.6543,0.274194,,,13.6885,30.5231,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,all,finescale,drop_weakest_10pct,3,62,21,8.26551e-08,1.8431e-08,4.48457,0.274194,,,2.97816,5.71588,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,none,background,drop_weakest_10pct,3,62,21,8.26551e-08,3.64854e-09,22.6543,0.274194,,,13.2079,31.0311,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,not_finger,none,finescale,drop_weakest_10pct,3,62,21,8.26551e-08,1.8431e-08,4.48457,0.274194,,,2.92599,5.89473,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,all,background,drop_weakest_10pct,3,2446,120,2.24861e-08,1.15046e-08,1.95453,0.0126738,,,1.60344,2.37999,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,all,finescale,drop_weakest_10pct,3,2446,120,2.24861e-08,1.66459e-08,1.35085,0.0126738,,,1.12435,1.63261,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,none,background,drop_weakest_10pct,3,2446,120,2.24861e-08,1.15046e-08,1.95453,0.0126738,,,1.62279,2.38023,False,shear,0.2,0.65
+vmp250 all free fall,vdb2021,control,none,finescale,drop_weakest_10pct,3,2446,120,2.24861e-08,1.66459e-08,1.35085,0.0126738,,,1.10482,1.62004,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,all,background,drop_weakest_10pct,3,3328,119,6.80699e-08,2.51424e-08,2.70738,0.26232,1.88925,4.37068,2.1112,3.47363,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,3328,119,6.80699e-08,3.43262e-08,1.98303,0.26232,1.88925,4.37068,1.58409,2.42644,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,interface,background,drop_weakest_10pct,3,53,21,1.62244e-07,2.64178e-08,6.14149,0.226415,1.66103,3.69537,3.51712,10.1489,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,interface,finescale,drop_weakest_10pct,3,53,21,1.62244e-07,6.09583e-08,2.66156,0.226415,1.66103,3.69537,1.79277,3.61272,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,interface,interface_local,drop_weakest_10pct,3,53,21,1.62244e-07,3.5743e-08,4.53919,0.226415,1.68215,3.76558,2.9118,6.45737,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,layer,background,drop_weakest_10pct,3,1,1,1.26721e-09,4.98519e-09,0.254195,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,layer,finescale,drop_weakest_10pct,3,1,1,1.26721e-09,1.00283e-08,0.126364,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,straddles,background,drop_weakest_10pct,3,51,25,2.59217e-07,2.3948e-08,10.8242,0.235294,1.57638,3.39517,6.48129,13.3311,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,straddles,finescale,drop_weakest_10pct,3,51,25,2.59217e-07,7.83047e-08,3.31037,0.235294,1.57638,3.39517,2.46931,3.71996,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,none,background,drop_weakest_10pct,3,3223,119,6.35173e-08,2.51465e-08,2.52589,0.263109,1.89745,4.39194,1.96021,3.21858,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,3223,119,6.35173e-08,3.31999e-08,1.91318,0.263109,1.89745,4.39194,1.52269,2.37926,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,all,background,drop_weakest_10pct,3,3261,119,6.77458e-08,2.55616e-08,2.6503,0.261883,1.87115,4.32314,2.08023,3.37102,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,3261,119,6.77458e-08,3.46452e-08,1.95541,0.261883,1.87115,4.32314,1.57418,2.38955,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,interface,background,drop_weakest_10pct,3,52,21,1.63397e-07,2.66739e-08,6.12574,0.230769,1.65887,3.6881,3.5942,9.63765,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,interface,finescale,drop_weakest_10pct,3,52,21,1.63397e-07,6.07955e-08,2.68765,0.230769,1.65887,3.6881,1.777,3.63859,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,interface,interface_local,drop_weakest_10pct,3,52,21,1.63397e-07,3.60597e-08,4.5313,0.230769,1.68139,3.76306,2.83585,6.66265,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,layer,background,drop_weakest_10pct,3,1,1,1.26721e-09,4.98519e-09,0.254195,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,layer,finescale,drop_weakest_10pct,3,1,1,1.26721e-09,1.00283e-08,0.126364,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,straddles,background,drop_weakest_10pct,3,51,25,2.59217e-07,2.3948e-08,10.8242,0.235294,1.57638,3.39517,6.50945,13.3273,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,straddles,finescale,drop_weakest_10pct,3,51,25,2.59217e-07,7.83047e-08,3.31037,0.235294,1.57638,3.39517,2.47722,3.6884,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,none,background,drop_weakest_10pct,3,3157,119,6.30982e-08,2.55759e-08,2.4671,0.262591,1.87876,4.34323,1.90621,3.14731,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,3157,119,6.30982e-08,3.3517e-08,1.88257,0.262591,1.87876,4.34323,1.4871,2.34114,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,2130,118,9.13829e-08,3.26383e-08,2.79987,0.266667,1.69186,3.79724,2.0959,3.6374,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,2130,118,9.13829e-08,4.49086e-08,2.03486,0.266667,1.69186,3.79724,1.56755,2.56459,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,interface,background,drop_weakest_10pct,3,51,20,1.63071e-07,2.65589e-08,6.13998,0.235294,1.65705,3.68195,3.52924,9.65277,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,interface,finescale,drop_weakest_10pct,3,51,20,1.63071e-07,5.96094e-08,2.73566,0.235294,1.65705,3.68195,1.82567,3.7128,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,interface,interface_local,drop_weakest_10pct,3,51,20,1.63071e-07,3.60399e-08,4.52473,0.235294,1.68032,3.75956,2.88661,6.53871,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,layer,background,drop_weakest_10pct,3,1,1,1.26721e-09,4.98519e-09,0.254195,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,layer,finescale,drop_weakest_10pct,3,1,1,1.26721e-09,1.00283e-08,0.126364,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,straddles,background,drop_weakest_10pct,3,50,24,2.58174e-07,2.40989e-08,10.7131,0.24,1.57463,3.38865,6.30782,13.2286,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,straddles,finescale,drop_weakest_10pct,3,50,24,2.58174e-07,7.84494e-08,3.29096,0.24,1.57463,3.38865,2.40325,3.70172,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,2028,118,8.55123e-08,3.30153e-08,2.59008,0.267751,1.69501,3.80744,1.94972,3.47858,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,2028,118,8.55123e-08,4.37292e-08,1.9555,0.267751,1.69501,3.80744,1.47291,2.57606,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,all,background,drop_weakest_10pct,3,62,21,8.26551e-08,3.64854e-09,22.6543,0.274194,,,12.8491,30.8019,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,all,finescale,drop_weakest_10pct,3,62,21,8.26551e-08,1.8431e-08,4.48457,0.274194,,,3.03145,5.74129,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,interface,background,drop_weakest_10pct,3,1,1,1.02291e-07,1.30992e-08,7.80897,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,interface,finescale,drop_weakest_10pct,3,1,1,1.02291e-07,6.94263e-08,1.47337,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,interface,interface_local,drop_weakest_10pct,3,1,1,1.02291e-07,1.92765e-08,5.30652,0,1.75875,4.00598,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,none,background,drop_weakest_10pct,3,61,20,8.23332e-08,3.49361e-09,23.5668,0.278689,,,14.1947,32.1392,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,not_finger,none,finescale,drop_weakest_10pct,3,61,20,8.23332e-08,1.7595e-08,4.67935,0.278689,,,3.1758,5.92044,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,all,background,drop_weakest_10pct,3,2446,120,2.24861e-08,1.15046e-08,1.95453,0.0126738,,,1.61508,2.36726,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,all,finescale,drop_weakest_10pct,3,2446,120,2.24861e-08,1.66459e-08,1.35085,0.0126738,,,1.12129,1.62219,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,layer,background,drop_weakest_10pct,3,1,1,4.92606e-10,1.27859e-10,3.85272,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,layer,finescale,drop_weakest_10pct,3,1,1,4.92606e-10,3.15825e-11,15.5975,0,,,,,True,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,none,background,drop_weakest_10pct,3,2445,120,2.24951e-08,1.15093e-08,1.95452,0.0126789,,,1.60969,2.37669,False,shear,0.2,0.65
+vmp250 all free fall,rollo2022,control,none,finescale,drop_weakest_10pct,3,2445,120,2.24951e-08,1.66527e-08,1.35084,0.0126789,,,1.13276,1.63758,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,all,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.19178,7.79673,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,all,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.68147,4.7186,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,none,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.15269,7.69163,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,none,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.64816,4.75449,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,all,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.21983,7.78776,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,all,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.66872,4.7336,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,none,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.17478,7.82684,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,none,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.66106,4.69945,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,all,background,all,3,187,7,2.44248e-07,4.3834e-08,5.57212,0.315508,1.6264,3.57636,2.21494,7.79862,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,all,finescale,all,3,187,7,2.44248e-07,6.82651e-08,3.57794,0.315508,1.6264,3.57636,1.6716,4.75668,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,none,background,all,3,187,7,2.44248e-07,4.3834e-08,5.57212,0.315508,1.6264,3.57636,2.09222,7.75592,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,none,finescale,all,3,187,7,2.44248e-07,6.82651e-08,3.57794,0.315508,1.6264,3.57636,1.70753,4.75637,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,all,background,all,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.22621,2.81486,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,all,finescale,all,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.06772,2.05392,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,none,background,all,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.27596,2.75547,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,none,finescale,all,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.03864,2.05575,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,all,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.08228,7.84078,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,all,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.65063,4.67037,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,none,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.18925,7.85315,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,none,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.62502,4.71892,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,all,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.13401,7.7726,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,all,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.64218,4.70089,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,none,background,all,3,189,7,2.42337e-07,4.38298e-08,5.52906,0.312169,1.63189,3.59556,2.18891,7.86485,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,none,finescale,all,3,189,7,2.42337e-07,6.81904e-08,3.55383,0.312169,1.63189,3.59556,1.70074,4.74619,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,all,background,all,3,187,7,2.44248e-07,4.3834e-08,5.57212,0.315508,1.6264,3.57636,2.25472,7.76956,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,all,finescale,all,3,187,7,2.44248e-07,6.82651e-08,3.57794,0.315508,1.6264,3.57636,1.67481,4.75637,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,none,background,all,3,187,7,2.44248e-07,4.3834e-08,5.57212,0.315508,1.6264,3.57636,2.24926,7.84789,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,none,finescale,all,3,187,7,2.44248e-07,6.82651e-08,3.57794,0.315508,1.6264,3.57636,1.70158,4.77937,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,all,background,all,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.2792,2.815,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,all,finescale,all,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.0604,2.05392,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,none,background,all,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.26789,2.91344,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,none,finescale,all,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.06392,2.03803,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,all,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.39749,8.18089,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.76321,4.84738,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,none,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.40925,8.09337,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.75021,4.9115,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,all,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.4162,8.19618,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.7711,4.8102,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,none,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.30247,8.20061,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.71025,4.91564,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,135,7,3.31475e-07,5.56999e-08,5.9511,0.185185,1.66308,3.70227,2.35932,8.20426,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,135,7,3.31475e-07,8.96703e-08,3.6966,0.185185,1.66308,3.70227,1.72806,4.85822,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,135,7,3.31475e-07,5.56999e-08,5.9511,0.185185,1.66308,3.70227,2.33625,8.27524,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,135,7,3.31475e-07,8.96703e-08,3.6966,0.185185,1.66308,3.70227,1.77903,4.91371,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,all,background,drop_weakest_10pct,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.29531,2.84842,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,all,finescale,drop_weakest_10pct,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.03471,2.07312,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,none,background,drop_weakest_10pct,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.27916,2.83184,False,shear,0.2,0.65
+vmp250 process_station free fall,vdb2021,control,none,finescale,drop_weakest_10pct,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.06085,2.05508,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,all,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.34427,8.23699,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.77819,4.82396,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,none,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.29863,8.17136,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.71024,4.88118,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,all,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.35491,8.16289,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.70247,4.91373,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,none,background,drop_weakest_10pct,3,137,7,3.27566e-07,5.55208e-08,5.89987,0.182482,1.66908,3.72235,2.42804,8.17578,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,137,7,3.27566e-07,8.92547e-08,3.67001,0.182482,1.66908,3.72235,1.72585,4.90354,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,135,7,3.31475e-07,5.56999e-08,5.9511,0.185185,1.66308,3.70227,2.30004,8.18214,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,135,7,3.31475e-07,8.96703e-08,3.6966,0.185185,1.66308,3.70227,1.76265,4.8819,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,135,7,3.31475e-07,5.56999e-08,5.9511,0.185185,1.66308,3.70227,2.45026,8.22863,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,135,7,3.31475e-07,8.96703e-08,3.6966,0.185185,1.66308,3.70227,1.77966,4.88163,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,all,background,drop_weakest_10pct,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.21783,2.75547,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,all,finescale,drop_weakest_10pct,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.01077,2.07525,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,none,background,drop_weakest_10pct,3,127,7,1.57369e-08,8.29911e-09,1.89622,0.015748,,,1.21747,2.79264,False,shear,0.2,0.65
+vmp250 process_station free fall,rollo2022,control,none,finescale,drop_weakest_10pct,3,127,7,1.57369e-08,1.06514e-08,1.47745,0.015748,,,1.03844,2.09508,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,all,background,all,3,303,8,4.48898e-08,1.5833e-08,2.8352,0.445545,1.6347,3.60534,2.54467,3.12199,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,all,finescale,all,3,303,8,4.48898e-08,2.23921e-08,2.00472,0.445545,1.6347,3.60534,1.81607,2.16546,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,none,background,all,3,303,8,4.48898e-08,1.5833e-08,2.8352,0.445545,1.6347,3.60534,2.53269,3.1074,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,none,finescale,all,3,303,8,4.48898e-08,2.23921e-08,2.00472,0.445545,1.6347,3.60534,1.82454,2.1707,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,all,background,all,3,299,8,4.51115e-08,1.59906e-08,2.82113,0.451505,1.62915,3.58598,2.53386,3.09645,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,all,finescale,all,3,299,8,4.51115e-08,2.24126e-08,2.01277,0.451505,1.62915,3.58598,1.82415,2.18919,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,none,background,all,3,299,8,4.51115e-08,1.59906e-08,2.82113,0.451505,1.62915,3.58598,2.53776,3.08168,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,none,finescale,all,3,299,8,4.51115e-08,2.24126e-08,2.01277,0.451505,1.62915,3.58598,1.82676,2.18605,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,all,background,all,3,259,8,4.57065e-08,1.56551e-08,2.91959,0.517375,1.53674,3.24322,2.6591,3.15336,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,all,finescale,all,3,259,8,4.57065e-08,2.12251e-08,2.15342,0.517375,1.53674,3.24322,1.95317,2.33279,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,none,background,all,3,259,8,4.57065e-08,1.56551e-08,2.91959,0.517375,1.53674,3.24322,2.66111,3.17256,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,none,finescale,all,3,259,8,4.57065e-08,2.12251e-08,2.15342,0.517375,1.53674,3.24322,1.94875,2.33567,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,all,background,all,3,2,2,1.79732e-08,5.25149e-09,3.4225,0,4.60793,7.27056,2.08191,5.95083,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,all,finescale,all,3,2,2,1.79732e-08,2.19699e-08,0.818083,0,4.60793,7.27056,0.577271,2.22445,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,none,background,all,3,2,2,1.79732e-08,5.25149e-09,3.4225,0,4.60793,7.27056,2.08191,5.95083,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,none,finescale,all,3,2,2,1.79732e-08,2.19699e-08,0.818083,0,4.60793,7.27056,0.577271,2.22445,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,all,background,all,3,158,8,1.44241e-08,4.68226e-09,3.08057,0.0126582,,,2.20767,4.04513,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,all,finescale,all,3,158,8,1.44241e-08,6.96575e-09,2.07071,0.0126582,,,1.55087,2.68055,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,none,background,all,3,158,8,1.44241e-08,4.68226e-09,3.08057,0.0126582,,,2.30485,4.06948,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,none,finescale,all,3,158,8,1.44241e-08,6.96575e-09,2.07071,0.0126582,,,1.55601,2.71003,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,all,background,all,3,303,8,4.48898e-08,1.5833e-08,2.8352,0.445545,1.6347,3.60534,2.52182,3.0876,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,all,finescale,all,3,303,8,4.48898e-08,2.23921e-08,2.00472,0.445545,1.6347,3.60534,1.8278,2.17034,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,interface,background,all,3,25,7,1.26201e-07,2.35125e-08,5.36742,0.64,1.57877,3.40408,4.50614,6.2316,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,interface,finescale,all,3,25,7,1.26201e-07,4.05211e-08,3.11446,0.64,1.57877,3.40408,2.68735,3.63474,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,interface,interface_local,all,3,25,7,1.26201e-07,2.75152e-08,4.58661,0.64,1.61956,3.55225,4.00205,5.39131,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,layer,background,all,3,20,7,2.20147e-09,6.07726e-09,0.362247,0.85,1.33747,2.34296,0.175761,0.699041,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,layer,finescale,all,3,20,7,2.20147e-09,2.5615e-09,0.859445,0.85,1.33747,2.34296,0.464638,1.9106,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,straddles,background,all,3,18,7,3.92902e-08,1.09981e-08,3.57246,0.888889,1.49262,3.06465,2.49695,5.57612,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,straddles,finescale,all,3,18,7,3.92902e-08,2.0905e-08,1.87946,0.888889,1.49262,3.06465,1.29193,3.20107,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,none,background,all,3,240,8,4.03972e-08,1.62087e-08,2.49231,0.358333,1.65991,3.6916,2.23822,2.72475,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,none,finescale,all,3,240,8,4.03972e-08,2.22677e-08,1.81416,0.358333,1.65991,3.6916,1.65803,1.97205,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,all,background,all,3,299,8,4.51115e-08,1.59906e-08,2.82113,0.451505,1.62915,3.58598,2.51171,3.08715,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,all,finescale,all,3,299,8,4.51115e-08,2.24126e-08,2.01277,0.451505,1.62915,3.58598,1.82778,2.17374,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,interface,background,all,3,25,7,1.26201e-07,2.35125e-08,5.36742,0.64,1.57877,3.40408,4.59358,6.33819,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,interface,finescale,all,3,25,7,1.26201e-07,4.05211e-08,3.11446,0.64,1.57877,3.40408,2.68527,3.62698,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,interface,interface_local,all,3,25,7,1.26201e-07,2.75152e-08,4.58661,0.64,1.61956,3.55225,3.99838,5.36511,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,layer,background,all,3,19,7,2.09242e-09,6.39701e-09,0.327093,0.894737,1.32255,2.26462,0.140684,0.660367,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,layer,finescale,all,3,19,7,2.09242e-09,2.29299e-09,0.912531,0.894737,1.32255,2.26462,0.439238,2.29004,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,straddles,background,all,3,17,7,4.03275e-08,1.1431e-08,3.52792,0.941176,1.49425,3.07143,2.43909,5.5459,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,straddles,finescale,all,3,17,7,4.03275e-08,1.99279e-08,2.02367,0.941176,1.49425,3.07143,1.367,3.13142,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,none,background,all,3,238,8,4.03697e-08,1.6292e-08,2.47788,0.361345,1.65332,3.66931,2.23796,2.72664,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,none,finescale,all,3,238,8,4.03697e-08,2.22941e-08,1.81078,0.361345,1.65332,3.66931,1.63952,1.96988,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,all,background,all,3,259,8,4.57065e-08,1.56551e-08,2.91959,0.517375,1.53674,3.24322,2.64726,3.1798,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,all,finescale,all,3,259,8,4.57065e-08,2.12251e-08,2.15342,0.517375,1.53674,3.24322,1.94124,2.33565,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,interface,background,all,3,25,7,1.26201e-07,2.35125e-08,5.36742,0.64,1.57877,3.40408,4.47959,6.33241,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,interface,finescale,all,3,25,7,1.26201e-07,4.05211e-08,3.11446,0.64,1.57877,3.40408,2.69572,3.59687,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,interface,interface_local,all,3,25,7,1.26201e-07,2.75152e-08,4.58661,0.64,1.61956,3.55225,3.93417,5.3073,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,layer,background,all,3,19,7,2.09242e-09,6.39701e-09,0.327093,0.894737,1.32255,2.26462,0.141211,0.650981,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,layer,finescale,all,3,19,7,2.09242e-09,2.29299e-09,0.912531,0.894737,1.32255,2.26462,0.442519,2.37012,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,straddles,background,all,3,16,7,4.22117e-08,1.2089e-08,3.49174,0.9375,1.49469,3.07325,2.37553,5.73792,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,straddles,finescale,all,3,16,7,4.22117e-08,1.96126e-08,2.15227,0.9375,1.49469,3.07325,1.41171,3.14529,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,none,background,all,3,199,8,4.00392e-08,1.58386e-08,2.52795,0.432161,1.53858,3.25048,2.29733,2.77075,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,none,finescale,all,3,199,8,4.00392e-08,2.07382e-08,1.9307,0.432161,1.53858,3.25048,1.7501,2.12841,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,all,background,all,3,2,2,1.79732e-08,5.25149e-09,3.4225,0,4.60793,7.27056,2.08191,5.95083,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,all,finescale,all,3,2,2,1.79732e-08,2.19699e-08,0.818083,0,4.60793,7.27056,0.577271,2.22445,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,straddles,background,all,3,1,1,2.16569e-08,3.63931e-09,5.95083,0,1.28992,2.08702,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,straddles,finescale,all,3,1,1,2.16569e-08,3.7516e-08,0.577271,0,1.28992,2.08702,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,none,background,all,3,1,1,1.42895e-08,6.86366e-09,2.08191,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,none,finescale,all,3,1,1,1.42895e-08,6.42383e-09,2.22445,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,all,background,all,3,158,8,1.44241e-08,4.68226e-09,3.08057,0.0126582,,,2.2996,3.99244,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,all,finescale,all,3,158,8,1.44241e-08,6.96575e-09,2.07071,0.0126582,,,1.55047,2.73505,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,layer,background,all,3,1,1,9.29482e-10,8.33425e-10,1.11526,0,,,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,layer,finescale,all,3,1,1,9.29482e-10,6.29961e-10,1.47546,0,,,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,straddles,background,all,3,1,1,2.16569e-08,3.63931e-09,5.95083,0,1.28992,2.08702,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,straddles,finescale,all,3,1,1,2.16569e-08,3.7516e-08,0.577271,0,1.28992,2.08702,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,none,background,all,3,156,8,1.44642e-08,4.71362e-09,3.06859,0.0128205,,,2.23412,4.00421,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,none,finescale,all,3,156,8,1.44642e-08,6.81052e-09,2.1238,0.0128205,,,1.61837,2.76484,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,all,background,drop_weakest_10pct,3,236,8,5.42137e-08,1.80719e-08,2.99988,0.40678,1.66084,3.69473,2.70143,3.27513,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,236,8,5.42137e-08,2.63204e-08,2.05976,0.40678,1.66084,3.69473,1.86881,2.22765,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,none,background,drop_weakest_10pct,3,236,8,5.42137e-08,1.80719e-08,2.99988,0.40678,1.66084,3.69473,2.72682,3.25637,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,236,8,5.42137e-08,2.63204e-08,2.05976,0.40678,1.66084,3.69473,1.86446,2.21277,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,all,background,drop_weakest_10pct,3,235,8,5.43836e-08,1.81196e-08,3.00136,0.408511,1.65607,3.67863,2.7014,3.2695,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,235,8,5.43836e-08,2.64051e-08,2.05958,0.408511,1.65607,3.67863,1.87532,2.22111,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,none,background,drop_weakest_10pct,3,235,8,5.43836e-08,1.81196e-08,3.00136,0.408511,1.65607,3.67863,2.71665,3.26339,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,235,8,5.43836e-08,2.64051e-08,2.05958,0.408511,1.65607,3.67863,1.86537,2.2169,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,198,8,5.64297e-08,1.78793e-08,3.15615,0.484848,1.55574,3.31702,2.87844,3.40555,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,198,8,5.64297e-08,2.54441e-08,2.21779,0.484848,1.55574,3.31702,2.03698,2.41755,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,198,8,5.64297e-08,1.78793e-08,3.15615,0.484848,1.55574,3.31702,2.87398,3.40437,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,198,8,5.64297e-08,2.54441e-08,2.21779,0.484848,1.55574,3.31702,2.03695,2.3999,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,all,background,drop_weakest_10pct,3,1,1,1.42895e-08,6.86366e-09,2.08191,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,all,finescale,drop_weakest_10pct,3,1,1,1.42895e-08,6.42383e-09,2.22445,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,none,background,drop_weakest_10pct,3,1,1,1.42895e-08,6.86366e-09,2.08191,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,not_finger,none,finescale,drop_weakest_10pct,3,1,1,1.42895e-08,6.42383e-09,2.22445,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,all,background,drop_weakest_10pct,3,157,8,1.4378e-08,4.68891e-09,3.06638,0.0127389,,,2.23464,4.00881,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,all,finescale,drop_weakest_10pct,3,157,8,1.4378e-08,6.77116e-09,2.12342,0.0127389,,,1.59285,2.75254,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,none,background,drop_weakest_10pct,3,157,8,1.4378e-08,4.68891e-09,3.06638,0.0127389,,,2.26338,4.00494,False,shear,0.2,0.65
+vmp250 process_station tow-yo,vdb2021,control,none,finescale,drop_weakest_10pct,3,157,8,1.4378e-08,6.77116e-09,2.12342,0.0127389,,,1.59939,2.71003,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,all,background,drop_weakest_10pct,3,236,8,5.42137e-08,1.80719e-08,2.99988,0.40678,1.66084,3.69473,2.70924,3.28074,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,236,8,5.42137e-08,2.63204e-08,2.05976,0.40678,1.66084,3.69473,1.85557,2.22271,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,interface,background,drop_weakest_10pct,3,25,7,1.26201e-07,2.35125e-08,5.36742,0.64,1.57877,3.40408,4.56565,6.26836,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,interface,finescale,drop_weakest_10pct,3,25,7,1.26201e-07,4.05211e-08,3.11446,0.64,1.57877,3.40408,2.64105,3.61108,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,interface,interface_local,drop_weakest_10pct,3,25,7,1.26201e-07,2.75152e-08,4.58661,0.64,1.61956,3.55225,3.93417,5.30339,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,straddles,background,drop_weakest_10pct,3,9,7,6.26933e-08,1.41987e-08,4.41543,0.888889,1.57508,3.39031,2.74689,7.01201,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,straddles,finescale,drop_weakest_10pct,3,9,7,6.26933e-08,2.72543e-08,2.30031,0.888889,1.57508,3.39031,1.3765,3.63819,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,none,background,drop_weakest_10pct,3,202,8,4.49265e-08,1.75712e-08,2.55683,0.356436,1.67862,3.75394,2.29147,2.78459,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,202,8,4.49265e-08,2.45213e-08,1.83214,0.356436,1.67862,3.75394,1.68531,1.97783,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,all,background,drop_weakest_10pct,3,235,8,5.43836e-08,1.81196e-08,3.00136,0.408511,1.65607,3.67863,2.69815,3.26056,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,235,8,5.43836e-08,2.64051e-08,2.05958,0.408511,1.65607,3.67863,1.88091,2.21899,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,interface,background,drop_weakest_10pct,3,25,7,1.26201e-07,2.35125e-08,5.36742,0.64,1.57877,3.40408,4.49923,6.36076,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,interface,finescale,drop_weakest_10pct,3,25,7,1.26201e-07,4.05211e-08,3.11446,0.64,1.57877,3.40408,2.68061,3.61886,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,interface,interface_local,drop_weakest_10pct,3,25,7,1.26201e-07,2.75152e-08,4.58661,0.64,1.61956,3.55225,4.00123,5.34674,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,straddles,background,drop_weakest_10pct,3,9,7,6.26933e-08,1.41987e-08,4.41543,0.888889,1.57508,3.39031,2.83528,6.94267,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,straddles,finescale,drop_weakest_10pct,3,9,7,6.26933e-08,2.72543e-08,2.30031,0.888889,1.57508,3.39031,1.3765,3.60398,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,none,background,drop_weakest_10pct,3,201,8,4.50789e-08,1.76244e-08,2.55775,0.358209,1.67285,3.73486,2.28402,2.80199,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,201,8,4.50789e-08,2.46114e-08,1.83163,0.358209,1.67285,3.73486,1.67629,1.97695,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,198,8,5.64297e-08,1.78793e-08,3.15615,0.484848,1.55574,3.31702,2.88539,3.40873,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,198,8,5.64297e-08,2.54441e-08,2.21779,0.484848,1.55574,3.31702,2.03769,2.39497,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,interface,background,drop_weakest_10pct,3,25,7,1.26201e-07,2.35125e-08,5.36742,0.64,1.57877,3.40408,4.60277,6.31134,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,interface,finescale,drop_weakest_10pct,3,25,7,1.26201e-07,4.05211e-08,3.11446,0.64,1.57877,3.40408,2.67853,3.61974,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,interface,interface_local,drop_weakest_10pct,3,25,7,1.26201e-07,2.75152e-08,4.58661,0.64,1.61956,3.55225,3.98724,5.32191,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,straddles,background,drop_weakest_10pct,3,9,7,6.26933e-08,1.41987e-08,4.41543,0.888889,1.57508,3.39031,2.74663,7.34547,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,straddles,finescale,drop_weakest_10pct,3,9,7,6.26933e-08,2.72543e-08,2.30031,0.888889,1.57508,3.39031,1.35863,3.54211,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,164,8,4.54501e-08,1.72226e-08,2.63898,0.439024,1.55004,3.29508,2.3655,2.90746,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,164,8,4.54501e-08,2.30465e-08,1.97211,0.439024,1.55004,3.29508,1.77851,2.16943,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,all,background,drop_weakest_10pct,3,1,1,1.42895e-08,6.86366e-09,2.08191,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,all,finescale,drop_weakest_10pct,3,1,1,1.42895e-08,6.42383e-09,2.22445,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,none,background,drop_weakest_10pct,3,1,1,1.42895e-08,6.86366e-09,2.08191,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,not_finger,none,finescale,drop_weakest_10pct,3,1,1,1.42895e-08,6.42383e-09,2.22445,0,5.86281,7.70188,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,all,background,drop_weakest_10pct,3,157,8,1.4378e-08,4.68891e-09,3.06638,0.0127389,,,2.2363,4.0566,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,all,finescale,drop_weakest_10pct,3,157,8,1.4378e-08,6.77116e-09,2.12342,0.0127389,,,1.59422,2.76468,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,layer,background,drop_weakest_10pct,3,1,1,9.29482e-10,8.33425e-10,1.11526,0,,,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,layer,finescale,drop_weakest_10pct,3,1,1,9.29482e-10,6.29961e-10,1.47546,0,,,,,True,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,none,background,drop_weakest_10pct,3,156,8,1.44642e-08,4.71362e-09,3.06859,0.0128205,,,2.26528,3.99565,False,shear,0.2,0.65
+vmp250 process_station tow-yo,rollo2022,control,none,finescale,drop_weakest_10pct,3,156,8,1.44642e-08,6.81052e-09,2.1238,0.0128205,,,1.60535,2.77472,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,all,background,all,3,4092,112,5.24031e-08,2.12482e-08,2.46624,0.327957,1.87502,4.33338,2.01689,2.92414,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,all,finescale,all,3,4092,112,5.24031e-08,2.85973e-08,1.83245,0.327957,1.87502,4.33338,1.55266,2.12112,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,none,background,all,3,4092,112,5.24031e-08,2.12482e-08,2.46624,0.327957,1.87502,4.33338,2.04571,2.94372,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,none,finescale,all,3,4092,112,5.24031e-08,2.85973e-08,1.83245,0.327957,1.87502,4.33338,1.54198,2.11823,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,all,background,all,3,3985,112,5.19746e-08,2.1712e-08,2.39382,0.328482,1.85272,4.27378,1.98346,2.83619,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,all,finescale,all,3,3985,112,5.19746e-08,2.89752e-08,1.79376,0.328482,1.85272,4.27378,1.5206,2.0705,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,none,background,all,3,3985,112,5.19746e-08,2.1712e-08,2.39382,0.328482,1.85272,4.27378,1.96931,2.84567,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,none,finescale,all,3,3985,112,5.19746e-08,2.89752e-08,1.79376,0.328482,1.85272,4.27378,1.55039,2.06402,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,all,background,all,3,2735,111,6.56825e-08,2.64821e-08,2.48026,0.353565,1.6705,3.72706,2.02123,3.04923,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,all,finescale,all,3,2735,111,6.56825e-08,3.56825e-08,1.84075,0.353565,1.6705,3.72706,1.52069,2.17523,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,none,background,all,3,2735,111,6.56825e-08,2.64821e-08,2.48026,0.353565,1.6705,3.72706,2.01514,3.0366,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,none,finescale,all,3,2735,111,6.56825e-08,3.56825e-08,1.84075,0.353565,1.6705,3.72706,1.52888,2.20023,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,all,background,all,3,95,24,7.06527e-08,3.27495e-09,21.5736,0.284211,,,13.8996,29.2214,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,all,finescale,all,3,95,24,7.06527e-08,1.46017e-08,4.83867,0.284211,,,3.37858,5.99814,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,none,background,all,3,95,24,7.06527e-08,3.27495e-09,21.5736,0.284211,,,14.3825,29.4157,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,none,finescale,all,3,95,24,7.06527e-08,1.46017e-08,4.83867,0.284211,,,3.3489,6.00001,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,all,background,all,3,2347,113,2.26991e-08,1.15513e-08,1.96506,0.0144866,,,1.59838,2.39551,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,all,finescale,all,3,2347,113,2.26991e-08,1.67947e-08,1.35156,0.0144866,,,1.12746,1.64679,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,none,background,all,3,2347,113,2.26991e-08,1.15513e-08,1.96506,0.0144866,,,1.59162,2.43273,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,none,finescale,all,3,2347,113,2.26991e-08,1.67947e-08,1.35156,0.0144866,,,1.14244,1.63767,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,all,background,all,3,4092,112,5.24031e-08,2.12482e-08,2.46624,0.327957,1.87502,4.33338,2.07228,2.92998,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,all,finescale,all,3,4092,112,5.24031e-08,2.85973e-08,1.83245,0.327957,1.87502,4.33338,1.56688,2.12043,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,interface,background,all,3,64,25,1.43413e-07,2.39747e-08,5.98185,0.3125,1.64619,3.645,3.53472,10.1317,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,interface,finescale,all,3,64,25,1.43413e-07,5.45572e-08,2.62868,0.3125,1.64619,3.645,1.76345,3.53141,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,interface,interface_local,all,3,64,25,1.43413e-07,3.27495e-08,4.3791,0.3125,1.6713,3.72974,2.85628,6.14947,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,layer,background,all,3,73,33,3.149e-09,1.05572e-08,0.298279,0.547945,1.4532,2.89587,0.133063,0.484831,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,layer,finescale,all,3,73,33,3.149e-09,2.7044e-09,1.1644,0.547945,1.4532,2.89587,0.788806,1.78659,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,straddles,background,all,3,102,38,1.58399e-07,1.63317e-08,9.69885,0.411765,1.58516,3.42781,5.85858,12.2369,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,straddles,finescale,all,3,102,38,1.58399e-07,4.8427e-08,3.27088,0.411765,1.58516,3.42781,2.45462,3.74772,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,none,background,all,3,3853,112,4.90186e-08,2.15356e-08,2.27617,0.321827,1.8872,4.36534,1.87865,2.69926,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,none,finescale,all,3,3853,112,4.90186e-08,2.81318e-08,1.74246,0.321827,1.8872,4.36534,1.47213,2.03327,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,all,background,all,3,3985,112,5.19746e-08,2.1712e-08,2.39382,0.328482,1.85272,4.27378,2.02306,2.82529,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,all,finescale,all,3,3985,112,5.19746e-08,2.89752e-08,1.79376,0.328482,1.85272,4.27378,1.54078,2.07068,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,interface,background,all,3,63,25,1.44066e-07,2.41474e-08,5.96612,0.31746,1.6441,3.63783,3.58905,9.78925,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,interface,finescale,all,3,63,25,1.44066e-07,5.43212e-08,2.65212,0.31746,1.6441,3.63783,1.77736,3.50381,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,interface,interface_local,all,3,63,25,1.44066e-07,3.29634e-08,4.37049,0.31746,1.67052,3.72714,2.81719,6.2913,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,layer,background,all,3,73,33,3.149e-09,1.05572e-08,0.298279,0.547945,1.4532,2.89587,0.136723,0.48092,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,layer,finescale,all,3,73,33,3.149e-09,2.7044e-09,1.1644,0.547945,1.4532,2.89587,0.787574,1.8245,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,straddles,background,all,3,101,38,1.59734e-07,1.64928e-08,9.68505,0.415842,1.57713,3.39798,5.953,12.1402,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,straddles,finescale,all,3,101,38,1.59734e-07,4.88897e-08,3.26723,0.415842,1.57713,3.39798,2.44542,3.72485,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,none,background,all,3,3748,112,4.84737e-08,2.20289e-08,2.20046,0.322038,1.86402,4.30416,1.82507,2.57209,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,none,finescale,all,3,3748,112,4.84737e-08,2.85242e-08,1.69939,0.322038,1.86402,4.30416,1.43131,1.96411,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,all,background,all,3,2735,111,6.56825e-08,2.64821e-08,2.48026,0.353565,1.6705,3.72706,1.98686,3.05036,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,all,finescale,all,3,2735,111,6.56825e-08,3.56825e-08,1.84075,0.353565,1.6705,3.72706,1.54343,2.18437,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,interface,background,all,3,61,24,1.45776e-07,2.43341e-08,5.9906,0.311475,1.64318,3.63465,3.55673,10.2901,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,interface,finescale,all,3,61,24,1.45776e-07,5.40288e-08,2.69812,0.311475,1.64318,3.63465,1.7993,3.62965,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,interface,interface_local,all,3,61,24,1.45776e-07,3.33317e-08,4.3735,0.311475,1.67053,3.72717,2.82631,6.3271,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,layer,background,all,3,72,32,3.17146e-09,1.0676e-08,0.297065,0.541667,1.44529,2.86092,0.12387,0.480001,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,layer,finescale,all,3,72,32,3.17146e-09,2.73332e-09,1.1603,0.541667,1.44529,2.86092,0.756044,1.79763,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,straddles,background,all,3,92,33,1.7029e-07,1.75277e-08,9.71549,0.402174,1.5628,3.34398,5.78473,12.2142,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,straddles,finescale,all,3,92,33,1.7029e-07,5.22858e-08,3.25691,0.402174,1.5628,3.34398,2.43634,3.73478,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,none,background,all,3,2510,111,6.16949e-08,2.73159e-08,2.25857,0.34741,1.67596,3.74518,1.84135,2.72999,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,none,finescale,all,3,2510,111,6.16949e-08,3.55732e-08,1.73431,0.34741,1.67596,3.74518,1.4007,2.0656,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,all,background,all,3,95,24,7.06527e-08,3.27495e-09,21.5736,0.284211,,,13.397,29.5164,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,all,finescale,all,3,95,24,7.06527e-08,1.46017e-08,4.83867,0.284211,,,3.51902,6.14984,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,interface,background,all,3,1,1,1.02291e-07,1.30992e-08,7.80897,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,interface,finescale,all,3,1,1,1.02291e-07,6.94263e-08,1.47337,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,interface,interface_local,all,3,1,1,1.02291e-07,1.92765e-08,5.30652,0,1.75875,4.00598,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,straddles,background,all,3,1,1,2.35407e-08,5.77569e-11,407.582,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,straddles,finescale,all,3,1,1,2.35407e-08,1.68765e-09,13.9488,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,none,background,all,3,93,24,7.0819e-08,3.20391e-09,22.1039,0.290323,,,14.0783,30.3197,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,none,finescale,all,3,93,24,7.0819e-08,1.4151e-08,5.00452,0.290323,,,3.52923,6.15108,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,all,background,all,3,2347,113,2.26991e-08,1.15513e-08,1.96506,0.0144866,,,1.62814,2.40362,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,all,finescale,all,3,2347,113,2.26991e-08,1.67947e-08,1.35156,0.0144866,,,1.13204,1.64908,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,layer,background,all,3,2,1,4.64032e-10,1.03484e-10,4.48408,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,layer,finescale,all,3,2,1,4.64032e-10,1.2157e-10,3.81701,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,straddles,background,all,3,1,1,2.35407e-08,5.77569e-11,407.582,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,straddles,finescale,all,3,1,1,2.35407e-08,1.68765e-09,13.9488,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,none,background,all,3,2344,113,2.27177e-08,1.1566e-08,1.96418,0.0145051,,,1.60585,2.41252,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,none,finescale,all,3,2344,113,2.27177e-08,1.68154e-08,1.35101,0.0145051,,,1.13709,1.63082,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,all,background,drop_weakest_10pct,3,3191,112,5.69209e-08,2.3801e-08,2.39154,0.265747,1.90181,4.40315,1.97737,2.94373,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,3191,112,5.69209e-08,3.19261e-08,1.78289,0.265747,1.90181,4.40315,1.46988,2.08427,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,none,background,drop_weakest_10pct,3,3191,112,5.69209e-08,2.3801e-08,2.39154,0.265747,1.90181,4.40315,1.95817,2.90442,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,3191,112,5.69209e-08,3.19261e-08,1.78289,0.265747,1.90181,4.40315,1.48318,2.06317,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,all,background,drop_weakest_10pct,3,3124,112,5.63435e-08,2.42098e-08,2.3273,0.265365,1.88265,4.35346,1.89208,2.79638,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,3124,112,5.63435e-08,3.22077e-08,1.74938,0.265365,1.88265,4.35346,1.47532,2.05373,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,none,background,drop_weakest_10pct,3,3124,112,5.63435e-08,2.42098e-08,2.3273,0.265365,1.88265,4.35346,1.92487,2.8013,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,3124,112,5.63435e-08,3.22077e-08,1.74938,0.265365,1.88265,4.35346,1.44626,2.04657,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,1995,111,7.51233e-08,3.10183e-08,2.4219,0.27218,1.69487,3.80699,1.94608,3.03609,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,1995,111,7.51233e-08,4.18128e-08,1.79666,0.27218,1.69487,3.80699,1.46679,2.18777,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,1995,111,7.51233e-08,3.10183e-08,2.4219,0.27218,1.69487,3.80699,1.93506,3.02745,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,1995,111,7.51233e-08,4.18128e-08,1.79666,0.27218,1.69487,3.80699,1.4658,2.19259,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,all,background,drop_weakest_10pct,3,62,21,8.26551e-08,3.64854e-09,22.6543,0.274194,,,13.5143,31.3089,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,all,finescale,drop_weakest_10pct,3,62,21,8.26551e-08,1.8431e-08,4.48457,0.274194,,,2.98411,5.89461,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,none,background,drop_weakest_10pct,3,62,21,8.26551e-08,3.64854e-09,22.6543,0.274194,,,12.9764,30.3281,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,not_finger,none,finescale,drop_weakest_10pct,3,62,21,8.26551e-08,1.8431e-08,4.48457,0.274194,,,2.96137,5.77831,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,all,background,drop_weakest_10pct,3,2319,113,2.28557e-08,1.16802e-08,1.9568,0.0125054,,,1.5951,2.4566,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,all,finescale,drop_weakest_10pct,3,2319,113,2.28557e-08,1.69742e-08,1.3465,0.0125054,,,1.10962,1.63686,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,none,background,drop_weakest_10pct,3,2319,113,2.28557e-08,1.16802e-08,1.9568,0.0125054,,,1.58709,2.43621,False,shear,0.2,0.65
+vmp250 transect free fall,vdb2021,control,none,finescale,drop_weakest_10pct,3,2319,113,2.28557e-08,1.69742e-08,1.3465,0.0125054,,,1.11889,1.64133,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,all,background,drop_weakest_10pct,3,3191,112,5.69209e-08,2.3801e-08,2.39154,0.265747,1.90181,4.40315,1.96457,2.88292,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,3191,112,5.69209e-08,3.19261e-08,1.78289,0.265747,1.90181,4.40315,1.47273,2.09774,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,interface,background,drop_weakest_10pct,3,53,21,1.62244e-07,2.64178e-08,6.14149,0.226415,1.66103,3.69537,3.648,10.2746,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,interface,finescale,drop_weakest_10pct,3,53,21,1.62244e-07,6.09583e-08,2.66156,0.226415,1.66103,3.69537,1.76861,3.61915,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,interface,interface_local,drop_weakest_10pct,3,53,21,1.62244e-07,3.5743e-08,4.53919,0.226415,1.68215,3.76558,2.9299,6.55769,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,layer,background,drop_weakest_10pct,3,1,1,1.26721e-09,4.98519e-09,0.254195,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,layer,finescale,drop_weakest_10pct,3,1,1,1.26721e-09,1.00283e-08,0.126364,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,straddles,background,drop_weakest_10pct,3,51,25,2.59217e-07,2.3948e-08,10.8242,0.235294,1.57638,3.39517,6.36457,13.3823,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,straddles,finescale,drop_weakest_10pct,3,51,25,2.59217e-07,7.83047e-08,3.31037,0.235294,1.57638,3.39517,2.40576,3.72154,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,none,background,drop_weakest_10pct,3,3086,112,5.17869e-08,2.37597e-08,2.17961,0.266688,1.91089,4.42634,1.78242,2.59311,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,3086,112,5.17869e-08,3.06682e-08,1.68862,0.266688,1.91089,4.42634,1.36523,1.97859,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,all,background,drop_weakest_10pct,3,3124,112,5.63435e-08,2.42098e-08,2.3273,0.265365,1.88265,4.35346,1.94464,2.81326,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,3124,112,5.63435e-08,3.22077e-08,1.74938,0.265365,1.88265,4.35346,1.44845,2.0244,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,interface,background,drop_weakest_10pct,3,52,21,1.63397e-07,2.66739e-08,6.12574,0.230769,1.65887,3.6881,3.55146,10.0448,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,interface,finescale,drop_weakest_10pct,3,52,21,1.63397e-07,6.07955e-08,2.68765,0.230769,1.65887,3.6881,1.75679,3.65683,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,interface,interface_local,drop_weakest_10pct,3,52,21,1.63397e-07,3.60597e-08,4.5313,0.230769,1.68139,3.76306,2.90171,6.53399,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,layer,background,drop_weakest_10pct,3,1,1,1.26721e-09,4.98519e-09,0.254195,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,layer,finescale,drop_weakest_10pct,3,1,1,1.26721e-09,1.00283e-08,0.126364,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,straddles,background,drop_weakest_10pct,3,51,25,2.59217e-07,2.3948e-08,10.8242,0.235294,1.57638,3.39517,6.6695,13.4194,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,straddles,finescale,drop_weakest_10pct,3,51,25,2.59217e-07,7.83047e-08,3.31037,0.235294,1.57638,3.39517,2.36329,3.68201,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,none,background,drop_weakest_10pct,3,3020,112,5.10924e-08,2.41782e-08,2.11316,0.266225,1.89105,4.37537,1.74193,2.50543,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,3020,112,5.10924e-08,3.09443e-08,1.65111,0.266225,1.89105,4.37537,1.35955,1.95331,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,1995,111,7.51233e-08,3.10183e-08,2.4219,0.27218,1.69487,3.80699,1.88965,3.02759,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,1995,111,7.51233e-08,4.18128e-08,1.79666,0.27218,1.69487,3.80699,1.45029,2.16071,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,interface,background,drop_weakest_10pct,3,51,20,1.63071e-07,2.65589e-08,6.13998,0.235294,1.65705,3.68195,3.48496,10.4611,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,interface,finescale,drop_weakest_10pct,3,51,20,1.63071e-07,5.96094e-08,2.73566,0.235294,1.65705,3.68195,1.76805,3.71443,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,interface,interface_local,drop_weakest_10pct,3,51,20,1.63071e-07,3.60399e-08,4.52473,0.235294,1.68032,3.75956,2.86021,6.6602,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,layer,background,drop_weakest_10pct,3,1,1,1.26721e-09,4.98519e-09,0.254195,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,layer,finescale,drop_weakest_10pct,3,1,1,1.26721e-09,1.00283e-08,0.126364,1,1.64136,3.62838,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,straddles,background,drop_weakest_10pct,3,50,24,2.58174e-07,2.40989e-08,10.7131,0.24,1.57463,3.38865,6.29246,13.3198,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,straddles,finescale,drop_weakest_10pct,3,50,24,2.58174e-07,7.84494e-08,3.29096,0.24,1.57463,3.38865,2.37677,3.6976,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,1893,111,6.79579e-08,3.13349e-08,2.16876,0.27364,1.69841,3.81842,1.70746,2.7221,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,1893,111,6.79579e-08,4.03824e-08,1.68286,0.27364,1.69841,3.81842,1.33494,2.0349,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,all,background,drop_weakest_10pct,3,62,21,8.26551e-08,3.64854e-09,22.6543,0.274194,,,13.1707,30.7647,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,all,finescale,drop_weakest_10pct,3,62,21,8.26551e-08,1.8431e-08,4.48457,0.274194,,,2.94516,5.77328,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,interface,background,drop_weakest_10pct,3,1,1,1.02291e-07,1.30992e-08,7.80897,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,interface,finescale,drop_weakest_10pct,3,1,1,1.02291e-07,6.94263e-08,1.47337,0,1.88391,4.35675,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,interface,interface_local,drop_weakest_10pct,3,1,1,1.02291e-07,1.92765e-08,5.30652,0,1.75875,4.00598,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,none,background,drop_weakest_10pct,3,61,20,8.23332e-08,3.49361e-09,23.5668,0.278689,,,14.0309,32.2597,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,not_finger,none,finescale,drop_weakest_10pct,3,61,20,8.23332e-08,1.7595e-08,4.67935,0.278689,,,3.27999,5.91947,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,all,background,drop_weakest_10pct,3,2319,113,2.28557e-08,1.16802e-08,1.9568,0.0125054,,,1.61171,2.41294,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,all,finescale,drop_weakest_10pct,3,2319,113,2.28557e-08,1.69742e-08,1.3465,0.0125054,,,1.10719,1.63366,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,layer,background,drop_weakest_10pct,3,1,1,4.92606e-10,1.27859e-10,3.85272,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,layer,finescale,drop_weakest_10pct,3,1,1,4.92606e-10,3.15825e-11,15.5975,0,,,,,True,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,none,background,drop_weakest_10pct,3,2318,113,2.28654e-08,1.16851e-08,1.95679,0.0125108,,,1.6004,2.40525,False,shear,0.2,0.65
+vmp250 transect free fall,rollo2022,control,none,finescale,drop_weakest_10pct,3,2318,113,2.28654e-08,1.69815e-08,1.34649,0.0125108,,,1.12485,1.63697,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,all,background,all,3,9118,44,1.72269e-08,3.38292e-09,5.0923,0.0939899,2.2427,5.14529,4.22281,6.02199,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,all,finescale,all,3,9118,44,1.72269e-08,6.31944e-09,2.72601,0.0939899,2.2427,5.14529,2.24216,3.28693,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,interface,background,all,3,275,41,6.19788e-08,7.9387e-09,7.80717,0.0254545,1.7452,3.96498,5.37394,11.5023,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,interface,finescale,all,3,275,41,6.19788e-08,1.76173e-08,3.51806,0.0254545,1.7452,3.96498,2.60457,4.73235,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,interface,interface_local,all,3,275,41,6.19788e-08,1.02038e-08,6.07409,0.0254545,1.74016,3.94958,4.27948,9.09417,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,layer,background,all,3,438,44,4.70315e-10,7.09525e-10,0.662859,0.0593607,1.79263,4.10579,0.402712,1.14653,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,layer,finescale,all,3,438,44,4.70315e-10,1.04263e-09,0.451085,0.0593607,1.79263,4.10579,0.324491,0.684489,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,straddles,background,all,3,419,44,4.02734e-08,6.22467e-09,6.46996,0.0906921,1.79124,4.10175,3.30815,13.259,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,straddles,finescale,all,3,419,44,4.02734e-08,1.97049e-08,2.04382,0.0906921,1.79124,4.10175,1.11799,4.18312,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,none,background,all,3,7986,44,1.53957e-08,3.22357e-09,4.77597,0.0984222,2.31066,5.26708,4.01868,5.71925,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,none,finescale,all,3,7986,44,1.53957e-08,5.51751e-09,2.79033,0.0984222,2.31066,5.26708,2.30433,3.31754,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,all,background,all,3,7912,44,1.86747e-08,3.74406e-09,4.98782,0.0626896,2.07987,4.82116,4.05304,5.97417,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,all,finescale,all,3,7912,44,1.86747e-08,6.85284e-09,2.7251,0.0626896,2.07987,4.82116,2.1809,3.25454,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,interface,background,all,3,274,41,6.21971e-08,7.96745e-09,7.8064,0.0255474,1.74418,3.96189,5.52839,11.7054,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,interface,finescale,all,3,274,41,6.21971e-08,1.76808e-08,3.51777,0.0255474,1.74418,3.96189,2.5821,4.92223,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,interface,interface_local,all,3,274,41,6.21971e-08,1.02407e-08,6.07353,0.0255474,1.73886,3.9456,4.2496,8.83683,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,layer,background,all,3,432,44,4.72838e-10,7.19021e-10,0.657613,0.0601852,1.7904,4.09933,0.389473,1.19053,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,layer,finescale,all,3,432,44,4.72838e-10,1.05419e-09,0.448531,0.0601852,1.7904,4.09933,0.321056,0.686765,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,straddles,background,all,3,413,44,4.08342e-08,6.3131e-09,6.46817,0.0895884,1.79066,4.10007,3.30393,12.9003,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,straddles,finescale,all,3,413,44,4.08342e-08,1.95222e-08,2.09168,0.0895884,1.79066,4.10007,1.10601,4.16314,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,none,background,all,3,6793,44,1.67295e-08,3.60989e-09,4.63434,0.0627116,2.12351,4.9129,3.77703,5.77351,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,none,finescale,all,3,6793,44,1.67295e-08,6.01459e-09,2.78148,0.0627116,2.12351,4.9129,2.29428,3.30806,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,all,background,all,3,3113,44,3.22326e-08,6.82729e-09,4.72114,0.013813,1.55728,3.32293,3.74265,5.73159,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,all,finescale,all,3,3113,44,3.22326e-08,1.30623e-08,2.46761,0.013813,1.55728,3.32293,1.93661,3.0413,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,interface,background,all,3,158,31,7.90215e-08,1.18271e-08,6.68138,0,1.48806,3.04555,4.30834,10.2689,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,interface,finescale,all,3,158,31,7.90215e-08,2.61541e-08,3.02139,0,1.48806,3.04555,2.09858,4.36986,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,interface,interface_local,all,3,158,31,7.90215e-08,1.53095e-08,5.16161,0,1.48867,3.04814,3.56569,7.70319,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,layer,background,all,3,237,35,6.06365e-10,1.15106e-09,0.526791,0.00421941,1.51135,3.14171,0.285167,1.0332,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,layer,finescale,all,3,237,35,6.06365e-10,1.70144e-09,0.356384,0.00421941,1.51135,3.14171,0.256231,0.575653,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,straddles,background,all,3,163,33,6.57915e-08,1.38206e-08,4.76039,0.00613497,1.48054,3.01389,2.54395,10.9,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,straddles,finescale,all,3,163,33,6.57915e-08,4.3602e-08,1.50891,0.00613497,1.48054,3.01389,0.831548,3.67915,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,none,background,all,3,2555,44,3.01319e-08,6.59848e-09,4.56649,0.016047,1.56914,3.36801,3.54224,5.78908,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,none,finescale,all,3,2555,44,3.01319e-08,1.13582e-08,2.65288,0.016047,1.56914,3.36801,2.05104,3.30667,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,all,background,all,3,1070,36,8.19323e-09,4.32374e-10,18.9494,0.307477,,,10.3687,36.4394,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,all,finescale,all,3,1070,36,8.19323e-09,1.33719e-09,6.12721,0.307477,,,2.15917,14.1335,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,layer,background,all,3,4,3,6.30114e-11,2.61628e-11,2.40843,0,47.7569,9.09128,1.07905,7.61316,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,layer,finescale,all,3,4,3,6.30114e-11,2.96869e-11,2.12254,0,47.7569,9.09128,1.43935,3.24248,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,straddles,background,all,3,2,2,3.74279e-09,1.04792e-10,35.7163,0,1.60279,3.49225,24.9935,78.6269,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,straddles,finescale,all,3,2,2,3.74279e-09,2.8149e-10,13.2963,0,1.60279,3.49225,8.80728,37.8137,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,none,background,all,3,1064,36,8.23216e-09,4.34517e-10,18.9456,0.309211,,,9.96862,36.3857,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,none,finescale,all,3,1064,36,8.23216e-09,1.34409e-09,6.12472,0.309211,,,2.1438,13.3437,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,all,background,all,3,1160,44,1.73556e-08,6.05424e-09,2.86668,0.0603448,,,1.86545,4.68702,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,all,finescale,all,3,1160,44,1.73556e-08,9.9504e-09,1.74421,0.0603448,,,1.17954,2.51931,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,straddles,background,all,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,straddles,finescale,all,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,none,background,all,3,1159,44,1.73669e-08,6.05932e-09,2.86616,0.0603969,,,1.84372,4.57868,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,none,finescale,all,3,1159,44,1.73669e-08,9.95857e-09,1.74392,0.0603969,,,1.15551,2.55076,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,all,background,all,3,9118,44,1.72269e-08,3.38292e-09,5.0923,0.0939899,2.2427,5.14529,4.27716,6.0527,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,all,finescale,all,3,9118,44,1.72269e-08,6.31944e-09,2.72601,0.0939899,2.2427,5.14529,2.24025,3.2523,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,interface,background,all,3,502,44,5.13869e-08,5.79201e-09,8.87204,0.0139442,1.74716,3.97096,6.11994,12.3918,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,interface,finescale,all,3,502,44,5.13869e-08,1.20176e-08,4.27598,0.0139442,1.74716,3.97096,3.04915,5.94424,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,interface,interface_local,all,3,502,44,5.13869e-08,7.64232e-09,6.72399,0.0139442,1.73722,3.94055,4.76247,9.28726,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,layer,background,all,3,1342,44,1.15529e-09,6.2263e-10,1.8555,0.0692996,2.05327,4.76331,1.34119,2.57165,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,layer,finescale,all,3,1342,44,1.15529e-09,1.02358e-09,1.12868,0.0692996,2.05327,4.76331,0.821097,1.57817,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,straddles,background,all,3,1274,44,2.40454e-08,3.48658e-09,6.89655,0.0478807,1.87933,4.34475,4.5169,10.6576,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,straddles,finescale,all,3,1274,44,2.40454e-08,1.00372e-08,2.39563,0.0478807,1.87933,4.34475,1.49765,3.77992,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,none,background,all,3,6000,44,1.65157e-08,3.77674e-09,4.37301,0.116,2.40029,5.41713,3.57617,5.29884,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,none,finescale,all,3,6000,44,1.65157e-08,6.2378e-09,2.64768,0.116,2.40029,5.41713,2.19462,3.17121,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,all,background,all,3,7912,44,1.86747e-08,3.74406e-09,4.98782,0.0626896,2.07987,4.82116,4.08194,5.97802,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,all,finescale,all,3,7912,44,1.86747e-08,6.85284e-09,2.7251,0.0626896,2.07987,4.82116,2.25564,3.29589,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,interface,background,all,3,502,44,5.13869e-08,5.79201e-09,8.87204,0.0139442,1.74716,3.97096,6.04168,12.2317,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,interface,finescale,all,3,502,44,5.13869e-08,1.20176e-08,4.27598,0.0139442,1.74716,3.97096,3.0652,5.85365,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,interface,interface_local,all,3,502,44,5.13869e-08,7.64232e-09,6.72399,0.0139442,1.73722,3.94055,4.93752,9.0974,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,layer,background,all,3,1330,44,1.13261e-09,6.23376e-10,1.8169,0.0691729,2.05277,4.76221,1.25415,2.54541,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,layer,finescale,all,3,1330,44,1.13261e-09,1.01929e-09,1.11117,0.0691729,2.05277,4.76221,0.757926,1.51266,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,straddles,background,all,3,1273,44,2.40583e-08,3.48928e-09,6.8949,0.0479183,1.87924,4.34449,4.62094,10.6538,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,straddles,finescale,all,3,1273,44,2.40583e-08,1.00446e-08,2.39515,0.0479183,1.87924,4.34449,1.62594,3.88961,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,none,background,all,3,4807,44,1.86863e-08,4.46108e-09,4.18874,0.0698981,2.16848,5.00358,3.33783,5.07885,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,none,finescale,all,3,4807,44,1.86863e-08,7.08227e-09,2.63847,0.0698981,2.16848,5.00358,2.14314,3.19259,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,all,background,all,3,3113,44,3.22326e-08,6.82729e-09,4.72114,0.013813,1.55728,3.32293,3.84675,5.86983,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,all,finescale,all,3,3113,44,3.22326e-08,1.30623e-08,2.46761,0.013813,1.55728,3.32293,1.93243,3.07704,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,interface,background,all,3,310,43,6.54909e-08,8.03855e-09,8.1471,0.00645161,1.52374,3.19169,5.16498,12.1766,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,interface,finescale,all,3,310,43,6.54909e-08,1.68426e-08,3.88842,0.00645161,1.52374,3.19169,2.6121,5.79676,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,interface,interface_local,all,3,310,43,6.54909e-08,1.06552e-08,6.14637,0.00645161,1.52342,3.19042,4.0634,8.72036,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,layer,background,all,3,584,44,1.52755e-09,1.10366e-09,1.38407,0.0273973,1.55847,3.3275,0.840265,2.13655,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,layer,finescale,all,3,584,44,1.52755e-09,1.77155e-09,0.862264,0.0273973,1.55847,3.3275,0.537249,1.34181,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,straddles,background,all,3,548,44,4.21666e-08,6.97004e-09,6.04969,0.0145985,1.51671,3.16344,3.63743,9.99121,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,straddles,finescale,all,3,548,44,4.21666e-08,2.05638e-08,2.05053,0.0145985,1.51671,3.16344,1.29489,3.49056,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,none,background,all,3,1671,44,3.3536e-08,8.55613e-09,3.91953,0.0101735,1.57185,3.37822,3.10209,4.9653,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,none,finescale,all,3,1671,44,3.3536e-08,1.38469e-08,2.42191,0.0101735,1.57185,3.37822,1.92607,3.0922,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,all,background,all,3,1070,36,8.19323e-09,4.32374e-10,18.9494,0.307477,,,10.1003,35.427,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,all,finescale,all,3,1070,36,8.19323e-09,1.33719e-09,6.12721,0.307477,,,2.06251,12.9967,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,layer,background,all,3,2,2,6.26878e-09,8.31562e-10,7.53857,0,17.2179,8.74641,4.61976,7.58111,True,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,layer,finescale,all,3,2,2,6.26878e-09,1.662e-09,3.77183,0,17.2179,8.74641,3.24248,3.77731,True,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,none,background,all,3,1068,35,8.19683e-09,4.31626e-10,18.9906,0.308052,,,10.3673,36.2756,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,none,finescale,all,3,1068,35,8.19683e-09,1.33658e-09,6.13269,0.308052,,,1.92307,13.5824,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,all,background,all,3,1160,44,1.73556e-08,6.05424e-09,2.86668,0.0603448,,,1.84895,4.34989,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,all,finescale,all,3,1160,44,1.73556e-08,9.9504e-09,1.74421,0.0603448,,,1.20695,2.63856,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,none,background,all,3,1160,44,1.73556e-08,6.05424e-09,2.86668,0.0603448,,,1.86065,4.71735,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,none,finescale,all,3,1160,44,1.73556e-08,9.9504e-09,1.74421,0.0603448,,,1.18845,2.65313,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,all,background,drop_weakest_10pct,3,8036,44,1.9324e-08,3.39653e-09,5.68935,0.0892235,2.25493,5.16776,4.69827,6.72047,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,8036,44,1.9324e-08,5.86749e-09,3.29341,0.0892235,2.25493,5.16776,2.81549,3.8333,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,interface,background,drop_weakest_10pct,3,265,41,6.39205e-08,7.72367e-09,8.27592,0.0264151,1.75444,3.99301,5.83171,12.1812,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,interface,finescale,drop_weakest_10pct,3,265,41,6.39205e-08,1.71196e-08,3.73376,0.0264151,1.75444,3.99301,2.70515,5.14597,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,interface,interface_local,drop_weakest_10pct,3,265,41,6.39205e-08,9.17301e-09,6.96832,0.0264151,1.74949,3.97804,5.07044,9.65895,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,layer,background,drop_weakest_10pct,3,155,38,7.16722e-10,1.13764e-09,0.630008,0.0774194,1.82217,4.18974,0.50148,0.818258,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,layer,finescale,drop_weakest_10pct,3,155,38,7.16722e-10,2.24629e-09,0.319069,0.0774194,1.82217,4.18974,0.23048,0.511319,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,straddles,background,drop_weakest_10pct,3,380,44,4.34906e-08,3.67113e-09,11.8467,0.0921053,1.81625,4.17313,8.35541,15.0702,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,straddles,finescale,drop_weakest_10pct,3,380,44,4.34906e-08,1.11395e-08,3.90417,0.0921053,1.81625,4.17313,2.75547,5.24752,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,none,background,drop_weakest_10pct,3,7236,44,1.68203e-08,3.27202e-09,5.14063,0.0916252,2.32048,5.28408,4.2224,6.33185,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,7236,44,1.68203e-08,5.25612e-09,3.20014,0.0916252,2.32048,5.28408,2.72112,3.74949,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,all,background,drop_weakest_10pct,3,7065,44,2.06919e-08,3.7351e-09,5.53984,0.0614296,2.0894,4.8415,4.64289,6.66322,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,7065,44,2.06919e-08,6.45577e-09,3.20517,0.0614296,2.0894,4.8415,2.70575,3.71509,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,interface,background,drop_weakest_10pct,3,264,41,6.41544e-08,7.75269e-09,8.27511,0.0265152,1.75341,3.9899,5.53791,12.0705,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,interface,finescale,drop_weakest_10pct,3,264,41,6.41544e-08,1.71836e-08,3.73346,0.0265152,1.75341,3.9899,2.72812,5.08483,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,interface,interface_local,drop_weakest_10pct,3,264,41,6.41544e-08,9.20737e-09,6.96771,0.0265152,1.74816,3.97402,5.08343,9.76195,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,layer,background,drop_weakest_10pct,3,155,38,7.16722e-10,1.13764e-09,0.630008,0.0774194,1.82217,4.18974,0.503892,0.846715,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,layer,finescale,drop_weakest_10pct,3,155,38,7.16722e-10,2.24629e-09,0.319069,0.0774194,1.82217,4.18974,0.232825,0.521815,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,straddles,background,drop_weakest_10pct,3,377,44,4.38253e-08,3.69976e-09,11.8455,0.0901857,1.81539,4.17072,8.51922,15.1964,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,straddles,finescale,drop_weakest_10pct,3,377,44,4.38253e-08,1.12267e-08,3.90367,0.0901857,1.81539,4.17072,2.72177,5.10095,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,none,background,drop_weakest_10pct,3,6269,44,1.79643e-08,3.63226e-09,4.94576,0.0607752,2.13087,4.92801,3.94997,5.96587,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,6269,44,1.79643e-08,5.82116e-09,3.08603,0.0607752,2.13087,4.92801,2.65069,3.60271,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,2681,44,3.70385e-08,6.9726e-09,5.312,0.0123088,1.56394,3.34832,4.2333,6.45029,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,2681,44,3.70385e-08,1.24773e-08,2.96848,0.0123088,1.56394,3.34832,2.49581,3.5566,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,interface,background,drop_weakest_10pct,3,151,31,8.22349e-08,1.14728e-08,7.16783,0,1.49549,3.07658,4.42777,10.8627,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,interface,finescale,drop_weakest_10pct,3,151,31,8.22349e-08,2.53812e-08,3.24,0,1.49549,3.07658,2.18158,4.54784,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,interface,interface_local,drop_weakest_10pct,3,151,31,8.22349e-08,1.35466e-08,6.07051,0,1.4955,3.07663,3.86762,8.98767,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,layer,background,drop_weakest_10pct,3,70,27,1.01459e-09,2.03648e-09,0.498206,0,1.55925,3.33046,0.374192,0.610243,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,layer,finescale,drop_weakest_10pct,3,70,27,1.01459e-09,4.52435e-09,0.224251,0,1.55925,3.33046,0.172425,0.331317,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,straddles,background,drop_weakest_10pct,3,143,33,7.26558e-08,7.28253e-09,9.97673,0.00699301,1.49993,3.09495,6.76463,13.7435,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,straddles,finescale,drop_weakest_10pct,3,143,33,7.26558e-08,2.29513e-08,3.16565,0.00699301,1.49993,3.09495,2.06665,4.3002,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,2317,44,3.29831e-08,6.80932e-09,4.84382,0.013811,1.57412,3.38672,3.78616,6.18108,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,2317,44,3.29831e-08,1.12301e-08,2.93701,0.013811,1.57412,3.38672,2.3708,3.58522,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,all,background,drop_weakest_10pct,3,920,35,9.4619e-09,5.01075e-10,18.8832,0.294565,,,10.055,36.1335,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,all,finescale,drop_weakest_10pct,3,920,35,9.4619e-09,9.76256e-10,9.69203,0.294565,,,4.63016,15.662,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,straddles,background,drop_weakest_10pct,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,straddles,finescale,drop_weakest_10pct,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,none,background,drop_weakest_10pct,3,919,35,9.46763e-09,5.01437e-10,18.881,0.294886,,,10.2638,35.1945,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,not_finger,none,finescale,drop_weakest_10pct,3,919,35,9.46763e-09,9.768e-10,9.69249,0.294886,,,4.84383,15.9926,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,all,background,drop_weakest_10pct,3,1128,44,1.78414e-08,6.22519e-09,2.86601,0.0505319,,,1.8637,4.58148,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,all,finescale,drop_weakest_10pct,3,1128,44,1.78414e-08,1.01869e-08,1.75142,0.0505319,,,1.17795,2.6294,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,straddles,background,drop_weakest_10pct,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,straddles,finescale,drop_weakest_10pct,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,none,background,drop_weakest_10pct,3,1127,44,1.78535e-08,6.23056e-09,2.86548,0.0505768,,,1.86764,4.68449,False,shear,0.2,0.65
+vmp5500 all free fall,vdb2021,control,none,finescale,drop_weakest_10pct,3,1127,44,1.78535e-08,1.01955e-08,1.75112,0.0505768,,,1.19762,2.55855,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,all,background,drop_weakest_10pct,3,8036,44,1.9324e-08,3.39653e-09,5.68935,0.0892235,2.25493,5.16776,4.69846,6.81906,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,8036,44,1.9324e-08,5.86749e-09,3.29341,0.0892235,2.25493,5.16776,2.82769,3.85905,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,interface,background,drop_weakest_10pct,3,496,44,5.18564e-08,5.62725e-09,9.21522,0.0141129,1.75146,3.98402,6.35704,12.6707,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,interface,finescale,drop_weakest_10pct,3,496,44,5.18564e-08,1.17257e-08,4.42246,0.0141129,1.75146,3.98402,3.16545,5.93162,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,interface,interface_local,drop_weakest_10pct,3,496,44,5.18564e-08,7.50101e-09,6.91326,0.0141129,1.74069,3.95122,4.87168,9.51331,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,layer,background,drop_weakest_10pct,3,921,44,1.37994e-09,6.45862e-10,2.13658,0.082519,2.11767,4.90085,1.61033,2.79537,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,layer,finescale,drop_weakest_10pct,3,921,44,1.37994e-09,9.37219e-10,1.47237,0.082519,2.11767,4.90085,1.07427,1.8988,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,straddles,background,drop_weakest_10pct,3,1258,44,2.4049e-08,2.50143e-09,9.61408,0.0476948,1.89382,4.38255,7.49427,12.1597,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,straddles,finescale,drop_weakest_10pct,3,1258,44,2.4049e-08,7.01599e-09,3.42774,0.0476948,1.89382,4.38255,2.7196,4.31366,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,none,background,drop_weakest_10pct,3,5361,44,1.82881e-08,3.87274e-09,4.72228,0.10707,2.4094,5.43177,3.86768,5.72272,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,5361,44,1.82881e-08,5.90299e-09,3.09812,0.10707,2.4094,5.43177,2.55304,3.75058,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,all,background,drop_weakest_10pct,3,7065,44,2.06919e-08,3.7351e-09,5.53984,0.0614296,2.0894,4.8415,4.57386,6.62483,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,7065,44,2.06919e-08,6.45577e-09,3.20517,0.0614296,2.0894,4.8415,2.72099,3.71359,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,interface,background,drop_weakest_10pct,3,496,44,5.18564e-08,5.62725e-09,9.21522,0.0141129,1.75146,3.98402,6.48749,12.5129,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,interface,finescale,drop_weakest_10pct,3,496,44,5.18564e-08,1.17257e-08,4.42246,0.0141129,1.75146,3.98402,3.23482,6.06011,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,interface,interface_local,drop_weakest_10pct,3,496,44,5.18564e-08,7.50101e-09,6.91326,0.0141129,1.74069,3.95122,4.85389,9.60762,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,layer,background,drop_weakest_10pct,3,917,44,1.35225e-09,6.42283e-10,2.10537,0.0817884,2.11737,4.90022,1.58998,2.71248,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,layer,finescale,drop_weakest_10pct,3,917,44,1.35225e-09,9.33165e-10,1.4491,0.0817884,2.11737,4.90022,1.04885,1.91127,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,straddles,background,drop_weakest_10pct,3,1257,44,2.4062e-08,2.50338e-09,9.6118,0.0477327,1.89372,4.38229,7.50656,12.3034,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,straddles,finescale,drop_weakest_10pct,3,1257,44,2.4062e-08,7.02109e-09,3.42711,0.0477327,1.89372,4.38229,2.6739,4.36234,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,none,background,drop_weakest_10pct,3,4395,44,2.0246e-08,4.51914e-09,4.48005,0.0664391,2.17473,5.01589,3.61481,5.5475,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,4395,44,2.0246e-08,6.85161e-09,2.95493,0.0664391,2.17473,5.01589,2.47682,3.5049,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,2681,44,3.70385e-08,6.9726e-09,5.312,0.0123088,1.56394,3.34832,4.34811,6.3836,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,2681,44,3.70385e-08,1.24773e-08,2.96848,0.0123088,1.56394,3.34832,2.47183,3.45208,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,interface,background,drop_weakest_10pct,3,306,43,6.62824e-08,7.76323e-09,8.53799,0.00653595,1.52743,3.20642,5.4712,13.0571,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,interface,finescale,drop_weakest_10pct,3,306,43,6.62824e-08,1.63949e-08,4.04286,0.00653595,1.52743,3.20642,2.63822,5.91861,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,interface,interface_local,drop_weakest_10pct,3,306,43,6.62824e-08,1.04175e-08,6.36258,0.00653595,1.52673,3.20361,4.25024,9.14215,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,layer,background,drop_weakest_10pct,3,302,44,2.34512e-09,1.35645e-09,1.72886,0.0264901,1.59245,3.45462,1.15579,2.41001,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,layer,finescale,drop_weakest_10pct,3,302,44,2.34512e-09,2.0151e-09,1.16377,0.0264901,1.59245,3.45462,0.774164,1.67844,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,straddles,background,drop_weakest_10pct,3,535,44,4.25007e-08,4.71923e-09,9.00585,0.0130841,1.52849,3.21062,6.62731,11.3624,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,straddles,finescale,drop_weakest_10pct,3,535,44,4.25007e-08,1.36814e-08,3.10645,0.0130841,1.52849,3.21062,2.3775,3.95589,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,1538,44,3.61324e-08,8.70192e-09,4.15223,0.0104031,1.57661,3.39605,3.30931,5.19905,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,1538,44,3.61324e-08,1.33333e-08,2.70994,0.0104031,1.57661,3.39605,2.22672,3.33845,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,all,background,drop_weakest_10pct,3,920,35,9.4619e-09,5.01075e-10,18.8832,0.294565,,,9.87198,36.1102,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,all,finescale,drop_weakest_10pct,3,920,35,9.4619e-09,9.76256e-10,9.69203,0.294565,,,4.88661,16.1831,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,layer,background,drop_weakest_10pct,3,1,1,1.24272e-08,1.63923e-09,7.58111,0,16.5206,8.72365,,,True,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,layer,finescale,drop_weakest_10pct,3,1,1,1.24272e-08,3.28996e-09,3.77731,0,16.5206,8.72365,,,True,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,none,background,drop_weakest_10pct,3,919,34,9.45867e-09,4.99836e-10,18.9235,0.294886,,,10.1114,34.6215,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,not_finger,none,finescale,drop_weakest_10pct,3,919,34,9.45867e-09,9.73738e-10,9.71377,0.294886,,,4.90097,15.5923,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,all,background,drop_weakest_10pct,3,1128,44,1.78414e-08,6.22519e-09,2.86601,0.0505319,,,1.85467,4.73897,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,all,finescale,drop_weakest_10pct,3,1128,44,1.78414e-08,1.01869e-08,1.75142,0.0505319,,,1.19014,2.62695,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,none,background,drop_weakest_10pct,3,1128,44,1.78414e-08,6.22519e-09,2.86601,0.0505319,,,1.88368,4.64216,False,shear,0.2,0.65
+vmp5500 all free fall,rollo2022,control,none,finescale,drop_weakest_10pct,3,1128,44,1.78414e-08,1.01869e-08,1.75142,0.0505319,,,1.16113,2.61785,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,all,background,all,3,819,4,1.07007e-08,3.70388e-09,2.88905,0.03663,2.20625,5.07689,1.90222,4.18578,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,all,finescale,all,3,819,4,1.07007e-08,6.47988e-09,1.65137,0.03663,2.20625,5.07689,1.22477,2.32146,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,interface,background,all,3,38,4,2.7199e-08,4.68542e-09,5.80503,0,1.79568,4.11457,3.28871,7.08892,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,interface,finescale,all,3,38,4,2.7199e-08,8.88534e-09,3.06111,0,1.79568,4.11457,1.47738,3.48929,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,interface,interface_local,all,3,38,4,2.7199e-08,5.8269e-09,4.66783,0,1.7815,4.07342,2.27692,5.95039,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,layer,background,all,3,50,4,3.54087e-10,4.9599e-10,0.7139,0.02,1.72745,3.91031,0.205707,1.48019,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,layer,finescale,all,3,50,4,3.54087e-10,6.64869e-10,0.532567,0.02,1.72745,3.91031,0.124762,1.70042,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,straddles,background,all,3,35,4,6.73105e-09,1.53134e-09,4.39554,0.0285714,1.88952,4.3714,3.16729,5.28736,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,straddles,finescale,all,3,35,4,6.73105e-09,9.62749e-09,0.699149,0.0285714,1.88952,4.3714,0.532039,1.49891,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,none,background,all,3,696,4,1.07429e-08,3.98999e-09,2.69245,0.0402299,2.28306,5.21849,1.80857,4.09076,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,none,finescale,all,3,696,4,1.07429e-08,6.60801e-09,1.62573,0.0402299,2.28306,5.21849,1.14553,2.30296,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,all,background,all,3,685,4,1.13984e-08,3.892e-09,2.92866,0.0277372,1.98526,4.60839,2.46141,3.83187,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,all,finescale,all,3,685,4,1.13984e-08,6.05508e-09,1.88244,0.0277372,1.98526,4.60839,1.65403,2.08595,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,interface,background,all,3,38,4,2.7199e-08,4.68542e-09,5.80503,0,1.79568,4.11457,3.28871,7.08892,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,interface,finescale,all,3,38,4,2.7199e-08,8.88534e-09,3.06111,0,1.79568,4.11457,1.47738,3.48929,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,interface,interface_local,all,3,38,4,2.7199e-08,5.8269e-09,4.66783,0,1.7815,4.07342,2.27692,5.95039,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,layer,background,all,3,49,4,3.60017e-10,5.05942e-10,0.711577,0.0204082,1.72063,3.88903,0.201487,1.48013,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,layer,finescale,all,3,49,4,3.60017e-10,6.77536e-10,0.531361,0.0204082,1.72063,3.88903,0.122357,1.74701,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,straddles,background,all,3,32,4,7.15526e-09,1.65203e-09,4.33118,0.03125,1.897,4.39077,3.16729,5.18306,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,straddles,finescale,all,3,32,4,7.15526e-09,4.48196e-09,1.59646,0.03125,1.897,4.39077,1.19203,1.80108,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,none,background,all,3,566,4,1.1533e-08,4.25851e-09,2.70823,0.0300353,2.0186,4.68563,2.07252,3.84627,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,none,finescale,all,3,566,4,1.1533e-08,6.41955e-09,1.79655,0.0300353,2.0186,4.68563,1.57233,2.11129,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,all,background,all,3,248,4,1.65815e-08,8.34495e-09,1.98701,0.0120968,1.48859,3.04779,1.49967,3.16275,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,all,finescale,all,3,248,4,1.65815e-08,1.23597e-08,1.34158,0.0120968,1.48859,3.04779,0.983285,1.87212,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,interface,background,all,3,25,4,1.62487e-08,5.03462e-09,3.2274,0,1.54808,3.28749,1.7225,6.30842,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,interface,finescale,all,3,25,4,1.62487e-08,1.01958e-08,1.59367,0,1.54808,3.28749,0.828227,2.80462,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,interface,interface_local,all,3,25,4,1.62487e-08,5.88753e-09,2.75986,0,1.53895,3.25191,1.30921,5.39091,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,layer,background,all,3,34,4,3.74963e-10,6.74882e-10,0.555598,0,1.57435,3.38759,0.0945497,1.43027,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,layer,finescale,all,3,34,4,3.74963e-10,9.21842e-10,0.406754,0,1.57435,3.38759,0.058139,1.44323,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,straddles,background,all,3,14,4,6.71313e-09,2.74852e-09,2.44245,0,1.64393,3.63722,1.69235,3.17747,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,straddles,finescale,all,3,14,4,6.71313e-09,8.18862e-09,0.819812,0,1.64393,3.63722,0.478693,1.30524,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,none,background,all,3,175,4,2.05672e-08,1.07558e-08,1.91221,0.0171429,1.47143,2.97505,1.44263,3.1594,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,none,finescale,all,3,175,4,2.05672e-08,1.52248e-08,1.35091,0.0171429,1.47143,2.97505,1.03958,1.92529,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,all,background,all,3,114,4,6.94953e-09,4.1204e-10,16.8662,0.0877193,,,7.02586,23.22,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,all,finescale,all,3,114,4,6.94953e-09,4.97132e-09,1.39792,0.0877193,,,0.180711,9.9112,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,layer,background,all,3,1,1,6.35368e-11,8.34566e-12,7.61316,0,34.3331,9.01525,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,layer,finescale,all,3,1,1,6.35368e-11,4.41428e-11,1.43935,0,34.3331,9.01525,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,straddles,background,all,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,straddles,finescale,all,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,none,background,all,3,112,4,7.03564e-09,4.17826e-10,16.8387,0.0892857,,,6.7336,23.3334,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,none,finescale,all,3,112,4,7.03564e-09,5.05545e-09,1.39169,0.0892857,,,0.172266,9.91703,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,all,background,all,3,93,4,2.47717e-08,1.34854e-08,1.83692,0,,,0.82238,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,all,finescale,all,3,93,4,2.47717e-08,2.17719e-08,1.13778,0,,,0.596247,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,straddles,background,all,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,straddles,finescale,all,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,none,background,all,3,92,4,2.49954e-08,1.36302e-08,1.83382,0,,,0.848943,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,none,finescale,all,3,92,4,2.49954e-08,2.20034e-08,1.13598,0,,,0.557966,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,all,background,all,3,819,4,1.07007e-08,3.70388e-09,2.88905,0.03663,2.20625,5.07689,1.90222,4.59539,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,all,finescale,all,3,819,4,1.07007e-08,6.47988e-09,1.65137,0.03663,2.20625,5.07689,1.22405,2.32146,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,interface,background,all,3,68,4,2.82246e-08,4.12805e-09,6.83726,0.0147059,1.80945,4.15392,4.97208,11.2536,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,interface,finescale,all,3,68,4,2.82246e-08,6.97e-09,4.04944,0.0147059,1.80945,4.15392,3.21162,6.18334,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,interface,interface_local,all,3,68,4,2.82246e-08,5.48103e-09,5.14949,0.0147059,1.81031,4.15638,3.91672,8.57078,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,layer,background,all,3,153,4,5.95765e-10,3.51494e-10,1.69495,0.0130719,2.26564,5.18721,1.20835,2.2537,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,layer,finescale,all,3,153,4,5.95765e-10,6.43827e-10,0.925349,0.0130719,2.26564,5.18721,0.687138,1.31073,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,straddles,background,all,3,103,4,6.44574e-09,1.52723e-09,4.22056,0.0194175,2.04881,4.75347,3.88427,4.53608,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,straddles,finescale,all,3,103,4,6.44574e-09,3.89636e-09,1.6543,0.0194175,2.04881,4.75347,1.42262,2.03678,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,none,background,all,3,495,4,1.23021e-08,5.13472e-09,2.39587,0.0505051,2.35747,5.34687,1.53461,3.66745,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,none,finescale,all,3,495,4,1.23021e-08,8.754e-09,1.40531,0.0505051,2.35747,5.34687,0.96255,2.11028,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,all,background,all,3,685,4,1.13984e-08,3.892e-09,2.92866,0.0277372,1.98526,4.60839,2.46141,3.83187,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,all,finescale,all,3,685,4,1.13984e-08,6.05508e-09,1.88244,0.0277372,1.98526,4.60839,1.65403,2.08595,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,interface,background,all,3,68,4,2.82246e-08,4.12805e-09,6.83726,0.0147059,1.80945,4.15392,4.97208,11.2315,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,interface,finescale,all,3,68,4,2.82246e-08,6.97e-09,4.04944,0.0147059,1.80945,4.15392,3.21162,6.18334,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,interface,interface_local,all,3,68,4,2.82246e-08,5.48103e-09,5.14949,0.0147059,1.81031,4.15638,3.91672,8.57078,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,layer,background,all,3,153,4,5.95765e-10,3.51494e-10,1.69495,0.0130719,2.26564,5.18721,1.20938,2.2537,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,layer,finescale,all,3,153,4,5.95765e-10,6.43827e-10,0.925349,0.0130719,2.26564,5.18721,0.687138,1.31073,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,straddles,background,all,3,103,4,6.44574e-09,1.52723e-09,4.22056,0.0194175,2.04881,4.75347,3.88427,4.53608,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,straddles,finescale,all,3,103,4,6.44574e-09,3.89636e-09,1.6543,0.0194175,2.04881,4.75347,1.42336,2.03678,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,none,background,all,3,361,4,1.42203e-08,6.02279e-09,2.36109,0.0387812,2.00817,4.66176,1.97436,3.17297,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,none,finescale,all,3,361,4,1.42203e-08,8.79207e-09,1.6174,0.0387812,2.00817,4.66176,1.4712,1.83914,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,all,background,all,3,248,4,1.65815e-08,8.34495e-09,1.98701,0.0120968,1.48859,3.04779,1.49967,3.16275,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,all,finescale,all,3,248,4,1.65815e-08,1.23597e-08,1.34158,0.0120968,1.48859,3.04779,0.983285,1.87212,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,interface,background,all,3,43,4,2.44138e-08,4.82873e-09,5.05595,0.0232558,1.54827,3.28823,2.2342,10.9882,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,interface,finescale,all,3,43,4,2.44138e-08,8.22755e-09,2.96732,0.0232558,1.54827,3.28823,1.43451,6.3349,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,interface,interface_local,all,3,43,4,2.44138e-08,6.20452e-09,3.93484,0.0232558,1.54664,3.2819,1.85254,8.34698,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,layer,background,all,3,61,4,5.55944e-10,6.29306e-10,0.883425,0.0163934,1.57607,3.39402,0.498771,1.55407,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,layer,finescale,all,3,61,4,5.55944e-10,9.50774e-10,0.584728,0.0163934,1.57607,3.39402,0.293247,1.4117,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,straddles,background,all,3,38,4,6.76489e-09,3.15853e-09,2.14178,0.0263158,1.59345,3.45827,1.41356,2.58265,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,straddles,finescale,all,3,38,4,6.76489e-09,8.54161e-09,0.791992,0.0263158,1.59345,3.45827,0.513287,1.05232,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,none,background,all,3,106,4,2.61457e-08,1.60708e-08,1.62691,0,1.44426,2.85632,1.38148,2.23666,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,none,finescale,all,3,106,4,2.61457e-08,2.19703e-08,1.19005,0,1.44426,2.85632,1.00127,1.53839,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,all,background,all,3,114,4,6.94953e-09,4.1204e-10,16.8662,0.0877193,,,7.02166,23.3369,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,all,finescale,all,3,114,4,6.94953e-09,4.97132e-09,1.39792,0.0877193,,,0.180711,9.9112,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,none,background,all,3,114,4,6.94953e-09,4.1204e-10,16.8662,0.0877193,,,7.02586,23.3369,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,none,finescale,all,3,114,4,6.94953e-09,4.97132e-09,1.39792,0.0877193,,,0.180711,9.91932,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,all,background,all,3,93,4,2.47717e-08,1.34854e-08,1.83692,0,,,0.82238,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,all,finescale,all,3,93,4,2.47717e-08,2.17719e-08,1.13778,0,,,0.561244,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,none,background,all,3,93,4,2.47717e-08,1.34854e-08,1.83692,0,,,0.82238,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,none,finescale,all,3,93,4,2.47717e-08,2.17719e-08,1.13778,0,,,0.596247,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,all,background,drop_weakest_10pct,3,721,4,1.20357e-08,4.16952e-09,2.8866,0.038835,2.2118,5.08746,1.91321,4.14796,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,721,4,1.20357e-08,6.04465e-09,1.99113,0.038835,2.2118,5.08746,1.38126,2.73162,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,interface,background,drop_weakest_10pct,3,37,4,2.79332e-08,4.81197e-09,5.80494,0,1.79517,4.11309,3.28796,7.08892,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,interface,finescale,drop_weakest_10pct,3,37,4,2.79332e-08,9.11811e-09,3.06349,0,1.79517,4.11309,1.48292,3.48929,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,interface,interface_local,drop_weakest_10pct,3,37,4,2.79332e-08,5.98389e-09,4.66807,0,1.7789,4.06578,2.27713,5.95039,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,layer,background,drop_weakest_10pct,3,22,4,6.00332e-10,4.72568e-10,1.27036,0.0454545,1.84953,4.26513,0.926878,1.44238,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,layer,finescale,drop_weakest_10pct,3,22,4,6.00332e-10,4.17945e-10,1.43639,0.0454545,1.84953,4.26513,0.490697,2.28729,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,straddles,background,drop_weakest_10pct,3,29,4,7.91705e-09,1.79555e-09,4.40927,0.0344828,1.89924,4.39654,3.16428,5.34632,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,straddles,finescale,drop_weakest_10pct,3,29,4,7.91705e-09,4.21647e-09,1.87765,0.0344828,1.89924,4.39654,1.19898,2.40573,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,none,background,drop_weakest_10pct,3,633,4,1.16926e-08,4.36921e-09,2.67614,0.0410742,2.28529,5.22247,1.79744,4.54478,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,633,4,1.16926e-08,6.14432e-09,1.903,0.0410742,2.28529,5.22247,1.30564,2.71801,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,all,background,drop_weakest_10pct,3,605,4,1.28192e-08,4.3629e-09,2.93823,0.0280992,1.98943,4.61819,2.47692,3.85417,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,605,4,1.28192e-08,6.37781e-09,2.00997,0.0280992,1.98943,4.61819,1.7003,2.4639,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,interface,background,drop_weakest_10pct,3,37,4,2.79332e-08,4.81197e-09,5.80494,0,1.79517,4.11309,3.28796,7.26362,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,interface,finescale,drop_weakest_10pct,3,37,4,2.79332e-08,9.11811e-09,3.06349,0,1.79517,4.11309,1.48292,3.50154,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,interface,interface_local,drop_weakest_10pct,3,37,4,2.79332e-08,5.98389e-09,4.66807,0,1.7789,4.06578,2.27713,5.95039,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,layer,background,drop_weakest_10pct,3,22,4,6.00332e-10,4.72568e-10,1.27036,0.0454545,1.84953,4.26513,0.928793,1.44238,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,layer,finescale,drop_weakest_10pct,3,22,4,6.00332e-10,4.17945e-10,1.43639,0.0454545,1.84953,4.26513,0.490697,2.07495,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,straddles,background,drop_weakest_10pct,3,28,4,8.05012e-09,1.85369e-09,4.34277,0.0357143,1.90319,4.40668,3.1653,5.21808,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,straddles,finescale,drop_weakest_10pct,3,28,4,8.05012e-09,4.35006e-09,1.85057,0.0357143,1.90319,4.40668,1.19898,2.35255,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,none,background,drop_weakest_10pct,3,518,4,1.25164e-08,4.63168e-09,2.70234,0.0289575,2.02032,4.68956,2.07165,3.84626,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,518,4,1.25164e-08,6.5448e-09,1.91241,0.0289575,2.02032,4.68956,1.58214,2.51098,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,199,4,2.05632e-08,1.02718e-08,2.00191,0.0100503,1.49045,3.05558,1.52292,3.21991,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,199,4,2.05632e-08,1.50069e-08,1.37025,0.0100503,1.49045,3.05558,1.01457,1.94025,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,interface,background,drop_weakest_10pct,3,25,4,1.62487e-08,5.03462e-09,3.2274,0,1.54808,3.28749,1.7225,6.30842,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,interface,finescale,drop_weakest_10pct,3,25,4,1.62487e-08,1.01958e-08,1.59367,0,1.54808,3.28749,0.828227,2.80462,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,interface,interface_local,drop_weakest_10pct,3,25,4,1.62487e-08,5.88753e-09,2.75986,0,1.53895,3.25191,1.30921,5.39091,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,layer,background,drop_weakest_10pct,3,15,4,6.18916e-10,6.01208e-10,1.02945,0,1.6996,3.82223,0.168447,1.3361,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,layer,finescale,drop_weakest_10pct,3,15,4,6.18916e-10,5.53595e-10,1.11799,0,1.6996,3.82223,0.141817,1.51244,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,straddles,background,drop_weakest_10pct,3,10,4,9.04189e-09,3.75174e-09,2.41005,0,1.64765,3.64999,1.60035,3.17636,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,straddles,finescale,drop_weakest_10pct,3,10,4,9.04189e-09,9.30198e-09,0.972039,0,1.64765,3.64999,0.611829,1.35142,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,149,4,2.40682e-08,1.25617e-08,1.916,0.0134228,1.47187,2.97694,1.45509,3.18131,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,149,4,2.40682e-08,1.7652e-08,1.36348,0.0134228,1.47187,2.97694,1.04676,1.98242,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,all,background,drop_weakest_10pct,3,107,4,7.38629e-09,4.37554e-10,16.8809,0.0934579,,,6.97305,23.6273,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,all,finescale,drop_weakest_10pct,3,107,4,7.38629e-09,9.74131e-10,7.58244,0.0934579,,,3.52434,9.9377,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,straddles,background,drop_weakest_10pct,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,straddles,finescale,drop_weakest_10pct,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,none,background,drop_weakest_10pct,3,106,4,7.41644e-09,4.401e-10,16.8517,0.0943396,,,6.73906,23.3577,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,not_finger,none,finescale,drop_weakest_10pct,3,106,4,7.41644e-09,9.78831e-10,7.57683,0.0943396,,,3.41978,9.9377,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,all,background,drop_weakest_10pct,3,93,4,2.47717e-08,1.34854e-08,1.83692,0,,,0.82238,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,all,finescale,drop_weakest_10pct,3,93,4,2.47717e-08,2.17719e-08,1.13778,0,,,0.596247,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,straddles,background,drop_weakest_10pct,3,1,1,4.19098e-09,1.67683e-10,24.9935,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,straddles,finescale,drop_weakest_10pct,3,1,1,4.19098e-09,4.75854e-10,8.80728,0,1.59156,3.45135,,,True,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,none,background,drop_weakest_10pct,3,92,4,2.49954e-08,1.36302e-08,1.83382,0,,,0.818193,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,vdb2021,control,none,finescale,drop_weakest_10pct,3,92,4,2.49954e-08,2.20034e-08,1.13598,0,,,0.59332,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,all,background,drop_weakest_10pct,3,721,4,1.20357e-08,4.16952e-09,2.8866,0.038835,2.2118,5.08746,1.91321,4.14796,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,721,4,1.20357e-08,6.04465e-09,1.99113,0.038835,2.2118,5.08746,1.38126,2.73162,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,interface,background,drop_weakest_10pct,3,68,4,2.82246e-08,4.12805e-09,6.83726,0.0147059,1.80945,4.15392,4.97208,11.2315,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,interface,finescale,drop_weakest_10pct,3,68,4,2.82246e-08,6.97e-09,4.04944,0.0147059,1.80945,4.15392,3.2235,6.18334,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,interface,interface_local,drop_weakest_10pct,3,68,4,2.82246e-08,5.48103e-09,5.14949,0.0147059,1.81031,4.15638,3.91672,8.57078,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,layer,background,drop_weakest_10pct,3,102,4,6.52529e-10,3.03898e-10,2.1472,0.00980392,2.40969,5.43222,1.92257,2.6526,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,layer,finescale,drop_weakest_10pct,3,102,4,6.52529e-10,4.70724e-10,1.38623,0.00980392,2.40969,5.43222,1.12889,1.84283,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,straddles,background,drop_weakest_10pct,3,103,4,6.44574e-09,1.52723e-09,4.22056,0.0194175,2.04881,4.75347,3.88187,4.53608,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,straddles,finescale,drop_weakest_10pct,3,103,4,6.44574e-09,3.89636e-09,1.6543,0.0194175,2.04881,4.75347,1.42336,2.03678,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,none,background,drop_weakest_10pct,3,448,4,1.34554e-08,5.66342e-09,2.37584,0.0535714,2.35879,5.34908,1.52386,3.61686,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,448,4,1.34554e-08,7.66718e-09,1.75493,0.0535714,2.35879,5.34908,1.13543,2.47374,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,all,background,drop_weakest_10pct,3,605,4,1.28192e-08,4.3629e-09,2.93823,0.0280992,1.98943,4.61819,2.47692,3.85417,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,605,4,1.28192e-08,6.37781e-09,2.00997,0.0280992,1.98943,4.61819,1.7003,2.4639,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,interface,background,drop_weakest_10pct,3,68,4,2.82246e-08,4.12805e-09,6.83726,0.0147059,1.80945,4.15392,4.97208,11.2315,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,interface,finescale,drop_weakest_10pct,3,68,4,2.82246e-08,6.97e-09,4.04944,0.0147059,1.80945,4.15392,3.21162,6.18334,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,interface,interface_local,drop_weakest_10pct,3,68,4,2.82246e-08,5.48103e-09,5.14949,0.0147059,1.81031,4.15638,3.91672,8.57078,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,layer,background,drop_weakest_10pct,3,102,4,6.52529e-10,3.03898e-10,2.1472,0.00980392,2.40969,5.43222,1.9099,2.6526,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,layer,finescale,drop_weakest_10pct,3,102,4,6.52529e-10,4.70724e-10,1.38623,0.00980392,2.40969,5.43222,1.13691,1.84283,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,straddles,background,drop_weakest_10pct,3,103,4,6.44574e-09,1.52723e-09,4.22056,0.0194175,2.04881,4.75347,3.89709,4.53608,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,straddles,finescale,drop_weakest_10pct,3,103,4,6.44574e-09,3.89636e-09,1.6543,0.0194175,2.04881,4.75347,1.42336,2.03678,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,none,background,drop_weakest_10pct,3,332,4,1.53791e-08,6.53778e-09,2.35235,0.0391566,2.00912,4.66394,1.96626,3.15751,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,332,4,1.53791e-08,8.84119e-09,1.73949,0.0391566,2.00912,4.66394,1.4766,2.25053,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,199,4,2.05632e-08,1.02718e-08,2.00191,0.0100503,1.49045,3.05558,1.52292,3.21991,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,199,4,2.05632e-08,1.50069e-08,1.37025,0.0100503,1.49045,3.05558,1.01457,1.94213,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,interface,background,drop_weakest_10pct,3,43,4,2.44138e-08,4.82873e-09,5.05595,0.0232558,1.54827,3.28823,2.2342,10.9882,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,interface,finescale,drop_weakest_10pct,3,43,4,2.44138e-08,8.22755e-09,2.96732,0.0232558,1.54827,3.28823,1.43451,5.98463,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,interface,interface_local,drop_weakest_10pct,3,43,4,2.44138e-08,6.20452e-09,3.93484,0.0232558,1.54664,3.2819,1.85254,8.34698,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,layer,background,drop_weakest_10pct,3,29,4,7.65097e-10,5.63496e-10,1.35777,0,1.66407,3.70559,1.15981,1.46726,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,layer,finescale,drop_weakest_10pct,3,29,4,7.65097e-10,6.14709e-10,1.24465,0,1.66407,3.70559,0.796214,1.51545,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,straddles,background,drop_weakest_10pct,3,38,4,6.76489e-09,3.15853e-09,2.14178,0.0263158,1.59345,3.45827,1.41356,2.58265,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,straddles,finescale,drop_weakest_10pct,3,38,4,6.76489e-09,8.54161e-09,0.791992,0.0263158,1.59345,3.45827,0.513287,1.05232,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,89,4,3.10454e-08,1.91021e-08,1.62523,0,1.44409,2.85556,1.38312,2.23216,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,89,4,3.10454e-08,2.57324e-08,1.20647,0,1.44409,2.85556,1.01146,1.57684,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,all,background,drop_weakest_10pct,3,107,4,7.38629e-09,4.37554e-10,16.8809,0.0934579,,,6.97305,23.3611,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,all,finescale,drop_weakest_10pct,3,107,4,7.38629e-09,9.74131e-10,7.58244,0.0934579,,,3.52434,9.9377,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,none,background,drop_weakest_10pct,3,107,4,7.38629e-09,4.37554e-10,16.8809,0.0934579,,,6.97305,23.3678,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,not_finger,none,finescale,drop_weakest_10pct,3,107,4,7.38629e-09,9.74131e-10,7.58244,0.0934579,,,3.45563,9.9377,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,all,background,drop_weakest_10pct,3,93,4,2.47717e-08,1.34854e-08,1.83692,0,,,0.82238,7.37009,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,all,finescale,drop_weakest_10pct,3,93,4,2.47717e-08,2.17719e-08,1.13778,0,,,0.596247,3.52744,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,none,background,drop_weakest_10pct,3,93,4,2.47717e-08,1.34854e-08,1.83692,0,,,0.82238,7.37837,False,shear,0.2,0.65
+vmp5500 process_station free fall,rollo2022,control,none,finescale,drop_weakest_10pct,3,93,4,2.47717e-08,2.17719e-08,1.13778,0,,,0.596247,3.52744,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,all,background,all,3,8299,40,1.78709e-08,3.35125e-09,5.33261,0.0996506,2.24559,5.15063,4.37323,6.30194,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,all,finescale,all,3,8299,40,1.78709e-08,6.3036e-09,2.83503,0.0996506,2.24559,5.15063,2.33995,3.38267,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,interface,background,all,3,237,37,6.75553e-08,8.46033e-09,7.98496,0.0295359,1.73862,3.94485,5.42286,12.1905,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,interface,finescale,all,3,237,37,6.75553e-08,1.90174e-08,3.55229,0.0295359,1.73862,3.94485,2.62722,5.05114,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,interface,interface_local,all,3,237,37,6.75553e-08,1.09056e-08,6.19456,0.0295359,1.73503,3.9338,4.29822,9.27421,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,layer,background,all,3,388,40,4.85293e-10,7.37043e-10,0.658433,0.064433,1.79993,4.12677,0.383243,1.24123,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,layer,finescale,all,3,388,40,4.85293e-10,1.09131e-09,0.444687,0.064433,1.79993,4.12677,0.31997,0.742699,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,straddles,background,all,3,384,40,4.33306e-08,6.65245e-09,6.51348,0.0963542,1.78422,4.08137,3.22775,13.3437,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,straddles,finescale,all,3,384,40,4.33306e-08,2.06234e-08,2.10104,0.0963542,1.78422,4.08137,1.02935,4.50625,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,none,background,all,3,7290,40,1.58399e-08,3.1504e-09,5.02791,0.103978,2.31275,5.27071,4.19562,6.03274,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,none,finescale,all,3,7290,40,1.58399e-08,5.4134e-09,2.92606,0.103978,2.31275,5.27071,2.44309,3.47806,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,all,background,all,3,7227,40,1.93643e-08,3.73003e-09,5.19147,0.0660025,2.0872,4.83682,4.21908,6.30892,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,all,finescale,all,3,7227,40,1.93643e-08,6.92846e-09,2.7949,0.0660025,2.0872,4.83682,2.23603,3.40852,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,interface,background,all,3,236,37,6.78324e-08,8.49591e-09,7.98412,0.029661,1.73747,3.94132,5.57325,12.3331,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,interface,finescale,all,3,236,37,6.78324e-08,1.90971e-08,3.55198,0.029661,1.73747,3.94132,2.57652,5.07741,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,interface,interface_local,all,3,236,37,6.78324e-08,1.09514e-08,6.19396,0.029661,1.73357,3.92931,4.2932,9.17602,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,layer,background,all,3,383,40,4.87272e-10,7.46282e-10,0.652933,0.0652742,1.7982,4.12183,0.381512,1.26631,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,layer,finescale,all,3,383,40,4.87272e-10,1.10238e-09,0.442018,0.0652742,1.7982,4.12183,0.313985,0.734026,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,straddles,background,all,3,381,40,4.36629e-08,6.70458e-09,6.51239,0.0944882,1.7832,4.07839,3.30095,13.089,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,straddles,finescale,all,3,381,40,4.36629e-08,2.07854e-08,2.10065,0.0944882,1.7832,4.07839,1.06501,4.5527,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,none,background,all,3,6227,40,1.72018e-08,3.55093e-09,4.8443,0.0656817,2.13123,4.92874,3.93236,5.98213,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,none,finescale,all,3,6227,40,1.72018e-08,5.97778e-09,2.87762,0.0656817,2.13123,4.92874,2.35966,3.45706,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,all,background,all,3,2865,40,3.35874e-08,6.69592e-09,5.0161,0.0139616,1.56305,3.34496,4.01382,6.25518,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,all,finescale,all,3,2865,40,3.35874e-08,1.31231e-08,2.55941,0.0139616,1.56305,3.34496,2.01711,3.25473,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,interface,background,all,3,133,27,9.08209e-08,1.31039e-08,6.93083,0,1.48072,3.01463,4.29604,10.6294,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,interface,finescale,all,3,133,27,9.08209e-08,2.91537e-08,3.11524,0,1.48072,3.01463,2.13135,4.61357,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,interface,interface_local,all,3,133,27,9.08209e-08,1.70805e-08,5.31722,0,1.48288,3.02376,3.52232,8.12485,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,layer,background,all,3,203,31,6.45122e-10,1.23081e-09,0.524145,0.00492611,1.50337,3.10913,0.258811,1.12052,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,layer,finescale,all,3,203,31,6.45122e-10,1.83201e-09,0.352139,0.00492611,1.50337,3.10913,0.25341,0.58741,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,straddles,background,all,3,149,29,7.13425e-08,1.48609e-08,4.80067,0.00671141,1.47076,2.97218,2.56455,11.2009,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,straddles,finescale,all,3,149,29,7.13425e-08,4.69295e-08,1.52021,0.00671141,1.47076,2.97218,0.878515,3.6627,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,none,background,all,3,2380,40,3.08352e-08,6.2928e-09,4.90008,0.0159664,1.57711,3.3979,3.83279,6.29698,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,none,finescale,all,3,2380,40,3.08352e-08,1.10739e-08,2.7845,0.0159664,1.57711,3.3979,2.17298,3.46384,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,all,background,all,3,956,32,8.34154e-09,4.34798e-10,19.1848,0.333682,,,9.26182,39.2333,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,all,finescale,all,3,956,32,8.34154e-09,9.03829e-10,9.22911,0.333682,,,3.92862,15.8847,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,layer,background,all,3,3,2,6.28363e-11,3.21019e-11,1.9574,0,57.8776,9.12528,1.07905,4.61976,True,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,layer,finescale,all,3,3,2,6.28363e-11,2.48682e-11,2.52677,0,57.8776,9.12528,1.92622,3.24248,True,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,straddles,background,all,3,1,1,3.29459e-09,4.19016e-11,78.6269,0,1.62796,3.58184,,,True,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,straddles,finescale,all,3,1,1,3.29459e-09,8.71268e-11,37.8137,0,1.62796,3.58184,,,True,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,none,background,all,3,952,32,8.37293e-09,4.3648e-10,19.1828,0.335084,,,9.77717,39.8752,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,none,finescale,all,3,952,32,8.37293e-09,9.07457e-10,9.2268,0.335084,,,4.15124,15.8915,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,all,background,all,3,1067,40,1.67092e-08,5.40653e-09,3.09056,0.0656045,,,1.8835,4.93354,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,all,finescale,all,3,1067,40,1.67092e-08,8.92003e-09,1.87322,0.0656045,,,1.2586,2.78596,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,none,background,all,3,1067,40,1.67092e-08,5.40653e-09,3.09056,0.0656045,,,1.92875,4.7797,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,none,finescale,all,3,1067,40,1.67092e-08,8.92003e-09,1.87322,0.0656045,,,1.2231,2.79823,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,all,background,all,3,8299,40,1.78709e-08,3.35125e-09,5.33261,0.0996506,2.24559,5.15063,4.47335,6.33872,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,all,finescale,all,3,8299,40,1.78709e-08,6.3036e-09,2.83503,0.0996506,2.24559,5.15063,2.29837,3.45865,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,interface,background,all,3,434,40,5.50161e-08,6.05272e-09,9.08948,0.0138249,1.73778,3.94228,5.84593,13.056,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,interface,finescale,all,3,434,40,5.50161e-08,1.28084e-08,4.2953,0.0138249,1.73778,3.94228,3.08477,6.01741,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,interface,interface_local,all,3,434,40,5.50161e-08,7.98096e-09,6.89342,0.0138249,1.7265,3.90735,4.68956,9.58334,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,layer,background,all,3,1189,40,1.22729e-09,6.5752e-10,1.86655,0.0765349,2.03551,4.72384,1.25361,2.75206,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,layer,finescale,all,3,1189,40,1.22729e-09,1.07244e-09,1.14439,0.0765349,2.03551,4.72384,0.769228,1.61204,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,straddles,background,all,3,1171,40,2.55934e-08,3.65893e-09,6.99479,0.0503843,1.86695,4.31198,4.46395,11.0221,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,straddles,finescale,all,3,1171,40,2.55934e-08,1.05773e-08,2.41966,0.0503843,1.86695,4.31198,1.59732,3.89028,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,none,background,all,3,5505,40,1.68946e-08,3.65463e-09,4.62279,0.121889,2.40329,5.42196,3.73535,5.54865,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,none,finescale,all,3,5505,40,1.68946e-08,6.01155e-09,2.81035,0.121889,2.40329,5.42196,2.27837,3.36579,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,all,background,all,3,7227,40,1.93643e-08,3.73003e-09,5.19147,0.0660025,2.0872,4.83682,4.15709,6.25116,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,all,finescale,all,3,7227,40,1.93643e-08,6.92846e-09,2.7949,0.0660025,2.0872,4.83682,2.23593,3.42568,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,interface,background,all,3,434,40,5.50161e-08,6.05272e-09,9.08948,0.0138249,1.73778,3.94228,6.0546,13.04,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,interface,finescale,all,3,434,40,5.50161e-08,1.28084e-08,4.2953,0.0138249,1.73778,3.94228,2.94654,5.954,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,interface,interface_local,all,3,434,40,5.50161e-08,7.98096e-09,6.89342,0.0138249,1.7265,3.90735,4.83066,9.74506,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,layer,background,all,3,1177,40,1.2024e-09,6.58718e-10,1.82536,0.0764656,2.03485,4.72237,1.26119,2.63333,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,layer,finescale,all,3,1177,40,1.2024e-09,1.0681e-09,1.12573,0.0764656,2.03485,4.72237,0.76899,1.59785,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,straddles,background,all,3,1170,40,2.56088e-08,3.66201e-09,6.99309,0.0504274,1.86684,4.3117,4.45905,10.8135,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,straddles,finescale,all,3,1170,40,2.56088e-08,1.05858e-08,2.41916,0.0504274,1.86684,4.3117,1.57508,4.00292,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,none,background,all,3,4446,40,1.9049e-08,4.33428e-09,4.39495,0.0724247,2.1793,5.02485,3.46975,5.5291,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,none,finescale,all,3,4446,40,1.9049e-08,6.94344e-09,2.74345,0.0724247,2.1793,5.02485,2.20984,3.38646,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,all,background,all,3,2865,40,3.35874e-08,6.69592e-09,5.0161,0.0139616,1.56305,3.34496,3.99483,6.17669,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,all,finescale,all,3,2865,40,3.35874e-08,1.31231e-08,2.55941,0.0139616,1.56305,3.34496,1.99687,3.2175,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,interface,background,all,3,267,39,7.21063e-08,8.55549e-09,8.42807,0.00374532,1.52019,3.17744,5.42425,12.8482,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,interface,finescale,all,3,267,39,7.21063e-08,1.823e-08,3.95537,0.00374532,1.52019,3.17744,2.56565,5.95937,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,interface,interface_local,all,3,267,39,7.21063e-08,1.1372e-08,6.34069,0.00374532,1.52024,3.17765,4.11715,9.27509,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,layer,background,all,3,523,40,1.64087e-09,1.15899e-09,1.41578,0.0286807,1.55712,3.32232,0.885687,2.28034,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,layer,finescale,all,3,523,40,1.64087e-09,1.86728e-09,0.878747,0.0286807,1.55712,3.32232,0.525638,1.3666,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,straddles,background,all,3,510,40,4.48044e-08,7.25404e-09,6.17647,0.0137255,1.5115,3.14233,3.85557,10.3948,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,straddles,finescale,all,3,510,40,4.48044e-08,2.14596e-08,2.08785,0.0137255,1.5115,3.14233,1.2998,3.63123,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,none,background,all,3,1565,40,3.40366e-08,8.04715e-09,4.22964,0.0108626,1.58166,3.41484,3.30801,5.31185,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,none,finescale,all,3,1565,40,3.40366e-08,1.32967e-08,2.55978,0.0108626,1.58166,3.41484,2.07499,3.22077,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,all,background,all,3,956,32,8.34154e-09,4.34798e-10,19.1848,0.333682,,,9.04435,39.1491,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,all,finescale,all,3,956,32,8.34154e-09,9.03829e-10,9.22911,0.333682,,,3.97598,16.0388,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,layer,background,all,3,2,2,6.26878e-09,8.31562e-10,7.53857,0,17.2179,8.74641,4.61976,7.58111,True,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,layer,finescale,all,3,2,2,6.26878e-09,1.662e-09,3.77183,0,17.2179,8.74641,3.24248,3.77731,True,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,none,background,all,3,954,31,8.34588e-09,4.33967e-10,19.2316,0.334382,,,9.23965,38.0592,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,none,finescale,all,3,954,31,8.34588e-09,9.0224e-10,9.25018,0.334382,,,3.97937,16.0887,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,all,background,all,3,1067,40,1.67092e-08,5.40653e-09,3.09056,0.0656045,,,1.92361,4.97719,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,all,finescale,all,3,1067,40,1.67092e-08,8.92003e-09,1.87322,0.0656045,,,1.23844,2.87267,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,none,background,all,3,1067,40,1.67092e-08,5.40653e-09,3.09056,0.0656045,,,1.96446,5.06182,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,none,finescale,all,3,1067,40,1.67092e-08,8.92003e-09,1.87322,0.0656045,,,1.20758,2.82608,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,all,background,drop_weakest_10pct,3,7314,40,2.00439e-08,3.31869e-09,6.03971,0.093656,2.25888,5.17496,4.98915,7.21262,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,all,finescale,drop_weakest_10pct,3,7314,40,2.00439e-08,5.84618e-09,3.42855,0.093656,2.25888,5.17496,2.91121,3.97773,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,interface,background,drop_weakest_10pct,3,228,37,6.97605e-08,8.19618e-09,8.51135,0.0307018,1.74905,3.9767,5.66693,12.7853,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,interface,finescale,drop_weakest_10pct,3,228,37,6.97605e-08,1.84181e-08,3.78761,0.0307018,1.74905,3.9767,2.68902,5.32511,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,interface,interface_local,drop_weakest_10pct,3,228,37,6.97605e-08,9.69055e-09,7.19882,0.0307018,1.74574,3.96665,4.9116,10.5978,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,layer,background,drop_weakest_10pct,3,134,34,7.39185e-10,1.25248e-09,0.590179,0.0820896,1.81148,4.15968,0.462299,0.781788,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,layer,finescale,drop_weakest_10pct,3,134,34,7.39185e-10,2.53703e-09,0.291359,0.0820896,1.81148,4.15968,0.210584,0.479346,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,straddles,background,drop_weakest_10pct,3,349,40,4.66315e-08,3.80313e-09,12.2613,0.0945559,1.81624,4.1731,8.80579,15.3638,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,straddles,finescale,drop_weakest_10pct,3,349,40,4.66315e-08,1.16623e-08,3.99847,0.0945559,1.81624,4.1731,2.7079,5.17386,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,none,background,drop_weakest_10pct,3,6603,40,1.73137e-08,3.1666e-09,5.46761,0.096017,2.32339,5.28909,4.54261,6.56927,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,all_turner,none,finescale,drop_weakest_10pct,3,6603,40,1.73137e-08,5.17182e-09,3.3477,0.096017,2.32339,5.28909,2.81609,3.90744,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,all,background,drop_weakest_10pct,3,6457,40,2.14376e-08,3.67561e-09,5.83238,0.0641165,2.09758,4.85885,4.85966,7.01326,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,all,finescale,drop_weakest_10pct,3,6457,40,2.14376e-08,6.46068e-09,3.31816,0.0641165,2.09758,4.85885,2.82534,3.87821,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,interface,background,drop_weakest_10pct,3,227,37,7.00582e-08,8.23201e-09,8.51047,0.030837,1.74788,3.97316,5.53888,13.0321,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,interface,finescale,drop_weakest_10pct,3,227,37,7.00582e-08,1.84983e-08,3.78728,0.030837,1.74788,3.97316,2.67238,5.22503,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,interface,interface_local,drop_weakest_10pct,3,227,37,7.00582e-08,9.73279e-09,7.19817,0.030837,1.74425,3.9621,4.88505,10.217,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,layer,background,drop_weakest_10pct,3,134,34,7.39185e-10,1.25248e-09,0.590179,0.0820896,1.81148,4.15968,0.467274,0.778701,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,layer,finescale,drop_weakest_10pct,3,134,34,7.39185e-10,2.53703e-09,0.291359,0.0820896,1.81148,4.15968,0.209864,0.486174,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,straddles,background,drop_weakest_10pct,3,347,40,4.68999e-08,3.8249e-09,12.2617,0.092219,1.8151,4.16991,8.92386,15.7284,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,straddles,finescale,drop_weakest_10pct,3,347,40,4.68999e-08,1.17293e-08,3.99852,0.092219,1.8151,4.16991,2.76952,5.13309,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,none,background,drop_weakest_10pct,3,5749,40,1.84634e-08,3.54317e-09,5.21097,0.0633154,2.13922,4.94501,4.28029,6.30175,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,finger_any,none,finescale,drop_weakest_10pct,3,5749,40,1.84634e-08,5.75882e-09,3.2061,0.0633154,2.13922,4.94501,2.70042,3.78095,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,all,background,drop_weakest_10pct,3,2478,40,3.84102e-08,6.71247e-09,5.72221,0.0121065,1.57046,3.37297,4.74238,6.99075,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,all,finescale,drop_weakest_10pct,3,2478,40,3.84102e-08,1.22769e-08,3.12865,0.0121065,1.57046,3.37297,2.57552,3.70989,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,interface,background,drop_weakest_10pct,3,126,27,9.53274e-08,1.27502e-08,7.47655,0,1.48894,3.04925,4.63298,11.832,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,interface,finescale,drop_weakest_10pct,3,126,27,9.53274e-08,2.83941e-08,3.35729,0,1.48894,3.04925,2.22716,4.88308,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,interface,interface_local,drop_weakest_10pct,3,126,27,9.53274e-08,1.50663e-08,6.3272,0,1.49034,3.05512,4.18704,9.37649,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,layer,background,drop_weakest_10pct,3,58,23,1.08269e-09,2.33379e-09,0.46392,0,1.54197,3.26373,0.355988,0.563352,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,layer,finescale,drop_weakest_10pct,3,58,23,1.08269e-09,5.33235e-09,0.203042,0,1.54197,3.26373,0.16265,0.275309,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,straddles,background,drop_weakest_10pct,3,130,29,7.90334e-08,7.59997e-09,10.3992,0.00769231,1.49465,3.07309,6.97045,14.2618,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,straddles,finescale,drop_weakest_10pct,3,130,29,7.90334e-08,2.4215e-08,3.26382,0.00769231,1.49465,3.07309,2.19058,4.59701,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,none,background,drop_weakest_10pct,3,2164,40,3.36562e-08,6.42496e-09,5.23835,0.0134011,1.5826,3.41835,4.15965,6.63066,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,strong_finger,none,finescale,drop_weakest_10pct,3,2164,40,3.36562e-08,1.08074e-08,3.11417,0.0134011,1.5826,3.41835,2.51564,3.81226,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,all,background,drop_weakest_10pct,3,814,31,9.72404e-09,5.08883e-10,19.1086,0.31941,,,9.08736,40.7574,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,all,finescale,drop_weakest_10pct,3,814,31,9.72404e-09,9.759e-10,9.96418,0.31941,,,4.64844,17.1723,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,none,background,drop_weakest_10pct,3,814,31,9.72404e-09,5.08883e-10,19.1086,0.31941,,,9.43599,40.0553,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,not_finger,none,finescale,drop_weakest_10pct,3,814,31,9.72404e-09,9.759e-10,9.96418,0.31941,,,4.37617,17.3793,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,all,background,drop_weakest_10pct,3,1035,40,1.72187e-08,5.57282e-09,3.08977,0.0550725,,,1.9303,5.09056,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,all,finescale,drop_weakest_10pct,3,1035,40,1.72187e-08,9.14589e-09,1.88267,0.0550725,,,1.23519,2.88562,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,none,background,drop_weakest_10pct,3,1035,40,1.72187e-08,5.57282e-09,3.08977,0.0550725,,,1.98606,5.05252,False,shear,0.2,0.65
+vmp5500 transect free fall,vdb2021,control,none,finescale,drop_weakest_10pct,3,1035,40,1.72187e-08,9.14589e-09,1.88267,0.0550725,,,1.2294,2.86713,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,all,background,drop_weakest_10pct,3,7314,40,2.00439e-08,3.31869e-09,6.03971,0.093656,2.25888,5.17496,4.98004,7.09624,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,all,finescale,drop_weakest_10pct,3,7314,40,2.00439e-08,5.84618e-09,3.42855,0.093656,2.25888,5.17496,2.97553,3.9987,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,interface,background,drop_weakest_10pct,3,428,40,5.5611e-08,5.86544e-09,9.48112,0.0140187,1.74267,3.95726,6.40563,13.527,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,interface,finescale,drop_weakest_10pct,3,428,40,5.5611e-08,1.24813e-08,4.45555,0.0140187,1.74267,3.95726,3.09428,6.28668,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,interface,interface_local,drop_weakest_10pct,3,428,40,5.5611e-08,7.82194e-09,7.10962,0.0140187,1.7304,3.91949,4.90085,9.92975,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,layer,background,drop_weakest_10pct,3,819,40,1.47282e-09,6.89955e-10,2.13466,0.0903541,2.09446,4.85226,1.63806,2.79723,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,layer,finescale,drop_weakest_10pct,3,819,40,1.47282e-09,9.96234e-10,1.47839,0.0903541,2.09446,4.85226,1.07014,1.96685,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,straddles,background,drop_weakest_10pct,3,1153,40,2.56468e-08,2.57903e-09,9.94436,0.0503036,1.88456,4.35845,7.68037,12.6214,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,straddles,finescale,drop_weakest_10pct,3,1153,40,2.56468e-08,7.27442e-09,3.52561,0.0503036,1.88456,4.35845,2.69145,4.42915,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,none,background,drop_weakest_10pct,3,4914,40,1.87267e-08,3.70855e-09,5.04959,0.111315,2.41305,5.43759,4.02904,6.27463,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,all_turner,none,finescale,drop_weakest_10pct,3,4914,40,1.87267e-08,5.74148e-09,3.26164,0.111315,2.41305,5.43759,2.64231,3.98513,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,all,background,drop_weakest_10pct,3,6457,40,2.14376e-08,3.67561e-09,5.83238,0.0641165,2.09758,4.85885,4.83342,6.98841,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,all,finescale,drop_weakest_10pct,3,6457,40,2.14376e-08,6.46068e-09,3.31816,0.0641165,2.09758,4.85885,2.82921,3.85048,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,interface,background,drop_weakest_10pct,3,428,40,5.5611e-08,5.86544e-09,9.48112,0.0140187,1.74267,3.95726,6.25176,13.5536,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,interface,finescale,drop_weakest_10pct,3,428,40,5.5611e-08,1.24813e-08,4.45555,0.0140187,1.74267,3.95726,3.23786,6.19138,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,interface,interface_local,drop_weakest_10pct,3,428,40,5.5611e-08,7.82194e-09,7.10962,0.0140187,1.7304,3.91949,4.84143,9.95195,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,layer,background,drop_weakest_10pct,3,815,40,1.44212e-09,6.86144e-10,2.10177,0.0895706,2.09399,4.85125,1.5723,2.76614,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,layer,finescale,drop_weakest_10pct,3,815,40,1.44212e-09,9.91962e-10,1.4538,0.0895706,2.09399,4.85125,1.06949,1.9374,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,straddles,background,drop_weakest_10pct,3,1152,40,2.56624e-08,2.58122e-09,9.94195,0.0503472,1.88445,4.35817,7.78381,12.5629,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,straddles,finescale,drop_weakest_10pct,3,1152,40,2.56624e-08,7.28021e-09,3.52495,0.0503472,1.88445,4.35817,2.76972,4.46799,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,none,background,drop_weakest_10pct,3,4062,40,2.06505e-08,4.35506e-09,4.74174,0.068193,2.18603,5.03795,3.86906,5.88652,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,finger_any,none,finescale,drop_weakest_10pct,3,4062,40,2.06505e-08,6.69113e-09,3.08625,0.068193,2.18603,5.03795,2.56175,3.79366,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,all,background,drop_weakest_10pct,3,2478,40,3.84102e-08,6.71247e-09,5.72221,0.0121065,1.57046,3.37297,4.76973,6.94167,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,all,finescale,drop_weakest_10pct,3,2478,40,3.84102e-08,1.22769e-08,3.12865,0.0121065,1.57046,3.37297,2.62739,3.65055,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,interface,background,drop_weakest_10pct,3,263,39,7.31279e-08,8.24302e-09,8.87149,0.00380228,1.52439,3.19427,5.42724,13.2888,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,interface,finescale,drop_weakest_10pct,3,263,39,7.31279e-08,1.77303e-08,4.12446,0.00380228,1.52439,3.19427,2.74834,5.98225,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,interface,interface_local,drop_weakest_10pct,3,263,39,7.31279e-08,1.11064e-08,6.58433,0.00380228,1.52397,3.19261,4.40819,9.44055,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,layer,background,drop_weakest_10pct,3,274,40,2.50459e-09,1.4399e-09,1.73941,0.0255474,1.5874,3.43609,1.21859,2.46644,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,layer,finescale,drop_weakest_10pct,3,274,40,2.50459e-09,2.15544e-09,1.16198,0.0255474,1.5874,3.43609,0.734267,1.77605,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,straddles,background,drop_weakest_10pct,3,494,40,4.54569e-08,4.83554e-09,9.40058,0.0121457,1.52563,3.19925,6.87517,12.1898,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,straddles,finescale,drop_weakest_10pct,3,494,40,4.54569e-08,1.40755e-08,3.2295,0.0121457,1.52563,3.19925,2.40391,4.06671,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,none,background,drop_weakest_10pct,3,1447,40,3.64933e-08,8.07345e-09,4.52016,0.0110574,1.58693,3.43433,3.61942,5.76146,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,strong_finger,none,finescale,drop_weakest_10pct,3,1447,40,3.64933e-08,1.25883e-08,2.899,0.0110574,1.58693,3.43433,2.36082,3.65508,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,all,background,drop_weakest_10pct,3,814,31,9.72404e-09,5.08883e-10,19.1086,0.31941,,,9.38947,39.9729,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,all,finescale,drop_weakest_10pct,3,814,31,9.72404e-09,9.759e-10,9.96418,0.31941,,,4.45575,16.9531,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,layer,background,drop_weakest_10pct,3,1,1,1.24272e-08,1.63923e-09,7.58111,0,16.5206,8.72365,,,True,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,layer,finescale,drop_weakest_10pct,3,1,1,1.24272e-08,3.28996e-09,3.77731,0,16.5206,8.72365,,,True,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,none,background,drop_weakest_10pct,3,813,30,9.72071e-09,5.07492e-10,19.1544,0.319803,,,9.08913,38.0986,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,not_finger,none,finescale,drop_weakest_10pct,3,813,30,9.72071e-09,9.73053e-10,9.98991,0.319803,,,4.40761,17.2285,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,all,background,drop_weakest_10pct,3,1035,40,1.72187e-08,5.57282e-09,3.08977,0.0550725,,,1.98995,5.08672,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,all,finescale,drop_weakest_10pct,3,1035,40,1.72187e-08,9.14589e-09,1.88267,0.0550725,,,1.20032,2.84441,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,none,background,drop_weakest_10pct,3,1035,40,1.72187e-08,5.57282e-09,3.08977,0.0550725,,,1.95526,4.87539,False,shear,0.2,0.65
+vmp5500 transect free fall,rollo2022,control,none,finescale,drop_weakest_10pct,3,1035,40,1.72187e-08,9.14589e-09,1.88267,0.0550725,,,1.25199,2.88298,False,shear,0.2,0.65
