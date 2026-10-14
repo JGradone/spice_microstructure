@@ -798,3 +798,22 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 
   With interface-local gradients, interfaces are 0.60–0.85.
 * **Outputs:** `diffusivity_bins.csv`, `attribution.csv`, `cast_metrics_<instrument>.csv`, figures. The `export` step will write them as products (docs/products.md, sections 4–6).
+
+## 2026-10-14: export and uncertainty steps
+
+* **`src/steps/export.py`** writes `outputs/<run>/products/` (docs/products.md):
+  * the cast table;
+  * segments NetCDF: one record per window, 86 variables, flag_masks and flag_meanings for the segment, shear and chi QC bits, window times from perturb;
+  * binned NetCDF;
+  * diffusivity NetCDF and CSV;
+  * attribution and cast-metric CSVs;
+  * a README listing files, provenance and caveats.
+
+  Global attributes carry product_version, the run name and sensitivity overrides, config sha256, git commit, microstructure-tpw version and commit, Python and creation date. Exclusions (including profile-level ones) and cautions are carried as flags.
+* **`products.depth_bin_m` 1 → 5 m.** 8 s windows are about 6 m tall and step about 3 m, so 1 m bins would be mostly empty; 92% of 5 m bins are filled for the VMP5500. Product version stays 0.1 (first written version).
+* **Validated:** shear epsilon in the segments product equals the regimes table, no missing window times, and profile-level exclusions appear in the cast table.
+* **`src/steps/uncertainty.py`:** the profile bootstrap is computed where each estimate is made (dd_test, diffusivities). This step checks coverage:
+  * dd_excess: 119/119 pooled estimates with intervals.
+  * diffusivity: 413/413.
+  * dd_pooled: 904/984 (the rest have fewer than 2 profiles; flagged).
+  * Median pooled interval width 0.24–0.35 decades.
