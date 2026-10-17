@@ -132,7 +132,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 * Every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from the baseline.
 * Upgrading the pinned commit later starts a new baseline. Record why in `docs/decisions.md` and rerun.
 
-## Current state (2026-10-14; details and reasons in docs/decisions.md)
+## Current state (2026-10-16; details and reasons in docs/decisions.md)
 
 * **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response.
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
@@ -148,6 +148,10 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
   * replies from Bieito (baseline, gradient scale, γ) and Pat (package questions);
   * ADCP for a finescale Richardson number and a shear-based Garrett–Munk estimate;
   * ML staircase labels.
+  * VMP5500 FP07 pair: on SPC_049–063, T2 (T3301) reads chi 0.6–0.7 of T1 on about half the casts, with the same probes that agreed on SPC_041–048. The T3304 "gain error" (SPC_012–040) could also be a bead response difference. Upstream `fp07-pair` (microstructure-tpw f77e5de, after our pin) targets this; trying it means upgrading the pin and starting a new baseline.
+  * Upstream since our pin (ebec847 → cc5107d, 9 commits, read 2026-10-16): no change to our results as configured. The double-pole `goto` tau is now speed dependent (our double-pole sensitivity run would shift a few percent), and FP07 calibration fallbacks to factory coefficients are now reported.
+  * The generated perturb configs now use `<CONFIG_DIR>` paths, which changes perturb's cache keys: the next rerun of each run recomputes its perturb stages once (check disk space; old `*_NN` stage directories can be deleted afterwards).
+  * Private open items (correspondence, history purge): `docs/private/next_steps.md`.
 
 ## Documentation habits
 
