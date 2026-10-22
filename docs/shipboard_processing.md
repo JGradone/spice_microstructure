@@ -159,7 +159,7 @@ Source of truth: the `.params_sha256_*` JSON files in `vmp250_processed`, which 
 Cast information below comes from the Sealog export (`SPICE_turbulence/sealog/FKt260806_sealog_export.csv`, 95 VMP events) matched to .p header start times (`rsi-tpw info`).
 
 * 48 hour process station, 11.626 N, 50.577 W, 2026-08-19 22:40 to about 2026-08-21 19:30 UTC:
-  * VMP250: `data_0132.p` (08-19 22:40, 4 profiles), `data_0133.p` (08-20 01:55, 3 profiles), `data_0134.p` (08-20 13:31 to 16:03, 8 profiles). That makes 15 profiles, matching the 15 VMP250 casts reported. **`data_0134.p` is entirely "Tow-yo line #1" and "#2" (EK80 off), with the ship under way, not free-fall casts from a stationary ship.**
+  * VMP250: `data_0132.p` (08-19 22:40, 4 profiles), `data_0133.p` (08-20 01:55, 3 profiles), `data_0134.p` (08-20 13:31 to 16:03, 8 profiles). That makes 15 profiles, matching the 15 VMP250 casts reported. Sealog labels all of `data_0134.p` "Tow-yo line #1" and "#2" (EK80 off). The label is wrong: the VMP250 never did a tow-yo, and the ship drifted only 0.4 km during the file. These are ordinary free-fall casts (decisions.md 2026-10-22).
   * VMP5500: `SPC_033.P` (08-20 09:22), `SPC_034.P` (08-20 22:51), `SPC_038.P` (08-21 13:51, only 31 min long), `SPC_039.P` (08-21 18:10). That is four files against the "3 VMP6000" casts reported earlier; `SPC_038.P` may be the incomplete one. TODO: confirm.
   * The "all but one of the 18 casts" result in Early results presumably counts these profiles; recheck which ones were included.
 * Second repeated station, 12.857 N, 55.354 W, 2026-08-27 to 08-28: VMP5500 `SPC_055.P` to `SPC_060.P` (six casts in about 20 h); VMP250 `data_0141.p` and `data_0142.p`.
@@ -216,7 +216,7 @@ Operating notes per VMP250 cast (Sealog):
 | `data_0128.p` | 3 casts; "forgot to turn on for the first 3", so earlier casts at this station were not recorded |
 | `data_0129.p` | second cast reached 269.4 m |
 | `data_0131.p` | calm; higher surface salinity, no salinity barrier layer |
-| `data_0134.p` | tow-yo lines 1 and 2, EK80 off |
+| `data_0134.p` | Sealog: "tow-yo lines 1 and 2, EK80 off" (wrong label; free fall, decisions.md 2026-10-22) |
 | `data_0140.p` | second deepest casts |
 
 Sealog cross check: VMP250 Sealog entries mostly fall within 0 to 5 min of the .p start time. Known problems:

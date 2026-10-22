@@ -891,3 +891,10 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * **Why:** none of them feeds the pipeline or the products. Their results are recorded in the entries above, and the code and figures remain in git history at commit `cd55806`.
 * **Reproduction check:** the 2026-10-14 result stands (51 files identical within rtol 1e-9). `scripts/check_reproduction.py` is kept to repeat it against any fresh run.
 * **Provenance:** removing unused keys changes the config hash. Outputs record the hash and git commit of the config that produced them; no processing parameter changed.
+
+## 2026-10-22: data_0134.p is free fall, not tow-yo
+
+* **Correction (user):** the VMP250 never did a tow-yo. Sealog labels both VMP250 events in `data_0134.p` (2026-08-20 13:50 and 15:08 UTC) "Tow-yo line #1/#2 with EK80 off", and `docs/shipboard_processing.md` and the 2026-10-12 decision repeated that label. The ship track agrees with the user: during the file (13:31–16:03) the ASNAP fixes give a median ship speed of 0.14 m/s and a net drift of 0.42 km.
+* **Decision:** `instruments.vmp250.towyo: []`. The 8 profiles of `data_0134.p` are ordinary free-fall casts, so the process-station VMP250 group now pools all 15 profiles (7 before). This supersedes the 2026-10-12 decision to treat `data_0134.p` separately, and the "VMP250 tow-yo" rows in the 2026-10-14 tables no longer exist. The `towyo` flag and group machinery stay for any future tow-yo.
+* **Products:** `product_version` 0.1 → 0.2 (groups changed; variables unchanged, `towyo` is false everywhere).
+* **Rerun:** cast_log through export for every run with outputs (patch and convert do not depend on the flag).

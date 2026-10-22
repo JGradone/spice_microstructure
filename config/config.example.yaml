@@ -66,7 +66,7 @@ instruments:
     archive_generation: "01"      # vmp250_processed/*_01: last shipboard-parameter run (2026-09-30)
     process_station_files: [data_0132.p, data_0133.p, data_0134.p]
     perturb_overrides: {}         # VMP250 uses the shared perturb block as is (JAC CT)
-    towyo: [data_0134.p]          # Tow-yo lines 1 and 2, 2026-08-20, ship under way
+    towyo: []                     # none: data_0134.p is free fall (Sealog "tow-yo" label wrong; decisions.md 2026-10-22)
     exclude: {}                   # e.g. {data_0112.p: "test casts, sh2 probe M3463"}
     exclude_probes:               # keys: a file (all profiles) or a profile stem (that profile only)
       data_0112.p: [sh2]          # test casts, sh2 M3463: e1/e2 0.08 and 0.18 on profiles 1-2 (decisions.md 2026-10-13)
@@ -528,7 +528,7 @@ products:
   # variables are specified in docs/products.md.
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
-  product_version: "0.1"          # bump on any change to variables or methods
+  product_version: "0.2"          # bump on any change to variables or methods
   recommended_run: fft2_diss8_mle # run whose products are published to outputs/<recommended_dir>/ (scripts/publish_recommended.py)
   recommended_dir: recommended
   recommended_sensitivity_label: sensitivity   # outputs/comparisons/<label>/ used for the uncertainty ranges

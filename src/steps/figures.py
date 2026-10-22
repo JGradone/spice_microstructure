@@ -101,7 +101,8 @@ def station_groups(runs: dict) -> list[tuple[str, RunData, list[str]]]:
     if v250 is not None:
         st = v250.casts[(v250.casts["station"] == "process_station") & v250.casts["excluded"].isna()]
         groups.append(("VMP250 free fall", v250, st.loc[~st["towyo"], "stem"].tolist()))
-        groups.append(("VMP250 tow-yo", v250, st.loc[st["towyo"], "stem"].tolist()))
+        if st["towyo"].any():
+            groups.append(("VMP250 tow-yo", v250, st.loc[st["towyo"], "stem"].tolist()))
     v55 = runs.get("vmp5500")
     if v55 is not None:
         st = v55.casts[(v55.casts["station"] == "process_station") & v55.casts["excluded"].isna()]
