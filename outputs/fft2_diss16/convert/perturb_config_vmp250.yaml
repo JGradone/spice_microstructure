@@ -140,7 +140,7 @@ gps:
 hotel:
   enable: false
 parallel:
-  jobs: 1
+  jobs: 0
 instruments: {}
 netcdf:
   title: SPICE FKt260806 VMP-250IR SN 537 microstructure
@@ -151,5 +151,5 @@ netcdf:
   project: SPICE
   platform: R/V Falkor (too)
   instrument: Rockland VMP-250IR SN 537
-  comment: spice_microstructure git 3a1e282b80baec81a71fb28115a5de9f11295356; config
-    sha256 bfc12c412439; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)
+  comment: spice_microstructure git 89a7d8d50128746fec6d305cebbd074bf36d44f5; config
+    sha256 d9db5d5d64ef; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880)

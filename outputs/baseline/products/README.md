@@ -1,8 +1,6 @@
 # SPICE microstructure products: `baseline`
 
-Product version 0.1. spice_microstructure git 073d8c927ac297c78efc83f49fdd9cbdfdcd3135; config sha256 923fe62d4d74; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-14T18:21:11+00:00.
-
-(This summary regenerated 2026-10-14T19:18:11Z from the run's existing reports.)
+Product version 0.3. spice_microstructure git 89a7d8d50128746fec6d305cebbd074bf36d44f5; config sha256 f8eefb4e6e4f; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-26T18:45:44+00:00.
 
 Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.
 
@@ -62,7 +60,7 @@ NetCDF files carry this provenance in their global attributes; `*.nc` stays out 
 | shear: median epsilon below 150 dbar | 4.6e-10 W/kg | 8.2e-11 W/kg |
 | chi: windows kept | 5715 of 6002 | 6675 of 6749 |
 | chi: at noise floor (below 150 dbar) | 0.1% | 2.8% |
-| epsilon_T roll-off resolved (below 150 dbar) | 53% | 68% |
+| epsilon_T roll-off resolved (below 150 dbar) | 91% | 93% |
 | salinity source | own | own_ts |
 | N2 vs ship CTD, 150-550 m (median ratio; N2<=0) | 1.01; 1% (ship 2%) | 1.11; 16% (ship 1%) |
 | windows with T-S salinity invalid (T inversions) | 0 | 856 |
@@ -77,29 +75,29 @@ Whole cruise, all free-fall casts, finger-favourable water, finescale gradients,
 
 | Group | Set | K_T | K_S (γ 0.65) | K_S_eps | K_GM | profiles |
 |---|---|---|---|---|---|---|
-| vmp250 all free fall | all | 4.5e-06 [3.4e-06, 5.8e-06] | 1.3e-05 [9.7e-06, 1.6e-05] | 2.9e-05 | 2.7e-06 | 119 |
-| vmp250 all free fall | interface | 5.5e-06 [3.7e-06, 7.2e-06] | 1.4e-05 [9.7e-06, 1.8e-05] | 3.1e-05 | 2.6e-06 | 15 |
-| vmp250 all free fall | layer | 9.4e-06 [9.2e-07, 1.6e-05] | 2.1e-05 [2.1e-06, 3.6e-05] | 0.00012 | 2.2e-06 | 14 |
-| vmp5500 all free fall | all | 4.5e-06 [3.6e-06, 5.3e-06] | 1.4e-05 [1.2e-05, 1.7e-05] | 2.3e-05 | 2.4e-06 | 44 |
-| vmp5500 all free fall | interface | 5.5e-06 [3.9e-06, 7.1e-06] | 1.5e-05 [1.1e-05, 1.9e-05] | 1.3e-05 | 2.5e-06 | 38 |
-| vmp5500 all free fall | layer | 7.3e-06 [4.4e-06, 1.1e-05] | 2.2e-05 [1.4e-05, 3.3e-05] | 5.5e-05 | 2.1e-06 | 44 |
-| vmp250 all free fall | doubly stable control | 2.1e-06 | – | – | 3e-06 | 120 |
+| vmp250 all free fall | all | 4.4e-06 [3.4e-06, 5.8e-06] | 1.2e-05 [9.7e-06, 1.6e-05] | 2.8e-05 | 2.7e-06 | 127 |
+| vmp250 all free fall | interface | 4.8e-06 [3.7e-06, 6e-06] | 1.2e-05 [9.4e-06, 1.5e-05] | 2.2e-05 | 2.6e-06 | 22 |
+| vmp250 all free fall | layer | 8.1e-06 [1e-06, 1.4e-05] | 1.8e-05 [2.2e-06, 3.1e-05] | 0.00011 | 2.2e-06 | 16 |
+| vmp5500 all free fall | all | 4.5e-06 [3.7e-06, 5.3e-06] | 1.4e-05 [1.2e-05, 1.7e-05] | 2.3e-05 | 2.4e-06 | 44 |
+| vmp5500 all free fall | interface | 5.5e-06 [3.9e-06, 7.4e-06] | 1.5e-05 [1.1e-05, 2e-05] | 1.3e-05 | 2.5e-06 | 38 |
+| vmp5500 all free fall | layer | 7.3e-06 [4.2e-06, 1.1e-05] | 2.2e-05 [1.3e-05, 3.3e-05] | 5.5e-05 | 2.1e-06 | 44 |
+| vmp250 all free fall | doubly stable control | 2.1e-06 | – | – | 3e-06 | 128 |
 | vmp5500 all free fall | doubly stable control | 1.7e-06 | – | – | 3.2e-06 | 44 |
 
 Interface finger fraction 1 − 1/E by baseline (finescale gradients). The spread is part of the result; it also depends on the stratification scale (docs/decisions.md).
 
 | Group | Baseline | E | finger fraction |
 |---|---|---|---|
-| vmp250 all free fall | theory_Gamma0.2 | 1.72 [1.34, 2.50] | 0.42 |
-| vmp250 all free fall | garrett_munk | 2.13 [1.43, 2.78] | 0.53 |
-| vmp250 all free fall | matched_control | 1.29 [0.96, 1.92] | 0.22 |
-| vmp5500 all free fall | theory_Gamma0.2 | 3.50 [2.29, 5.58] | 0.71 |
-| vmp5500 all free fall | garrett_munk | 2.24 [1.60, 2.87] | 0.55 |
-| vmp5500 all free fall | matched_control | 2.25 [1.37, 3.44] | 0.56 |
+| vmp250 all free fall | theory_Gamma0.2 | 2.13 [1.68, 2.84] | 0.53 |
+| vmp250 all free fall | garrett_munk | 1.87 [1.43, 2.34] | 0.46 |
+| vmp250 all free fall | matched_control | 1.55 [1.20, 2.14] | 0.35 |
+| vmp5500 all free fall | theory_Gamma0.2 | 3.50 [2.23, 5.31] | 0.71 |
+| vmp5500 all free fall | garrett_munk | 2.24 [1.57, 2.98] | 0.55 |
+| vmp5500 all free fall | matched_control | 2.25 [1.49, 3.59] | 0.56 |
 
 ## Uncertainty
 
-Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 892/916 pooled estimates with intervals; dd_excess: 117/117 pooled estimates with intervals; diffusivity_bins: 407/407 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
+Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 828/852 pooled estimates with intervals; dd_excess: 109/109 pooled estimates with intervals; diffusivity_bins: 375/375 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
 
 ## Caveats
 

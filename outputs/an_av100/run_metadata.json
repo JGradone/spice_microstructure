@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-14T19:01:09+00:00",
-  "config_sha256": "6b6aec9fcef0792836a8bd04544a1041ace92aebbef42632bbf5fcf2c9578437",
-  "git_commit": "7a3bde1b85e06f1cf4c3d67046a8e963eb10d279",
+  "created_utc": "2026-10-26T19:04:15+00:00",
+  "config_sha256": "4df836866742c4e7dbafa8b3cfab7ca8731f1065c8fe9e1d54396a22d481ab2b",
+  "git_commit": "89a7d8d50128746fec6d305cebbd074bf36d44f5",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

@@ -1,8 +1,8 @@
 {
   "step": "diffusivities",
-  "created_utc": "2026-10-14T18:43:33+00:00",
-  "config_sha256": "d015710a2441dd139b679a9647530e466e2cfcb88f6e51bffcb77670c8b4617c",
-  "git_commit": "7a3bde1b85e06f1cf4c3d67046a8e963eb10d279",
+  "created_utc": "2026-10-26T18:44:05+00:00",
+  "config_sha256": "103a8ae242746281920ac4580a7445cb2dc5a87423ce1637676d48bfc01172c1",
+  "git_commit": "89a7d8d50128746fec6d305cebbd074bf36d44f5",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

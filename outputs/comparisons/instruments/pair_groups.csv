@@ -1,0 +1,14 @@
+instrument,profile_file,group
+vmp250,data_0127_prof001.nc,1
+vmp250,data_0142_prof001.nc,2
+vmp250,data_0142_prof002.nc,2
+vmp250,data_0142_prof003.nc,2
+vmp250,data_0142_prof004.nc,2
+vmp250,data_0142_prof005.nc,2
+vmp5500,SPC_026_prof001.nc,1
+vmp5500,SPC_055_prof001.nc,2
+vmp5500,SPC_056_prof001.nc,2
+vmp5500,SPC_057_prof001.nc,2
+vmp5500,SPC_058_prof001.nc,2
+vmp5500,SPC_059_prof001.nc,2
+vmp5500,SPC_060_prof001.nc,2

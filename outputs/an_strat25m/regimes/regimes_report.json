@@ -47,19 +47,6 @@
         "layer_height_ratio": 1,
         "temp_flag_only": true
       },
-      "test_grid": {
-        "ml_grad": [
-          0.0005,
-          0.001,
-          0.002
-        ],
-        "ml_density_difference": [
-          0.005,
-          0.01,
-          0.02,
-          0.04
-        ]
-      },
       "ml": {
         "enabled": false,
         "labels_path": null

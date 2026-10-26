@@ -1,6 +1,6 @@
 # Figures: run `baseline`
 
-Provenance: spice_microstructure git 073d8c927ac297c78efc83f49fdd9cbdfdcd3135; config sha256 923fe62d4d74; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880).
+Provenance: spice_microstructure git 89a7d8d50128746fec6d305cebbd074bf36d44f5; config sha256 f8eefb4e6e4f; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880).
 
 All figures show perturb output before this pipeline's QC.
 

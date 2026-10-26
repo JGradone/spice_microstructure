@@ -1,10 +1,23 @@
 {
   "vmp250": {
+    "stage_dirs": {
+      "chi": "chi_00",
+      "chi_binned": "chi_binned_00",
+      "chi_combo": "chi_combo_00",
+      "combo": "combo_00",
+      "ctd": "ctd_00",
+      "ctd_combo": "ctd_combo_00",
+      "diss": "diss_00",
+      "diss_binned": "diss_binned_00",
+      "diss_combo": "diss_combo_00",
+      "profiles": "profiles_00",
+      "profiles_binned": "profiles_binned_00"
+    },
     "files": 38,
     "exit_code": 0,
     "perturb_summary": "Pipeline complete: no errors.",
-    "perturb_log": "outputs/fft2_diss8/convert/vmp250/logs/run_20261013T182725Z.log",
-    "warnings_in_log": 883,
+    "perturb_log": "outputs/fft2_diss8/convert/vmp250/logs/run_20261026T192823Z.log",
+    "warnings_in_log": 0,
     "outputs": {
       ".cache": 0,
       "chi_00": 135,
@@ -22,11 +35,24 @@
     }
   },
   "vmp5500": {
+    "stage_dirs": {
+      "chi": "chi_00",
+      "chi_binned": "chi_binned_00",
+      "chi_combo": "chi_combo_00",
+      "combo": "combo_00",
+      "ctd": "ctd_00",
+      "ctd_combo": "ctd_combo_00",
+      "diss": "diss_00",
+      "diss_binned": "diss_binned_00",
+      "diss_combo": "diss_combo_00",
+      "profiles": "profiles_00",
+      "profiles_binned": "profiles_binned_00"
+    },
     "files": 45,
     "exit_code": 0,
     "perturb_summary": "Pipeline complete: no errors.",
-    "perturb_log": "outputs/fft2_diss8/convert/vmp5500/logs/run_20261013T183139Z.log",
-    "warnings_in_log": 429,
+    "perturb_log": "outputs/fft2_diss8/convert/vmp5500/logs/run_20261026T192915Z.log",
+    "warnings_in_log": 0,
     "outputs": {
       ".cache": 0,
       "chi_00": 46,

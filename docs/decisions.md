@@ -928,3 +928,17 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * The run summary's "epsilon_T/shear where resolved" now compares against the same shear that sets the gate, so it is biased high. Read the gate check instead.
   * `Re_b_T`, the `epsilon_T_resolved` flag and the `an_epsT` sensitivity run change. Results built on shear epsilon do not.
   * `product_version` 0.2 → 0.3.
+
+## 2026-10-26: Rerun after the tow-yo and epsilon_T gate changes
+
+* **Scope:**
+  * `fft2_diss8_mle` and `baseline`: rerun from `cast_log` (tow-yo fix) and then from `thermistor` (gate).
+  * The six `an_*` runs and `fft2_diss8_mle_dp`: full chain.
+  * `fft2_diss8` and `fft2_diss16`: through `thermistor`, as before.
+  * Then `compare_sensitivity.py`, `publish_recommended.py` and `compare_instruments.py`.
+  * All exited cleanly; products are `product_version` 0.3.
+* **Changes against the 2026-10-14 sensitivity summary:**
+  * **VMP5500:** every run except `an_epsT` is identical (K_S, K_T, interface excess E, finger fraction, window counts). The gate does not touch results built on shear epsilon, and the tow-yo fix concerns only the VMP250. Bootstrap intervals shift by about 1% (median) because one random stream is shared across groups and the VMP250 groups changed.
+  * **VMP250:** pooling `data_0134.p` into free fall adds 40% more interface windows (63 → 88 in the analysis run). K_S changes by −2%, K_T by −1%, E by +1% (1.54) and the finger fraction from 0.34 to 0.35. The same holds in every sensitivity run.
+  * **`an_epsT`** (epsilon_T replaces shear in chi_expected where resolved): the new gate passes about twice as many windows. Because resolved epsilon_T runs 2–3× above shear, E stays below 1 but moves from 0.20/0.26 to 0.45/0.43 (VMP250/VMP5500), and K_S doubles (to 1.0e-5/1.5e-5 m²/s). It remains a sensitivity run that shows epsilon_T absorbs the finger signal. It is not a candidate primary estimate.
+* **Recommended README:** the groups text no longer refers to a tow-yo group, which is now produced only for casts listed in `towyo`.

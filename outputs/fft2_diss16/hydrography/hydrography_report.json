@@ -34,8 +34,8 @@
         "microstructure": 0.3
       },
       "windows": 6749,
-      "windows_without_stratification": 846,
-      "windows_N2_nonpositive": 754,
+      "windows_without_stratification": 257,
+      "windows_N2_nonpositive": 900,
       "windows_ts_salinity_invalid": 856,
       "profiles_ts_bad_cell": [
         "SPC_018_prof002.nc",
@@ -50,16 +50,16 @@
         "SPC_049_prof002.nc"
       ],
       "windows_ts_ship_only": 312,
-      "windows_ts_disagrees_with_ship": 438,
+      "windows_ts_disagrees_with_ship": 473,
       "validation_150_550m": {
         "estimates": 1804,
-        "N2_nonpositive_fraction": 0.155,
+        "N2_nonpositive_fraction": 0.156,
         "ship_N2_nonpositive_fraction": 0.014,
-        "N2_median_ratio": 1.112,
-        "N2_within_factor2": 0.572,
+        "N2_median_ratio": 1.111,
+        "N2_within_factor2": 0.573,
         "T_z_median_ratio": 0.888,
-        "S_z_median_ratio": 0.677,
-        "R_rho_median": 1.736,
+        "S_z_median_ratio": 0.672,
+        "R_rho_median": 1.738,
         "R_rho_ship_median": 1.584
       }
     }

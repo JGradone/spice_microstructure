@@ -1,93 +1,74 @@
 instrument_group,method,turner,staircase,depth_bin,n_windows,n_profiles,N2_mean,K_T_background,K_T_finescale,K_rho_measured,K_GM
-vmp250 all free fall,rollo2022,finger_any,all,pooled,4174,119,6.05836e-05,6.53672e-06,4.94767e-06,2.41928e-06,2.67665e-06
-vmp250 all free fall,rollo2022,finger_any,all,162.5,1089,119,0.000102829,3.13892e-06,2.52887e-06,2.27071e-06,2.73903e-06
-vmp250 all free fall,rollo2022,finger_any,all,187.5,1005,113,6.02634e-05,5.63407e-06,4.34506e-06,2.23307e-06,2.62755e-06
-vmp250 all free fall,rollo2022,finger_any,all,212.5,844,101,4.22102e-05,1.42543e-05,1.03365e-05,2.74105e-06,2.56861e-06
-vmp250 all free fall,rollo2022,finger_any,all,237.5,594,82,3.96736e-05,8.19041e-06,5.93182e-06,2.37471e-06,2.61305e-06
-vmp250 all free fall,rollo2022,finger_any,all,262.5,365,49,3.46973e-05,1.89121e-05,1.06074e-05,3.39211e-06,2.68897e-06
+vmp250 all free fall,rollo2022,finger_any,all,pooled,4473,127,5.95567e-05,6.49421e-06,4.87651e-06,2.41676e-06,2.66422e-06
+vmp250 all free fall,rollo2022,finger_any,all,162.5,1160,127,0.000100451,3.19253e-06,2.55732e-06,2.2766e-06,2.72881e-06
+vmp250 all free fall,rollo2022,finger_any,all,187.5,1082,121,5.88155e-05,5.66747e-06,4.3266e-06,2.25278e-06,2.6165e-06
+vmp250 all free fall,rollo2022,finger_any,all,212.5,919,109,4.22036e-05,1.30831e-05,9.63666e-06,2.69999e-06,2.56069e-06
+vmp250 all free fall,rollo2022,finger_any,all,237.5,649,90,3.97778e-05,7.84611e-06,5.46097e-06,2.32484e-06,2.60067e-06
+vmp250 all free fall,rollo2022,finger_any,all,262.5,386,55,3.40922e-05,1.86297e-05,1.03758e-05,3.40099e-06,2.67116e-06
 vmp250 all free fall,rollo2022,finger_any,all,287.5,277,34,3.05949e-05,1.81427e-05,9.63739e-06,3.03077e-06,2.7268e-06
-vmp250 all free fall,rollo2022,finger_any,interface,pooled,35,16,5.03891e-05,2.61031e-05,1.02204e-05,2.93608e-06,2.62407e-06
-vmp250 all free fall,rollo2022,finger_any,interface,237.5,13,6,4.46821e-05,1.2868e-05,7.1261e-06,2.13005e-06,2.51087e-06
-vmp250 all free fall,rollo2022,finger_any,interface,262.5,5,5,6.30186e-05,1.78433e-05,5.00248e-06,2.0647e-06,2.73716e-06
+vmp250 all free fall,rollo2022,finger_any,interface,pooled,55,22,5.21772e-05,1.8004e-05,8.25707e-06,2.42171e-06,2.58913e-06
+vmp250 all free fall,rollo2022,finger_any,interface,212.5,5,3,5.39514e-05,1.99122e-05,9.95083e-06,2.8403e-06,2.50259e-06
+vmp250 all free fall,rollo2022,finger_any,interface,237.5,24,10,5.56397e-05,8.48612e-06,4.84082e-06,1.63241e-06,2.543e-06
+vmp250 all free fall,rollo2022,finger_any,interface,262.5,13,8,4.86146e-05,1.61471e-05,5.8769e-06,2.2374e-06,2.56954e-06
 vmp250 all free fall,rollo2022,finger_any,interface,287.5,13,6,4.86649e-05,4.54914e-05,1.65721e-05,4.09337e-06,2.72176e-06
-vmp250 all free fall,rollo2022,finger_any,layer,pooled,34,17,9.74421e-06,2.76002e-06,1.02054e-05,1.06597e-05,2.20684e-06
+vmp250 all free fall,rollo2022,finger_any,layer,pooled,47,24,9.67798e-06,2.36079e-06,9.026e-06,9.68738e-06,2.19639e-06
 vmp250 all free fall,rollo2022,finger_any,layer,212.5,12,9,1.34744e-05,8.40706e-07,1.96881e-06,7.24759e-06,2.22056e-06
-vmp250 all free fall,rollo2022,finger_any,layer,237.5,14,8,7.36681e-06,6.70324e-06,3.94564e-05,1.15627e-05,2.12761e-06
-vmp250 all free fall,rollo2022,finger_any,layer,262.5,6,5,5.73967e-06,3.86079e-06,0.000163202,1.7165e-05,2.24216e-06
-vmp250 all free fall,rollo2022,finger_any,none,pooled,4065,119,6.13758e-05,6.18918e-06,4.75397e-06,2.3952e-06,2.68086e-06
-vmp250 all free fall,rollo2022,finger_any,none,162.5,1089,119,0.000102829,3.13892e-06,2.52887e-06,2.27071e-06,2.73903e-06
-vmp250 all free fall,rollo2022,finger_any,none,187.5,1005,113,6.02634e-05,5.63407e-06,4.34506e-06,2.23307e-06,2.62755e-06
-vmp250 all free fall,rollo2022,finger_any,none,212.5,820,100,4.26507e-05,1.40222e-05,1.03072e-05,2.7112e-06,2.57455e-06
-vmp250 all free fall,rollo2022,finger_any,none,237.5,554,78,4.06898e-05,7.75476e-06,5.76518e-06,2.31239e-06,2.62825e-06
-vmp250 all free fall,rollo2022,finger_any,none,262.5,344,49,3.45942e-05,1.93406e-05,1.16806e-05,3.36052e-06,2.69298e-06
+vmp250 all free fall,rollo2022,finger_any,layer,237.5,22,14,8.28984e-06,3.84983e-06,3.05315e-05,9.21588e-06,2.14789e-06
+vmp250 all free fall,rollo2022,finger_any,layer,262.5,11,10,7.15988e-06,2.79608e-06,8.07612e-06,1.24143e-05,2.21057e-06
+vmp250 all free fall,rollo2022,finger_any,none,pooled,4319,127,6.05494e-05,6.15015e-06,4.69515e-06,2.39435e-06,2.67015e-06
+vmp250 all free fall,rollo2022,finger_any,none,162.5,1160,127,0.000100451,3.19253e-06,2.55732e-06,2.2766e-06,2.72881e-06
+vmp250 all free fall,rollo2022,finger_any,none,187.5,1082,121,5.88155e-05,5.66747e-06,4.3266e-06,2.25278e-06,2.6165e-06
+vmp250 all free fall,rollo2022,finger_any,none,212.5,893,108,4.26524e-05,1.28656e-05,9.59062e-06,2.67187e-06,2.56636e-06
+vmp250 all free fall,rollo2022,finger_any,none,237.5,581,85,4.08047e-05,7.545e-06,5.47598e-06,2.28333e-06,2.62131e-06
+vmp250 all free fall,rollo2022,finger_any,none,262.5,350,53,3.43533e-05,1.92499e-05,1.14948e-05,3.36742e-06,2.68696e-06
 vmp250 all free fall,rollo2022,finger_any,none,287.5,253,31,2.97675e-05,9.29176e-06,5.55769e-06,2.80509e-06,2.73374e-06
-vmp250 all free fall,rollo2022,control,all,pooled,2474,120,0.000340985,3.50153e-06,2.44323e-06,2.52156e-06,3.0406e-06
-vmp250 all free fall,rollo2022,control,all,12.5,155,97,0.000686205,7.08595e-06,4.87274e-06,5.43377e-06,3.11114e-06
-vmp250 all free fall,rollo2022,control,all,37.5,900,120,0.000414997,4.13597e-06,3.02474e-06,3.12896e-06,3.04261e-06
-vmp250 all free fall,rollo2022,control,all,62.5,652,109,0.000248529,1.81616e-06,1.39406e-06,9.10763e-07,2.99494e-06
-vmp250 all free fall,rollo2022,control,all,87.5,549,87,0.000272832,2.99288e-06,1.98693e-06,1.23543e-06,3.04043e-06
+vmp250 all free fall,rollo2022,control,all,pooled,2632,128,0.000339541,3.42515e-06,2.40147e-06,2.44601e-06,3.03102e-06
+vmp250 all free fall,rollo2022,control,all,12.5,167,104,0.000652628,7.12961e-06,4.90349e-06,5.4628e-06,3.09539e-06
+vmp250 all free fall,rollo2022,control,all,37.5,968,128,0.000415244,3.87845e-06,2.85941e-06,2.9803e-06,3.03522e-06
+vmp250 all free fall,rollo2022,control,all,62.5,698,117,0.000248808,1.73835e-06,1.33395e-06,8.89468e-07,2.98446e-06
+vmp250 all free fall,rollo2022,control,all,87.5,570,95,0.000272688,2.89469e-06,1.94296e-06,1.20645e-06,3.03336e-06
 vmp250 all free fall,rollo2022,control,all,112.5,162,64,0.000281272,2.29133e-06,1.41362e-06,7.28602e-07,3.04856e-06
-vmp250 all free fall,rollo2022,control,all,137.5,34,14,0.000160002,1.2987e-05,5.95493e-06,2.24425e-06,2.79221e-06
+vmp250 all free fall,rollo2022,control,all,137.5,44,21,0.000162545,1.79233e-05,7.15306e-06,2.06117e-06,2.78407e-06
 vmp250 all free fall,rollo2022,control,all,162.5,5,5,7.85126e-05,4.04837e-06,1.65816e-06,1.36248e-06,2.66587e-06
 vmp250 all free fall,rollo2022,control,all,287.5,8,4,2.62483e-05,5.80012e-05,1.38661e-05,6.2563e-06,2.57533e-06
-vmp250 all free fall,rollo2022,all_turner,all,pooled,4281,119,6.00276e-05,6.70544e-06,5.05289e-06,2.43385e-06,2.67452e-06
-vmp250 all free fall,rollo2022,all_turner,all,162.5,1094,119,0.000102718,3.13959e-06,2.52761e-06,2.26753e-06,2.73872e-06
-vmp250 all free fall,rollo2022,all_turner,all,187.5,1027,113,6.02858e-05,5.98382e-06,4.5797e-06,2.25082e-06,2.62645e-06
-vmp250 all free fall,rollo2022,all_turner,all,212.5,869,101,4.18002e-05,1.42996e-05,1.03426e-05,2.76143e-06,2.56649e-06
-vmp250 all free fall,rollo2022,all_turner,all,237.5,609,83,3.94319e-05,8.35756e-06,6.01405e-06,2.39543e-06,2.61073e-06
-vmp250 all free fall,rollo2022,all_turner,all,262.5,381,49,3.46013e-05,1.88609e-05,1.05683e-05,3.33111e-06,2.68297e-06
+vmp250 all free fall,rollo2022,all_turner,all,pooled,4584,127,5.90352e-05,6.65522e-06,4.97683e-06,2.43129e-06,2.6623e-06
+vmp250 all free fall,rollo2022,all_turner,all,162.5,1166,127,0.000100362,3.19291e-06,2.55607e-06,2.27251e-06,2.72851e-06
+vmp250 all free fall,rollo2022,all_turner,all,187.5,1104,121,5.88652e-05,5.99848e-06,4.54679e-06,2.26928e-06,2.6157e-06
+vmp250 all free fall,rollo2022,all_turner,all,212.5,944,109,4.18263e-05,1.31303e-05,9.64825e-06,2.71947e-06,2.55895e-06
+vmp250 all free fall,rollo2022,all_turner,all,237.5,664,91,3.95538e-05,7.98912e-06,5.53155e-06,2.34463e-06,2.59883e-06
+vmp250 all free fall,rollo2022,all_turner,all,262.5,405,55,3.38028e-05,1.86321e-05,1.03617e-05,3.36395e-06,2.66295e-06
 vmp250 all free fall,rollo2022,all_turner,all,287.5,301,34,3.04649e-05,2.06494e-05,1.06048e-05,3.2207e-06,2.71909e-06
-vmp250 process_station free fall,rollo2022,finger_any,all,pooled,189,7,5.41712e-05,2.25195e-05,1.64753e-05,3.56095e-06,2.52166e-06
-vmp250 process_station free fall,rollo2022,finger_any,all,162.5,64,7,8.04327e-05,3.54621e-06,2.91171e-06,2.43321e-06,2.60179e-06
-vmp250 process_station free fall,rollo2022,finger_any,all,187.5,57,6,4.63026e-05,4.9883e-06,3.70429e-06,2.12202e-06,2.4898e-06
-vmp250 process_station free fall,rollo2022,finger_any,all,212.5,48,5,4.05435e-05,8.24865e-05,5.09832e-05,8.53268e-06,2.46288e-06
-vmp250 process_station free fall,rollo2022,finger_any,all,237.5,19,4,2.58639e-05,1.28627e-05,7.40265e-06,3.37616e-06,2.37186e-06
-vmp250 process_station free fall,rollo2022,finger_any,none,pooled,189,7,5.41712e-05,2.25195e-05,1.64753e-05,3.56095e-06,2.52166e-06
-vmp250 process_station free fall,rollo2022,finger_any,none,162.5,64,7,8.04327e-05,3.54621e-06,2.91171e-06,2.43321e-06,2.60179e-06
-vmp250 process_station free fall,rollo2022,finger_any,none,187.5,57,6,4.63026e-05,4.9883e-06,3.70429e-06,2.12202e-06,2.4898e-06
-vmp250 process_station free fall,rollo2022,finger_any,none,212.5,48,5,4.05435e-05,8.24865e-05,5.09832e-05,8.53268e-06,2.46288e-06
-vmp250 process_station free fall,rollo2022,finger_any,none,237.5,19,4,2.58639e-05,1.28627e-05,7.40265e-06,3.37616e-06,2.37186e-06
-vmp250 process_station free fall,rollo2022,control,all,pooled,127,7,0.000307254,2.40337e-06,1.65204e-06,1.68599e-06,2.87365e-06
-vmp250 process_station free fall,rollo2022,control,all,12.5,11,7,0.000351386,7.91579e-06,6.79096e-06,3.81838e-06,2.90081e-06
-vmp250 process_station free fall,rollo2022,control,all,37.5,62,7,0.000381151,1.688e-06,1.53115e-06,1.80465e-06,2.91734e-06
-vmp250 process_station free fall,rollo2022,control,all,62.5,37,7,0.000217542,1.19553e-06,9.29192e-07,7.23923e-07,2.80367e-06
+vmp250 process_station free fall,rollo2022,finger_any,all,pooled,488,15,4.86869e-05,1.35857e-05,9.42321e-06,2.88298e-06,2.50029e-06
+vmp250 process_station free fall,rollo2022,finger_any,all,162.5,135,15,7.1781e-05,4.12866e-06,3.11969e-06,2.42787e-06,2.57897e-06
+vmp250 process_station free fall,rollo2022,finger_any,all,187.5,134,14,4.26339e-05,5.5967e-06,3.88279e-06,2.40128e-06,2.47333e-06
+vmp250 process_station free fall,rollo2022,finger_any,all,212.5,123,13,4.15102e-05,3.62852e-05,2.6406e-05,4.63668e-06,2.46793e-06
+vmp250 process_station free fall,rollo2022,finger_any,all,237.5,74,12,3.7042e-05,6.87414e-06,3.91195e-06,2.08457e-06,2.44499e-06
+vmp250 process_station free fall,rollo2022,finger_any,all,262.5,22,7,2.31356e-05,1.32248e-05,6.45165e-06,3.66218e-06,2.34938e-06
+vmp250 process_station free fall,rollo2022,finger_any,interface,pooled,20,6,5.53063e-05,8.21514e-06,4.75168e-06,1.60159e-06,2.52624e-06
+vmp250 process_station free fall,rollo2022,finger_any,interface,237.5,11,4,6.85896e-05,6.48223e-06,3.74929e-06,1.24928e-06,2.57012e-06
+vmp250 process_station free fall,rollo2022,finger_any,interface,262.5,8,3,3.96121e-05,1.41762e-05,7.89543e-06,2.40913e-06,2.45829e-06
+vmp250 process_station free fall,rollo2022,finger_any,layer,pooled,13,7,9.50475e-06,1.27212e-06,5.36079e-06,7.0802e-06,2.16902e-06
+vmp250 process_station free fall,rollo2022,finger_any,layer,237.5,8,6,9.90513e-06,5.45791e-07,7.24046e-06,6.16141e-06,2.17733e-06
+vmp250 process_station free fall,rollo2022,finger_any,layer,262.5,5,5,8.86414e-06,2.35716e-06,4.91908e-06,8.72291e-06,2.15496e-06
+vmp250 process_station free fall,rollo2022,finger_any,none,pooled,443,15,5.02449e-05,1.40884e-05,9.95771e-06,2.92152e-06,2.50666e-06
+vmp250 process_station free fall,rollo2022,finger_any,none,162.5,135,15,7.1781e-05,4.12866e-06,3.11969e-06,2.42787e-06,2.57897e-06
+vmp250 process_station free fall,rollo2022,finger_any,none,187.5,134,14,4.26339e-05,5.5967e-06,3.88279e-06,2.40128e-06,2.47333e-06
+vmp250 process_station free fall,rollo2022,finger_any,none,212.5,121,13,4.18274e-05,3.65246e-05,2.65258e-05,4.65373e-06,2.46948e-06
+vmp250 process_station free fall,rollo2022,finger_any,none,237.5,46,11,3.60178e-05,7.16572e-06,4.11027e-06,2.21201e-06,2.43929e-06
+vmp250 process_station free fall,rollo2022,finger_any,none,262.5,7,5,1.95968e-05,1.12842e-05,3.24227e-06,4.12012e-06,2.31579e-06
+vmp250 process_station free fall,rollo2022,control,all,pooled,285,15,0.000312619,2.31351e-06,1.67605e-06,1.39781e-06,2.87747e-06
+vmp250 process_station free fall,rollo2022,control,all,12.5,23,14,0.000282276,8.72474e-06,7.12317e-06,4.95937e-06,2.85665e-06
+vmp250 process_station free fall,rollo2022,control,all,37.5,130,15,0.000400695,1.28127e-06,1.09132e-06,1.38102e-06,2.9278e-06
+vmp250 process_station free fall,rollo2022,control,all,62.5,83,15,0.000237062,1.03927e-06,7.98826e-07,6.4638e-07,2.82134e-06
+vmp250 process_station free fall,rollo2022,control,all,87.5,21,8,0.000268933,3.09897e-07,2.93209e-07,4.38014e-07,2.84725e-06
 vmp250 process_station free fall,rollo2022,control,all,112.5,5,5,0.000293229,9.04732e-07,5.35495e-07,5.39127e-07,2.86411e-06
-vmp250 process_station free fall,rollo2022,control,all,137.5,12,7,0.000167458,1.1013e-05,3.06023e-06,8.79236e-07,2.75059e-06
-vmp250 process_station free fall,rollo2022,all_turner,all,pooled,189,7,5.41712e-05,2.25195e-05,1.64753e-05,3.56095e-06,2.52166e-06
-vmp250 process_station free fall,rollo2022,all_turner,all,162.5,64,7,8.04327e-05,3.54621e-06,2.91171e-06,2.43321e-06,2.60179e-06
-vmp250 process_station free fall,rollo2022,all_turner,all,187.5,57,6,4.63026e-05,4.9883e-06,3.70429e-06,2.12202e-06,2.4898e-06
-vmp250 process_station free fall,rollo2022,all_turner,all,212.5,48,5,4.05435e-05,8.24865e-05,5.09832e-05,8.53268e-06,2.46288e-06
-vmp250 process_station free fall,rollo2022,all_turner,all,237.5,19,4,2.58639e-05,1.28627e-05,7.40265e-06,3.37616e-06,2.37186e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,all,pooled,299,8,4.52203e-05,5.78829e-06,3.84075e-06,2.3696e-06,2.48548e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,all,162.5,71,8,6.39822e-05,5.17258e-06,3.41984e-06,2.42183e-06,2.55587e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,all,187.5,77,8,3.99182e-05,6.25897e-06,4.05219e-06,2.64107e-06,2.46017e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,all,212.5,75,8,4.21288e-05,4.9244e-06,4.07431e-06,2.23706e-06,2.4711e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,all,237.5,55,8,4.09036e-05,5.85541e-06,3.32588e-06,1.80244e-06,2.4652e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,all,262.5,21,6,2.35748e-05,1.31297e-05,6.43413e-06,3.62795e-06,2.35319e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,interface,pooled,20,6,5.53063e-05,8.21514e-06,4.75168e-06,1.60159e-06,2.52624e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,interface,237.5,11,4,6.85896e-05,6.48223e-06,3.74929e-06,1.24928e-06,2.57012e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,interface,262.5,8,3,3.96121e-05,1.41762e-05,7.89543e-06,2.40913e-06,2.45829e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,layer,pooled,13,7,9.50475e-06,1.27212e-06,5.36079e-06,7.0802e-06,2.16902e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,layer,237.5,8,6,9.90513e-06,5.45791e-07,7.24046e-06,6.16141e-06,2.17733e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,layer,262.5,5,5,8.86414e-06,2.35716e-06,4.91908e-06,8.72291e-06,2.15496e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,none,pooled,254,8,4.73233e-05,5.3965e-06,3.68544e-06,2.37688e-06,2.49471e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,none,162.5,71,8,6.39822e-05,5.17258e-06,3.41984e-06,2.42183e-06,2.55587e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,none,187.5,77,8,3.99182e-05,6.25897e-06,4.05219e-06,2.64107e-06,2.46017e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,none,212.5,73,8,4.26715e-05,4.91123e-06,4.05483e-06,2.23038e-06,2.47371e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,none,237.5,27,7,4.3163e-05,5.18961e-06,2.97334e-06,1.72112e-06,2.47618e-06
-vmp250 process_station tow-yo,rollo2022,finger_any,none,262.5,6,4,2.05439e-05,1.07775e-05,3.13631e-06,4.03431e-06,2.32535e-06
-vmp250 process_station tow-yo,rollo2022,control,all,pooled,158,8,0.000316932,2.24006e-06,1.69768e-06,1.17325e-06,2.88049e-06
-vmp250 process_station tow-yo,rollo2022,control,all,12.5,12,7,0.000218924,1.15593e-05,8.07049e-06,6.63812e-06,2.80533e-06
-vmp250 process_station tow-yo,rollo2022,control,all,37.5,68,8,0.000418516,9.54968e-07,7.75441e-07,1.02924e-06,2.93691e-06
-vmp250 process_station tow-yo,rollo2022,control,all,62.5,46,8,0.000252764,9.74694e-07,7.45787e-07,5.927e-07,2.83455e-06
-vmp250 process_station tow-yo,rollo2022,control,all,87.5,21,8,0.000268933,3.09897e-07,2.93209e-07,4.38014e-07,2.84725e-06
-vmp250 process_station tow-yo,rollo2022,control,all,137.5,10,7,0.000171193,8.81843e-05,1.23702e-05,1.47937e-06,2.75569e-06
-vmp250 process_station tow-yo,rollo2022,all_turner,all,pooled,303,8,4.50146e-05,5.82117e-06,3.864e-06,2.38316e-06,2.48455e-06
-vmp250 process_station tow-yo,rollo2022,all_turner,all,162.5,72,8,6.45734e-05,5.1421e-06,3.41404e-06,2.39284e-06,2.55774e-06
-vmp250 process_station tow-yo,rollo2022,all_turner,all,187.5,77,8,3.99182e-05,6.25897e-06,4.05219e-06,2.64107e-06,2.46017e-06
-vmp250 process_station tow-yo,rollo2022,all_turner,all,212.5,75,8,4.21288e-05,4.9244e-06,4.07431e-06,2.23706e-06,2.4711e-06
-vmp250 process_station tow-yo,rollo2022,all_turner,all,237.5,55,8,4.09036e-05,5.85541e-06,3.32588e-06,1.80244e-06,2.4652e-06
-vmp250 process_station tow-yo,rollo2022,all_turner,all,262.5,24,6,2.11279e-05,1.41702e-05,6.87335e-06,4.21782e-06,2.33093e-06
+vmp250 process_station free fall,rollo2022,control,all,137.5,22,14,0.000169155,2.52824e-05,5.94676e-06,1.15531e-06,2.75292e-06
+vmp250 process_station free fall,rollo2022,all_turner,all,pooled,492,15,4.85321e-05,1.35921e-05,9.42895e-06,2.88818e-06,2.49964e-06
+vmp250 process_station free fall,rollo2022,all_turner,all,162.5,136,15,7.20366e-05,4.12181e-06,3.11815e-06,2.41405e-06,2.5797e-06
+vmp250 process_station free fall,rollo2022,all_turner,all,187.5,134,14,4.26339e-05,5.5967e-06,3.88279e-06,2.40128e-06,2.47333e-06
+vmp250 process_station free fall,rollo2022,all_turner,all,212.5,123,13,4.15102e-05,3.62852e-05,2.6406e-05,4.63668e-06,2.46793e-06
+vmp250 process_station free fall,rollo2022,all_turner,all,237.5,74,12,3.7042e-05,6.87414e-06,3.91195e-06,2.08457e-06,2.44499e-06
+vmp250 process_station free fall,rollo2022,all_turner,all,262.5,25,7,2.08394e-05,1.42643e-05,6.88842e-06,4.23551e-06,2.32815e-06
 vmp250 transect free fall,rollo2022,finger_any,all,pooled,3985,112,6.08878e-05,5.64997e-06,4.2847e-06,2.37111e-06,2.68396e-06
 vmp250 transect free fall,rollo2022,finger_any,all,162.5,1025,112,0.000104227,3.11815e-06,2.50973e-06,2.26288e-06,2.74732e-06
 vmp250 transect free fall,rollo2022,finger_any,all,187.5,948,107,6.11028e-05,5.67636e-06,4.38876e-06,2.23813e-06,2.63552e-06

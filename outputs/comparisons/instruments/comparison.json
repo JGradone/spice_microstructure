@@ -1,0 +1,84 @@
+{
+  "provenance": "spice_microstructure git 89a7d8d50128746fec6d305cebbd074bf36d44f5; config sha256 f8eefb4e6e4f; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); products of run fft2_diss8_mle",
+  "run": "fft2_diss8_mle",
+  "run_config_hash": "103a8ae242746281920ac4580a7445cb2dc5a87423ce1637676d48bfc01172c1",
+  "settings": {
+    "depth_range_dbar": [
+      20,
+      300
+    ],
+    "depth_bin_m": 10,
+    "min_profiles": 3,
+    "station": "process_station",
+    "pairing": {
+      "max_hours": 12,
+      "max_km": 20,
+      "alt": {
+        "max_hours": 6,
+        "max_km": 15
+      }
+    }
+  },
+  "station": {
+    "vmp250": {
+      "n_profiles": 15
+    },
+    "vmp5500": {
+      "n_profiles": 4
+    },
+    "epsilon_log10_ratio_5500_over_250": {
+      "n_bins": 25,
+      "median": -0.26,
+      "ratio_of_depth_means": 0.31
+    },
+    "chi_log10_ratio_5500_over_250": {
+      "n_bins": 25,
+      "median": -0.08,
+      "ratio_of_depth_means": 0.39
+    }
+  },
+  "pairs": {
+    "main": {
+      "max_hours": 12,
+      "max_km": 20,
+      "n_groups": 2,
+      "n_profiles": {
+        "vmp250": 6,
+        "vmp5500": 7
+      },
+      "epsilon_log10_ratio_5500_over_250": {
+        "n_bins": 50,
+        "median": -0.33,
+        "ci95_groups": null,
+        "spearman_r": 0.74
+      },
+      "chi_log10_ratio_5500_over_250": {
+        "n_bins": 49,
+        "median": 0.03,
+        "ci95_groups": null,
+        "spearman_r": 0.76
+      }
+    },
+    "alt": {
+      "max_hours": 6,
+      "max_km": 15,
+      "n_groups": 2,
+      "n_profiles": {
+        "vmp250": 3,
+        "vmp5500": 2
+      },
+      "epsilon_log10_ratio_5500_over_250": {
+        "n_bins": 50,
+        "median": -0.31,
+        "ci95_groups": null,
+        "spearman_r": 0.79
+      },
+      "chi_log10_ratio_5500_over_250": {
+        "n_bins": 49,
+        "median": 0.01,
+        "ci95_groups": null,
+        "spearman_r": 0.72
+      }
+    }
+  }
+}

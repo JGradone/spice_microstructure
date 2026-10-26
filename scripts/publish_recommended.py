@@ -114,8 +114,9 @@ def main() -> int:
         "K_N ≈ K_S is an assumption to state). Use `K_T` for heat and, outside finger water, `K_rho` (flag "
         "`K_rho_valid`). Take `gradients = finescale` as the primary estimate and report the others as sensitivity; "
         f"take `method = {m}` (tuned staircase labels; `vdb2021` is the published-threshold alternative). "
-        "Groups: `<instrument> all free fall` for cruise-wide averages, `process_station free fall` / `tow-yo` for "
-        "the station (never pool tow-yo with free fall). `depth_bin = pooled` for whole-depth values, numeric "
+        "Groups: `<instrument> all free fall` for cruise-wide averages, `process_station free fall` for the "
+        "station (a `tow-yo` group appears only for casts in config `towyo`, none at present; never pool it with "
+        "free fall). `depth_bin = pooled` for whole-depth values, numeric "
         "depth bins for profiles. Use rows with `min_profiles_ok` true; `K_S_applicable` marks where K_S is defined.",
         "* **Finger contribution:** `attribution_<instrument>.csv`. Report the range across `baseline` values, not a "
         "single number.",

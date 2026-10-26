@@ -3,7 +3,7 @@
     "profiles": 137,
     "segments": 6002,
     "binned_profiles": 137,
-    "diffusivity_records": 986
+    "diffusivity_records": 840
   },
   "vmp5500": {
     "profiles": 46,

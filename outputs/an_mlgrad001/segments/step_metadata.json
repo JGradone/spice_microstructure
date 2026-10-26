@@ -1,8 +1,8 @@
 {
   "step": "segments",
-  "created_utc": "2026-10-14T18:59:09+00:00",
-  "config_sha256": "3755f27726ccb4a5f390aa56d4599c0627602c28ee2e9e53e6930a86385c7d47",
-  "git_commit": "7a3bde1b85e06f1cf4c3d67046a8e963eb10d279",
+  "created_utc": "2026-10-26T19:02:07+00:00",
+  "config_sha256": "0e5873bd98123dc38aa3bfe4c8c35ecae1de862347bb68d4e6b5ea9acaf1ce76",
+  "git_commit": "89a7d8d50128746fec6d305cebbd074bf36d44f5",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

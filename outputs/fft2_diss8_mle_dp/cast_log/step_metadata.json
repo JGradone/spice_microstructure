@@ -1,8 +1,8 @@
 {
   "step": "cast_log",
-  "created_utc": "2026-10-14T19:11:23+00:00",
-  "config_sha256": "b108e13ab01df722d68f1a040489ebe42eb01785da36873c10ecc7be7cc937a7",
-  "git_commit": "7a3bde1b85e06f1cf4c3d67046a8e963eb10d279",
+  "created_utc": "2026-10-26T19:15:42+00:00",
+  "config_sha256": "5a52581953b3764b3517a56c78b7d649bba9d20bc728e629e081bcccfa3441c3",
+  "git_commit": "89a7d8d50128746fec6d305cebbd074bf36d44f5",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

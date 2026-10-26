@@ -1,8 +1,8 @@
 {
   "step": "epsilon_shear",
-  "created_utc": "2026-10-14T18:19:39+00:00",
-  "config_sha256": "923fe62d4d7471dac21e2d7eb8902db0429b846ac98db5e200f46d33151f79ea",
-  "git_commit": "073d8c927ac297c78efc83f49fdd9cbdfdcd3135",
+  "created_utc": "2026-10-22T15:55:35+00:00",
+  "config_sha256": "c265a59caf19fc43fd9f3211048054e52c22a57627398425ef8f3eb8e844ba24",
+  "git_commit": "36293d66e99424e9af35b0dfa2eaaa511baacfb4-dirty",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

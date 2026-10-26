@@ -25,7 +25,7 @@
         "speed_range": 0,
         "unsteady_speed": 233,
         "vibration": 60,
-        "towyo": 371
+        "towyo": 0
       },
       "removed_sequentially": {
         "excluded_cast": 0,

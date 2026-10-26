@@ -4,21 +4,7 @@
     "refit": {
       "enabled": true,
       "f_min_hz": 1.0,
-      "min_points": 5,
-      "test_f_min_hz": [
-        0.0,
-        0.5,
-        1.0,
-        2.0
-      ],
-      "test_noise_ratio": [
-        2.0,
-        3.0
-      ],
-      "test_white_band_hz": [
-        20.0,
-        40.0
-      ]
+      "min_points": 5
     },
     "noise_floor": {
       "method": "quietest_windows",
