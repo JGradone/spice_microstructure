@@ -136,7 +136,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 
 * **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response.
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
-* **epsilon_T:** used only where K_max/kB ≥ 1.6. It tends to absorb the finger signal, so shear epsilon is primary.
+* **epsilon_T:** flagged resolved where K_max/kB ≥ 1.6, with kB from shear epsilon, not from the FP07 fit (decisions.md 2026-10-26). There it runs 2–3× above shear epsilon, so shear epsilon is primary.
 * **Probe exclusions:**
   * VMP5500 T2 (T3304), SPC_012–040: gain error.
   * VMP250 sh2 for data_0112 (test casts) and for data_0123_prof004 and data_0124 (fouled).

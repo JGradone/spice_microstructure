@@ -27,11 +27,20 @@ Per window:
     max(chi, floor) (policy clamp).
 
 epsilon_T is only trusted where the Batchelor roll-off is resolved:
-epsilon_T_resolved = K_max/kB >= chi_qc.epsilon_T.k_max_ratio_min on the
-probes used (decisions.md 2026-10-13: below ~1.6 the fit extrapolates kB and
-epsilon_T runs 2-6x above shear epsilon; above it the single-pole response
-agrees with shear within ~20%). epsilon_T is reported everywhere; the flag
-says where to use it.
+epsilon_T_resolved = K_max_T / kB >= chi_qc.epsilon_T.k_max_ratio_min on every
+probe used. With kb_source `shear` (default) kB is computed from the combined
+shear epsilon_shear_bounded, kB_shear = (eps / (nu kappa_T^2))^(1/4) / 2 pi,
+so the gate is independent of the FP07 fit. The fit's own kB (kb_source `fit`,
+the rule before 2026-10-26) puts the same kB on both sides: a window whose
+fitted kB comes out high gets a high epsilon_T and a low K_max/kB, so gating on
+it keeps underestimates and drops overestimates (decisions.md 2026-10-26).
+Where shear is at its floor, epsilon_shear_bounded is an upper bound, so
+kB_shear is too and the gate is conservative. epsilon_T is reported everywhere;
+the flag says where to use it.
+
+The report checks the gate (chi_qc.epsilon_T.check): epsilon_T against one
+shear probe, binned by K_max/kB from the other probe (independent of both
+sides of the ratio) and, for contrast, by the fit's own kB.
 epsilon_T assumes the Kraichnan (turbulent) spectral shape, which may not hold
 for finger-scale variance. The report compares it with shear epsilon where the
 shear estimate is above its floor, by Turner-angle regime and buoyancy
@@ -51,6 +60,7 @@ Reads:  <run_dir>/convert/<instrument>/chi_NN/*_prof*.nc
         <run_dir>/hydrography/windows_<instrument>.csv
 Writes: <run_dir>/thermistor/
           thermistor_<instrument>.csv     one row per window
+          epsilon_T_check_<instrument>.csv  epsilon_T/shear by K_max/kB bin (gate check)
           figures/*.png, thermistor_report.json, step_metadata.json
 """
 
@@ -189,7 +199,6 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
     df["epsilon_T"] = combine(np.column_stack([df[f"epsilon_T_{p}"].to_numpy() for p in probes]), u, cfg["combine"])
     kr = np.column_stack([df[f"K_max_ratio_{p}"].to_numpy() for p in probes])
     df["K_max_ratio"] = np.where(u.any(axis=1), np.nanmin(np.where(u, kr, np.nan), axis=1), np.nan)
-    df["epsilon_T_resolved"] = df["K_max_ratio"] >= cfg["epsilon_T"]["k_max_ratio_min"]
     df["kB"] = combine(np.column_stack([df[f"kB_{p}"].to_numpy() for p in probes]), u, cfg["combine"])
     nf = cfg["noise_floor"]
     at_floor = (np.isfinite(df["chi"]) & (df["chi"] < nf["factor"] * df["chi_floor"])).to_numpy()
@@ -214,6 +223,89 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
                    "kept_at_floor_fraction": round(float((k & at_floor).sum() / max(k.sum(), 1)), 4),
                    "kept_fom_out_of_band_fraction": round(float((k & fom_bad_any).sum() / max(k.sum(), 1)), 4)})
     return df, counts
+
+
+def batchelor_kB(eps, nu, kappa_T: float):
+    """Batchelor wavenumber (cpm) from epsilon."""
+    with np.errstate(invalid="ignore", divide="ignore"):
+        return (np.asarray(eps, float) / (np.asarray(nu, float) * kappa_T ** 2)) ** 0.25 / (2 * np.pi)
+
+
+def min_ratio_over_used(df: pd.DataFrame, probes: list[str], kB) -> np.ndarray:
+    """min over the thermistors used of K_max_T / kB (NaN where none is used)."""
+    kmax = np.column_stack([df[f"K_max_T_{p}"].to_numpy() for p in probes])
+    use = np.column_stack([df[f"use_{p}"].to_numpy(bool) for p in probes])
+    with np.errstate(invalid="ignore", divide="ignore"):
+        r = np.where(use, kmax / np.asarray(kB, float)[:, None], np.nan)
+    return np.where(use.any(axis=1), np.nanmin(np.where(use, r, np.inf), axis=1), np.nan)
+
+
+def resolved_gate(df: pd.DataFrame, shear: pd.DataFrame, probes: list[str], ecfg: dict) -> pd.DataFrame:
+    """epsilon_T_resolved from K_max_T / kB, with kB from shear (default) or from the FP07 fit."""
+    s = shear[["profile_file", "window", "epsilon_shear_bounded", "keep"]].rename(
+        columns={"epsilon_shear_bounded": "epsilon_shear_for_kB", "keep": "shear_keep_for_kB"})
+    df = df.merge(s, on=["profile_file", "window"], how="left", validate="one_to_one")
+    eps = df["epsilon_shear_for_kB"].where(df["shear_keep_for_kB"].fillna(False).astype(bool))
+    df["kB_shear"] = batchelor_kB(eps, df["nu"], ecfg["kappa_T"])
+    df["K_max_ratio_shear"] = min_ratio_over_used(df, probes, df["kB_shear"])
+    if ecfg["kb_source"] == "shear":
+        gate = df["K_max_ratio_shear"]
+    elif ecfg["kb_source"] == "fit":
+        gate = df["K_max_ratio"]
+    else:
+        raise ValueError(f"Unknown chi_qc.epsilon_T.kb_source {ecfg['kb_source']!r}")
+    df["epsilon_T_resolved"] = (gate >= ecfg["k_max_ratio_min"]).to_numpy()
+    return df.drop(columns=["epsilon_shear_for_kB", "shear_keep_for_kB"])
+
+
+def gate_check(df: pd.DataFrame, shear: pd.DataFrame, probes: list[str], ecfg: dict) -> pd.DataFrame:
+    """Median log10(epsilon_T / epsilon_shp) per K_max/kB bin, with kB from the other shear probe
+    (independent of both sides) or from the FP07 fit (shared with epsilon_T)."""
+    c = ecfg["check"]
+    m = df[["profile_file", "window", "P_mean", "nu", "epsilon_T", "keep", "K_max_ratio"]
+           + [f"K_max_T_{p}" for p in probes] + [f"use_{p}" for p in probes]].merge(
+        shear[["profile_file", "window", "epsilon_sh1", "epsilon_sh2", "floor_sh1", "floor_sh2",
+               "use_sh1", "use_sh2"]], on=["profile_file", "window"])
+    good = (m["keep"] & np.isfinite(m["epsilon_T"]) & (m["P_mean"] > c["min_pressure_dbar"])
+            & m["use_sh1"].astype(bool) & m["use_sh2"].astype(bool)
+            & (m["epsilon_sh1"] >= c["min_floor_ratio"] * m["floor_sh1"])
+            & (m["epsilon_sh2"] >= c["min_floor_ratio"] * m["floor_sh2"]))
+    m = m[good].copy()
+    edges = np.asarray(c["bins"], float)
+    rows = []
+    for sp, other in (("sh1", "sh2"), ("sh2", "sh1")):
+        lr = np.log10(m["epsilon_T"] / m[f"epsilon_{sp}"])
+        gates = {"fit kB (own)": m["K_max_ratio"].to_numpy(),
+                 f"kB from {other}": min_ratio_over_used(m, probes, batchelor_kB(m[f"epsilon_{other}"], m["nu"],
+                                                                                  ecfg["kappa_T"]))}
+        for gname, x in gates.items():
+            b = pd.cut(x, edges)
+            for iv, g in lr.groupby(b, observed=True):
+                rows.append({"shear_probe": sp, "kB_from": gname, "bin_lo": iv.left, "bin_hi": iv.right,
+                             "n": int(g.size), "median_log10_ratio": float(g.median()),
+                             "q25": float(g.quantile(0.25)), "q75": float(g.quantile(0.75))})
+    return pd.DataFrame(rows)
+
+
+def gate_check_figure(checks: dict, path: Path, thresh: float, foot: str) -> None:
+    fig, axes = plt.subplots(1, len(checks), figsize=(6.2 * len(checks), 4.8), squeeze=False, sharey=True)
+    for ax, (name, t) in zip(axes[0], checks.items()):
+        for (sp, gname), g in t.groupby(["shear_probe", "kB_from"], sort=False):
+            own = gname.startswith("fit")
+            col = (ps.MUTED if own else ps.BLUE) if sp == "sh1" else (ps.TEXT_2 if own else ps.ORANGE)
+            mid = (g["bin_lo"] + g["bin_hi"]) / 2
+            ax.plot(mid, g["median_log10_ratio"], "o-", color=col, label=f"vs {sp}, binned by {gname}")
+            ax.fill_between(mid, g["q25"], g["q75"], color=col, alpha=0.12, lw=0)
+        ax.axhline(0, color="k", lw=0.8)
+        ax.axvline(thresh, color=ps.RED, lw=0.8, ls="--")
+        ax.set_xlabel("K_max / kB")
+        ax.set_title(f"{name}: epsilon_T / shear probe (median, IQR), P > 150 dbar", fontsize=10)
+        ax.legend(fontsize=7)
+    axes[0, 0].set_ylabel(r"log$_{10}$($\epsilon_T$ / $\epsilon_{sh}$)")
+    fig.tight_layout()
+    ps.footer(fig, foot)
+    fig.savefig(path, dpi=105)
+    plt.close(fig)
 
 
 def agreement(df: pd.DataFrame, shear: pd.DataFrame, hyd: pd.DataFrame) -> pd.DataFrame:
@@ -325,14 +417,21 @@ def run(ctx: dict) -> None:
     ps.apply()
     report = {"segments_applied": seg_enabled, "chi_qc": cfg,
               "fit_method": config["perturb"]["chi"]["fit_method"], "instruments": {}}
-    results = {}
+    results, checks = {}, {}
     for name, inst in common.instruments(config):
         data = load(common.single_dir(ctx["run_dir"] / "convert" / name, "chi"))
         seg = pd.read_csv(ctx["run_dir"] / "segments" / f"segments_{name}.csv")
         df, counts = qc(data, seg, cfg, seg_enabled, inst.get("exclude_probes") or {})
+        shear = pd.read_csv(ctx["run_dir"] / "epsilon_shear" / f"epsilon_shear_{name}.csv")
+        df = resolved_gate(df, shear, data["probes"], cfg["epsilon_T"])
         df.insert(0, "instrument", name)
         df.to_csv(out / f"thermistor_{name}.csv", index=False, float_format="%.6g")
-        shear = pd.read_csv(ctx["run_dir"] / "epsilon_shear" / f"epsilon_shear_{name}.csv")
+        check = gate_check(df, shear, data["probes"], cfg["epsilon_T"])
+        check.insert(0, "instrument", name)
+        check.to_csv(out / f"epsilon_T_check_{name}.csv", index=False, float_format="%.4g")
+        checks[name] = check
+        counts["epsilon_T_gate"] = {"kb_source": cfg["epsilon_T"]["kb_source"],
+                                    "check": check.to_dict(orient="records")}
         hyd = pd.read_csv(ctx["run_dir"] / "hydrography" / f"windows_{name}.csv")
         agree = agreement(df, shear, hyd)
         deep = df[df["keep"] & (df["P_mean"] > 150)]
@@ -368,6 +467,8 @@ def run(ctx: dict) -> None:
               + "; all windows "
               + ", ".join(f"{k} {v['median_ratio']:.2f} (n={v['n']})" for k, v in er.items()))
     agreement_figure(results, out / "figures" / "epsilon_T_vs_shear.png", foot)
+    gate_check_figure(checks, out / "figures" / "epsilon_T_gate_check.png",
+                      cfg["epsilon_T"]["k_max_ratio_min"], foot)
     for name, r in results.items():
         gallery_figure(name, r["data"], r["df"], cfg["gallery"], out / "figures" / f"spectra_gallery_{name}.png", foot)
     common.write_json(out / "thermistor_report.json", report)

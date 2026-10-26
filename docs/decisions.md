@@ -898,3 +898,33 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * **Decision:** `instruments.vmp250.towyo: []`. The 8 profiles of `data_0134.p` are ordinary free-fall casts, so the process-station VMP250 group now pools all 15 profiles (7 before). This supersedes the 2026-10-12 decision to treat `data_0134.p` separately, and the "VMP250 tow-yo" rows in the 2026-10-14 tables no longer exist. The `towyo` flag and group machinery stay for any future tow-yo.
 * **Products:** `product_version` 0.1 → 0.2 (groups changed; variables unchanged, `towyo` is false everywhere).
 * **Rerun:** cast_log through export for every run with outputs (patch and convert do not depend on the flag).
+
+## 2026-10-26: epsilon_T gate on kB from shear, not from the FP07 fit
+
+* **Problem (Pat Welch, reply of 2026-10-16):** the 2026-10-13 gate used K_max/kB with the FP07 fit's own kB. That kB is on both sides: a window whose fitted kB comes out high gets a high epsilon_T (∝ kB⁴) and a low K_max/kB. Binning or gating on it keeps underestimates and drops overestimates, and a simulation with no real bias reproduces most of the slope in the 2026-10-13 table. Gating on the shear probe in the ratio biases it the other way.
+* **Check (`thermistor/epsilon_T_check_<instrument>.csv`, `figures/epsilon_T_gate_check.png`):** epsilon_T against one shear probe, binned by K_max/kB with kB from the other probe, which is independent of both sides of the ratio. Run `fft2_diss8_mle`, P > 150 dbar, both probes used and ≥ 5× their floors. Median log10(epsilon_T / shear probe):
+
+  | K_max/kB | VMP250 vs sh1 / sh2, own kB | VMP250, other probe's kB | VMP5500, own kB | VMP5500, other probe's kB |
+  |---|---|---|---|---|
+  | 0.8–1.2 | +0.43 / +0.55 | −0.09 / +0.04 | +0.70 / +0.62 | −0.21 / −0.30 |
+  | 1.2–1.6 | +0.13 / +0.23 | +0.19 / +0.31 | +0.51 / +0.43 | +0.16 / +0.02 |
+  | 1.6–2.0 | −0.29 / −0.12 | +0.34 / +0.45 | +0.27 / +0.19 | +0.39 / +0.26 |
+  | 2.0–2.5 | — | — | −0.04 / −0.10 | +0.49 / +0.39 |
+  | 2.5–3.0 | — | — | −0.23 / −0.33 | +0.39 / +0.37 |
+  | 3.0–4.0 | — | — | −0.54 / −0.60 | +0.43 / +0.29 |
+
+  * Binned by the fit's own kB, the ratio falls through 1 with resolution, as the coupling predicts.
+  * Binned independently, the trend reverses. Where the roll-off is resolved, single-pole epsilon_T runs **2–3× above shear** (+0.3 to +0.5 dex) and does not level off at 1.
+  * So the 2026-10-13 findings ("2–6× high below 1.6", "single-pole agrees with shear within ~20% above it") were produced by the gate, and are withdrawn.
+  * This also removes the 2026-10-13 argument that single pole agrees with shear and double pole is 2–3× low. Following Pat, the overall level cannot pick a response model (beads, casts and shear probes differ about as much). The single pole stays, and the systematic is carried as a range (see the FP07 response item in `docs/private/next_steps.md`).
+* **Decision:**
+  * `epsilon_T_resolved` = K_max_T / kB_shear ≥ 1.6 on every thermistor used (`chi_qc.epsilon_T.kb_source: shear`), with kB_shear from the combined `epsilon_shear_bounded` and κ_T = 1.4e-7 m²/s (perturb's constant).
+  * Where shear is at its floor, the bounded value is an upper bound, so kB_shear is too and the gate is conservative.
+  * 1.6 is kept: no independent threshold makes epsilon_T agree with shear, so the threshold only marks where the roll-off sits inside the fit band.
+  * `kb_source: fit` reproduces the old rule.
+  * Below 150 dbar the resolved fraction rises from 38% to 73% (VMP250) and from 52% to 81% (VMP5500).
+* **Consequences:**
+  * Shear epsilon stays primary. epsilon_T is a 2–3× high estimate in resolved, mostly finger-favourable water, consistent with it absorbing finger-scale variance, with a response-model bias, or both.
+  * The run summary's "epsilon_T/shear where resolved" now compares against the same shear that sets the gate, so it is biased high. Read the gate check instead.
+  * `Re_b_T`, the `epsilon_T_resolved` flag and the `an_epsT` sensitivity run change. Results built on shear epsilon do not.
+  * `product_version` 0.2 → 0.3.
