@@ -1,6 +1,6 @@
 # SPICE microstructure products: `fft2_diss8_mle_dp`
 
-Product version 0.3. spice_microstructure git 89a7d8d50128746fec6d305cebbd074bf36d44f5; config sha256 5a52581953b3; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-26T19:22:59+00:00.
+Product version 0.4. spice_microstructure git daaeff0e7f9904f8f2ce548ea8c1c162d6d7585d-dirty; config sha256 c714184aea2c; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-27T12:44:14+00:00.
 
 **Sensitivity run** of `baseline`, based on `fft2_diss8_mle`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `perturb.chi.fp07_model` = double_pole.
 
@@ -26,8 +26,8 @@ Specification of every variable: `docs/products.md`. Methods and the reasons beh
 
 | File | Contents |
 |---|---|
-| `attribution_vmp250.csv` | finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched control) with intervals |
-| `attribution_vmp5500.csv` | finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched control) with intervals |
+| `attribution_vmp250.csv` | finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched non-staircase finger water at the same depths) with intervals |
+| `attribution_vmp5500.csv` | finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched non-staircase finger water at the same depths) with intervals |
 | `binned_vmp250.nc` | per profile in depth bins: window means of epsilon and chi with counts, and the hydrography |
 | `binned_vmp5500.nc` | per profile in depth bins: window means of epsilon and chi with counts, and the hydrography |
 | `cast_metrics_vmp250.csv` | per-profile finger metrics: salinity maximum, R_rho, finger fraction, staircase occurrence and geometry, K_T relative to Garrett-Munk |
@@ -73,29 +73,29 @@ Whole cruise, all free-fall casts, finger-favourable water, finescale gradients,
 
 | Group | Set | K_T | K_S (γ 0.65) | K_S_eps | K_GM | profiles |
 |---|---|---|---|---|---|---|
-| vmp250 all free fall | all | 2.4e-06 [2e-06, 2.9e-06] | 6.7e-06 [5.7e-06, 8.1e-06] | 2.9e-05 | 2.7e-06 | 127 |
-| vmp250 all free fall | interface | 3.1e-06 [2.3e-06, 4.3e-06] | 7.8e-06 [5.8e-06, 1e-05] | 2.1e-05 | 2.6e-06 | 32 |
-| vmp250 all free fall | layer | 4.1e-06 [2.5e-06, 6.9e-06] | 9e-06 [5.6e-06, 1.5e-05] | 5.8e-05 | 2.2e-06 | 40 |
-| vmp5500 all free fall | all | 2.7e-06 [2.3e-06, 3.2e-06] | 8.8e-06 [7.4e-06, 1e-05] | 2.2e-05 | 2.4e-06 | 44 |
-| vmp5500 all free fall | interface | 3.5e-06 [2.7e-06, 4.4e-06] | 9.5e-06 [7.4e-06, 1.2e-05] | 1.4e-05 | 2.5e-06 | 44 |
+| vmp250 all free fall | all | 2.4e-06 [2e-06, 2.9e-06] | 6.7e-06 [5.6e-06, 8.2e-06] | 2.9e-05 | 2.7e-06 | 127 |
+| vmp250 all free fall | interface | 3.1e-06 [2.3e-06, 4.2e-06] | 7.8e-06 [5.7e-06, 1e-05] | 2.1e-05 | 2.6e-06 | 32 |
+| vmp250 all free fall | layer | 4.1e-06 [2.5e-06, 7.4e-06] | 9e-06 [5.7e-06, 1.6e-05] | 5.8e-05 | 2.2e-06 | 40 |
+| vmp5500 all free fall | all | 2.7e-06 [2.3e-06, 3.2e-06] | 8.8e-06 [7.5e-06, 1e-05] | 2.2e-05 | 2.4e-06 | 44 |
+| vmp5500 all free fall | interface | 3.5e-06 [2.7e-06, 4.5e-06] | 9.5e-06 [7.3e-06, 1.2e-05] | 1.4e-05 | 2.5e-06 | 44 |
 | vmp5500 all free fall | layer | 2.6e-06 [2.1e-06, 3.2e-06] | 8.3e-06 [6.6e-06, 1e-05] | 6e-05 | 2.1e-06 | 44 |
-| vmp250 all free fall | doubly stable control | 1.5e-06 | – | – | 3e-06 | 128 |
-| vmp5500 all free fall | doubly stable control | 1.1e-06 | – | – | 3.2e-06 | 44 |
+| vmp250 all free fall | finger water, no staircase (control) | 2.3e-06 | – | – | 2.7e-06 | 127 |
+| vmp5500 all free fall | finger water, no staircase (control) | 2.4e-06 | – | – | 2.5e-06 | 44 |
 
 Interface finger fraction 1 − 1/E by baseline (finescale gradients). The spread is part of the result; it also depends on the stratification scale (docs/decisions.md).
 
 | Group | Baseline | E | finger fraction |
 |---|---|---|---|
-| vmp250 all free fall | theory_Gamma0.2 | 1.40 [1.09, 1.72] | 0.29 |
-| vmp250 all free fall | garrett_munk | 1.21 [0.89, 1.66] | 0.18 |
-| vmp250 all free fall | matched_control | 1.64 [1.22, 2.08] | 0.39 |
-| vmp5500 all free fall | theory_Gamma0.2 | 2.27 [1.65, 3.13] | 0.56 |
-| vmp5500 all free fall | garrett_munk | 1.43 [1.10, 1.79] | 0.30 |
-| vmp5500 all free fall | matched_control | 1.85 [1.31, 2.59] | 0.46 |
+| vmp250 all free fall | theory_Gamma0.2 | 1.40 [1.10, 1.73] | 0.29 |
+| vmp250 all free fall | garrett_munk | 1.21 [0.89, 1.65] | 0.18 |
+| vmp250 all free fall | nonstaircase_control | 1.48 [1.12, 1.89] | 0.32 |
+| vmp5500 all free fall | theory_Gamma0.2 | 2.27 [1.67, 3.09] | 0.56 |
+| vmp5500 all free fall | garrett_munk | 1.43 [1.10, 1.80] | 0.30 |
+| vmp5500 all free fall | nonstaircase_control | 1.33 [0.95, 1.83] | 0.25 |
 
 ## Uncertainty
 
-Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 850/920 pooled estimates with intervals; dd_excess: 111/111 pooled estimates with intervals; diffusivity_bins: 381/381 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
+Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 812/856 pooled estimates with intervals; dd_excess: 63/63 pooled estimates with intervals; diffusivity_bins: 357/357 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
 
 ## Caveats
 
@@ -105,4 +105,4 @@ Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 850/920 pooled
 * K_S = R_rho K_T / gamma assumes finger-dominated fluxes; gamma (0.5-0.7) is poorly constrained; K_S is given only where finger-favourable and 1 < R_rho <= diffusivities.k_s_max_r_rho.
 * VMP5500 salinity is from each cast's own T-S relation (FP07 temperature); its S_z, R_rho and Turner angle follow the T-S slope, and windows in temperature inversions are flagged ts_salinity_invalid.
 * chi depends on the FP07 response model (single pole, speed-dependent tau) by a factor ~1.4-1.8 against a double-pole model (decisions.md 2026-10-13).
-* The finger fraction depends on the baseline (Gamma = 0.2 theory, Garrett-Munk, Re_b-matched control); the spread across baselines is part of the result.
+* The finger fraction depends on the baseline (Gamma = 0.2 theory, Garrett-Munk, Re_b-matched non-staircase finger water at the same depths, a lower bound); the spread across baselines is part of the result.

@@ -23,7 +23,9 @@ diffusivity relevant to nutrient fluxes computed outside this repository.
 Attribution (finger fraction of the heat-variance budget, f = 1 - 1/E) against
 each baseline of the ladder (decisions.md 2026-10-14): Gamma = 0.2 theory
 (E = R from dd_pooled), the GM level (E = K_T / K_GM), and the Re_b-matched
-doubly stable control (E from dd_excess). The spread is the baseline uncertainty.
+non-staircase finger control at the same depths (E from dd_excess; interfaces and
+layers only, a lower bound on the finger fraction). The spread is the baseline
+uncertainty.
 
 Per-cast metrics (one row per profile) for mesoscale comparisons: salinity
 maximum depth, finger-favourable fraction and R_rho over the test range,
@@ -175,7 +177,7 @@ def profile_figure(tab, groups, gammas, path, foot):
         ax.plot(f[f"K_S_g{g0:g}"], f["z"], color=ps.ORANGE, lw=1.6, label=f"K_S (γ={g0:g})")
         ax.plot(f["K_T"], f["z"], color=ps.RED, lw=1.2, label="K_T finger water")
         c = b[(b["turner"] == "control") & (b["staircase"] == "all") & (b["gradients"] == "finescale")].sort_values("z")
-        ax.plot(c["K_T"], c["z"], color=ps.BLUE, lw=1.2, marker="o", ms=2, label="K_T doubly stable (control)")
+        ax.plot(c["K_T"], c["z"], color=ps.BLUE, lw=1.2, marker="o", ms=2, label="K_T finger water, no staircase (control)")
         a = b[(b["turner"] == "all_turner") & (b["staircase"] == "all") & (b["gradients"] == "background")].sort_values("z")
         allz = pd.concat([a, c]).sort_values("z").drop_duplicates("z")
         ax.plot(allz["K_GM"], allz["z"], color="k", lw=1.5, ls="--", label="Garrett–Munk")
@@ -234,7 +236,7 @@ def run(ctx: dict) -> None:
     rows = []
     for g in groups:
         dg = w[w["instrument_group"] == g]
-        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        dg.attrs["control_label"] = dd["control_staircase_label"]
         for m in methods:
             for (tname, sname), sel in regime_sets(dg, m).items():
                 if tname == "not_finger":
@@ -289,7 +291,7 @@ def run(ctx: dict) -> None:
                 x = exc[(exc["instrument_group"] == g) & (exc["method"] == m) & (exc["staircase"] == sname)
                         & (exc["gradients"] == grad)]
                 if len(x):
-                    e["matched_control"] = (x["excess"].iloc[0], x["excess_lo"].iloc[0], x["excess_hi"].iloc[0])
+                    e["nonstaircase_control"] = (x["excess"].iloc[0], x["excess_lo"].iloc[0], x["excess_hi"].iloc[0])
                 for base, (val, lo, hi) in e.items():
                     att.append({"instrument_group": g, "method": m, "staircase": sname, "gradients": grad,
                                 "baseline": base, "E": val, "E_ci_low": lo, "E_ci_high": hi,

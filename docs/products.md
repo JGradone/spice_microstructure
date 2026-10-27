@@ -35,7 +35,7 @@ The segment variables averaged into depth bins of `products.depth_bin_m` per pro
 
 ## 4. Diffusivities: `diffusivity_<instrument>.nc`
 
-From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over windows and profiles, never per window. One record per station group (process station, transect, all free fall; tow-yo separate) × staircase method × Turner set (finger-favourable, strong finger, doubly stable control, all) × staircase label (interface, layer, straddles, none, all) × gradient choice (background 10 m fits, finescale 1 m gradient variance, interface_local for interfaces) × depth bin (`double_diffusion.depth_bin_m`, and pooled). Depth range: from 20 dbar (control) and 150 dbar (finger sets) to the bottom of each instrument's casts.
+From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over windows and profiles, never per window. One record per station group (process station, transect, all free fall; tow-yo separate) × staircase method × Turner set (finger-favourable, strong finger, control = finger-favourable outside staircases, all) × staircase label (interface, layer, straddles, none, all) × gradient choice (background 10 m fits, finescale 1 m gradient variance, interface_local for interfaces) × depth bin (`double_diffusion.depth_bin_m`, and pooled). Depth range: from 150 dbar to the bottom of each instrument's casts.
 
 * `K_T` = <chi> / (2 <T_z^2>) (Osborn and Cox; needs no epsilon)
 * `R_rho` = <alpha T_z> / <beta S_z> for the bin
@@ -48,7 +48,7 @@ From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over window
 
 ## 5. Finger attribution: `attribution_<instrument>.csv`
 
-The finger fraction of the heat-variance budget, f = 1 - 1/E, for finger-favourable water (all, interfaces, layers, non-staircase) against each baseline of the ladder: Gamma = 0.2 theory, the Garrett-Munk level, and the Re_b-matched doubly stable control, with 95% intervals. The spread across baselines is the baseline uncertainty and is part of the result (decisions.md 2026-10-14).
+The finger fraction of the heat-variance budget, f = 1 - 1/E, for finger-favourable water (all, interfaces, layers, non-staircase) against each baseline of the ladder: Gamma = 0.2 theory, the Garrett-Munk level, and the Re_b-matched non-staircase finger water at the same depths (`nonstaircase_control`, interfaces and layers only; a lower bound on the finger fraction, since the control itself is finger-favourable), with 95% intervals. The spread across baselines is the baseline uncertainty and is part of the result (decisions.md 2026-10-14).
 
 ## 6. Per-cast finger metrics: `cast_metrics_<instrument>.csv`
 

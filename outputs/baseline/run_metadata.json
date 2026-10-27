@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-26T18:44:14+00:00",
-  "config_sha256": "f8eefb4e6e4f037ec6fd10610ed274884a98f0bb4363c9f46438d05962b2887f",
-  "git_commit": "89a7d8d50128746fec6d305cebbd074bf36d44f5",
+  "created_utc": "2026-10-27T12:42:57+00:00",
+  "config_sha256": "da69c476fc9efeee50aa3cece5d014024a1fd44358f443901dcc9ab40e118ded",
+  "git_commit": "daaeff0e7f9904f8f2ce548ea8c1c162d6d7585d-dirty",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -25,14 +25,7 @@
     ]
   },
   "steps": [
-    "thermistor",
-    "regimes",
-    "dd_test",
-    "diffusivities",
-    "uncertainty",
-    "export",
-    "compare_archive",
-    "figures"
+    "export"
   ],
   "manifests_verified": true
 }

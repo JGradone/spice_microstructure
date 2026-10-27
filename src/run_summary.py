@@ -24,7 +24,7 @@ FILES = {
     "diffusivity": "bin averages over windows and profiles by group, regime, staircase label, gradient choice and "
                    "depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals",
     "attribution": "finger fraction 1 - 1/E against each baseline (Gamma 0.2 theory, Garrett-Munk, Re_b-matched "
-                   "control) with intervals",
+                   "non-staircase finger water at the same depths) with intervals",
     "cast_metrics": "per-profile finger metrics: salinity maximum, R_rho, finger fraction, staircase occurrence and "
                     "geometry, K_T relative to Garrett-Munk",
 }
@@ -141,7 +141,7 @@ def _headlines(run_dir: Path, config) -> list[str]:
                    f"{_fmt(r.get(f'K_S_g{g0:g}_ci_high'), sci=True)}] | {_fmt(r.get(f'K_S_eps_g{g0:g}'), sci=True)} | "
                    f"{_fmt(r['K_GM'], sci=True)} | {int(r['n_profiles'])} |")
     for _, r in sel[(sel["turner"] == "control") & (sel["staircase"] == "all")].iterrows():
-        out.append(f"| {r['instrument_group']} | doubly stable control | {_fmt(r['K_T'], sci=True)} | – | – | "
+        out.append(f"| {r['instrument_group']} | finger water, no staircase (control) | {_fmt(r['K_T'], sci=True)} | – | – | "
                    f"{_fmt(r['K_GM'], sci=True)} | {int(r['n_profiles'])} |")
     if att is not None and len(att):
         a = att[att["instrument_group"].str.contains("all free fall") & (att["staircase"] == "interface")

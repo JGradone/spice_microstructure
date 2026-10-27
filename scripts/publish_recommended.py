@@ -129,7 +129,7 @@ def main() -> int:
         "## Headline values and uncertainty ranges", "",
         f"Finger-favourable water, whole cruise, finescale gradients (m²/s). Processing range = across sensitivity runs "
         f"(stratification scale 5/10/25 m, 10 m bins, staircase threshold, α/β window). Interface excess E is over the "
-        f"Re_b-matched doubly stable control.", "",
+        f"Re_b-matched non-staircase finger water at the same depths.", "",
         f"| | K_S (γ {g0:g}) [95% CI] | K_S for γ {max(g):g}–{min(g):g} | K_S processing range | K_S with double-pole "
         "FP07 | K_T | K_GM | interface E, processing range | interface finger fraction across baselines |",
         "|---|---|---|---|---|---|---|---|---|"]

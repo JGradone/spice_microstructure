@@ -454,10 +454,9 @@ double_diffusion:
   exclude_weakest_n2_percent: 10  # robustness check: repeat with the weakest N2 decile removed
   station_groups: [process_station, transect]   # cast_log station names; casts outside a station are `transect`
   pool_free_fall: true            # also test all free-fall casts of an instrument together ("all free fall")
-  control_max_turner_deg: 30      # control: -45 < Tu < 30 (doubly stable, away from the 45 deg finger boundary)
-  control_depth_range_dbar:       # control windows (also need T_z > 0); reaches above the salinity maximum (~105 dbar)
-    vmp250: [20, 300]
-    vmp5500: [20, 1000]
+  control_staircase_label: none   # control: finger-favourable windows at the targets' depths (depth_range_dbar)
+                                  # with this staircase label, per method (decisions.md 2026-10-27; doubly stable
+                                  # water exists only above ~150 dbar, a different regime)
   re_b_bins: [0, 3, 10, 30, 100, 1000000]   # Re_b bins for the finger vs control comparison
   excess_control_group: all free fall   # control used to calibrate R by Re_b (per instrument)
   excess_min_control_windows: 10  # Re_b bins with fewer control windows are left out of the excess
@@ -536,7 +535,7 @@ products:
   # variables are specified in docs/products.md.
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
-  product_version: "0.3"          # bump on any change to variables or methods
+  product_version: "0.4"          # bump on any change to variables or methods
   recommended_run: fft2_diss8_mle # run whose products are published to outputs/<recommended_dir>/ (scripts/publish_recommended.py)
   recommended_dir: recommended
   recommended_sensitivity_label: sensitivity   # outputs/comparisons/<label>/ used for the uncertainty ranges

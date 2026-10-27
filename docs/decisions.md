@@ -942,3 +942,44 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * **VMP250:** pooling `data_0134.p` into free fall adds 40% more interface windows (63 → 88 in the analysis run). K_S changes by −2%, K_T by −1%, E by +1% (1.54) and the finger fraction from 0.34 to 0.35. The same holds in every sensitivity run.
   * **`an_epsT`** (epsilon_T replaces shear in chi_expected where resolved): the new gate passes about twice as many windows. Because resolved epsilon_T runs 2–3× above shear, E stays below 1 but moves from 0.20/0.26 to 0.45/0.43 (VMP250/VMP5500), and K_S doubles (to 1.0e-5/1.5e-5 m²/s). It remains a sensitivity run that shows epsilon_T absorbs the finger signal. It is not a candidate primary estimate.
 * **Recommended README:** the groups text no longer refers to a tow-yo group, which is now produced only for casts listed in `towyo`.
+
+## 2026-10-27: Control from the same depths: non-staircase finger water
+
+* **Why:** the Re_b-matched control (2026-10-14) was doubly stable water (−45 < Tu < 30, T_z > 0) from 20 dbar. It sat almost entirely at 20–150 dbar (median about 55 dbar), above the salinity maximum. There N² is about 2.7e-4 s⁻², 5–15× that of the interfaces (2–5e-5), and the energetics differ. Matching in Re_b does not make it a comparable regime.
+* **No doubly stable control exists at the interfaces' depths:**
+  * VMP250: 23 windows below 150 dbar.
+  * VMP5500: 216 windows, mostly 900–1000 dbar near the AAIW salinity minimum, where the T–S Turner angle is unreliable. R there is about 10–30.
+* **Change:**
+  * `double_diffusion.control_staircase_label: none` replaces `control_max_turner_deg` and `control_depth_range_dbar`.
+  * The control is finger-favourable windows over `depth_range_dbar` (150 dbar down, the same Turner classes and depths as the targets) labelled `none` by the staircase method. It has about 4200 (VMP250) and 4800 (VMP5500) windows, with N² 5e-5 and 1e-5 s⁻² (interfaces 4.8e-5 and 2e-5).
+  * `dd_test` no longer reads windows above 150 dbar.
+  * The excess E is computed for interfaces, layers and straddles only. The `all` and `none` sets contain the control.
+  * In the attribution ladder, `matched_control` becomes `nonstaircase_control`.
+  * `turner = control` rows (dd_pooled, dd_re_b, diffusivity_bins) now mean this set.
+  * `product_version` 0.3 → 0.4.
+* **What E means now:** E is the staircase excess over ordinary finger water at the same depths and Re_b, not fingers against no fingers. 1 − 1/E against it is a lower bound on the finger fraction, since the control is itself finger-favourable. The fingers-versus-no-fingers question rests on the theory (Γ = 0.2) and Garrett–Munk rungs.
+* **Result, analysis run, all free fall, rollo2022, interfaces, E [95% CI]** (old doubly stable control in brackets):
+
+  | Gradients | VMP250 | VMP5500 |
+  |---|---|---|
+  | finescale | 1.49 [1.12, 1.90] (1.54) | 1.37 [0.99, 1.88] (1.75) |
+  | background | 2.31 [1.52, 3.38] (2.29) | 1.92 [1.34, 2.75] (2.37) |
+  | interface_local | 2.39 [1.70, 3.23] (2.47) | 2.15 [1.51, 3.04] (2.74) |
+
+  * Layers (finescale): 0.56 [0.37, 0.87] and 0.52 [0.38, 0.76].
+  * Interface finger fraction lower bound (finescale): 0.33 and 0.27, from 0.35 and 0.43. Against theory and GM the finger fraction is unchanged (0.58–0.77).
+  * K_T of the control is 4.6e-6 and 4.4e-6 m²/s. The doubly stable water above it had 2.4e-6 and 2.0e-6. K_T and K_S of the finger sets are unchanged.
+* **Sensitivity runs, interface E (finescale), VMP250 / VMP5500:**
+  * `an_strat5m`: 1.91 / 1.56.
+  * `an_strat25m`: 0.88 / 1.10. At the 25 m stratification scale, interfaces are indistinguishable from non-staircase finger water.
+  * `an_mlgrad001`: 1.76 / 1.30.
+  * `an_epsT`: 1.05 / 1.09.
+  * `fft2_diss8_mle_dp`: 1.48 / 1.33.
+  * `an_bin10m` and `an_av100`: unchanged.
+* **Reading:**
+  * Interfaces carry more chi than ordinary finger water at the same depths and Re_b, about 1.4–2.4× depending on gradients.
+  * Layers carry about half. This holds for both instruments.
+  * The VMP5500 finescale interval now touches 1, and the 25 m stratification scale removes the excess. The staircase excess is robust in sign at the 5–10 m scales but not in size.
+* **Reruns:**
+  * `baseline`, `fft2_diss8_mle`, the six `an_*` runs and `fft2_diss8_mle_dp`: `dd_test` to `export`. `fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before.
+  * Then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`) and `publish_recommended.py`.

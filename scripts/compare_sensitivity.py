@@ -4,7 +4,7 @@
 For each run and instrument ("<instrument> all free fall", finger-favourable
 water, the last staircase method, finescale gradients unless noted), pooled:
   K_T and K_S (gamma = double_diffusion.flux_ratio_gamma) for all finger water
-  and for interfaces; the interface excess E over the Re_b-matched control and
+  and for interfaces; the interface excess E over the Re_b-matched non-staircase control and
   its finger fraction; the raw interface ratio <chi_obs>/<chi_exp>; the number
   of interface windows. Each value is also given relative to the reference run.
 

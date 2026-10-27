@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-26T18:59:43+00:00",
-  "config_sha256": "0e5873bd98123dc38aa3bfe4c8c35ecae1de862347bb68d4e6b5ea9acaf1ce76",
-  "git_commit": "89a7d8d50128746fec6d305cebbd074bf36d44f5",
+  "created_utc": "2026-10-27T12:43:44+00:00",
+  "config_sha256": "5db2fcafe2554eb061dda3b87f473fb00f852fa9b1f1c1d8e22a96e6d92eabfc",
+  "git_commit": "daaeff0e7f9904f8f2ce548ea8c1c162d6d7585d-dirty",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -40,17 +40,6 @@
     "reuse_convert_from": "fft2_diss8_mle"
   },
   "steps": [
-    "cast_log",
-    "patch",
-    "convert",
-    "segments",
-    "hydrography",
-    "epsilon_shear",
-    "thermistor",
-    "regimes",
-    "dd_test",
-    "diffusivities",
-    "uncertainty",
     "export"
   ],
   "manifests_verified": true

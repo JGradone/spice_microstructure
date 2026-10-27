@@ -1,6 +1,6 @@
 # Recommended SPICE microstructure products
 
-Copies of the products of run **`fft2_diss8_mle`**: 2 s FFT / 8 s windows, chi by mle, FP07 single_pole. These are the files to take into other analyses. Built 2026-10-26T19:38:55Z by `scripts/publish_recommended.py` from `outputs/fft2_diss8_mle/products` (exported with spice_microstructure git 89a7d8d50128746fec6d305cebbd074bf36d44f5, config sha256 103a8ae24274, microstructure-tpw ebec847c157051d6835ebf2d8ac9553166c01880). Do not edit; rebuild with the script.
+Copies of the products of run **`fft2_diss8_mle`**: 2 s FFT / 8 s windows, chi by mle, FP07 single_pole. These are the files to take into other analyses. Built 2026-10-27T12:44:17Z by `scripts/publish_recommended.py` from `outputs/fft2_diss8_mle/products` (exported with spice_microstructure git daaeff0e7f9904f8f2ce548ea8c1c162d6d7585d-dirty, config sha256 582f3efe0404, microstructure-tpw ebec847c157051d6835ebf2d8ac9553166c01880). Do not edit; rebuild with the script.
 
 `RUN_SUMMARY.md` has the full settings, file list, QC counts and caveats of the run. Variable definitions: `docs/products.md`; methods and reasons: `docs/decisions.md`.
 
@@ -14,12 +14,12 @@ Copies of the products of run **`fft2_diss8_mle`**: 2 s FFT / 8 s windows, chi b
 
 ## Headline values and uncertainty ranges
 
-Finger-favourable water, whole cruise, finescale gradients (m²/s). Processing range = across sensitivity runs (stratification scale 5/10/25 m, 10 m bins, staircase threshold, α/β window). Interface excess E is over the Re_b-matched doubly stable control.
+Finger-favourable water, whole cruise, finescale gradients (m²/s). Processing range = across sensitivity runs (stratification scale 5/10/25 m, 10 m bins, staircase threshold, α/β window). Interface excess E is over the Re_b-matched non-staircase finger water at the same depths.
 
 | | K_S (γ 0.65) [95% CI] | K_S for γ 0.7–0.5 | K_S processing range | K_S with double-pole FP07 | K_T | K_GM | interface E, processing range | interface finger fraction across baselines |
 |---|---|---|---|---|---|---|---|---|
-| vmp250 | 1.4e-05 [1.1e-05, 1.8e-05] | 1.3e-05–1.8e-05 | 1.4e-05–1.4e-05 | ×0.49 | 4.9e-06 | 2.7e-06 | 0.6–2.2 | 0.35–0.64 |
-| vmp5500 | 1.6e-05 [1.3e-05, 1.9e-05] | 1.5e-05–2.1e-05 | 1.6e-05–1.7e-05 | ×0.54 | 5.1e-06 | 2.4e-06 | 1.1–2.2 | 0.43–0.77 |
+| vmp250 | 1.4e-05 [1.1e-05, 1.7e-05] | 1.3e-05–1.8e-05 | 1.4e-05–1.4e-05 | ×0.49 | 4.9e-06 | 2.7e-06 | 0.88–1.9 | 0.33–0.64 |
+| vmp5500 | 1.6e-05 [1.4e-05, 1.9e-05] | 1.5e-05–2.1e-05 | 1.6e-05–1.7e-05 | ×0.54 | 5.1e-06 | 2.4e-06 | 1.1–1.6 | 0.27–0.77 |
 
 Reading: K_S is robust to processing choices; the FP07 response model (×~0.5 with double-pole) and γ are its main uncertainties. The interface excess and finger fraction depend on the baseline and on the stratification scale; report them as ranges. `sensitivity_summary.csv` / `.png` give every run.
 

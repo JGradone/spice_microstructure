@@ -52,8 +52,8 @@ CAVEATS = [
     "follow the T-S slope, and windows in temperature inversions are flagged ts_salinity_invalid.",
     "chi depends on the FP07 response model (single pole, speed-dependent tau) by a factor ~1.4-1.8 against a "
     "double-pole model (decisions.md 2026-10-13).",
-    "The finger fraction depends on the baseline (Gamma = 0.2 theory, Garrett-Munk, Re_b-matched control); the "
-    "spread across baselines is part of the result.",
+    "The finger fraction depends on the baseline (Gamma = 0.2 theory, Garrett-Munk, Re_b-matched non-staircase finger water at the "
+    "same depths, a lower bound); the spread across baselines is part of the result.",
 ]
 
 

@@ -78,7 +78,7 @@ Existing pieces:
   * `epsilon_shear`: probe QC, 1 Hz low-wavenumber refit, noise floor per window, combined epsilon.
   * `thermistor`: chi and epsilon_T QC, FP07 noise floor, `epsilon_T_resolved`.
   * `regimes`: Turner class (25 m), staircase labels (vdb2021 published, rollo2022 tuned), Re_b.
-  * `dd_test`: ratio of averages; the baseline ladder (theory, Garrett–Munk, Re_b-matched control, internal contrasts); three gradient choices.
+  * `dd_test`: ratio of averages; the baseline ladder (theory, Garrett–Munk, Re_b-matched non-staircase finger water at the same depths); three gradient choices.
   * `diffusivities`: K_T, K_S (γ range), K_S_eps, K_rho, K_GM; attribution; per-cast metrics.
   * `uncertainty`: checks the profile bootstrap.
   * `compare_archive`, `figures`: baseline-only comparisons with the shipboard archive.
@@ -141,6 +141,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
   * VMP5500 T2 (T3304), SPC_012–040: gain error.
   * VMP250 sh2 for data_0112 (test casts) and for data_0123_prof004 and data_0124 (fouled).
 * **Double diffusion:** report the ladder of baselines and the three gradient choices.
+  * Control: finger-favourable water outside staircases at the same depths (150 dbar down), matched in Re_b (decisions.md 2026-10-27). Never doubly stable water from above 150 dbar: different stratification and energetics. E against it is the staircase excess, a lower bound on the finger fraction.
   * Robust: interfaces carry the most chi and layers the least at matched Re_b, and R rises with R_ρ.
   * Not robust: the finger fraction. It depends on the baseline and on the stratification scale (5 vs 25 m), and is reported as a range.
 * **Diffusivities:** K_S is robust to processing choices except the FP07 response model (about 2×) and γ (1.4×).

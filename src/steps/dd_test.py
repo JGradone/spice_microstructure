@@ -17,17 +17,18 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     `transect`) x instrument x tow-yo / free fall (tow-yo profiles are never
     pooled with free-fall casts). With pool_free_fall, all free-fall casts of an
     instrument in the selected groups are also tested together ("all free fall").
-  * Control: doubly stable water, -45 < Tu < control_max_turner_deg (25 m Turner
-    angle, away from the 45 deg finger boundary and excluding diffusive
-    convection), T_z > 0 at the window scale (no temperature inversion, which
-    marks intrusions), taken over control_depth_range_dbar (which reaches above
-    the shallow salinity maximum). Finger and other regime sets use
-    depth_range_dbar.
+  * Control: finger-favourable windows (same Turner classes and depth range as
+    the targets) with staircase label control_staircase_label ("none"), per
+    staircase method. Doubly stable water exists almost only above ~150 dbar,
+    where stratification and energetics differ (decisions.md 2026-10-27), so
+    the control is ordinary finger water, not water without fingers.
   * Excess over the Re_b-matched control (dd_excess.csv): the control's ratio in
     each Re_b bin, R_c(b), calibrates the Gamma = 0.2 expectation empirically;
-    for a target set E = sum(chi_obs) / sum(chi_exp * R_c(b_window)). E = 1 means
-    indistinguishable from doubly stable water at the same Re_b. The control is
-    the instrument's "all free fall" control (excess_control_group); windows in
+    for a target set (interface, layer, straddles) E = sum(chi_obs) /
+    sum(chi_exp * R_c(b_window)). E = 1 means indistinguishable from
+    non-staircase finger water at the same depths and Re_b; E is the staircase
+    excess, a lower bound on the finger contribution. The control is the
+    instrument's "all free fall" control (excess_control_group); windows in
     Re_b bins with fewer than excess_min_control_windows control windows are
     left out (counted). 95% bootstrap resamples target and control profiles
     independently.
@@ -100,15 +101,14 @@ def regime_sets(df: pd.DataFrame, method: str) -> dict[str, pd.Series]:
     lab = df[f"staircase_{method}"]
     tc = df["turner_class"]
     out = {}
-    tu = df["Turner_smooth"]
     t = df["in_test"]
-    control = (tu > -45) & (tu < df.attrs.get("control_max", 30)) & (df["T_z"] > 0) & df["in_control_range"]
     for tname, tsel in (("all_turner", t), ("finger_any", t & tc.isin(FINGER)),
-                        ("strong_finger", t & (tc == "strong_finger")), ("not_finger", t & (tc == "not_finger")),
-                        ("control", control)):
+                        ("strong_finger", t & (tc == "strong_finger")), ("not_finger", t & (tc == "not_finger"))):
         for sname in ("all", "interface", "layer", "straddles", "none"):
             ssel = pd.Series(True, index=df.index) if sname == "all" else (lab == sname)
             out[(tname, sname)] = tsel & ssel
+    # control: finger-favourable water at the same depths outside staircases (one label set only)
+    out[("control", "all")] = t & tc.isin(FINGER) & (lab == df.attrs.get("control_label", "none"))
     return out
 
 
@@ -217,15 +217,13 @@ def prepare(ctx, name, config) -> pd.DataFrame:
     else:
         raise ValueError(f"Unknown double_diffusion.epsilon_source {dd['epsilon_source']!r}")
     lo, hi = dd["depth_range_dbar"][name]
-    clo, chi_ = dd["control_depth_range_dbar"][name]
     ok = (df["shear_keep"].fillna(False).astype(bool) & df["chi_keep"].fillna(False).astype(bool)
           & (df["N2"] > 0) & np.isfinite(df["T_z"]) & np.isfinite(eps) & np.isfinite(df["chi"])
           & ~df["ts_salinity_invalid"].fillna(False).astype(bool)
-          & (df["P_mean"] >= min(lo, clo)) & (df["P_mean"] < max(hi, chi_)))
+          & (df["P_mean"] >= lo) & (df["P_mean"] < hi))
     df = df[ok].copy()
     df["epsilon_used"] = eps[ok]
-    df["in_test"] = (df["P_mean"] >= lo) & (df["P_mean"] < hi)
-    df["in_control_range"] = (df["P_mean"] >= clo) & (df["P_mean"] < chi_)
+    df["in_test"] = True
     df["chi_obs"] = df["chi"]
     df["chi_exp"] = 2 * dd["flux_coefficient"] * df["epsilon_used"] / df["N2"] * df["T_z"] ** 2
     b = dd["depth_bin_m"]
@@ -371,15 +369,12 @@ def gm_figure(gmt, groups, path, foot):
         b["z"] = b["depth_bin"].astype(float)
         for (tname, sname), c, lab in ((("finger_any", "interface"), ps.ORANGE, "K_T interfaces"),
                                        (("finger_any", "layer"), ps.BLUE, "K_T layers"),
-                                       (("finger_any", "none"), ps.AQUA, "K_T finger, no staircase"),
-                                       (("control", "all"), ps.MUTED, "K_T control")):
+                                       (("control", "all"), ps.AQUA, "K_T finger, no staircase (control)")):
             s = b[(b["turner"] == tname) & (b["staircase"] == sname)].sort_values("z")
             ax.plot(s["K_T_finescale"], s["z"], "o-", color=c, ms=3, lw=1, label=lab + " (finescale)")
         a = b[(b["turner"] == "all_turner") & (b["staircase"] == "all")].sort_values("z")
         ax.plot(a["K_rho_measured"], a["z"], color="k", lw=1, ls=":", label="K_rho = 0.2<ε>/<N²>")
-        c_ = b[(b["turner"] == "control") & (b["staircase"] == "all")].sort_values("z")
-        allz = pd.concat([a, c_]).drop_duplicates("z").sort_values("z")
-        ax.plot(allz["K_GM"], allz["z"], color=ps.RED, lw=2, label="Garrett–Munk K_GM")
+        ax.plot(a["K_GM"], a["z"], color=ps.RED, lw=2, label="Garrett–Munk K_GM")
         ax.axvline(1.4e-7, color="k", lw=0.6, ls="--", label="molecular κ_T")
         ax.set_xscale("log")
         ax.set_xlim(1e-8, 1e-2)
@@ -440,16 +435,16 @@ def run(ctx: dict) -> None:
         ff = prep[~prep["towyo"]].copy()
         ff["instrument_group"] = ff["instrument_group"].str.split(" ").str[0] + " all free fall"
         prep = pd.concat([prep, ff], ignore_index=True)
-    prep.attrs["control_max"] = dd["control_max_turner_deg"]
+    prep.attrs["control_label"] = dd["control_staircase_label"]
     groups = sorted(prep["instrument_group"].unique())
     bins_rows, pooled_rows = [], []
     for g in groups:
         dg = prep[prep["instrument_group"] == g]
-        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        dg.attrs["control_label"] = dd["control_staircase_label"]
         weak = dg["N2"] <= dg["N2"].quantile(dd["exclude_weakest_n2_percent"] / 100)
         for n2f, dsel in (("all", dg), (f"drop_weakest_{dd['exclude_weakest_n2_percent']}pct", dg[~weak])):
             for m in methods:
-                dsel.attrs["control_max"] = dd["control_max_turner_deg"]
+                dsel.attrs["control_label"] = dd["control_staircase_label"]
                 for (tname, sname), sel in regime_sets(dsel, m).items():
                     d = dsel[sel]
                     if len(d) == 0:
@@ -473,7 +468,7 @@ def run(ctx: dict) -> None:
     edges = dd["re_b_bins"]
     for g in groups:
         dg = prep[prep["instrument_group"] == g]
-        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        dg.attrs["control_label"] = dd["control_staircase_label"]
         sets = regime_sets(dg, methods[-1])
         for tname in ("finger_any", "control"):
             d = dg[sets[(tname, "all")]]
@@ -492,13 +487,13 @@ def run(ctx: dict) -> None:
     for g in groups:
         inst = g.split(" ")[0]
         cg = prep[prep["instrument_group"] == f"{inst} {dd['excess_control_group']}"]
-        cg.attrs["control_max"] = dd["control_max_turner_deg"]
+        cg.attrs["control_label"] = dd["control_staircase_label"]
         dg = prep[prep["instrument_group"] == g]
-        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        dg.attrs["control_label"] = dd["control_staircase_label"]
         for m in methods:
             ctrl_sel = regime_sets(cg, m)[("control", "all")]
             sets = regime_sets(dg, m)
-            for sname in ("all", "interface", "layer", "straddles", "none"):
+            for sname in ("interface", "layer", "straddles"):   # "all" and "none" contain the control
                 d = dg[sets[("finger_any", sname)]]
                 if len(d) < 5:
                     continue
@@ -523,10 +518,10 @@ def run(ctx: dict) -> None:
     gm_rows = []
     for g in groups:
         dg = prep[prep["instrument_group"] == g]
-        dg.attrs["control_max"] = dd["control_max_turner_deg"]
+        dg.attrs["control_label"] = dd["control_staircase_label"]
         sets = regime_sets(dg, methods[-1])
         for (tname, sname) in [("finger_any", "all"), ("finger_any", "interface"), ("finger_any", "layer"),
-                               ("finger_any", "none"), ("control", "all"), ("all_turner", "all")]:
+                               ("control", "all"), ("all_turner", "all")]:
             d = dg[sets[(tname, sname)]]
             if len(d) < 5:
                 continue
