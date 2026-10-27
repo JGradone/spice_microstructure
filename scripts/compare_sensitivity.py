@@ -36,7 +36,7 @@ METRICS = ["K_S_finger", "K_S_interface", "K_T_finger", "K_T_interface", "E_inte
 
 
 def run_metrics(config, config_hash, run, ref_name) -> pd.DataFrame:
-    cfg, _ = (config, config_hash) if run == ref_name and run == config["run"]["name"] else \
+    cfg, _ = (config, config_hash) if run == config["run"]["name"] else \
         common.apply_sensitivity(config, config_hash, run)
     rd = common.run_dir_of(cfg)
     g0 = float(cfg["double_diffusion"]["flux_ratio_gamma"])
@@ -104,6 +104,8 @@ def main() -> int:
         ax.axvline(1, color="k", lw=0.8)
         ax.set_xscale("log")
         ax.set_xlim(0.25, 4)
+        ax.set_xticks([0.25, 0.5, 1, 2, 4], ["¼", "½", "1", "2", "4"])
+        ax.xaxis.set_minor_locator(plt.NullLocator())
         ax.set_title(f"{mtr}\n(relative to {args.reference})", fontsize=8.5)
     axes[0, 0].set_yticks(range(len(runs)), runs, fontsize=8)
     axes[0, 0].invert_yaxis()
