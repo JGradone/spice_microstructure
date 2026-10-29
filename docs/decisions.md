@@ -1028,3 +1028,4 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * **Reruns:**
   * Every run on the new pin and final config. `baseline` runs the full chain; the analysis-run family runs `cast_log` to `export`; `fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before.
   * Then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`) and `publish_recommended.py`.
+* Results and config committed in 71ee226.
