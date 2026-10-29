@@ -92,6 +92,7 @@ Existing pieces:
   * results: `publish_recommended.py` (outputs/recommended/), `write_run_summaries.py`;
   * run comparisons: `compare_runs.py`, `compare_sensitivity.py`, `check_reproduction.py` (rerun from the raw files into a fresh run directory and compare).
   * probe check: `shear_probe_ratio.py` (sh1/sh2 per cast and depth bin).
+  * figures of the 2026-10-29 processing changes: `plot_processing_changes.py` (record-locked shear interference, failing sh1).
   * One-off diagnostics (FM explainer, f_min and K_max tests, staircase threshold grid, VMP5500 conductivity, QC explorer) and the `repro_baseline` run were removed on 2026-10-14 to keep the repository to what reproduces the outputs; they remain in git history at commit `cd55806`.
 * `config/config.example.yaml` lists every parameter; `config/config.yaml` is the local copy with real paths.
 * Docs:
@@ -137,7 +138,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 
 * **Pin:** microstructure-tpw c90ff7f (main, not tagged; decisions.md 2026-10-29). The pin alone left the baseline identical.
 * **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response, and `epsilon.record_locked_shear: true`.
-* **VMP5500 shear interference:** two pulses at fixed samples of every .p record, on every cast, mostly below the despike threshold. Removing the record-locked waveform lowers VMP5500 shear epsilon by a median 14% (VMP250 unaffected). A residual remains on sh1 on SPC_034 and SPC_038. `fft2_diss8_mle_norls` is the run without the removal.
+* **VMP5500 shear interference:** two pulses at fixed samples of every .p record, on every cast, mostly below the despike threshold. Removing the record-locked waveform lowers VMP5500 shear epsilon by a median 17% (VMP250 unaffected). A residual remains on sh1 on SPC_034 and SPC_038. `fft2_diss8_mle_norls` is the run without the removal.
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
 * **epsilon_T:** flagged resolved where K_max/kB ≥ 1.6, with kB from shear epsilon, not from the FP07 fit (decisions.md 2026-10-26). There it runs 2–3× above shear epsilon, so shear epsilon is primary.
 * **Probe exclusions:**

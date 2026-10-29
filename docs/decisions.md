@@ -992,7 +992,7 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Pat Welch traced the pulses to fixed samples of every 512-sample .p record (6 and 81–82). They are on all 44 casts and both probes; the FP07 channels are clean. Most pulses sit below the despike threshold, so no half-width removes them.
   * microstructure-tpw 5d2b93c (main, not tagged) adds `epsilon.despike_half_width` and `epsilon.record_locked_shear`, which subtracts the per-profile record-locked waveform before despiking.
 * **Pin:** microstructure-tpw ebec847 → c90ff7f (main, 2026-10-28; 34 commits). This starts a new baseline (CLAUDE.md).
-  * The new `baseline` is identical to the old one window for window, for epsilon and chi on both instruments. The only change is two VMP5500 windows at 6.8 dbar, above the near-surface cut. Pin effects and method effects are therefore separable.
+  * The new `baseline` is identical to the old one window for window, for epsilon and chi on both instruments. The only change is two VMP5500 windows at 6.8 dbar (SPC_018_prof002, SPC_049_prof002), above the near-surface cut: both files are mis-framed (trailing words after the last intact record), which c90ff7f now repairs (bdd0a4d). Pin effects and method effects are therefore separable.
 * **Config:** every perturb option is set explicitly.
   * New keys at c90ff7f, at their old behaviour: `fp07.allow_hotel_reference: false`, `epsilon.despike_half_width: 0.04`, `epsilon.record_locked_shear: false`, `chi.anchor: top`, the chi bbl keys (null), `stratification.sort: density`, `stratification.dTdz_source: ct`. perturb's N2 and dT/dz are not used.
   * Keys that existed at ebec847 but were inherited (inert as configured): the `top_trim` detail keys and `epsilon.bbl_*_length`.
@@ -1003,7 +1003,7 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Templates are significant on all 44 VMP5500 profiles (median 73 and 64 standard errors, sh1 and sh2) and on none of the 135 VMP250 profiles.
   * Phase power ratio after removal: median 1.03 (sh1) and 1.01 (sh2). Residual record-to-record variation remains on sh1 on SPC_034 (1.65) and SPC_038 (2.20), both process station casts, and on SPC_016, 017, 033, 041 and 042 (1.2–1.35). Epsilon there may remain biased high.
 * **Effect on VMP5500 shear epsilon** (analysis run vs `_norls`, below 20 dbar):
-  * Median −14% (p10 −0.52 dex, p90 +0.06 dex); the noise floor drops 23%.
+  * Median −17% (p10 −0.55 dex, p90 +0.05 dex); the noise floor drops 24%. Despiked fraction (scripts/plot_processing_changes.py): median 2.4% → 0.19% per cast and probe; 19 casts above 5% before, none after (maximum 1.3%).
   * The largest drops (0.3–0.6 dex) are on casts whose pulses sat under the despike threshold (SPC_021–023, 027–030, 039, 045, 049–050). Casts with large, detected spikes (SPC_026, 033) barely move.
   * The VMP250 is unchanged.
 * **sh1 (M3461):** once the spikes were gone, Pat saw sh1 reading high at 150–550 dbar on SPC_043–044 and 059–061. `scripts/shear_probe_ratio.py` (config `shear_probe_check`) shows the same, plus SPC_041–042.

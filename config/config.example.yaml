@@ -591,6 +591,22 @@ shear_probe_check:
   min_windows: 5                  # per cast and bin, else no ratio
   instruments: [vmp5500, vmp250]
 
+processing_figures:
+  # Figures of the 2026-10-29 processing changes (scripts/plot_processing_changes.py):
+  # VMP5500 record-locked shear interference and the failing sh1 (M3461). Compares
+  # products.recommended_run with without_run; raw shear read from the run's patched files.
+  without_run: fft2_diss8_mle_norls
+  instrument: vmp5500
+  example_cast: SPC_033.P         # process station cast with large, detected pulses
+  example_probe: sh1
+  spectrum_cast: SPC_039.P        # process station cast whose pulses sat below the despike threshold
+  spectrum_P_min_dbar: 300        # mean spectrum over windows below this
+  min_P_dbar: 20                  # raw-shear panels: descent below this
+  min_fall_speed_m_s: 0.3
+  failing_probe: sh1              # failing casts: this probe in exclude_probes and serial failing_probe_serial
+  failing_probe_serial: M3461
+  level_bins_log10: [-12, -10.5, -10, -9.5, -9, -8, -5]
+
 instrument_comparison:
   # VMP250 against VMP5500 in the depth range both sample (scripts/compare_instruments.py).
   # Reads the exported segment products of products.recommended_run. Kept windows
