@@ -1,8 +1,8 @@
 {
   "step": "epsilon_shear",
-  "created_utc": "2026-10-22T15:51:19+00:00",
-  "config_sha256": "8b3b5704a8d7d5b6ab0579fc792c3b22e1e48107c640797d725023fac68c6ca7",
-  "git_commit": "36293d66e99424e9af35b0dfa2eaaa511baacfb4-dirty",
+  "created_utc": "2026-10-29T16:34:36+00:00",
+  "config_sha256": "32f92e5715376bf17b687d71e52d73c04eb1fe0f9b7d2ac8911d8994187da4a8",
+  "git_commit": "1625108a14e820888b7f649d284e718fe8457df8-dirty",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -14,7 +14,7 @@
     "pandas": "3.0.6",
     "netCDF4": "1.7.4"
   },
-  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "microstructure_tpw_commit": "c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4",
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
   "manifests_verified": true,
   "segments_applied": false

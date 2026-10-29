@@ -4,7 +4,7 @@
     "patched": 38,
     "linked_to_raw": 0,
     "edit_groups": 2,
-    "reused_existing_patched_files": false,
+    "reused_existing_patched_files": true,
     "verification_failures": [],
     "files_differing_from_archive": 38
   },
@@ -13,7 +13,7 @@
     "patched": 44,
     "linked_to_raw": 1,
     "edit_groups": 2,
-    "reused_existing_patched_files": false,
+    "reused_existing_patched_files": true,
     "verification_failures": [],
     "files_differing_from_archive": 22
   }

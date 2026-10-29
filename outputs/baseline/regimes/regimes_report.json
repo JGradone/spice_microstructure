@@ -109,13 +109,13 @@
       "Re_b_shear_median_below_150": 9.761379661643819
     },
     "vmp5500": {
-      "windows": 6749,
+      "windows": 6747,
       "windows_below_150": 5738,
       "turner_class_below_150": {
         "finger": 2631,
-        "strong_finger": 1728,
+        "strong_finger": 1727,
         "not_finger": 648,
-        "unstable": 469,
+        "unstable": 470,
         "undefined": 219,
         "diffusive": 43
       },
@@ -128,8 +128,8 @@
       },
       "profiles_with_interfaces_vdb2021": 44,
       "staircase_rollo2022_below_150": {
-        "none": 4120,
-        "straddles": 829,
+        "none": 4119,
+        "straddles": 830,
         "layer": 687,
         "interface": 102
       },
@@ -152,16 +152,16 @@
           "interface": 16,
           "layer": 64,
           "none": 3921,
-          "straddles": 119
+          "straddles": 118
         },
         "straddles": {
           "interface": 27,
           "layer": 1,
           "none": 693,
-          "straddles": 108
+          "straddles": 109
         }
       },
-      "Re_b_shear_median_below_150": 5.5730795608607915
+      "Re_b_shear_median_below_150": 5.731788273058113
     }
   }
 }

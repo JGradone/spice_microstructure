@@ -1,8 +1,8 @@
 # SPICE microstructure products: `an_epsT`
 
-Product version 0.4. spice_microstructure git daaeff0e7f9904f8f2ce548ea8c1c162d6d7585d-dirty; config sha256 0f3391920d9e; microstructure-tpw 0.4.0 (ebec847c157051d6835ebf2d8ac9553166c01880); exported 2026-10-27T12:44:04+00:00.
+Product version 0.5. spice_microstructure git 1625108a14e820888b7f649d284e718fe8457df8-dirty; config sha256 9daa3ea503c0; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-10-29T17:20:49+00:00.
 
-**Sensitivity run** of `baseline`, based on `fft2_diss8_mle`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `double_diffusion.epsilon_source` = thermistor.
+**Sensitivity run** of `baseline`, based on `fft2_diss8_mle`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `perturb.epsilon.record_locked_shear` = True, `double_diffusion.epsilon_source` = thermistor.
 
 Specification of every variable: `docs/products.md`. Methods and the reasons behind them: `docs/decisions.md`. Rerun: `python src/run_pipeline.py --config config/config.yaml --sensitivity an_epsT`.
 
@@ -47,25 +47,25 @@ NetCDF files carry this provenance in their global attributes; `*.nc` stays out 
 
 | | vmp250 | vmp5500 |
 |---|---|---|
-| profiles | 135 | 46 |
-| dissipation windows | 12206 | 13562 |
-| segment QC flags (applied: False) | 628 (5.1%): near_surface 316, bottom_approach 157, unsteady_speed 83, vibration 72 | 322 (2.4%): near_surface 111, bottom_approach 29, unsteady_speed 45, vibration 137 |
-| probe exclusions (windows) | sh2 592 | sh1 626, T2 6680 |
-| shear: probe estimates removed | probe_exclusion 583, var_resolved 563 | probe_exclusion 626, var_resolved 110 |
-| shear: probes disagree (smaller kept) | 365 | 2862 |
-| shear: windows kept | 11940 of 12206 | 13509 of 13562 |
-| shear: at noise floor (below 150 dbar) | 39%, median floor 2.0e-10 W/kg | 10%, median floor 1.0e-11 W/kg |
-| shear: median epsilon below 150 dbar | 4.5e-10 W/kg | 7.2e-11 W/kg |
-| chi: windows kept | 11610 of 12206 | 13384 of 13562 |
+| profiles | 135 | 44 |
+| dissipation windows | 12206 | 13554 |
+| segment QC flags (applied: False) | 628 (5.1%): near_surface 316, bottom_approach 157, unsteady_speed 83, vibration 72 | 314 (2.3%): near_surface 105, bottom_approach 27, unsteady_speed 45, vibration 137 |
+| probe exclusions (windows) | sh2 592 | sh1 2189, T2 6676 |
+| shear: probe estimates removed | probe_exclusion 583, var_resolved 563 | probe_exclusion 2189, var_resolved 108 |
+| shear: probes disagree (smaller kept) | 365 | 1081 |
+| shear: windows kept | 11940 of 12206 | 13509 of 13554 |
+| shear: at noise floor (below 150 dbar) | 39%, median floor 2.0e-10 W/kg | 13%, median floor 8.3e-12 W/kg |
+| shear: median epsilon below 150 dbar | 4.5e-10 W/kg | 4.3e-11 W/kg |
+| chi: windows kept | 11610 of 12206 | 13384 of 13554 |
 | chi: at noise floor (below 150 dbar) | 0.4% | 3.9% |
-| epsilon_T roll-off resolved (below 150 dbar) | 73% | 81% |
+| epsilon_T roll-off resolved (below 150 dbar) | 73% | 88% |
 | salinity source | own | own_ts |
-| N2 vs ship CTD, 150-550 m (median ratio; N2<=0) | 1.01; 1% (ship 2%) | 1.11; 16% (ship 1%) |
+| N2 vs ship CTD, 150-550 m (median ratio; N2<=0) | 1.01; 1% (ship 2%) | 1.11; 16% (ship 2%) |
 | windows with T-S salinity invalid (T inversions) | 0 | 1744 |
-| Turner class below 150 dbar | strong_finger 4021, finger 1393, not_finger 127, unstable 27, diffusive 26, undefined 8 | finger 5264, strong_finger 3472, not_finger 1317, unstable 923, undefined 465, diffusive 76 |
-| staircase windows below 150 dbar (vdb2021) | none 5573, layer 15, interface 9, straddles 5; 5 profiles with interfaces | none 10159, layer 630, straddles 441, interface 287; 44 profiles with interfaces |
-| staircase windows below 150 dbar (rollo2022) | none 4867, layer 385, straddles 207, interface 143; 72 profiles with interfaces | none 8088, layer 1623, straddles 1295, interface 511; 44 profiles with interfaces |
-| median Re_b below 150 dbar (shear) | 9.6 | 5.0 |
+| Turner class below 150 dbar | strong_finger 4021, finger 1393, not_finger 127, unstable 27, diffusive 26, undefined 8 | finger 5263, strong_finger 3471, not_finger 1318, unstable 924, undefined 465, diffusive 76 |
+| staircase windows below 150 dbar (vdb2021) | none 5573, layer 15, interface 9, straddles 5; 5 profiles with interfaces | none 10159, layer 630, straddles 440, interface 288; 44 profiles with interfaces |
+| staircase windows below 150 dbar (rollo2022) | none 4867, layer 385, straddles 207, interface 143; 72 profiles with interfaces | none 8088, layer 1624, straddles 1291, interface 514; 44 profiles with interfaces |
+| median Re_b below 150 dbar (shear) | 9.6 | 3.2 |
 
 ## Headline results
 
@@ -76,9 +76,9 @@ Whole cruise, all free-fall casts, finger-favourable water, finescale gradients,
 | vmp250 all free fall | all | 3.8e-06 [3.3e-06, 4.2e-06] | 1e-05 [9.3e-06, 1.2e-05] | 4.9e-05 | 2.7e-06 | 127 |
 | vmp250 all free fall | interface | 6.3e-06 [4.5e-06, 8.8e-06] | 1.6e-05 [1.1e-05, 2.2e-05] | 6.4e-05 | 2.6e-06 | 32 |
 | vmp250 all free fall | layer | 9.1e-06 [3.7e-06, 1.8e-05] | 2e-05 [8.3e-06, 3.8e-05] | 0.00017 | 2.2e-06 | 29 |
-| vmp5500 all free fall | all | 4.7e-06 [4e-06, 5.4e-06] | 1.5e-05 [1.3e-05, 1.7e-05] | 7.3e-05 | 2.4e-06 | 44 |
-| vmp5500 all free fall | interface | 6.4e-06 [4.6e-06, 8.6e-06] | 1.7e-05 [1.3e-05, 2.3e-05] | 5.9e-05 | 2.5e-06 | 44 |
-| vmp5500 all free fall | layer | 4.4e-06 [3.2e-06, 5.7e-06] | 1.4e-05 [1e-05, 1.8e-05] | 0.00027 | 2.1e-06 | 44 |
+| vmp5500 all free fall | all | 4.5e-06 [3.9e-06, 5.2e-06] | 1.4e-05 [1.2e-05, 1.6e-05] | 7.1e-05 | 2.4e-06 | 44 |
+| vmp5500 all free fall | interface | 5.8e-06 [4.5e-06, 7.1e-06] | 1.6e-05 [1.2e-05, 1.9e-05] | 5.7e-05 | 2.5e-06 | 44 |
+| vmp5500 all free fall | layer | 4.4e-06 [3.4e-06, 5.5e-06] | 1.4e-05 [1.1e-05, 1.7e-05] | 0.00026 | 2.1e-06 | 44 |
 | vmp250 all free fall | finger water, no staircase (control) | 3.4e-06 | – | – | 2.7e-06 | 127 |
 | vmp5500 all free fall | finger water, no staircase (control) | 3.7e-06 | – | – | 2.5e-06 | 44 |
 
@@ -88,14 +88,14 @@ Interface finger fraction 1 − 1/E by baseline (finescale gradients). The sprea
 |---|---|---|---|
 | vmp250 all free fall | theory_Gamma0.2 | 0.77 [0.66, 0.86] | -0.30 |
 | vmp250 all free fall | garrett_munk | 2.44 [1.74, 3.42] | 0.59 |
-| vmp250 all free fall | nonstaircase_control | 1.05 [0.90, 1.21] | 0.05 |
-| vmp5500 all free fall | theory_Gamma0.2 | 0.89 [0.71, 1.05] | -0.13 |
-| vmp5500 all free fall | garrett_munk | 2.58 [1.86, 3.44] | 0.61 |
-| vmp5500 all free fall | nonstaircase_control | 1.09 [0.86, 1.31] | 0.08 |
+| vmp250 all free fall | nonstaircase_control | 1.05 [0.90, 1.20] | 0.05 |
+| vmp5500 all free fall | theory_Gamma0.2 | 0.80 [0.66, 0.94] | -0.25 |
+| vmp5500 all free fall | garrett_munk | 2.33 [1.83, 2.85] | 0.57 |
+| vmp5500 all free fall | nonstaircase_control | 0.99 [0.78, 1.25] | -0.01 |
 
 ## Uncertainty
 
-Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 806/856 pooled estimates with intervals; dd_excess: 63/63 pooled estimates with intervals; diffusivity_bins: 357/357 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
+Bootstrap over profiles, 1000 samples (seed 20260812). dd_pooled: 812/856 pooled estimates with intervals; dd_excess: 63/63 pooled estimates with intervals; diffusivity_bins: 357/357 pooled estimates with intervals. Records with fewer than 3 profiles are flagged.
 
 ## Caveats
 

@@ -91,6 +91,7 @@ Existing pieces:
   * `make_manifest.py`, `record_environment.py`;
   * results: `publish_recommended.py` (outputs/recommended/), `write_run_summaries.py`;
   * run comparisons: `compare_runs.py`, `compare_sensitivity.py`, `check_reproduction.py` (rerun from the raw files into a fresh run directory and compare).
+  * probe check: `shear_probe_ratio.py` (sh1/sh2 per cast and depth bin).
   * One-off diagnostics (FM explainer, f_min and K_max tests, staircase threshold grid, VMP5500 conductivity, QC explorer) and the `repro_baseline` run were removed on 2026-10-14 to keep the repository to what reproduces the outputs; they remain in git history at commit `cd55806`.
 * `config/config.example.yaml` lists every parameter; `config/config.yaml` is the local copy with real paths.
 * Docs:
@@ -132,13 +133,16 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 * Every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from the baseline.
 * Upgrading the pinned commit later starts a new baseline. Record why in `docs/decisions.md` and rerun.
 
-## Current state (2026-10-16; details and reasons in docs/decisions.md)
+## Current state (2026-10-29; details and reasons in docs/decisions.md)
 
-* **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response.
+* **Pin:** microstructure-tpw c90ff7f (main, not tagged; decisions.md 2026-10-29). The pin alone left the baseline identical.
+* **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response, and `epsilon.record_locked_shear: true`.
+* **VMP5500 shear interference:** two pulses at fixed samples of every .p record, on every cast, mostly below the despike threshold. Removing the record-locked waveform lowers VMP5500 shear epsilon by a median 14% (VMP250 unaffected). A residual remains on sh1 on SPC_034 and SPC_038. `fft2_diss8_mle_norls` is the run without the removal.
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
 * **epsilon_T:** flagged resolved where K_max/kB ≥ 1.6, with kB from shear epsilon, not from the FP07 fit (decisions.md 2026-10-26). There it runs 2–3× above shear epsilon, so shear epsilon is primary.
 * **Probe exclusions:**
   * VMP5500 T2 (T3304), SPC_012–040: gain error.
+  * VMP5500 sh1 (M3461), SPC_041–044 and 059–061: failing probe (reads high in quiet water, low in strong turbulence; `scripts/shear_probe_ratio.py`).
   * VMP250 sh2 for data_0112 (test casts) and for data_0123_prof004 and data_0124 (fouled).
 * **Double diffusion:** report the ladder of baselines and the three gradient choices.
   * Control: finger-favourable water outside staircases at the same depths (150 dbar down), matched in Re_b (decisions.md 2026-10-27). Never doubly stable water from above 150 dbar: different stratification and energetics. E against it is the staircase excess, a lower bound on the finger fraction.
@@ -149,9 +153,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
   * replies from Bieito (baseline, gradient scale, γ) and Pat (package questions);
   * ADCP for a finescale Richardson number and a shear-based Garrett–Munk estimate;
   * ML staircase labels.
-  * VMP5500 FP07 pair: on SPC_049–063, T2 (T3301) reads chi 0.6–0.7 of T1 on about half the casts, with the same probes that agreed on SPC_041–048. The T3304 "gain error" (SPC_012–040) could also be a bead response difference. Upstream `fp07-pair` (microstructure-tpw f77e5de, after our pin) targets this; trying it means upgrading the pin and starting a new baseline.
-  * Upstream since our pin (ebec847 → cc5107d, 9 commits, read 2026-10-16): no change to our results as configured. The double-pole `goto` tau is now speed dependent (our double-pole sensitivity run would shift a few percent), and FP07 calibration fallbacks to factory coefficients are now reported.
-  * The generated perturb configs now use `<CONFIG_DIR>` paths, which changes perturb's cache keys: the next rerun of each run recomputes its perturb stages once (check disk space; old `*_NN` stage directories can be deleted afterwards).
+  * VMP5500 FP07 pair: on SPC_049–063, T2 (T3301) reads chi 0.6–0.7 of T1 on about half the casts, with the same probes that agreed on SPC_041–048. The T3304 "gain error" (SPC_012–040) could also be a bead response difference. Upstream `fp07-pair` (microstructure-tpw f77e5de) targets this and is in our pin; trying it is a config change and its own run.
   * Private open items (correspondence, history purge): `docs/private/next_steps.md`.
 
 ## Documentation habits

@@ -1,0 +1,601 @@
+{
+  "segments_applied": false,
+  "chi_qc": {
+    "k_max_ratio": {
+      "min": 0.5,
+      "apply": true
+    },
+    "fom": {
+      "band": 1.15,
+      "apply": false
+    },
+    "noise_floor": {
+      "factor": 2.0,
+      "policy": "clamp"
+    },
+    "probe_pair": {
+      "limit": 2.7718585822512662,
+      "policy": "min"
+    },
+    "combine": "geometric",
+    "epsilon_T": {
+      "kb_source": "shear",
+      "k_max_ratio_min": 1.6,
+      "kappa_T": 1.4e-07,
+      "check": {
+        "min_floor_ratio": 5.0,
+        "min_pressure_dbar": 150,
+        "bins": [
+          0.8,
+          1.2,
+          1.6,
+          2.0,
+          2.5,
+          3.0,
+          4.0
+        ]
+      }
+    },
+    "gallery": {
+      "per_panel": 5,
+      "seed": 1
+    }
+  },
+  "fit_method": "mle",
+  "instruments": {
+    "vmp250": {
+      "windows": 12206,
+      "after_segment_qc": 12206,
+      "probe_estimates_removed": {
+        "probe_exclusion": 0,
+        "k_max_ratio": 0,
+        "fom": 0
+      },
+      "no_usable_probe": 596,
+      "probe_disagree": 43,
+      "kept": 11610,
+      "kept_at_floor_fraction": 0.0031,
+      "kept_fom_out_of_band_fraction": 0.0005,
+      "epsilon_T_gate": {
+        "kb_source": "shear",
+        "check": [
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 113,
+            "median_log10_ratio": 0.4287387712696959,
+            "q25": 0.26564148697786505,
+            "q75": 0.590094292228358
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 144,
+            "median_log10_ratio": 0.12913110886061455,
+            "q25": -0.07074757531164921,
+            "q75": 0.2718397785093947
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 24,
+            "median_log10_ratio": -0.29450548131321924,
+            "q25": -0.42499773110251937,
+            "q75": -0.16810131068711942
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 2.0,
+            "bin_hi": 2.5,
+            "n": 1,
+            "median_log10_ratio": -0.2806647690903579,
+            "q25": -0.2806647690903579,
+            "q75": -0.2806647690903579
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 28,
+            "median_log10_ratio": -0.09024732088293552,
+            "q25": -0.39259816206960974,
+            "q75": 0.00854635176425271
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 164,
+            "median_log10_ratio": 0.18683499537731046,
+            "q25": -0.07057990290466078,
+            "q75": 0.41446457889838295
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 93,
+            "median_log10_ratio": 0.3395857421662068,
+            "q25": 0.1370631235960018,
+            "q75": 0.5147692925835967
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 113,
+            "median_log10_ratio": 0.5477480493896815,
+            "q25": 0.367518893131585,
+            "q75": 0.6983618055131666
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 144,
+            "median_log10_ratio": 0.23214494647355127,
+            "q25": 0.10172117064379924,
+            "q75": 0.3528880099754277
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 24,
+            "median_log10_ratio": -0.11663760453695385,
+            "q25": -0.2048836567828422,
+            "q75": -0.03703033820122184
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 2.0,
+            "bin_hi": 2.5,
+            "n": 1,
+            "median_log10_ratio": -0.28597412353567603,
+            "q25": -0.28597412353567603,
+            "q75": -0.28597412353567603
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 49,
+            "median_log10_ratio": 0.035779661715993706,
+            "q25": -0.1483862058073836,
+            "q75": 0.29977315423567
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 190,
+            "median_log10_ratio": 0.313625712827637,
+            "q25": 0.14575264705271074,
+            "q75": 0.5449749453769346
+          },
+          {
+            "instrument": "vmp250",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 46,
+            "median_log10_ratio": 0.44531938989715536,
+            "q25": 0.32700248005126775,
+            "q75": 0.6616319365453862
+          }
+        ]
+      },
+      "chi_median_below_150": 1.4690703218437474e-08,
+      "chi_floor_median_below_150": 4.8880332553231145e-11,
+      "at_floor_fraction_below_150": 0.0037,
+      "snr_median_below_150": {
+        "T1": 343.5210784401975,
+        "T2": 306.5537113237127
+      },
+      "probe_ratio_median_below_150": 1.0049975752928786,
+      "epsilon_T_resolved_fraction_below_150": 0.7269,
+      "epsilon_T_vs_shear_below_150_resolved": {
+        "Tu < 45 (not finger)": {
+          "n": 119,
+          "median_ratio": 2.5038612406546115
+        },
+        "Tu 45-72": {
+          "n": 582,
+          "median_ratio": 1.3943737530343125
+        },
+        "Tu 72-90": {
+          "n": 1597,
+          "median_ratio": 2.4656351814977415
+        }
+      },
+      "epsilon_T_vs_shear_below_150": {
+        "Tu < 45 (not finger)": {
+          "n": 182,
+          "median_ratio": 2.0989635974098553,
+          "iqr_log10": [
+            0.037146230887760694,
+            0.5102592139213351
+          ]
+        },
+        "Tu 45-72": {
+          "n": 898,
+          "median_ratio": 1.278826951335145,
+          "iqr_log10": [
+            -0.07734702126301236,
+            0.30921156254475174
+          ]
+        },
+        "Tu 72-90": {
+          "n": 2254,
+          "median_ratio": 2.059321919123482,
+          "iqr_log10": [
+            0.11485067010890318,
+            0.5120602996721764
+          ]
+        }
+      }
+    },
+    "vmp5500": {
+      "windows": 13554,
+      "after_segment_qc": 13554,
+      "probe_estimates_removed": {
+        "probe_exclusion": 6204,
+        "k_max_ratio": 3,
+        "fom": 0
+      },
+      "no_usable_probe": 170,
+      "probe_disagree": 547,
+      "kept": 13384,
+      "kept_at_floor_fraction": 0.0342,
+      "kept_fom_out_of_band_fraction": 0.0132,
+      "epsilon_T_gate": {
+        "kb_source": "shear",
+        "check": [
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 582,
+            "median_log10_ratio": 0.7299348702947672,
+            "q25": 0.39910835827669633,
+            "q75": 1.019493551887606
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 2017,
+            "median_log10_ratio": 0.5293026196897683,
+            "q25": 0.2642504588651523,
+            "q75": 0.7790506418055432
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 1005,
+            "median_log10_ratio": 0.28484400598078113,
+            "q25": 0.0385975331416902,
+            "q75": 0.5192072748236883
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 2.0,
+            "bin_hi": 2.5,
+            "n": 581,
+            "median_log10_ratio": -0.010209119444226209,
+            "q25": -0.24954204589810214,
+            "q75": 0.24387546976384386
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 2.5,
+            "bin_hi": 3.0,
+            "n": 309,
+            "median_log10_ratio": -0.2277656876873967,
+            "q25": -0.45601419829845474,
+            "q75": 0.058028120505948806
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 3.0,
+            "bin_hi": 4.0,
+            "n": 266,
+            "median_log10_ratio": -0.53935131316697,
+            "q25": -0.7628333845183788,
+            "q75": -0.28313643054659376
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 268,
+            "median_log10_ratio": -0.19702259056723098,
+            "q25": -0.47660466731334633,
+            "q75": 0.1005140044194466
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 899,
+            "median_log10_ratio": 0.1613341128413733,
+            "q25": -0.14016508490616822,
+            "q75": 0.42151506343778955
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 1662,
+            "median_log10_ratio": 0.40000693010584637,
+            "q25": 0.06276772027414831,
+            "q75": 0.6628339581710626
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 2.0,
+            "bin_hi": 2.5,
+            "n": 1504,
+            "median_log10_ratio": 0.4969088001478662,
+            "q25": 0.0340355362206925,
+            "q75": 0.8168068960937118
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 2.5,
+            "bin_hi": 3.0,
+            "n": 433,
+            "median_log10_ratio": 0.3887933903615522,
+            "q25": -0.07855282041380524,
+            "q75": 0.7886683210293369
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh1",
+            "kB_from": "kB from sh2",
+            "bin_lo": 3.0,
+            "bin_hi": 4.0,
+            "n": 65,
+            "median_log10_ratio": 0.42552184771859075,
+            "q25": 0.1338755803272904,
+            "q75": 0.8711029381646588
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 582,
+            "median_log10_ratio": 0.6620289907280403,
+            "q25": 0.3600089289227853,
+            "q75": 0.9065582072137381
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 2017,
+            "median_log10_ratio": 0.4560403056379539,
+            "q25": 0.17197638616862668,
+            "q75": 0.6800147793239739
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 1005,
+            "median_log10_ratio": 0.20555309561174256,
+            "q25": -0.055238652192264,
+            "q75": 0.439914637540958
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 2.0,
+            "bin_hi": 2.5,
+            "n": 581,
+            "median_log10_ratio": -0.0666492592095269,
+            "q25": -0.3171719537818235,
+            "q75": 0.17313741254029655
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 2.5,
+            "bin_hi": 3.0,
+            "n": 309,
+            "median_log10_ratio": -0.29039412002795495,
+            "q25": -0.5762349776020733,
+            "q75": -0.05116721364172559
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "fit kB (own)",
+            "bin_lo": 3.0,
+            "bin_hi": 4.0,
+            "n": 266,
+            "median_log10_ratio": -0.590951831438504,
+            "q25": -0.8636784794660944,
+            "q75": -0.3702841393937691
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 0.8,
+            "bin_hi": 1.2,
+            "n": 218,
+            "median_log10_ratio": -0.3142357231487125,
+            "q25": -0.6085751399613571,
+            "q75": -0.03396026810054299
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 1.2,
+            "bin_hi": 1.6,
+            "n": 739,
+            "median_log10_ratio": 0.045269386346612574,
+            "q25": -0.2315230792491923,
+            "q75": 0.33608973883846904
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 1.6,
+            "bin_hi": 2.0,
+            "n": 1447,
+            "median_log10_ratio": 0.27863476869813597,
+            "q25": -0.06205174464925238,
+            "q75": 0.5205125495627656
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 2.0,
+            "bin_hi": 2.5,
+            "n": 1687,
+            "median_log10_ratio": 0.3982182857619815,
+            "q25": -0.030026936575356523,
+            "q75": 0.6778988414158704
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 2.5,
+            "bin_hi": 3.0,
+            "n": 619,
+            "median_log10_ratio": 0.38401083258863306,
+            "q25": -0.13635626144801286,
+            "q75": 0.756926770701682
+          },
+          {
+            "instrument": "vmp5500",
+            "shear_probe": "sh2",
+            "kB_from": "kB from sh1",
+            "bin_lo": 3.0,
+            "bin_hi": 4.0,
+            "n": 128,
+            "median_log10_ratio": 0.2987360423293154,
+            "q25": -0.07830829814264936,
+            "q75": 0.7185914007204133
+          }
+        ]
+      },
+      "chi_median_below_150": 9.350339436155568e-10,
+      "chi_floor_median_below_150": 2.1245951764967538e-11,
+      "at_floor_fraction_below_150": 0.0392,
+      "snr_median_below_150": {
+        "T1": 62.2128066219357,
+        "T2": 67.97468171389464
+      },
+      "probe_ratio_median_below_150": 1.0422646250013252,
+      "epsilon_T_resolved_fraction_below_150": 0.7978,
+      "epsilon_T_vs_shear_below_150_resolved": {
+        "Tu < 45 (not finger)": {
+          "n": 872,
+          "median_ratio": 1.9590377235696326
+        },
+        "Tu 45-72": {
+          "n": 3314,
+          "median_ratio": 2.307818373945748
+        },
+        "Tu 72-90": {
+          "n": 2562,
+          "median_ratio": 3.7144511730173364
+        }
+      },
+      "epsilon_T_vs_shear_below_150": {
+        "Tu < 45 (not finger)": {
+          "n": 1144,
+          "median_ratio": 1.5464074085055208,
+          "iqr_log10": [
+            -0.2997567420284051,
+            0.596155993600412
+          ]
+        },
+        "Tu 45-72": {
+          "n": 4302,
+          "median_ratio": 1.690689421198186,
+          "iqr_log10": [
+            -0.22082458625830453,
+            0.6185138230259905
+          ]
+        },
+        "Tu 72-90": {
+          "n": 3041,
+          "median_ratio": 3.174358064892468,
+          "iqr_log10": [
+            0.1557312889314115,
+            0.7721541252160727
+          ]
+        }
+      }
+    }
+  }
+}

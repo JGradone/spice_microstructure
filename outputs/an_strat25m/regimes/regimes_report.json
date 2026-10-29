@@ -110,13 +110,13 @@
       "Re_b_shear_median_below_150": 9.818318162688499
     },
     "vmp5500": {
-      "windows": 13562,
+      "windows": 13554,
       "windows_below_150": 11517,
       "turner_class_below_150": {
-        "finger": 5264,
-        "strong_finger": 3472,
-        "not_finger": 1317,
-        "unstable": 923,
+        "finger": 5263,
+        "strong_finger": 3471,
+        "not_finger": 1318,
+        "unstable": 924,
         "undefined": 465,
         "diffusive": 76
       },
@@ -124,29 +124,29 @@
       "staircase_vdb2021_below_150": {
         "none": 10159,
         "layer": 630,
-        "straddles": 441,
-        "interface": 287
+        "straddles": 440,
+        "interface": 288
       },
       "profiles_with_interfaces_vdb2021": 44,
       "staircase_rollo2022_below_150": {
         "none": 8088,
-        "layer": 1623,
-        "straddles": 1295,
-        "interface": 511
+        "layer": 1624,
+        "straddles": 1291,
+        "interface": 514
       },
       "profiles_with_interfaces_rollo2022": 44,
-      "methods_agree_below_150": 0.727,
+      "methods_agree_below_150": 0.728,
       "methods_confusion_below_150": {
         "interface": {
-          "interface": 134,
+          "interface": 136,
           "layer": 0,
-          "none": 377,
+          "none": 378,
           "straddles": 0
         },
         "layer": {
           "interface": 13,
           "layer": 439,
-          "none": 1066,
+          "none": 1067,
           "straddles": 105
         },
         "none": {
@@ -156,13 +156,13 @@
           "straddles": 178
         },
         "straddles": {
-          "interface": 68,
+          "interface": 67,
           "layer": 0,
-          "none": 1069,
-          "straddles": 158
+          "none": 1067,
+          "straddles": 157
         }
       },
-      "Re_b_shear_median_below_150": 5.421233578842966
+      "Re_b_shear_median_below_150": 3.4808521231815894
     }
   }
 }

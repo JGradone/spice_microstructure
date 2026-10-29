@@ -1,13 +1,13 @@
 {
-  "chi": "chi_00",
-  "chi_binned": "chi_binned_00",
-  "chi_combo": "chi_combo_03",
-  "combo": "combo_03",
-  "ctd": "ctd_00",
-  "ctd_combo": "ctd_combo_03",
-  "diss": "diss_00",
-  "diss_binned": "diss_binned_00",
-  "diss_combo": "diss_combo_03",
-  "profiles": "profiles_00",
-  "profiles_binned": "profiles_binned_00"
+  "chi": "chi_01",
+  "chi_binned": "chi_binned_01",
+  "chi_combo": "chi_combo_05",
+  "combo": "combo_05",
+  "ctd": "ctd_01",
+  "ctd_combo": "ctd_combo_05",
+  "diss": "diss_01",
+  "diss_binned": "diss_binned_01",
+  "diss_combo": "diss_combo_05",
+  "profiles": "profiles_01",
+  "profiles_binned": "profiles_binned_01"
 }

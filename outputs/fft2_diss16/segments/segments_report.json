@@ -44,33 +44,33 @@
       "terminal_speed_median_m_s": 0.686
     },
     "vmp5500": {
-      "windows": 6749,
-      "profiles": 46,
+      "windows": 6747,
+      "profiles": 44,
       "kept": 6592,
-      "removed": 157,
-      "removed_fraction": 0.0233,
+      "removed": 155,
+      "removed_fraction": 0.023,
       "flagged_by_criterion": {
         "excluded_cast": 0,
-        "near_surface": 45,
+        "near_surface": 43,
         "bottom_approach": 1,
         "speed_range": 0,
-        "unsteady_speed": 89,
+        "unsteady_speed": 87,
         "vibration": 101,
         "towyo": 0
       },
       "removed_sequentially": {
         "excluded_cast": 0,
-        "near_surface": 45,
+        "near_surface": 43,
         "bottom_approach": 1,
         "speed_range": 0,
         "unsteady_speed": 44,
         "vibration": 67
       },
       "probe_exclusions_windows": {
-        "sh1": 312,
+        "sh1": 1090,
         "sh2": 0,
         "T1": 0,
-        "T2": 3324
+        "T2": 3323
       },
       "terminal_speed_median_m_s": 0.813
     }

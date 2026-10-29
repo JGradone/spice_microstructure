@@ -10,7 +10,7 @@ fonttools==4.66.1
 gsw==3.6.23
 kiwisolver==1.5.1
 matplotlib==3.11.2
-microstructure-tpw @ git+https://github.com/mousebrains/turbulence.git@ebec847c157051d6835ebf2d8ac9553166c01880
+microstructure-tpw @ git+https://github.com/mousebrains/turbulence.git@c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4
 netCDF4==1.7.4
 numpy==2.5.4
 packaging==26.3

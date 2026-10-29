@@ -983,3 +983,48 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * **Reruns:**
   * `baseline`, `fft2_diss8_mle`, the six `an_*` runs and `fft2_diss8_mle_dp`: `dd_test` to `export`. `fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before.
   * Then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`) and `publish_recommended.py`.
+
+## 2026-10-29: New pin c90ff7f; VMP5500 record-locked shear interference removed; sh1 (M3461) excluded on SPC_041–044 and 059–061
+
+* **Why:**
+  * Rockland (2026-10-27) found a periodic spike in the VMP5500 shear on SPC_026: two pulses of about 20 ms every second. Above the 5% despiked limit, Zissou/ATOMIX rejects the windows. Our QC does not use the despiked fraction, so nothing was rejected here, but the spikes enter the spectra.
+  * Our scan of the raw files: at the 0.04 s despike half-width, 19 of 44 casts are above 5% despiked on at least one probe (up to 14%, mostly sh1); at 0.01 s none are.
+  * Pat Welch traced the pulses to fixed samples of every 512-sample .p record (6 and 81–82). They are on all 44 casts and both probes; the FP07 channels are clean. Most pulses sit below the despike threshold, so no half-width removes them.
+  * microstructure-tpw 5d2b93c (main, not tagged) adds `epsilon.despike_half_width` and `epsilon.record_locked_shear`, which subtracts the per-profile record-locked waveform before despiking.
+* **Pin:** microstructure-tpw ebec847 → c90ff7f (main, 2026-10-28; 34 commits). This starts a new baseline (CLAUDE.md).
+  * The new `baseline` is identical to the old one window for window, for epsilon and chi on both instruments. The only change is two VMP5500 windows at 6.8 dbar, above the near-surface cut. Pin effects and method effects are therefore separable.
+* **Config:** every perturb option is set explicitly.
+  * New keys at c90ff7f, at their old behaviour: `fp07.allow_hotel_reference: false`, `epsilon.despike_half_width: 0.04`, `epsilon.record_locked_shear: false`, `chi.anchor: top`, the chi bbl keys (null), `stratification.sort: density`, `stratification.dTdz_source: ct`. perturb's N2 and dT/dz are not used.
+  * Keys that existed at ebec847 but were inherited (inert as configured): the `top_trim` detail keys and `epsilon.bbl_*_length`.
+* **Analysis run** `fft2_diss8_mle`: `record_locked_shear: true`, `despike_half_width` 0.04.
+  * New run `fft2_diss8_mle_norls`: the same without the removal, to isolate it.
+  * `baseline`, `fft2_diss8` and `fft2_diss16` keep the removal off (shipboard-equivalent settings).
+* **Removal check** (perturb's per-profile `record_locked_*` attributes):
+  * Templates are significant on all 44 VMP5500 profiles (median 73 and 64 standard errors, sh1 and sh2) and on none of the 135 VMP250 profiles.
+  * Phase power ratio after removal: median 1.03 (sh1) and 1.01 (sh2). Residual record-to-record variation remains on sh1 on SPC_034 (1.65) and SPC_038 (2.20), both process station casts, and on SPC_016, 017, 033, 041 and 042 (1.2–1.35). Epsilon there may remain biased high.
+* **Effect on VMP5500 shear epsilon** (analysis run vs `_norls`, below 20 dbar):
+  * Median −14% (p10 −0.52 dex, p90 +0.06 dex); the noise floor drops 23%.
+  * The largest drops (0.3–0.6 dex) are on casts whose pulses sat under the despike threshold (SPC_021–023, 027–030, 039, 045, 049–050). Casts with large, detected spikes (SPC_026, 033) barely move.
+  * The VMP250 is unchanged.
+* **sh1 (M3461):** once the spikes were gone, Pat saw sh1 reading high at 150–550 dbar on SPC_043–044 and 059–061. `scripts/shear_probe_ratio.py` (config `shear_probe_check`) shows the same, plus SPC_041–042.
+  * On 041–044 and 059–061 the sh1/sh2 ratio depends on the turbulence level, not on depth: 3–7× at epsilon_sh2 < 3e-11 and 0.1–0.2× above 1e-8. On the other casts it is about 1.0–1.15 and 0.6.
+  * That is consistent with lost gain plus added noise. The crew logged "low response" on SPC_060–061 and replaced the probe after SPC_061. 150–550 dbar is just where the water is quietest.
+  * Not the water: SPC_043 and 044 are about 160 km and 20 h apart, and SPC_059–060 are at the same site as SPC_055–058, which are normal.
+  * **Decision:** exclude sh1 for whole casts (SPC_041–044 and 059, added to the existing 060–061); sh2 (M3459) alone. A pressure-limited exclusion was considered and dropped.
+* **Results** (analysis run, all free fall, rollo2022, finescale gradients; 2026-10-27 values in brackets):
+  * Interface E against the non-staircase control: VMP250 1.49 [1.11, 1.95] (1.49), VMP5500 1.37 [1.02, 1.80] (1.37 [0.99, 1.88]). The spike bias is common to interfaces and control, so the ratio barely moves.
+  * VMP5500 layers 0.61 (0.52). Lower-bound finger fractions are unchanged (0.33 and 0.27).
+  * Against Γ = 0.2 theory, VMP5500 interface E is 4.75 (4.28), finger fraction 0.79 (0.77), because shear epsilon is lower. Garrett–Munk is unchanged.
+  * VMP5500 diffusivities: K_T and K_S (from chi) are unchanged (0.99–1.01×). The epsilon-based quantities (mean epsilon, K_ρ, K_S_eps) are 0.81× at interfaces, 0.65× in layers, 0.83× in all finger water and 0.88× in the control. The VMP250 is unchanged.
+* **Sensitivity runs, interface E (finescale), VMP250 / VMP5500:**
+  * `fft2_diss8_mle_norls`: 1.49 / 1.34 [0.96, 1.83].
+  * `an_strat5m`: 1.91 / 1.62.
+  * `an_strat25m`: 0.88 / 1.06.
+  * `an_mlgrad001`: 1.75 / 1.30.
+  * `an_epsT`: 1.05 / 0.99.
+  * `fft2_diss8_mle_dp`: 1.48 / 1.32.
+  * `an_bin10m` and `an_av100`: unchanged.
+* `product_version` 0.4 → 0.5 (method change in VMP5500 shear epsilon; new probe exclusions).
+* **Reruns:**
+  * Every run on the new pin and final config. `baseline` runs the full chain; the analysis-run family runs `cast_log` to `export`; `fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before.
+  * Then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`) and `publish_recommended.py`.

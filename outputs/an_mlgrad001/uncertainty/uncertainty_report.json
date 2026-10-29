@@ -9,7 +9,7 @@
       "pooled_with_interval": 812,
       "pooled_without_interval_reason": "fewer than 2 profiles",
       "records_below_min_profiles": 64,
-      "pooled_interval_width_log10_median": 0.3245847334297408,
+      "pooled_interval_width_log10_median": 0.3053968327366341,
       "estimate_outside_interval": 0
     },
     "dd_excess": {
@@ -18,16 +18,16 @@
       "pooled_with_interval": 63,
       "pooled_without_interval_reason": null,
       "records_below_min_profiles": 0,
-      "pooled_interval_width_log10_median": 0.39872061847027196,
+      "pooled_interval_width_log10_median": 0.39353194780893913,
       "estimate_outside_interval": 0
     },
     "diffusivity_bins": {
-      "records": 5544,
+      "records": 5548,
       "pooled_records": 357,
       "pooled_with_interval": 357,
       "pooled_without_interval_reason": null,
-      "records_below_min_profiles": 246,
-      "pooled_interval_width_log10_median": 0.28409880110907054,
+      "records_below_min_profiles": 254,
+      "pooled_interval_width_log10_median": 0.28375543969789224,
       "estimate_outside_interval": 0
     }
   }

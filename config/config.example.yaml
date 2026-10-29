@@ -150,7 +150,17 @@ instruments:
       SPC_038.P: [T2]
       SPC_039.P: [T2]
       SPC_040.P: [T2]             # T2 (T3304) flat-lined; replaced after this cast
-      SPC_060.P: [sh1]            # sh1 (M3461) low response; replaced after SPC_061
+      # sh1 (M3461) failing on SPC_041-044 and SPC_059-061: sh1/sh2 depends on the turbulence
+      # level, 3-7x high at eps < 3e-11 and 0.1-0.2x at eps > 1e-8 (other casts ~1 and ~0.6),
+      # i.e. lost gain plus added noise; the crew logged "low response" on SPC_060-061 and
+      # replaced it after SPC_061. Found by Pat Welch once the record-locked spikes were
+      # removed (decisions.md 2026-10-29; scripts/shear_probe_ratio.py). sh2 (M3459) alone.
+      SPC_041.P: [sh1]
+      SPC_042.P: [sh1]
+      SPC_043.P: [sh1]
+      SPC_044.P: [sh1]
+      SPC_059.P: [sh1]
+      SPC_060.P: [sh1]
       SPC_061.P: [sh1]
     flag:                         # usable with caution; carried as flags into products
       SPC_004.P: "ballast tuning: 0.4 m/s, spiking"
@@ -203,16 +213,21 @@ perturb:
                                   # W_min null = auto, 0.3 dbar/s for a free-fall VMP
   fp07: {calibrate: true, order: 2, max_lag_seconds: 10, reference: JAC_T,
          must_be_negative: true, reference_interval: null,
-         min_corr: 0.0}           # 0 = no correlation gate, as in 0.3.1. With the new
+         min_corr: 0.0,           # 0 = no correlation gate, as in 0.3.1. With the new
                                   # default 0.5 every VMP5500 profile failed the gate and
                                   # the uncalibrated FP07 kept nominal coefficients (+3 degC;
                                   # decisions.md 2026-10-12)
+         allow_hotel_reference: false}  # new at c90ff7f; we have no hotel file
   ct: {align: true, T_name: JAC_T, C_name: JAC_C}
   bottom: {enable: false, method: vibration, depth_window: 4.0, depth_minimum: 10.0,
            speed_factor: 0.3, median_factor: 1.0, vibration_frequency: 16,
            vibration_factor: 4.0, proximity_bins: 2, height: 0.15,
            fallrate_fraction: 0.9, fallrate_smooth_s: 0.05}
-  top_trim: {enable: false, dz: 0.5, min_depth: 1.0, max_depth: 50.0, quantile: 0.6, noise_factor: 2.0}
+  top_trim: {enable: false, dz: 0.5, min_depth: 1.0, max_depth: 50.0, quantile: 0.6, noise_factor: 2.0,
+             combine: max, use_fall_rate_residual: true, residual_smooth_m: 6.0,
+             use_inclinometer: false, incl_channel: Incl_Y, incl_threshold_deg: 85.0,
+             incl_relax_deg: 5.0, incl_hold_m: 1.0, incl_margin_m: 2.0}
+                                  # disabled; the detail keys are set only so none is inherited
   epsilon:
     fft_sec: 4.0                  # sensitivity parameter (shipboard 4 s)
     diss_sec: 16.0                # shipboard null = 4 x fft_sec; sensitivity parameter
@@ -224,12 +239,19 @@ perturb:
     bbl_diss_sec: null
     bbl_overlap_sec: null
     bbl_extent_sec: null
+    bbl_diss_length: null
+    bbl_overlap: null
+    bbl_extent: null
     goodman: true
     f_AA: 98.0
     f_limit: null                 # null = f_AA
     fit_order: 3
     despike_thresh: 8
     despike_smooth: 0.5
+    despike_half_width: 0.04      # new at c90ff7f; 0.04 s = ODAS and the old hard-wired value
+    record_locked_shear: false    # new at c90ff7f; true subtracts the VMP5500 shear interference
+                                  # locked to the .p record (decisions.md 2026-10-29); the
+                                  # analysis run turns it on
     salinity: null                # viscosity salinity fixed at 35
     epsilon_minimum: 1.0e-13
     T_source: null
@@ -248,6 +270,13 @@ perturb:
     fft_length: null
     diss_length: null
     overlap: null
+    anchor: top                   # new at c90ff7f; same layout as epsilon
+    bbl_diss_sec: null
+    bbl_overlap_sec: null
+    bbl_extent_sec: null
+    bbl_diss_length: null
+    bbl_overlap: null
+    bbl_extent: null
     fp07_model: single_pole
     goodman: true
     f_AA: 98.0
@@ -267,7 +296,11 @@ perturb:
   qc: {enable: true, drop_action: nan, epsilon_drop_from: [], chi_drop_from: [], rules: {}}
   binning: {method: depth, width: 1.0, aggregation: mean, diss_width: null,
             diss_aggregation: null, chi_width: null, chi_aggregation: null, diagnostics: false}
-  stratification: {enable: true, window: 2.0, salinity: null}
+  stratification: {enable: true, window: 2.0, salinity: null,
+                   sort: density, dTdz_source: ct}
+                                  # new at c90ff7f: density and ct are the behaviour before
+                                  # (the new default sort is temperature). perturb's N2 and
+                                  # dT/dz are not used; the hydrography step computes its own
 
 segments:
   # Per-window QC on the perturb dissipation windows (epsilon and chi share
@@ -495,10 +528,11 @@ sensitivity_runs:
   - name: fft2_diss8              # 2 s FFT, 8 s windows (~6 m): resolves staircase interfaces, 7 FFTs as baseline
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0}
-  - name: fft2_diss8_mle           # analysis run (decisions.md 2026-10-13): 2 s / 8 s windows, chi by MLE
+  - name: fft2_diss8_mle           # analysis run (decisions.md 2026-10-13): 2 s / 8 s windows, chi by MLE,
+                                   # record-locked shear interference removed (decisions.md 2026-10-29)
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
-          perturb.chi.fit_method: mle}
+          perturb.chi.fit_method: mle, perturb.epsilon.record_locked_shear: true}
   # Analysis-run sensitivity runs: `base` inherits the analysis run's overrides; runs whose
   # perturb settings are unchanged reuse its patched files and perturb output
   # (`reuse_convert_from`, checked in the convert step).
@@ -529,13 +563,16 @@ sensitivity_runs:
   - name: fft2_diss8_mle_dp       # FP07 double-pole response, tau 3 ms (Goto et al. 2016); own perturb run
     base: fft2_diss8_mle
     set: {perturb.chi.fp07_model: double_pole}
+  - name: fft2_diss8_mle_norls    # analysis run without the record-locked shear removal; own perturb run
+    base: fft2_diss8_mle
+    set: {perturb.epsilon.record_locked_shear: false}
 
 products:
   # Final exported products for use outside this repository. Layout and
   # variables are specified in docs/products.md.
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
-  product_version: "0.4"          # bump on any change to variables or methods
+  product_version: "0.5"          # bump on any change to variables or methods
   recommended_run: fft2_diss8_mle # run whose products are published to outputs/<recommended_dir>/ (scripts/publish_recommended.py)
   recommended_dir: recommended
   recommended_sensitivity_label: sensitivity   # outputs/comparisons/<label>/ used for the uncertainty ranges
@@ -544,6 +581,15 @@ products:
   creator_email: "joe@gradone.com"
   institution: "Rutgers University"
   license: "CC-BY-4.0"            # data products; the code is MIT
+
+shear_probe_check:
+  # sh1/sh2 agreement per cast and depth bin (scripts/shear_probe_ratio.py), on the
+  # epsilon_shear windows of products.recommended_run. Raw per-probe estimates, before
+  # the config probe exclusions, so excluded casts can be checked too.
+  depth_bin_m: 50
+  floor_factor: 3                 # both probes at least this many times their own noise floor
+  min_windows: 5                  # per cast and bin, else no ratio
+  instruments: [vmp5500, vmp250]
 
 instrument_comparison:
   # VMP250 against VMP5500 in the depth range both sample (scripts/compare_instruments.py).

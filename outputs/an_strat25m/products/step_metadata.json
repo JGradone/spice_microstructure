@@ -1,8 +1,8 @@
 {
   "step": "export",
-  "created_utc": "2026-10-27T12:43:29+00:00",
-  "config_sha256": "a153ec1c513dd0d737e557b5aa4a28d11e78d022e6ac7e15140be5c2d72abb8d",
-  "git_commit": "daaeff0e7f9904f8f2ce548ea8c1c162d6d7585d-dirty",
+  "created_utc": "2026-10-29T17:03:18+00:00",
+  "config_sha256": "38b58386d94b70f80281cfee847a0294bcb8f0f5660111c4a7e01bcfb0034d7c",
+  "git_commit": "1625108a14e820888b7f649d284e718fe8457df8-dirty",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -14,7 +14,7 @@
     "pandas": "3.0.6",
     "netCDF4": "1.7.4"
   },
-  "microstructure_tpw_commit": "ebec847c157051d6835ebf2d8ac9553166c01880",
+  "microstructure_tpw_commit": "c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4",
   "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
   "manifests_verified": true
 }

@@ -6,9 +6,9 @@
     "diffusivity_records": 758
   },
   "vmp5500": {
-    "profiles": 46,
-    "segments": 6749,
-    "binned_profiles": 46,
+    "profiles": 44,
+    "segments": 6747,
+    "binned_profiles": 44,
     "diffusivity_records": 3756
   }
 }

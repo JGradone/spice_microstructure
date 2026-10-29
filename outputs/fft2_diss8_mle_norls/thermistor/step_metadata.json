@@ -1,0 +1,21 @@
+{
+  "step": "thermistor",
+  "created_utc": "2026-10-29T16:43:52+00:00",
+  "config_sha256": "fbcbd5c3d6e83172ccd1181b1bd45d2cf84b00baf7a4c4c0c62acf81ab2586b5",
+  "git_commit": "1625108a14e820888b7f649d284e718fe8457df8-dirty",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "manifests_verified": true,
+  "segments_applied": false
+}
