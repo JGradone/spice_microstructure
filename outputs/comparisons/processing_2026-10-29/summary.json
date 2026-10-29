@@ -1,5 +1,5 @@
 {
-  "provenance": "spice_microstructure git 3dcaaafbb5ce5b1e773cf83d426834b26c4c222b; config sha256 11afeed29a92; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); runs fft2_diss8_mle and fft2_diss8_mle_norls",
+  "provenance": "spice_microstructure git e197b6b4c22a0f5769cf28002ff4b3e2aad81d36; config sha256 c6f769657b86; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); runs fft2_diss8_mle and fft2_diss8_mle_norls",
   "settings": {
     "without_run": "fft2_diss8_mle_norls",
     "instrument": "vmp5500",
@@ -12,6 +12,44 @@
     "failing_probe": "sh1",
     "failing_probe_serial": "M3461",
     "level_bins_log10": [
+      -12,
+      -10.5,
+      -10,
+      -9.5,
+      -9,
+      -8,
+      -5
+    ],
+    "spectra_examples": [
+      {
+        "cast": "SPC_033.P",
+        "P_dbar": 170,
+        "note": "process station, energetic"
+      },
+      {
+        "cast": "SPC_033.P",
+        "P_dbar": 454,
+        "note": "process station, median"
+      },
+      {
+        "cast": "SPC_039.P",
+        "P_dbar": 558,
+        "note": "process station, quiet; pulses under the despike threshold"
+      },
+      {
+        "cast": "SPC_023.P",
+        "P_dbar": 832,
+        "note": "transect, quiet; pulses under the despike threshold"
+      }
+    ],
+    "nasmyth_reference_log10": [
+      -11,
+      -10,
+      -9,
+      -8,
+      -7
+    ],
+    "fm_level_bins_log10": [
       -12,
       -10.5,
       -10,
@@ -39,5 +77,15 @@
     "quiet_median_other": 0.01,
     "energetic_median_failing": -0.59,
     "energetic_median_other": -0.22
+  },
+  "figure_of_merit": {
+    "without": {
+      "median": 1.136,
+      "fraction_above_max": 0.489
+    },
+    "with": {
+      "median": 0.878,
+      "fraction_above_max": 0.177
+    }
   }
 }
