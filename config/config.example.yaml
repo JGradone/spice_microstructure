@@ -606,6 +606,13 @@ processing_figures:
   failing_probe: sh1              # failing casts: this probe in exclude_probes and serial failing_probe_serial
   failing_probe_serial: M3461
   level_bins_log10: [-12, -10.5, -10, -9.5, -9, -8, -5]
+  spectra_examples:               # windows nearest P_dbar, drawn like rsi-tpw ql's epsilon spectra
+    - {cast: SPC_033.P, P_dbar: 170, note: "process station, energetic"}
+    - {cast: SPC_033.P, P_dbar: 454, note: "process station, median"}
+    - {cast: SPC_039.P, P_dbar: 558, note: "process station, quiet; pulses under the despike threshold"}
+    - {cast: SPC_023.P, P_dbar: 832, note: "transect, quiet; pulses under the despike threshold"}
+  nasmyth_reference_log10: [-11, -10, -9, -8, -7]
+  fm_level_bins_log10: [-12, -10.5, -10, -9.5, -9, -8, -5]
 
 instrument_comparison:
   # VMP250 against VMP5500 in the depth range both sample (scripts/compare_instruments.py).
