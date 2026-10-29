@@ -10,6 +10,9 @@ Figure 1, VMP5500 record-locked interference (config `processing_figures`):
   c. mean shear frequency spectrum below spectrum_P_min_dbar on spectrum_cast,
      with and without the removal (perturb diss output of both runs);
   d. per cast, the median change in combined shear epsilon between the runs.
+Figure 1r, the same for Rockland, on the file they flagged (rockland_cast):
+  a. 20 s of shear before and after the removal (rockland_window_s, s from file start);
+  c. record-folded mean of both probes; d. despiked fraction per cast (as 1b).
 Figure 2, the failing sh1 (M3461):
   a. median sh1/sh2 per epsilon_sh2 level, failing casts against the others;
   b. per cast, median sh1/sh2 in quiet and in energetic windows, with probe serials.
@@ -24,7 +27,7 @@ Figure 4, figure of merit (shear_qc refit FM) of both runs: distribution, the
 Reads:  outputs/<run>/patch/<instrument>/*.P, outputs/<run>/convert/<instrument>/diss_NN/,
         outputs/<run>/epsilon_shear/, outputs/<run>/cast_log/ (run = products.recommended_run
         and processing_figures.without_run)
-Writes: outputs/comparisons/processing_2026-10-29/{record_locked_shear.png,
+Writes: outputs/comparisons/processing_2026-10-29/{record_locked_shear.png, rockland_spike.png,
         failing_sh1.png, spectra_examples.png, figure_of_merit.png, despike_fraction.csv,
         spectra_examples.csv, summary.json}
 
@@ -178,6 +181,68 @@ def figure_record_locked(fc, eps_cfg, inst, run_dir, run_dir_without, casts, pat
     plt.close(fig)
     return {"despike_fraction": frac, "median_dlog_epsilon_windows": round(float(m["dlog"].median()), 3),
             "example_snr": round(float(ex["result"].snr), 1)}
+
+
+def figure_rockland(fc, eps_cfg, inst, run_dir, run_dir_without, frac, path, foot) -> None:
+    cast = fc["rockland_cast"]
+    patched = run_dir / "patch" / inst
+    r = {probe: raw_shear(patched / cast, probe, fc, eps_cfg) for probe in ("sh1", "sh2")}
+    colors = {"sh1": ps.BLUE, "sh2": ps.ORANGE}
+    stem = Path(cast).stem
+
+    fig = plt.figure(figsize=(12, 9))
+    gs = fig.add_gridspec(3, 2, height_ratios=[1, 1, 1.4], width_ratios=[1, 1.6])
+    t0, t1 = fc["rockland_window_s"]
+    for row, key, label in ((0, "before", "as recorded (high-passed)"), (1, "after", "after record-locked removal")):
+        ax = fig.add_subplot(gs[row, :])
+        for probe, d in r.items():
+            t = (d["index0"] + np.arange(len(d[key]))) / d["fs"]
+            sel = (t >= t0) & (t <= t1)
+            ax.plot(t[sel], d[key][sel], color=colors[probe], lw=0.6, label=probe)
+        ax.set_xlim(t0, t1)
+        ax.set_ylabel("shear (raw units)")
+        ax.set_title(f"{'ab'[row]}. {stem}, {label}", loc="left")
+        if row == 0:
+            ax.legend(frameon=False, ncol=2, loc="upper right")
+            ylim = ax.get_ylim()
+        else:
+            ax.set_ylim(ylim)
+            ax.set_xlabel("time from file start (s)")
+
+    ax = fig.add_subplot(gs[2, 0])
+    for probe, d in r.items():
+        t_ms = np.arange(d["spr"]) / d["fs"] * 1e3
+        ax.plot(t_ms, folded(d["before"], d["index0"], d["spr"]), color=colors[probe], lw=1.1,
+                label=f"{probe} before")
+        ax.plot(t_ms, folded(d["after"], d["index0"], d["spr"]), color=colors[probe], lw=1.1, ls=":",
+                label=f"{probe} after")
+    ax.set_xlabel("time within 1 s .p record (ms)")
+    ax.set_ylabel("mean over all records (raw units)")
+    ax.set_title("c. Averaged over every record", loc="left")
+    ax.legend(frameon=False, fontsize=7)
+
+    ax = fig.add_subplot(gs[2, 1])
+    stems = list(dict.fromkeys(Path(f).stem for f in frac["file"]))
+    x = np.arange(len(stems))
+    for probe, off, mk in (("sh1", -0.17, "o"), ("sh2", 0.17, "s")):
+        p = frac[frac["probe"] == probe].set_index(frac[frac["probe"] == probe]["file"].map(lambda f: Path(f).stem))
+        ax.scatter(x + off, 100 * p.loc[stems, "before"], color=ps.ORANGE, marker=mk, s=12,
+                   label=f"{probe} before")
+        ax.scatter(x + off, 100 * p.loc[stems, "after"], color=ps.BLUE, marker=mk, s=12, label=f"{probe} after")
+    ax.axhline(100 * DESPIKE_LIMIT, color=ps.TEXT_2, ls="--", lw=1, label="5% rejection limit")
+    ax.axvline(stems.index(stem), color=ps.TEXT_2, lw=0.6, alpha=0.5)
+    ax.set_xticks(x, stems, rotation=90, fontsize=5)
+    ax.set_ylabel(f"despiked (%), half-width {eps_cfg['despike_half_width']} s")
+    ax.set_ylim(top=1.25 * ax.get_ylim()[1])
+    ax.set_title("d. Fraction despiked, all VMP-6000 casts", loc="left")
+    ax.legend(frameon=False, fontsize=7, ncol=5, loc="upper left")
+
+    fig.suptitle("VMP-6000 shear: two pulses at fixed times in every 1 s .p record, removed by "
+                 "subtracting the record-averaged waveform", x=0.01, ha="left")
+    fig.tight_layout()
+    ps.footer(fig, foot)
+    fig.savefig(path)
+    plt.close(fig)
 
 
 def figure_failing_probe(fc, inst, run_dir, casts, failing, path, foot) -> dict:
@@ -404,7 +469,11 @@ def main() -> int:
             + f"; runs {run} and {fc['without_run']}")
     ps.apply()
     r1 = figure_record_locked(fc, eps_cfg, inst, run_dir, run_dir_without, casts, out / "record_locked_shear.png", foot)
-    r1.pop("despike_fraction").round(4).to_csv(out / "despike_fraction.csv", index=False)
+    frac = r1.pop("despike_fraction")
+    frac.round(4).to_csv(out / "despike_fraction.csv", index=False)
+    figure_rockland(fc, eps_cfg, inst, run_dir, run_dir_without, frac, out / "rockland_spike.png",
+                    f"microstructure-tpw {common.provenance(config_hash)['microstructure_tpw_commit'][:7]}, "
+                    f"epsilon.record_locked_shear")
     r2 = figure_failing_probe(fc, inst, run_dir, casts, failing, out / "failing_sh1.png", foot)
     r3 = figure_spectra(fc, inst, run_dir, run_dir_without, rcfg["shear_qc"]["refit"], out / "spectra_examples.png",
                         foot)

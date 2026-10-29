@@ -1,5 +1,5 @@
 {
-  "provenance": "spice_microstructure git e197b6b4c22a0f5769cf28002ff4b3e2aad81d36; config sha256 c6f769657b86; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); runs fft2_diss8_mle and fft2_diss8_mle_norls",
+  "provenance": "spice_microstructure git 52a75e5af7507d6bcb7cf0fa6390867f46e054c9-dirty; config sha256 13eacc4a6b4c; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); runs fft2_diss8_mle and fft2_diss8_mle_norls",
   "settings": {
     "without_run": "fft2_diss8_mle_norls",
     "instrument": "vmp5500",
@@ -7,6 +7,11 @@
     "example_probe": "sh1",
     "spectrum_cast": "SPC_039.P",
     "spectrum_P_min_dbar": 300,
+    "rockland_cast": "SPC_026.P",
+    "rockland_window_s": [
+      730,
+      750
+    ],
     "min_P_dbar": 20,
     "min_fall_speed_m_s": 0.3,
     "failing_probe": "sh1",

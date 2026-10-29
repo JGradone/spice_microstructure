@@ -601,6 +601,8 @@ processing_figures:
   example_probe: sh1
   spectrum_cast: SPC_039.P        # process station cast whose pulses sat below the despike threshold
   spectrum_P_min_dbar: 300        # mean spectrum over windows below this
+  rockland_cast: SPC_026.P        # the file Rockland flagged (rockland_spike.png)
+  rockland_window_s: [730, 750]   # as in Rockland's figure, s from file start
   min_P_dbar: 20                  # raw-shear panels: descent below this
   min_fall_speed_m_s: 0.3
   failing_probe: sh1              # failing casts: this probe in exclude_probes and serial failing_probe_serial
