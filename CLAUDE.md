@@ -93,6 +93,7 @@ Existing pieces:
   * run comparisons: `compare_runs.py`, `compare_sensitivity.py`, `check_reproduction.py` (rerun from the raw files into a fresh run directory and compare).
   * probe check: `shear_probe_ratio.py` (sh1/sh2 per cast and depth bin).
   * figures of the 2026-10-29 processing changes: `plot_processing_changes.py` (record-locked shear interference, failing sh1).
+  * slide figures for a general audience: `plot_team_summary.py` (reads only the exported products).
   * One-off diagnostics (FM explainer, f_min and K_max tests, staircase threshold grid, VMP5500 conductivity, QC explorer) and the `repro_baseline` run were removed on 2026-10-14 to keep the repository to what reproduces the outputs; they remain in git history at commit `cd55806`.
 * `config/config.example.yaml` lists every parameter; `config/config.yaml` is the local copy with real paths.
 * Docs:

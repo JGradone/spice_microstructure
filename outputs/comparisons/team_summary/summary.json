@@ -1,0 +1,193 @@
+{
+  "products": "products 0.5, run fft2_diss8_mle; spice_microstructure git 1625108; microstructure-tpw c90ff7f",
+  "settings": {
+    "out_dir": "team_summary",
+    "station": "process_station",
+    "station_lonlat": [
+      -50.577,
+      11.626
+    ],
+    "group": "all free fall",
+    "staircase_method": "rollo2022",
+    "gradients": "finescale",
+    "dd_sets": [
+      "interface",
+      "layer"
+    ],
+    "k_sets": [
+      "interface",
+      "layer",
+      "none"
+    ],
+    "gammas": [
+      0.5,
+      0.65,
+      0.7
+    ],
+    "gamma_mid": 0.65,
+    "depth_bin_m": 25,
+    "min_profiles": 3,
+    "min_depth_m": 20,
+    "deep_m": 150,
+    "k_over_gm_range": [
+      0.5,
+      20
+    ],
+    "k_over_gm_ticks": [
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      20
+    ],
+    "e_ticks": [
+      0.5,
+      1,
+      2,
+      3,
+      5,
+      10
+    ],
+    "k_range": [
+      1e-07,
+      0.001
+    ]
+  },
+  "overview": {
+    "vmp250": {
+      "profiles": 135,
+      "station_profiles": 15
+    },
+    "vmp5500": {
+      "profiles": 44,
+      "station_profiles": 4
+    },
+    "K_T_finger_over_GM": {
+      "median": 1.35,
+      "fraction_above_1": 0.7
+    }
+  },
+  "dissipation": {
+    "vmp250": {
+      "epsilon_shear_bounded": {
+        "upper": 4e-09,
+        "deep": 5.4e-10
+      },
+      "chi": {
+        "upper": 4.6e-08,
+        "deep": 8e-08
+      }
+    },
+    "vmp5500": {
+      "epsilon_shear_bounded": {
+        "upper": 4.3e-09,
+        "deep": 1.1e-10
+      },
+      "chi": {
+        "upper": 2.6e-08,
+        "deep": 1.6e-08
+      }
+    }
+  },
+  "double_diffusion": {
+    "E vmp250 interface theory_Gamma0.2": [
+      2.76,
+      2.12,
+      3.48
+    ],
+    "E vmp250 interface garrett_munk": [
+      2.39,
+      1.7,
+      3.32
+    ],
+    "E vmp250 interface nonstaircase_control": [
+      1.49,
+      1.11,
+      1.95
+    ],
+    "E vmp250 layer theory_Gamma0.2": [
+      1.12,
+      0.76,
+      1.61
+    ],
+    "E vmp250 layer garrett_munk": [
+      3.26,
+      1.92,
+      5.68
+    ],
+    "E vmp250 layer nonstaircase_control": [
+      0.56,
+      0.36,
+      0.9
+    ],
+    "E vmp5500 interface theory_Gamma0.2": [
+      4.75,
+      3.57,
+      6.14
+    ],
+    "E vmp5500 interface garrett_munk": [
+      2.67,
+      1.99,
+      3.43
+    ],
+    "E vmp5500 interface nonstaircase_control": [
+      1.37,
+      1.01,
+      1.8
+    ],
+    "E vmp5500 layer theory_Gamma0.2": [
+      1.45,
+      0.98,
+      2.12
+    ],
+    "E vmp5500 layer garrett_munk": [
+      2.03,
+      1.62,
+      2.48
+    ],
+    "E vmp5500 layer nonstaircase_control": [
+      0.61,
+      0.44,
+      0.84
+    ],
+    "K vmp250 interface": {
+      "K_T": 6.1e-06,
+      "K_S": 1.5e-05,
+      "K_GM": 2.6e-06
+    },
+    "K vmp5500 interface": {
+      "K_T": 6.6e-06,
+      "K_S": 1.8e-05,
+      "K_GM": 2.5e-06
+    },
+    "K vmp250 layer": {
+      "K_T": 7.3e-06,
+      "K_S": 1.6e-05,
+      "K_GM": 2.2e-06
+    },
+    "K vmp5500 layer": {
+      "K_T": 4.3e-06,
+      "K_S": 1.4e-05,
+      "K_GM": 2.1e-06
+    },
+    "K vmp250 none": {
+      "K_T": 4.6e-06,
+      "K_S": 1.3e-05,
+      "K_GM": 2.7e-06
+    },
+    "K vmp5500 none": {
+      "K_T": 4.4e-06,
+      "K_S": 1.5e-05,
+      "K_GM": 2.5e-06
+    }
+  },
+  "diffusivity": {
+    "vmp250": {
+      "K_T_over_K_rho_median": 2.7
+    },
+    "vmp5500": {
+      "K_T_over_K_rho_median": 5.9
+    }
+  }
+}
