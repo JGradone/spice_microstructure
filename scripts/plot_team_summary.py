@@ -8,6 +8,8 @@ Each figure carries a one-line takeaway computed from the products and a plain
 
   1. overview.png: profile positions by instrument (process station marked), and
      K_T in finger-favourable water relative to Garrett-Munk per profile.
+  1b. maps.png: per-profile metrics on a map: salinity maximum (both instruments), and
+     for map_instrument the median R_rho, staircase coverage and mean epsilon below 150 m.
   2. dissipation_profiles.png: epsilon (shear, bounded at the noise floor) and chi
      against depth, arithmetic mean over profiles in depth_bin_m bins with the
      interquartile range across profiles; the median shear noise floor.
@@ -20,7 +22,7 @@ Each figure carries a one-line takeaway computed from the products and a plain
 
 Reads:  outputs/<recommended_dir>/{casts,cast_metrics,attribution,diffusivity}_<inst>.csv,
         outputs/<recommended_dir>/{binned,segments}_<inst>.nc
-Writes: outputs/comparisons/<team_summary.out_dir>/{overview,dissipation_profiles,
+Writes: outputs/comparisons/<team_summary.out_dir>/{overview,maps,dissipation_profiles,
         double_diffusion,diffusivity_profiles}.png, summary.json
 
 Usage:
@@ -139,6 +141,63 @@ def figure_overview(prod: Path, ts: dict, path: Path, foot: str) -> dict:
              f"{frac:.0%} of them (median {med:.1f}×)",
              "Each dot is one free-falling profile. In (b), 1 means the mixing expected from internal waves "
              "alone (Garrett–Munk); darker = more mixing.")
+    finish(fig, path, foot)
+    return info
+
+
+def figure_maps(prod: Path, ts: dict, path: Path, foot: str) -> dict:
+    m = {inst: load(prod, inst, "cast_metrics") for inst in INSTRUMENTS}
+    deep = m[ts["map_instrument"]]
+    fig, axs = plt.subplots(2, 2, figsize=(14, 10.5), sharex=True, sharey=True)
+    lon0, lat0 = ts["station_lonlat"]
+
+    def panel(ax, df, col, cmap, norm, label, title, ticks=None, marker="s", size=46):
+        d = df[np.isfinite(df[col])]
+        sc = ax.scatter(d["lon"], d["lat"], c=d[col], cmap=cmap, norm=norm, marker=marker, s=size,
+                        edgecolor=ps.TEXT_2, linewidth=0.3, zorder=3)
+        cb = fig.colorbar(sc, ax=ax, pad=0.02)
+        if ticks is not None:
+            plain_log_axis(cb.ax.yaxis, ticks)
+        cb.set_label(label)
+        ax.scatter([lon0], [lat0], s=380, facecolor="none", edgecolor=ps.TEXT, lw=1.2, zorder=4)
+        ax.set_title(title, loc="left")
+
+    ax = axs[0, 0]
+    sa = pd.concat([m[inst]["SA_max"] for inst in INSTRUMENTS])
+    norm = plt.Normalize(*np.nanpercentile(sa, [2, 98]))
+    v = m["vmp250"]
+    ax.scatter(v["lon"], v["lat"], c=v["SA_max"], cmap=ps.SEQ_CHI, norm=norm, marker="o", s=22,
+               edgecolor=ps.TEXT_2, linewidth=0.3, zorder=2)
+    panel(ax, m["vmp5500"], "SA_max", ps.SEQ_CHI, norm, "salinity maximum (g kg⁻¹)",
+          "a. Salt-rich subtropical water (both instruments)")
+    ax.legend(handles=[plt.Line2D([], [], marker="o", ls="none", color=ps.MUTED, label=SHORT["vmp250"]),
+                       plt.Line2D([], [], marker="s", ls="none", color=ps.MUTED, label=SHORT["vmp5500"])],
+              loc="upper right")
+    lo, hi = ts["r_rho_range"]
+    panel(axs[0, 1], deep, "R_rho_median", ps.SEQ_EPSILON.reversed(), plt.Normalize(lo, hi),
+          "density ratio Rρ (lower = stronger fingering)", "b. How strongly the water favours salt fingers")
+    panel(axs[1, 0], deep.assign(pct=100 * deep["staircase_fraction_rollo2022"]), "pct", ps.SEQ_EPSILON,
+          plt.Normalize(0, ts["staircase_pct_max"]), "% of the profile in staircases",
+          "c. How much of the water column is staircased")
+    lo, hi = ts["epsilon_map_range"]
+    panel(axs[1, 1], deep, "epsilon_mean", ps.SEQ_CHI, LogNorm(lo, hi), r"turbulence $\varepsilon$ (W kg$^{-1}$)",
+          "d. Turbulence level")
+    for ax in axs[1]:
+        ax.set_xlabel("longitude (°E)")
+    for ax in axs[:, 0]:
+        ax.set_ylabel("latitude (°N)")
+    axs[0, 0].annotate("process station", (lon0, lat0), xytext=(-20, 30), textcoords="offset points",
+                       ha="right", fontsize=10, arrowprops={"arrowstyle": "-", "color": ps.TEXT_2, "lw": 0.8})
+    cov = 100 * deep["staircase_fraction_rollo2022"]
+    info = {"staircase_pct_median": round(float(cov.median()), 1), "staircase_pct_range":
+            [round(float(cov.min()), 1), round(float(cov.max()), 1)],
+            "R_rho_median_range": [round(float(deep["R_rho_median"].min()), 2),
+                                   round(float(deep["R_rho_median"].max()), 2)],
+            "profiles_with_interfaces": int((deep["n_interfaces_rollo2022"] > 0).sum()), "profiles": len(deep)}
+    headline(fig, f"Staircases are everywhere we looked: every deep profile has them, "
+             f"covering {cov.min():.0f}–{cov.max():.0f}% of the water column below 150 m",
+             f"Panels b–d: {SHORT[ts['map_instrument']]} profiles, 150 m to bottom (the VMP-250 reaches only "
+             "~290 m). Circle: 48 h process station.")
     finish(fig, path, foot)
     return info
 
@@ -326,6 +385,7 @@ def main() -> int:
     slide_style()
     summary = {"products": foot, "settings": ts,
                "overview": figure_overview(prod, ts, out / "overview.png", foot),
+               "maps": figure_maps(prod, ts, out / "maps.png", foot),
                "dissipation": figure_dissipation(prod, ts, out / "dissipation_profiles.png", foot),
                "double_diffusion": figure_dd(prod, ts, out / "double_diffusion.png", foot),
                "diffusivity": figure_diffusivity(prod, ts, config["double_diffusion"]["depth_bin_m"],

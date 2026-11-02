@@ -637,6 +637,10 @@ team_summary:
   k_over_gm_ticks: [0.5, 1, 2, 5, 10, 20]
   e_ticks: [0.5, 1, 2, 3, 5, 10]
   k_range: [1.0e-7, 1.0e-3]
+  map_instrument: vmp5500           # maps of depth-dependent metrics: the instrument covering 150 m to 1000 m
+  r_rho_range: [1.3, 3.2]
+  staircase_pct_max: 50
+  epsilon_map_range: [1.0e-11, 1.0e-9]
 
 instrument_comparison:
   # VMP250 against VMP5500 in the depth range both sample (scripts/compare_instruments.py).
