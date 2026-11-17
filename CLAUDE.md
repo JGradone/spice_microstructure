@@ -52,6 +52,7 @@ src/          # run_pipeline.py, common.py, steps/<name>.py
 scripts/      # utilities, diagnostics and run comparisons
 manifests/    # committed checksum manifests of data directories
 docs/         # shipboard_processing.md, decisions.md, products.md; private/ (gitignored)
+examples/     # products_quickstart.ipynb: starter for analyses, reads only the exported products
 outputs/      # <run.name>/<step>/ results and figures (bulky files gitignored)
 ```
 
