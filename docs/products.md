@@ -2,7 +2,7 @@
 
 The `export` step writes the products below to `<output_root>/<run.name>/products/`. These files are the interface to analyses done outside this repository. Everything upstream of them is internal and may change between runs; the products change only with a `products.product_version` bump, recorded in `docs/decisions.md`.
 
-Status: specification; the diffusivity, attribution and cast-metric tables exist as step outputs (CSV) and are converted by the `export` step (not yet written). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
+Status: written by the `export` step (product version 0.6, 2026-11-17). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
 
 ## Common to every file
 
@@ -24,6 +24,7 @@ One record per dissipation window per profile (dimension `segment`), at native r
 * `epsilon_sh1`, `epsilon_sh2`, `epsilon_shear` (combined), figure of merit, fraction of variance resolved, noise-floor flag
 * `chi_T1`, `chi_T2`, `chi` (combined), `epsilon_T` (from the Kraichnan fit), fit quality
 * Background hydrography at the configured smoothing scale: `SA`, `CT`, `N2`, `T_z`, `S_z`, `alpha`, `beta`, `R_rho`, `turner_angle`
+* `T_z2_fine` (since 0.6): mean squared temperature gradient on the 1 m hydrography grid over the window, the finescale gradient choice. With it, K_T = <chi> / (2 <T_z2_fine>) can be formed from averages for any grouping; the diffusivity product's `finescale` records use exactly this.
 * `Re_b` (buoyancy Reynolds number), regime label (Turner class), and one staircase label (interface, layer, or none) per detection method (`staircase_vdb2021`, `staircase_rollo2022`, and `staircase_ml` when ML labels are supplied)
 * QC bit flags with a `flag_meanings` attribute
 
@@ -35,7 +36,7 @@ The segment variables averaged into depth bins of `products.depth_bin_m` per pro
 
 ## 4. Diffusivities: `diffusivity_<instrument>.nc`
 
-From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over windows and profiles, never per window. One record per station group (process station, transect, all free fall; tow-yo separate) × staircase method × Turner set (finger-favourable, strong finger, control = finger-favourable outside staircases, all) × staircase label (interface, layer, straddles, none, all) × gradient choice (background 10 m fits, finescale 1 m gradient variance, interface_local for interfaces) × depth bin (`double_diffusion.depth_bin_m`, and pooled). Depth range: from 150 dbar to the bottom of each instrument's casts.
+From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over windows and profiles, never per window. One record per station group (process station, transect, all free fall; tow-yo separate) × staircase method × Turner set (finger-favourable, strong finger, control = finger-favourable outside staircases, all) × staircase label (interface, layer, straddles, none, all) × gradient choice (background 10 m fits, finescale 1 m gradient variance, interface_local for interfaces) × depth bin (`double_diffusion.depth_bin_m`, and pooled). Depth range (since 0.6): depth bins from 20 dbar to the bottom of each instrument's casts (`diffusivities.depth_range_dbar`), so the profiles cover the nitracline and the salinity maximum; `P_top_dbar` and `P_bottom_dbar` give each record's pressure limits (the 20–25 dbar bin is partial). Pooled records cover the double-diffusion test range, 150 dbar to the bottom, as the attribution does. Above about 115 dbar the water is mostly not finger-favourable: use the `all_turner` records there, where K_rho is valid and K_S does not apply.
 
 * `K_T` = <chi> / (2 <T_z^2>) (Osborn and Cox; needs no epsilon)
 * `R_rho` = <alpha T_z> / <beta S_z> for the bin

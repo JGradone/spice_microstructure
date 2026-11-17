@@ -37,6 +37,7 @@ import run_summary  # noqa: E402
 import epsilon_shear  # noqa: E402
 import segments as segments_step  # noqa: E402
 import thermistor  # noqa: E402
+from dd_test import finescale_tz2  # noqa: E402
 
 STEP = "export"
 CAVEATS = [
@@ -116,7 +117,7 @@ def cast_table(run_dir, name, inst, hyd) -> pd.DataFrame:
     return out
 
 
-def segments_product(run_dir, name) -> xr.Dataset:
+def segments_product(run_dir, name, hyd: xr.Dataset, diss_sec: float) -> xr.Dataset:
     keys = ["profile_file", "window"]
     reg = pd.read_csv(run_dir / "regimes" / f"regimes_{name}.csv")
     sh = pd.read_csv(run_dir / "epsilon_shear" / f"epsilon_shear_{name}.csv")
@@ -137,6 +138,8 @@ def segments_product(run_dir, name) -> xr.Dataset:
            .merge(sg[keys + ["flags", "keep", "vibration_ratio", "speed_cv"]]
                   .rename(columns={"flags": "segment_flags", "keep": "segment_keep"}), on=keys) \
            .merge(window_times(run_dir, name), on=keys, how="left")
+    # finescale T_z^2: 1 m grid gradient variance over each window, as in dd_test and diffusivities
+    d["T_z2_fine"] = finescale_tz2(d["profile_file"], d["depth"], d["speed"] * diss_sec / 2, hyd)
     rename = {"P_mean": "pressure", "speed": "fall_speed", "Turner": "turner_angle_10m",
               "Turner_smooth": "turner_angle", "R_rho": "R_rho_10m", "N2": "N2_10m", "T_z": "T_z_10m",
               "S_z": "S_z_10m"}
@@ -167,6 +170,9 @@ def segments_product(run_dir, name) -> xr.Dataset:
     ds["chi_flags"].attrs.update(flag_attrs(thermistor.BITS, "chi QC flags (thermistor step)"))
     ds["segment_flags"].attrs.update(flag_attrs(segments_step.BITS, "window QC flags (segments step)"))
     ds["T_z_10m"].attrs["comment"] = ds["S_z_10m"].attrs["comment"] = "z positive upward; linear fits over 10 m"
+    ds["T_z2_fine"].attrs.update({"units": "K2 m-2", "comment": "mean squared CT gradient on the 1 m hydrography "
+                                  "grid over the window (fall speed x diss_sec); the finescale gradient choice: "
+                                  "K_T = <chi> / (2 <T_z2_fine>) from averages only"})
     ds["turner_angle"].attrs["comment"] = "Ruddick (1983), linear fits over regimes.turner_smoothing_m"
     ds["epsilon_shear_bounded"].attrs["comment"] = "max(epsilon_shear, epsilon_floor); upper bound where at floor"
     ds.attrs["comment"] = ("One record per dissipation window. No diffusivities at this level: average epsilon, chi "
@@ -240,7 +246,7 @@ def run(ctx: dict) -> None:
         casts = cast_table(rd, name, inst, hyd)
         casts.to_csv(out / f"casts_{name}.csv", index=False)
 
-        seg = segments_product(rd, name)
+        seg = segments_product(rd, name, hyd, float(config["perturb"]["epsilon"]["diss_sec"]))
         seg.attrs.update(global_attrs(config, prov, name, inst, "dissipation segments"))
         seg.to_netcdf(out / f"segments_{name}.nc", encoding={v: enc for v in seg.data_vars
                                                             if seg[v].dtype.kind in "fiu"})

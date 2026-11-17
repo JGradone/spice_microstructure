@@ -17,6 +17,11 @@ window (T_z and S_z approach zero):
   K_GM     = canonical Garrett-Munk level at the bin's N and latitude (reference)
 
 with 95% bootstrap intervals over profiles (uncertainty.bootstrap_samples).
+Depth bins (double_diffusion.depth_bin_m) cover diffusivities.depth_range_dbar, from
+20 dbar, so the profiles reach the nitracline and the salinity maximum; the pooled
+values cover the double-diffusion test range (double_diffusion.depth_range_dbar,
+150 dbar down), as the tests and the attribution do. P_top_dbar and P_bottom_dbar
+give each record's pressure limits (a bin cut by the range is partial).
 Nitrate behaves like salt in fingering (low molecular diffusivity), so K_S is the
 diffusivity relevant to nutrient fluxes computed outside this repository.
 
@@ -237,23 +242,30 @@ def run(ctx: dict) -> None:
     for g in groups:
         dg = w[w["instrument_group"] == g]
         dg.attrs["control_label"] = dd["control_staircase_label"]
+        inst = g.split(" ")[0]
+        tlo, thi = dd["depth_range_dbar"][inst]
+        dlo, dhi = dc["depth_range_dbar"][inst]
         for m in methods:
-            for (tname, sname), sel in regime_sets(dg, m).items():
+            # pooled values over the double-diffusion test range (as dd_test); depth bins over the
+            # diffusivity range, which reaches up to dlo (decisions.md 2026-11-17)
+            test_sets, range_sets = regime_sets(dg, m), regime_sets(dg, m, "in_diffusivity_range")
+            for (tname, sname), sel in range_sets.items():
                 if tname == "not_finger":
                     continue
-                d0 = dg[sel]
+                d0, d0_test = dg[sel], dg[test_sets[(tname, sname)]]
                 grads = ["background", "finescale"] + (["interface_local"] if sname == "interface" else [])
                 for grad in grads:
-                    d = gradient_frame(d0, grad, m)
-                    if len(d) < dc["min_windows"]:
-                        continue
+                    d, dt = gradient_frame(d0, grad, m), gradient_frame(d0_test, grad, m)
                     base = {"instrument_group": g, "method": m, "turner": tname, "staircase": sname, "gradients": grad,
                             "finger_set": tname in FINGER_SETS}
-                    rows.append({**base, "depth_bin": "pooled", **bin_estimates(d, gammas, dd["gm"], unc["bootstrap_samples"],
-                                                                                rng, ci_keys)})
+                    if len(dt) >= dc["min_windows"]:
+                        rows.append({**base, "depth_bin": "pooled", "P_top_dbar": tlo, "P_bottom_dbar": thi,
+                                     **bin_estimates(dt, gammas, dd["gm"], unc["bootstrap_samples"], rng, ci_keys)})
                     for zb, db in d.groupby("depth_bin"):
                         if len(db) >= dc["min_windows"]:
-                            rows.append({**base, "depth_bin": zb,
+                            half = dd["depth_bin_m"] / 2
+                            rows.append({**base, "depth_bin": zb, "P_top_dbar": max(zb - half, dlo),
+                                         "P_bottom_dbar": min(zb + half, dhi),
                                          **bin_estimates(db, gammas, dd["gm"], unc["bootstrap_samples"], rng, ci_keys)})
     tab = pd.DataFrame(rows)
     # K_S applies only to finger-favourable sets with R_rho <= k_s_max_r_rho (fingers weaken at high

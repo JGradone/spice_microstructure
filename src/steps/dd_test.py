@@ -67,12 +67,16 @@ per-window dissipation ratio is never formed (T_z and N2 approach zero).
     finestructure makes the 1 m gradient variance much larger than the
     background T_z^2 in some windows, and the ratio of averages is dominated by
     them (decisions.md 2026-10-14).
-  * Depth range per instrument: double_diffusion.depth_range_dbar.
+  * Depth range per instrument: double_diffusion.depth_range_dbar. The window
+    table (dd_windows.csv) also holds the windows of diffusivities.depth_range_dbar
+    outside it, for the diffusivities step; `in_test` marks the tested ones, and
+    every test here uses only those.
 
 Reads:  <run_dir>/regimes/{regimes,steps}_<instrument>.csv, <run_dir>/cast_log/casts_<instrument>.csv
 Writes: <run_dir>/dd_test/
           dd_bins.csv        group x method x regime x depth bin
           dd_pooled.csv      group x method x regime over the whole depth range
+          dd_windows.csv     the window table (in_test marks the tested windows)
           figures/*.png, dd_test_report.json, step_metadata.json
 """
 
@@ -96,12 +100,12 @@ FINGER = ("finger", "strong_finger")
 LABEL_COLOR = {"interface": ps.ORANGE, "layer": ps.BLUE, "straddles": ps.AQUA, "none": ps.MUTED, "all": "k"}
 
 
-def regime_sets(df: pd.DataFrame, method: str) -> dict[str, pd.Series]:
-    """Named boolean selections: Turner group x staircase label for one method."""
+def regime_sets(df: pd.DataFrame, method: str, range_col: str = "in_test") -> dict[str, pd.Series]:
+    """Named boolean selections: Turner group x staircase label for one method, within range_col."""
     lab = df[f"staircase_{method}"]
     tc = df["turner_class"]
     out = {}
-    t = df["in_test"]
+    t = df[range_col]
     for tname, tsel in (("all_turner", t), ("finger_any", t & tc.isin(FINGER)),
                         ("strong_finger", t & (tc == "strong_finger")), ("not_finger", t & (tc == "not_finger"))):
         for sname in ("all", "interface", "layer", "straddles", "none"):
@@ -201,6 +205,24 @@ def gm_stats(d: pd.DataFrame, gm: dict) -> dict:
             "K_GM": float(k_gm(n2, d["lat"].mean(), gm))}
 
 
+def finescale_tz2(profile_file, depth, half_m, hyd: xr.Dataset) -> np.ndarray:
+    """Mean squared CT gradient on the hydrography 1 m grid over each window (depth +- half_m)."""
+    zc = hyd["depth"].values
+    row = {f: k for k, f in enumerate(hyd["profile_file"].values)}
+    out = np.full(len(depth), np.nan)
+    grads = {}
+    for k, (pf, dep, h) in enumerate(zip(profile_file, depth, half_m)):
+        if pf not in row or not np.isfinite(dep) or not np.isfinite(h):
+            continue
+        if pf not in grads:
+            grads[pf] = -np.gradient(hyd["CT"].values[row[pf]], zc)        # z up
+        sel = (zc >= dep - h) & (zc <= dep + h)
+        if sel.any():
+            with np.errstate(invalid="ignore"):
+                out[k] = np.nanmean(grads[pf][sel] ** 2)
+    return out
+
+
 def prepare(ctx, name, config) -> pd.DataFrame:
     dd = config["double_diffusion"]
     rd = ctx["run_dir"]
@@ -217,13 +239,16 @@ def prepare(ctx, name, config) -> pd.DataFrame:
     else:
         raise ValueError(f"Unknown double_diffusion.epsilon_source {dd['epsilon_source']!r}")
     lo, hi = dd["depth_range_dbar"][name]
+    # windows over the union of the test range and the diffusivity range; in_test marks the tests'
+    dlo, dhi = config["diffusivities"]["depth_range_dbar"][name]
     ok = (df["shear_keep"].fillna(False).astype(bool) & df["chi_keep"].fillna(False).astype(bool)
           & (df["N2"] > 0) & np.isfinite(df["T_z"]) & np.isfinite(eps) & np.isfinite(df["chi"])
           & ~df["ts_salinity_invalid"].fillna(False).astype(bool)
-          & (df["P_mean"] >= lo) & (df["P_mean"] < hi))
+          & (df["P_mean"] >= min(lo, dlo)) & (df["P_mean"] < max(hi, dhi)))
     df = df[ok].copy()
     df["epsilon_used"] = eps[ok]
-    df["in_test"] = True
+    df["in_test"] = (df["P_mean"] >= lo) & (df["P_mean"] < hi)
+    df["in_diffusivity_range"] = (df["P_mean"] >= dlo) & (df["P_mean"] < dhi)
     df["chi_obs"] = df["chi"]
     df["chi_exp"] = 2 * dd["flux_coefficient"] * df["epsilon_used"] / df["N2"] * df["T_z"] ** 2
     b = dd["depth_bin_m"]
@@ -234,17 +259,9 @@ def prepare(ctx, name, config) -> pd.DataFrame:
 
     # Finescale (1 m grid) temperature-gradient variance over each window
     hyd = xr.open_dataset(rd / "hydrography" / f"hydrography_{name}.nc")
-    zc = hyd["depth"].values
     row = {f: k for k, f in enumerate(hyd["profile_file"].values)}
     hw = df["speed"] * float(config["perturb"]["epsilon"]["diss_sec"]) / 2
-    fine = np.full(len(df), np.nan)
-    grads = {}
-    for k, (pf, dep, h) in enumerate(zip(df["profile_file"], df["depth"], hw)):
-        if pf not in grads:
-            grads[pf] = -np.gradient(hyd["CT"].values[row[pf]], zc)        # z up
-        sel = (zc >= dep - h) & (zc <= dep + h)
-        if sel.any():
-            fine[k] = np.nanmean(grads[pf][sel] ** 2)
+    fine = finescale_tz2(df["profile_file"], df["depth"], hw, hyd)
     df["T_z2_fine"] = fine
     lat = hyd["lat"].values
     df["lat"] = df["profile_file"].map({f: (float(lat[k]) if np.isfinite(lat[k]) else 12.0) for f, k in row.items()})
@@ -435,6 +452,8 @@ def run(ctx: dict) -> None:
         ff = prep[~prep["towyo"]].copy()
         ff["instrument_group"] = ff["instrument_group"].str.split(" ").str[0] + " all free fall"
         prep = pd.concat([prep, ff], ignore_index=True)
+    windows = prep                                  # written to dd_windows.csv for the diffusivities step
+    prep = prep[prep["in_test"]]
     prep.attrs["control_label"] = dd["control_staircase_label"]
     groups = sorted(prep["instrument_group"].unique())
     bins_rows, pooled_rows = [], []
@@ -546,7 +565,7 @@ def run(ctx: dict) -> None:
         t["flux_ratio_gamma"] = dd["flux_ratio_gamma"]
     bins.to_csv(out / "dd_bins.csv", index=False, float_format="%.6g")
     pooled.to_csv(out / "dd_pooled.csv", index=False, float_format="%.6g")
-    prep.to_csv(out / "dd_windows.csv", index=False, float_format="%.6g")
+    windows.to_csv(out / "dd_windows.csv", index=False, float_format="%.6g")
 
     report = {"double_diffusion": dd, "groups": {}}
     for g in groups:
