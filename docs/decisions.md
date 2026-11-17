@@ -1029,3 +1029,16 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Every run on the new pin and final config. `baseline` runs the full chain; the analysis-run family runs `cast_log` to `export`; `fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before.
   * Then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`) and `publish_recommended.py`.
 * Results and config committed in 71ee226.
+
+## 2026-11-17: Diffusivity profiles from 20 dbar; finescale gradient in the segments product; products 0.6
+
+* **Why:** the products were designed (2026-10-14) to give diffusivity profiles including K_S from 20 dbar through the salinity-maximum cap, for nitrate fluxes outside this repository. The diffusivity product started at 150 dbar, the double-diffusion test range, so the nitracline and the salinity maximum (about 100 m) were missing. Users could not fill the gap correctly from the segments either: the finescale T_z² behind the headline K_T was not exported.
+* **Change:**
+  * New `diffusivities.depth_range_dbar` (VMP250 [20, 300], VMP5500 [20, 1000]). `dd_test` builds its window table over the union of this and `double_diffusion.depth_range_dbar`; `in_test` marks the tested windows and every test still uses only those. Tests, the Re_b excess, the GM comparison, the attribution and the per-cast metrics are unchanged window for window.
+  * `diffusivities` reports depth bins over the new range. **Pooled records still cover the test range (150 dbar down)**, so the headline diffusivities and the attribution are unchanged. New columns `P_top_dbar`, `P_bottom_dbar`; the 20–25 dbar bin is partial.
+  * `export` adds `T_z2_fine` to every window of the segments product (shared `dd_test.finescale_tz2`). K_T from the segments with it reproduces the published finescale bins exactly (checked at 75–100 and 400–425 dbar).
+* **Above the staircases** (all free fall, rollo2022, finescale): no finger-favourable water above 50 dbar; under 10% at 50–75 dbar, 25–30% at 75–100, 50–60% at 100–125 and 80–90% at 125–150. K_T at 50–125 dbar is about 1e-6 m²/s (VMP5500 0.8–1.0e-6, VMP250 1.1–1.7e-6), below the GM level (3e-6) and within about 1.5× of 0.2⟨ε⟩/⟨N²⟩. The 20–50 dbar bins are energetic and few (the 20–25 dbar bin has 43 VMP5500 windows).
+* **Bootstrap intervals** move by Monte Carlo noise (about 1–3%) everywhere, because the single random stream now runs over more bins; central values at 150 dbar and below are identical.
+* `product_version` 0.5 → 0.6 (new depth bins, new columns, new segment variable). `examples/products_quickstart.ipynb` updated.
+* **Reruns:** `dd_test` to `export` for `baseline` and the analysis-run family (`fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before), all at 7d063de with a clean tree; then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`), `write_run_summaries.py`, `publish_recommended.py` and `plot_team_summary.py`.
+

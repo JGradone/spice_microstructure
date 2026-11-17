@@ -3,12 +3,12 @@
     "profiles": 137,
     "segments": 6002,
     "binned_profiles": 137,
-    "diffusivity_records": 758
+    "diffusivity_records": 1070
   },
   "vmp5500": {
     "profiles": 44,
     "segments": 6747,
     "binned_profiles": 44,
-    "diffusivity_records": 3756
+    "diffusivity_records": 4044
   }
 }

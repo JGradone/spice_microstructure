@@ -1,6 +1,8 @@
 # SPICE microstructure products: `fft2_diss8_mle_norls`
 
-Product version 0.5. spice_microstructure git 1625108a14e820888b7f649d284e718fe8457df8-dirty; config sha256 fbcbd5c3d6e8; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-10-29T16:45:21+00:00.
+Product version 0.6. spice_microstructure git 7d063ded488586d7ca3544b7587f02b4fbbe0c16; config sha256 fbcab2884b74; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-11-17T21:44:27+00:00.
+
+(This summary regenerated 2026-11-17T21:45:35Z from the run's existing reports.)
 
 **Sensitivity run** of `baseline`, based on `fft2_diss8_mle`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `perturb.epsilon.record_locked_shear` = False.
 
@@ -73,12 +75,12 @@ Whole cruise, all free-fall casts, finger-favourable water, finescale gradients,
 
 | Group | Set | K_T | K_S (γ 0.65) | K_S_eps | K_GM | profiles |
 |---|---|---|---|---|---|---|
-| vmp250 all free fall | all | 4.9e-06 [3.9e-06, 6.3e-06] | 1.4e-05 [1.1e-05, 1.7e-05] | 2.9e-05 | 2.7e-06 | 127 |
-| vmp250 all free fall | interface | 6.1e-06 [4.4e-06, 8.5e-06] | 1.5e-05 [1.1e-05, 2.1e-05] | 2.1e-05 | 2.6e-06 | 32 |
-| vmp250 all free fall | layer | 7.3e-06 [4.3e-06, 1.3e-05] | 1.6e-05 [9.6e-06, 2.7e-05] | 5.8e-05 | 2.2e-06 | 40 |
-| vmp5500 all free fall | all | 5.1e-06 [4.2e-06, 6e-06] | 1.6e-05 [1.3e-05, 1.9e-05] | 2.4e-05 | 2.4e-06 | 44 |
-| vmp5500 all free fall | interface | 6.6e-06 [4.9e-06, 8.5e-06] | 1.8e-05 [1.3e-05, 2.3e-05] | 1.5e-05 | 2.5e-06 | 44 |
-| vmp5500 all free fall | layer | 4.3e-06 [3.4e-06, 5.3e-06] | 1.4e-05 [1.1e-05, 1.7e-05] | 6.2e-05 | 2.1e-06 | 44 |
+| vmp250 all free fall | all | 4.9e-06 [3.8e-06, 6.1e-06] | 1.4e-05 [1.1e-05, 1.7e-05] | 2.9e-05 | 2.7e-06 | 127 |
+| vmp250 all free fall | interface | 6.1e-06 [4.3e-06, 8.7e-06] | 1.5e-05 [1.1e-05, 2.1e-05] | 2.1e-05 | 2.6e-06 | 32 |
+| vmp250 all free fall | layer | 7.3e-06 [4.2e-06, 1.2e-05] | 1.6e-05 [9.5e-06, 2.7e-05] | 5.8e-05 | 2.2e-06 | 40 |
+| vmp5500 all free fall | all | 5.1e-06 [4.2e-06, 6.1e-06] | 1.6e-05 [1.4e-05, 1.9e-05] | 2.4e-05 | 2.4e-06 | 44 |
+| vmp5500 all free fall | interface | 6.6e-06 [5e-06, 8.4e-06] | 1.8e-05 [1.3e-05, 2.3e-05] | 1.5e-05 | 2.5e-06 | 44 |
+| vmp5500 all free fall | layer | 4.3e-06 [3.4e-06, 5.4e-06] | 1.4e-05 [1.1e-05, 1.7e-05] | 6.2e-05 | 2.1e-06 | 44 |
 | vmp250 all free fall | finger water, no staircase (control) | 4.6e-06 | – | – | 2.7e-06 | 127 |
 | vmp5500 all free fall | finger water, no staircase (control) | 4.4e-06 | – | – | 2.5e-06 | 44 |
 
@@ -87,10 +89,10 @@ Interface finger fraction 1 − 1/E by baseline (finescale gradients). The sprea
 | Group | Baseline | E | finger fraction |
 |---|---|---|---|
 | vmp250 all free fall | theory_Gamma0.2 | 2.76 [2.12, 3.48] | 0.64 |
-| vmp250 all free fall | garrett_munk | 2.39 [1.70, 3.32] | 0.58 |
+| vmp250 all free fall | garrett_munk | 2.39 [1.68, 3.39] | 0.58 |
 | vmp250 all free fall | nonstaircase_control | 1.49 [1.11, 1.94] | 0.33 |
 | vmp5500 all free fall | theory_Gamma0.2 | 3.88 [2.92, 5.01] | 0.74 |
-| vmp5500 all free fall | garrett_munk | 2.67 [1.99, 3.43] | 0.63 |
+| vmp5500 all free fall | garrett_munk | 2.67 [2.00, 3.40] | 0.63 |
 | vmp5500 all free fall | nonstaircase_control | 1.34 [0.96, 1.83] | 0.26 |
 
 ## Uncertainty

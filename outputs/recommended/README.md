@@ -1,6 +1,6 @@
 # Recommended SPICE microstructure products
 
-Copies of the products of run **`fft2_diss8_mle`**: 2 s FFT / 8 s windows, chi by mle, FP07 single_pole. These are the files to take into other analyses. Built 2026-10-29T17:36:29Z by `scripts/publish_recommended.py` from `outputs/fft2_diss8_mle/products` (exported with spice_microstructure git 1625108a14e820888b7f649d284e718fe8457df8-dirty, config sha256 32f92e571537, microstructure-tpw c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4). Do not edit; rebuild with the script.
+Copies of the products of run **`fft2_diss8_mle`**: 2 s FFT / 8 s windows, chi by mle, FP07 single_pole. These are the files to take into other analyses. Built 2026-11-17T21:45:37Z by `scripts/publish_recommended.py` from `outputs/fft2_diss8_mle/products` (exported with spice_microstructure git 7d063ded488586d7ca3544b7587f02b4fbbe0c16, config sha256 b2dbcea08efd, microstructure-tpw c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4). Do not edit; rebuild with the script.
 
 `RUN_SUMMARY.md` has the full settings, file list, QC counts and caveats of the run. Variable definitions: `docs/products.md`; methods and reasons: `docs/decisions.md`.
 
@@ -19,7 +19,7 @@ Finger-favourable water, whole cruise, finescale gradients (m²/s). Processing r
 | | K_S (γ 0.65) [95% CI] | K_S for γ 0.7–0.5 | K_S processing range | K_S with double-pole FP07 | K_T | K_GM | interface E, processing range | interface finger fraction across baselines |
 |---|---|---|---|---|---|---|---|---|
 | vmp250 | 1.4e-05 [1.1e-05, 1.7e-05] | 1.3e-05–1.8e-05 | 1.4e-05–1.4e-05 | ×0.53 | 4.9e-06 | 2.7e-06 | 0.88–1.9 | 0.33–0.64 |
-| vmp5500 | 1.6e-05 [1.3e-05, 1.9e-05] | 1.5e-05–2.1e-05 | 1.6e-05–1.7e-05 | ×0.56 | 5.1e-06 | 2.4e-06 | 1.1–1.6 | 0.27–0.79 |
+| vmp5500 | 1.6e-05 [1.4e-05, 1.9e-05] | 1.5e-05–2.1e-05 | 1.6e-05–1.7e-05 | ×0.56 | 5.1e-06 | 2.4e-06 | 1.1–1.6 | 0.27–0.79 |
 
 Reading: K_S is robust to processing choices; the FP07 response model (×~0.5 with double-pole) and γ are its main uncertainties. The interface excess and finger fraction depend on the baseline and on the stratification scale; report them as ranges. `sensitivity_summary.csv` / `.png` give every run.
 

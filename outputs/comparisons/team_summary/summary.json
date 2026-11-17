@@ -1,5 +1,5 @@
 {
-  "products": "products 0.5, run fft2_diss8_mle; spice_microstructure git 1625108; microstructure-tpw c90ff7f",
+  "products": "products 0.6, run fft2_diss8_mle; spice_microstructure git 7d063de; microstructure-tpw c90ff7f",
   "settings": {
     "out_dir": "team_summary",
     "station": "process_station",
@@ -121,8 +121,8 @@
     ],
     "E vmp250 interface garrett_munk": [
       2.39,
-      1.7,
-      3.32
+      1.68,
+      3.39
     ],
     "E vmp250 interface nonstaircase_control": [
       1.49,
@@ -136,8 +136,8 @@
     ],
     "E vmp250 layer garrett_munk": [
       3.26,
-      1.92,
-      5.68
+      1.88,
+      5.49
     ],
     "E vmp250 layer nonstaircase_control": [
       0.56,
@@ -151,8 +151,8 @@
     ],
     "E vmp5500 interface garrett_munk": [
       2.67,
-      1.99,
-      3.43
+      2.0,
+      3.4
     ],
     "E vmp5500 interface nonstaircase_control": [
       1.37,
@@ -166,8 +166,8 @@
     ],
     "E vmp5500 layer garrett_munk": [
       2.03,
-      1.62,
-      2.48
+      1.6,
+      2.53
     ],
     "E vmp5500 layer nonstaircase_control": [
       0.61,

@@ -22,12 +22,12 @@
       "estimate_outside_interval": 0
     },
     "diffusivity_bins": {
-      "records": 5649,
+      "records": 6285,
       "pooled_records": 357,
       "pooled_with_interval": 357,
       "pooled_without_interval_reason": null,
       "records_below_min_profiles": 291,
-      "pooled_interval_width_log10_median": 0.22214855979261963,
+      "pooled_interval_width_log10_median": 0.22175706441041218,
       "estimate_outside_interval": 0
     }
   }
