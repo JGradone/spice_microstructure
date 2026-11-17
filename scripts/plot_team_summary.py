@@ -339,7 +339,7 @@ def figure_diffusivity(prod: Path, ts: dict, dd_bin: float, path: Path, foot: st
         d = load(prod, inst, "diffusivity")
         f = pick(d, ts, turner="finger_any", staircase="all")
         f = f[(f["depth_bin"] != "pooled") & f["min_profiles_ok"]].assign(z=lambda x: x["depth_bin"].astype(float))
-        f = f.sort_values("z")
+        f = f[f["z"] > ts["deep_m"]].sort_values("z")     # finger-favourable water: the staircase depths
         ks = f[[f"K_S_g{x}" for x in ts["gammas"]]]
         ax.fill_betweenx(f["z"], ks.min(axis=1), ks.max(axis=1), color=ps.ORANGE, alpha=0.2, lw=0,
                          label=f"salt (and nitrate), γ {min(ts['gammas'])}–{max(ts['gammas'])}")
