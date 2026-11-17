@@ -1042,3 +1042,4 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * `product_version` 0.5 → 0.6 (new depth bins, new columns, new segment variable). `examples/products_quickstart.ipynb` updated.
 * **Reruns:** `dd_test` to `export` for `baseline` and the analysis-run family (`fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before), all at 7d063de with a clean tree; then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`), `write_run_summaries.py`, `publish_recommended.py` and `plot_team_summary.py`.
 
+* Results and config committed in d706f42 (code in 2eaa333 and 7d063de).
