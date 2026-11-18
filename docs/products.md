@@ -2,13 +2,13 @@
 
 The `export` step writes the products below to `<output_root>/<run.name>/products/`. These files are the interface to analyses done outside this repository. Everything upstream of them is internal and may change between runs; the products change only with a `products.product_version` bump, recorded in `docs/decisions.md`.
 
-Status: written by the `export` step (product version 0.6, 2026-11-17). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
+Status: written by the `export` step (product version 0.7, 2026-11-18). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
 
 ## Common to every file
 
 * Format: NetCDF-4, CF-1.13 and ACDD-1.3 metadata (`products` section of the config).
 * One set of files per instrument (`vmp250`, `vmp5500`), with the instrument model and serial in global attributes.
-* Provenance attributes: `product_version`, `run_name`, `config_sha256`, `git_commit` (flagged `-dirty` if the tree had uncommitted changes), `microstructure_tpw_version` and `microstructure_tpw_commit`, `python_version`, `date_created`, and the archive manifests verified for the run.
+* Provenance attributes: `product_version`, `run_name`, `run_notes` (the run's own description; since 0.7, sensitivity runs no longer carry the baseline's), `config_sha256`, `git_commit` (flagged `-dirty` if the tree had uncommitted changes), `microstructure_tpw_version` and `microstructure_tpw_commit`, `python_version`, `date_created`, and the archive manifests verified for the run.
 * Time in UTC; position from the Sealog ship track (`lat`, `lon`, with the time gap to the nearest fix).
 * Every exclusion and caution from the config (`exclude`, `exclude_probes`, `flag`, `towyo`) is carried as a flag variable or attribute, never as silently missing data.
 
@@ -46,6 +46,17 @@ From the `diffusivities` step (`diffusivity_bins.csv`). Bin averages over window
 * `K_GM`, the canonical Garrett-Munk level at the bin's N and latitude (reference only)
 * 95% bootstrap intervals over profiles (`*_ci_low`, `*_ci_high`) for K_T, R_rho, K_rho and K_S at the configured gamma; `n_windows`, `n_profiles`, `min_profiles_ok`
 * Attributes: epsilon source, gammas, flux coefficient, staircase thresholds, gradient choice
+
+## 4a. Primary diffusivity profiles: `diffusivity_primary_<instrument>.csv` (and `.nc`)
+
+Since 0.7. The starting point for nitrate fluxes: the same values as section 4, with only the primary choices (config `products.primary`: `rollo2022` staircase labels, `finescale` gradients, finger-favourable set `finger_any`, γ = `double_diffusion.flux_ratio_gamma`). One row per group (`all free fall`, `process_station free fall`) and depth bin, from 20 dbar.
+
+* `depth_bin`, `P_top_dbar`, `P_bottom_dbar`, `n_profiles`, `n_windows`, `min_profiles_ok` (all water)
+* `finger_fraction`: fraction of the bin's windows that are finger-favourable
+* `K_T`, `K_rho` with 95% intervals: all water. `K_rho` is not a valid diffusivity where fingers dominate.
+* `K_S` with 95% intervals: finger-favourable water at the primary γ; `K_S_gamma_low` and `K_S_gamma_high` at the largest and smallest γ in `diffusivities.gammas`. Empty where K_S is not defined (R_rho outside 1 to `k_s_max_r_rho`) or the finger water has too few profiles. `R_rho_finger`, `n_profiles_finger`.
+* `K_GM`: Garrett–Munk reference.
+* `K_nitrate`, its 95% interval, and `K_nitrate_source`: `K_S` where `finger_fraction` ≥ `products.primary.finger_fraction_min` (0.5) and K_S is defined, else `K_T` of all water. This is a suggestion, not a method: it assumes K_N = K_S in fingering and treats a bin as finger-dominated or not, so bins near the threshold can switch between instruments. The underlying columns are all in the file.
 
 ## 5. Finger attribution: `attribution_<instrument>.csv`
 

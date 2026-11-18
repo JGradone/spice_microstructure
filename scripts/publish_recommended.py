@@ -109,7 +109,15 @@ def main() -> int:
         "`RUN_SUMMARY.md` has the full settings, file list, QC counts and caveats of the run. Variable definitions: "
         "`docs/products.md`; methods and reasons: `docs/decisions.md`.", "",
         "## What to use", "",
-        "* **Vertical diffusivities for nutrient (nitrate) fluxes:** `diffusivity_<instrument>.csv` (or `.nc`). In "
+        "* **Start here for nitrate fluxes:** `diffusivity_primary_<instrument>.csv` (or `.nc`). One diffusivity "
+        "profile per group (`all free fall` = whole cruise, `process_station free fall`), 25 m bins from 20 dbar, "
+        f"primary choices only ({m} staircase labels, finescale gradients, γ {g0:g}): `K_T` and `K_rho` of all water, "
+        "`K_S` of the finger-favourable water with its 95% interval and γ range (`K_S_gamma_low`/`_high`), the "
+        "finger-favourable fraction, `K_GM`, and `K_nitrate` with `K_nitrate_source`. `K_nitrate` is `K_S` where at "
+        f"least {cfg['products']['primary']['finger_fraction_min']:g} of the bin is finger-favourable and K_S is "
+        "defined, else `K_T` of all water; K_N ≈ K_S in fingering is an assumption to state. Use rows with "
+        "`min_profiles_ok` true. The values are the same as in the full table below.",
+        "* **All variants of the diffusivities:** `diffusivity_<instrument>.csv` (or `.nc`). In "
         "finger-favourable water use `K_S_g<gamma>` (salt diffusivity; nitrate behaves like salt in fingering, "
         "K_N ≈ K_S is an assumption to state). Use `K_T` for heat and, outside finger water, `K_rho` (flag "
         "`K_rho_valid`). Take `gradients = finescale` as the primary estimate and report the others as sensitivity; "

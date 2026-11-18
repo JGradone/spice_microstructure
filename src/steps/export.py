@@ -8,6 +8,8 @@ Writes to <run_dir>/products/, per instrument:
   binned_<instrument>.nc            per profile x depth bin (products.depth_bin_m): window means
                                     of epsilon and chi with counts, and the hydrography grid
   diffusivity_<instrument>.nc/.csv  bin-averaged diffusivities (diffusivities step)
+  diffusivity_primary_<instrument>.nc/.csv  the same, primary choices only (products.primary):
+                                    one profile per group, with K_nitrate and its source
   attribution_<instrument>.csv      finger fraction per baseline
   cast_metrics_<instrument>.csv     per-profile finger metrics
 plus README.md (file list, provenance, caveats).
@@ -230,6 +232,73 @@ def table_to_netcdf(tab: pd.DataFrame) -> xr.Dataset:
     return xr.Dataset({c: ("record", t[c].to_numpy()) for c in t.columns})
 
 
+def primary_product(di: pd.DataFrame, config: dict, name: str) -> pd.DataFrame:
+    """One diffusivity profile per group with only the primary choices (products.primary), for
+    nitrate fluxes: K_T and K_rho of all water, K_S of finger-favourable water (with its gamma
+    range), the finger-favourable fraction, K_GM, and K_nitrate with its source."""
+    pc = config["products"]["primary"]
+    g0 = float(config["double_diffusion"]["flux_ratio_gamma"])
+    gs = [float(g) for g in config["diffusivities"]["gammas"]]
+    ks, ks_lo, ks_hi = f"K_S_g{g0:g}", f"K_S_g{max(gs):g}", f"K_S_g{min(gs):g}"
+    rows = []
+    for group in pc["groups"]:
+        sel = di[(di["instrument_group"] == f"{name} {group}") & (di["method"] == pc["method"])
+                 & (di["gradients"] == pc["gradients"]) & (di["staircase"] == "all")
+                 & (di["depth_bin"].astype(str) != "pooled")]
+        if sel.empty:
+            continue
+        allw = sel[sel["turner"] == "all_turner"].set_index("depth_bin")
+        fing = sel[sel["turner"] == pc["finger_set"]].set_index("depth_bin")
+        for b, a in allw.iterrows():
+            f = fing.loc[b] if b in fing.index else None
+            nf = int(f["n_windows"]) if f is not None else 0
+            r = {"group": group, "depth_bin": float(b), "P_top_dbar": a["P_top_dbar"],
+                 "P_bottom_dbar": a["P_bottom_dbar"], "n_profiles": int(a["n_profiles"]),
+                 "n_windows": int(a["n_windows"]), "min_profiles_ok": bool(a["min_profiles_ok"]),
+                 "finger_fraction": nf / a["n_windows"] if a["n_windows"] else np.nan,
+                 "K_T": a["K_T"], "K_T_ci_low": a["K_T_ci_low"], "K_T_ci_high": a["K_T_ci_high"],
+                 "K_rho": a["K_rho"], "K_rho_ci_low": a["K_rho_ci_low"], "K_rho_ci_high": a["K_rho_ci_high"],
+                 "K_GM": a["K_GM"]}
+            s_ok = f is not None and bool(f["K_S_applicable"]) and bool(f["min_profiles_ok"])
+            r.update({"R_rho_finger": f["R_rho"] if f is not None else np.nan,
+                      "n_profiles_finger": int(f["n_profiles"]) if f is not None else 0,
+                      "K_S": f[ks] if s_ok else np.nan,
+                      "K_S_ci_low": f[f"{ks}_ci_low"] if s_ok else np.nan,
+                      "K_S_ci_high": f[f"{ks}_ci_high"] if s_ok else np.nan,
+                      "K_S_gamma_low": f[ks_lo] if s_ok else np.nan,
+                      "K_S_gamma_high": f[ks_hi] if s_ok else np.nan})
+            use_s = s_ok and r["finger_fraction"] >= float(pc["finger_fraction_min"])
+            src = "K_S" if use_s else "K_T"
+            r.update({"K_nitrate": r[src], "K_nitrate_ci_low": r[f"{src}_ci_low"],
+                      "K_nitrate_ci_high": r[f"{src}_ci_high"],
+                      "K_nitrate_source": "K_S finger water" if use_s else "K_T all water"})
+            rows.append(r)
+    return pd.DataFrame(rows)
+
+
+PRIMARY_UNITS = {"depth_bin": "dbar", "P_top_dbar": "dbar", "P_bottom_dbar": "dbar", "finger_fraction": "1",
+                 "R_rho_finger": "1"}
+PRIMARY_DESC = {
+    "group": "casts averaged: all free fall (whole cruise) or process_station free fall",
+    "depth_bin": "bin centre (pressure)", "P_top_dbar": "top of the bin as averaged",
+    "P_bottom_dbar": "bottom of the bin as averaged",
+    "min_profiles_ok": "at least double_diffusion.min_profiles_per_average profiles; use rows where true",
+    "finger_fraction": "fraction of the bin's windows that are finger-favourable (Turner 45-90 deg)",
+    "K_T": "<chi>/(2<T_z^2>) over all water, finescale gradients (Osborn and Cox)",
+    "K_rho": "0.2<epsilon>/<N2> over all water (Osborn); not a valid diffusivity where fingers dominate",
+    "K_GM": "Garrett-Munk reference level at the bin's N and latitude",
+    "R_rho_finger": "density ratio of the finger-favourable water",
+    "K_S": "salt diffusivity of the finger-favourable water, R_rho K_T/gamma at the primary gamma; "
+           "only where 1 < R_rho <= diffusivities.k_s_max_r_rho and enough profiles",
+    "K_S_gamma_low": "K_S at the largest gamma (lower end of the gamma range)",
+    "K_S_gamma_high": "K_S at the smallest gamma (upper end of the gamma range)",
+    "K_nitrate": "suggested vertical diffusivity for nitrate: K_S where the finger-favourable fraction is at least "
+                 "products.primary.finger_fraction_min and K_S is defined (assumes K_N = K_S in fingering), "
+                 "else K_T of all water",
+    "K_nitrate_source": "which estimate K_nitrate is",
+}
+
+
 def run(ctx: dict) -> None:
     config = ctx["config"]
     rd = ctx["run_dir"]
@@ -265,6 +334,30 @@ def run(ctx: dict) -> None:
         dn.attrs["bootstrap_samples"] = config["uncertainty"]["bootstrap_samples"]
         dn.attrs["random_seed"] = config["uncertainty"]["random_seed"]
         dn.to_netcdf(out / f"diffusivity_{name}.nc")
+
+        pr = primary_product(di, config, name)
+        pr.to_csv(out / f"diffusivity_primary_{name}.csv", index=False, float_format="%.4g")
+        pn = xr.Dataset({c: ("record", (pr[c].astype(np.int8) if pr[c].dtype == bool else pr[c]).to_numpy())
+                         for c in pr.columns})
+        for c in pn.data_vars:
+            if c.startswith("K_") and c != "K_nitrate_source":
+                pn[c].attrs["units"] = "m2 s-1"
+            if c in PRIMARY_UNITS:
+                pn[c].attrs["units"] = PRIMARY_UNITS[c]
+            key = c.replace("_ci_low", "").replace("_ci_high", "")
+            if key in PRIMARY_DESC:
+                pn[c].attrs["long_name"] = PRIMARY_DESC[key] + (
+                    ", 95% bootstrap over profiles, " + ("low" if c.endswith("low") else "high")
+                    if c.endswith(("_ci_low", "_ci_high")) else "")
+        pc = config["products"]["primary"]
+        pn.attrs.update(global_attrs(config, prov, name, inst, "primary diffusivity profiles"))
+        pn.attrs.update({"staircase_method": pc["method"], "gradients": pc["gradients"],
+                         "finger_set": pc["finger_set"], "finger_fraction_min": pc["finger_fraction_min"],
+                         "gamma": config["double_diffusion"]["flux_ratio_gamma"],
+                         "gammas": ",".join(str(g) for g in config["diffusivities"]["gammas"]),
+                         "comment": "Primary choices only, from diffusivity_<instrument> (same values). One row per "
+                                    "group and depth bin; bin averages over windows and profiles."})
+        pn.to_netcdf(out / f"diffusivity_primary_{name}.nc")
         att[att["instrument_group"].str.startswith(name)].to_csv(out / f"attribution_{name}.csv", index=False,
                                                                  float_format="%.4g")
         cm = pd.read_csv(rd / "diffusivities" / f"cast_metrics_{name}.csv")

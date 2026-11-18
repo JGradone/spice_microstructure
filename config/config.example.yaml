@@ -517,7 +517,8 @@ uncertainty:
   random_seed: 20260812
 
 sensitivity_runs:
-  # Each entry is its own run, reported as a difference from the baseline.
+  # Each entry is its own run, reported as a difference from the baseline. Optional `notes`
+  # describe the run in product metadata (run_notes); runs without them get a generic note.
   - name: segqc                   # planned change: apply segment QC
     set: {segments.enabled: true}
   - name: bin10m
@@ -533,6 +534,7 @@ sensitivity_runs:
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0}
   - name: fft2_diss8_mle           # analysis run (decisions.md 2026-10-13): 2 s / 8 s windows, chi by MLE,
                                    # record-locked shear interference removed (decisions.md 2026-10-29)
+    notes: "Analysis run: 2 s FFT / 8 s windows, chi by MLE, record-locked shear interference removed; all science results come from this run."
     set: {perturb.epsilon.fft_sec: 2.0, perturb.epsilon.diss_sec: 8.0, perturb.epsilon.overlap_sec: 4.0,
           perturb.chi.fft_sec: 2.0, perturb.chi.diss_sec: 8.0, perturb.chi.overlap_sec: 4.0,
           perturb.chi.fit_method: mle, perturb.epsilon.record_locked_shear: true}
@@ -575,11 +577,18 @@ products:
   # variables are specified in docs/products.md.
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
-  product_version: "0.6"          # bump on any change to variables or methods
+  product_version: "0.7"          # bump on any change to variables or methods
   recommended_run: fft2_diss8_mle # run whose products are published to outputs/<recommended_dir>/ (scripts/publish_recommended.py)
   recommended_dir: recommended
   recommended_sensitivity_label: sensitivity   # outputs/comparisons/<label>/ used for the uncertainty ranges
   depth_bin_m: 5.0                # binned profiles; 8 s windows are ~6 m tall and step ~3 m (1 m bins would be mostly empty)
+  primary:                        # diffusivity_primary_<instrument>: the primary choices only, one profile per group
+    groups: ["all free fall", "process_station free fall"]   # instrument_group suffixes
+    method: rollo2022             # staircase labels (tuned)
+    gradients: finescale          # 1 m gradient variance
+    finger_set: finger_any        # finger-favourable water (Turner 45-90 deg)
+    finger_fraction_min: 0.5      # K_nitrate = K_S where at least this fraction of the bin's windows is
+                                  # finger-favourable (and K_S is defined), else K_T of all water
   creator_name: "Joe Gradone"
   creator_email: "joe@gradone.com"
   institution: "Rutgers University"

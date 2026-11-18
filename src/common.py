@@ -64,6 +64,10 @@ def apply_sensitivity(config: dict, config_hash: str, name: str) -> tuple[dict, 
             sys.exit(f"Sensitivity run {name!r}: {key} is not a config key")
         node[parts[-1]] = value
     cfg["run"]["name"] = name
+    # the run's own notes; never the base config's (they describe the baseline)
+    cfg["run"]["notes"] = runs[name].get("notes") or (
+        f"Sensitivity run {name} of {runs[name].get('base') or config['run']['name']}; "
+        "changed settings in sensitivity_overrides.")
     cfg["run"]["sensitivity"] = {"of": config["run"]["name"], "set": overrides,
                                  "base": runs[name].get("base")}
     if runs[name].get("reuse_convert_from"):
