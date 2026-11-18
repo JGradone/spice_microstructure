@@ -172,7 +172,7 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
                 .to_numpy(bool) & (df["fp07_response_applied"].to_numpy() == 1))
         stage.setdefault("probe_readmitted", 0)
         stage["probe_readmitted"] += int((ok & excl & back).sum())
-        excl &= ~back
+        excl = excl & ~back
         stage["probe_exclusion"] += int((ok & excl).sum())
         ok &= ~excl
         kr_bad = df[f"K_max_ratio_{p}"].to_numpy() < kc["min"]
