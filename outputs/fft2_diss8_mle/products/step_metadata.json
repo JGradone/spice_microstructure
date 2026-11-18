@@ -1,8 +1,8 @@
 {
   "step": "export",
-  "created_utc": "2026-11-18T14:15:14+00:00",
-  "config_sha256": "4e19379ae3d109315c3a795db758895d7fdbfc971f62be148b10a76dfb6cc8d2",
-  "git_commit": "d328f33e4c72ba97bf6b6e8806456f6cba6370b7",
+  "created_utc": "2026-11-18T14:41:15+00:00",
+  "config_sha256": "8cf6ba0c97bbf833cb38db1847301eb5a72561b4b395945679d831f6fa0e4379",
+  "git_commit": "6eeb239115fdccebc550a4b7914f896937eff3f0",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",

@@ -1,8 +1,8 @@
 # SPICE microstructure products: `fft2_diss8_mle`
 
-Product version 0.7. spice_microstructure git d328f33e4c72ba97bf6b6e8806456f6cba6370b7; config sha256 4e19379ae3d1; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-11-18T14:15:14+00:00.
+Product version 0.8. spice_microstructure git 6eeb239115fdccebc550a4b7914f896937eff3f0; config sha256 8cf6ba0c97bb; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-11-18T14:41:15+00:00.
 
-(This summary regenerated 2026-11-18T14:17:00Z from the run's existing reports.)
+(This summary regenerated 2026-11-18T14:42:44Z from the run's existing reports.)
 
 **Sensitivity run** of `baseline`. Overrides: `perturb.epsilon.fft_sec` = 2.0, `perturb.epsilon.diss_sec` = 8.0, `perturb.epsilon.overlap_sec` = 4.0, `perturb.chi.fft_sec` = 2.0, `perturb.chi.diss_sec` = 8.0, `perturb.chi.overlap_sec` = 4.0, `perturb.chi.fit_method` = mle, `perturb.epsilon.record_locked_shear` = True.
 
@@ -44,6 +44,8 @@ Specification of every variable: `docs/products.md`. Methods and the reasons beh
 | `diffusivity_vmp250.nc` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
 | `diffusivity_vmp5500.csv` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
 | `diffusivity_vmp5500.nc` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
+| `finger_profiles_vmp250.nc` |  |
+| `finger_profiles_vmp5500.nc` |  |
 | `segments_vmp250.nc` | one record per dissipation window: epsilon and chi per probe and combined, noise floors and flags, epsilon_T, background hydrography, Turner class, staircase labels per method, Re_b, QC bit flags |
 | `segments_vmp5500.nc` | one record per dissipation window: epsilon and chi per probe and combined, noise floors and flags, epsilon_T, background hydrography, Turner class, staircase labels per method, Re_b, QC bit flags |
 

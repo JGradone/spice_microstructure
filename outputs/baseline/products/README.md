@@ -1,8 +1,8 @@
 # SPICE microstructure products: `baseline`
 
-Product version 0.7. spice_microstructure git d328f33e4c72ba97bf6b6e8806456f6cba6370b7; config sha256 edeb0f2f6cb7; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-11-18T14:15:03+00:00.
+Product version 0.8. spice_microstructure git 6eeb239115fdccebc550a4b7914f896937eff3f0; config sha256 993605e618cb; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4); exported 2026-11-18T14:41:04+00:00.
 
-(This summary regenerated 2026-11-18T14:17:00Z from the run's existing reports.)
+(This summary regenerated 2026-11-18T14:42:44Z from the run's existing reports.)
 
 Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.
 
@@ -46,6 +46,8 @@ Specification of every variable: `docs/products.md`. Methods and the reasons beh
 | `diffusivity_vmp250.nc` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
 | `diffusivity_vmp5500.csv` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
 | `diffusivity_vmp5500.nc` | bin averages over windows and profiles by group, regime, staircase label, gradient choice and depth: K_T, R_rho, K_S (each gamma), K_S_eps, K_rho, K_GM, 95% profile-bootstrap intervals |
+| `finger_profiles_vmp250.nc` |  |
+| `finger_profiles_vmp5500.nc` |  |
 | `segments_vmp250.nc` | one record per dissipation window: epsilon and chi per probe and combined, noise floors and flags, epsilon_T, background hydrography, Turner class, staircase labels per method, Re_b, QC bit flags |
 | `segments_vmp5500.nc` | one record per dissipation window: epsilon and chi per probe and combined, noise floors and flags, epsilon_T, background hydrography, Turner class, staircase labels per method, Re_b, QC bit flags |
 
