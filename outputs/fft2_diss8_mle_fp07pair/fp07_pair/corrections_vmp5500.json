@@ -1,0 +1,32 @@
+{
+  "source_chi": "outputs/fft2_diss8_mle/convert/vmp5500/chi_01",
+  "anchor": "T1",
+  "files": [
+    "outputs/fft2_diss8_mle_fp07pair/fp07_pair/vmp5500/fp07pair_SN010_T3303-T3301_20260822T1503Z.nc",
+    "outputs/fft2_diss8_mle_fp07pair/fp07_pair/vmp5500/fp07pair_SN010_T3303-T3304_20260810T1347Z.nc"
+  ],
+  "fits": [
+    {
+      "pair": "T1_dT1=T3303 T2_dT2=T3301",
+      "span": "2026-08-22T16:03:16+00:00..2026-08-30T10:20:42+00:00",
+      "files": "21",
+      "windows": "6571",
+      "band": "0.5-94.2",
+      "lnG": "-0.082",
+      "lnR20": "+0.048",
+      "spread": "0.122",
+      "flags": "-"
+    },
+    {
+      "pair": "T1_dT1=T3303 T2_dT2=T3304",
+      "span": "2026-08-10T14:47:47+00:00..2026-08-22T10:24:54+00:00",
+      "files": "23",
+      "windows": "6983",
+      "band": "0.5-42.1",
+      "lnG": "+0.011",
+      "lnR20": "+0.714",
+      "spread": "0.248",
+      "flags": "-"
+    }
+  ]
+}

@@ -145,7 +145,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
 * **epsilon_T:** flagged resolved where K_max/kB ≥ 1.6, with kB from shear epsilon, not from the FP07 fit (decisions.md 2026-10-26). There it runs 2–3× above shear epsilon, so shear epsilon is primary.
 * **Probe exclusions:**
-  * VMP5500 T2 (T3304), SPC_012–040: gain error.
+  * VMP5500 T2 (T3304), SPC_012–040: a faster bead (response difference, not gain; `fp07-pair` 2026-11-18). Kept excluded in the analysis run: re-admitting it with the correction changes K_S by ≤ 2% (station ≤ 5%).
   * VMP5500 sh1 (M3461), SPC_041–044 and 059–061: failing probe (reads high in quiet water, low in strong turbulence; `scripts/shear_probe_ratio.py`).
   * VMP250 sh2 for data_0112 (test casts) and for data_0123_prof004 and data_0124 (fouled).
 * **Double diffusion:** report the ladder of baselines and the three gradient choices.
@@ -157,7 +157,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
   * replies from Bieito (baseline, gradient scale, γ) and Pat (package questions);
   * ADCP for a finescale Richardson number and a shear-based Garrett–Munk estimate;
   * ML staircase labels.
-  * VMP5500 FP07 pair: on SPC_049–063, T2 (T3301) reads chi 0.6–0.7 of T1 on about half the casts, with the same probes that agreed on SPC_041–048. The T3304 "gain error" (SPC_012–040) could also be a bead response difference. Upstream `fp07-pair` (microstructure-tpw f77e5de) targets this and is in our pin; trying it is a config change and its own run.
+  * VMP5500 FP07 pair (decisions.md 2026-11-18): run `fft2_diss8_mle_fp07pair` (step `fp07_pair`, `scripts/fp07_pair_check.py`) shows T3304 is a response difference that `fp07-pair` corrects, with headline K_S −1% and station ±5%; not adopted. Remaining: on 8 of SPC_049–063 T2 (T3301) loses sensitivity flat across frequency, cast to cast (χ_T2/χ_T1 0.6–0.75); `fp07-pair` cannot fix it; the effect on bin-averaged χ there is about 4%.
   * Private open items (correspondence, history purge): `docs/private/next_steps.md`.
 
 ## Documentation habits

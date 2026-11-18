@@ -1,0 +1,46 @@
+file,status,edited,verified,problems,data_identical,differs_from_archive
+SPC_003.P,linked_to_raw,,True,,True,archive: operator = Rutgers | archive: project =SPICE | archive: ship = R/V Falkor (too) | archive: coef0 = 18.48 | new: operator = APL | new: project = | new: ship = | new: coef0 = 29.48
+SPC_004.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_012.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_014.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_015.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_016.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_017.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_018.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_019.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_020.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_021.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_022.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_023.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_025.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_026.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_027.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_028.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_030.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_031.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_033.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_034.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_038.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_039.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_040.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date",True,,True,
+SPC_041.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_042.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_043.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_044.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_045.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_047.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_048.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_049.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_050.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_051.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_052.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_054.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_055.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_056.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_057.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_058.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_059.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_060.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_061.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_062.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301
+SPC_063.P,patched,"P.coef0, P.coef1, P.coef2, P.cal_date, T2.sn",True,,True,archive: SN = T3304 | new: SN = T3301

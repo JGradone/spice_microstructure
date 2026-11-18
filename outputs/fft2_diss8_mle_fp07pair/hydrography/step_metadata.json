@@ -1,0 +1,21 @@
+{
+  "step": "hydrography",
+  "created_utc": "2026-11-18T15:23:46+00:00",
+  "config_sha256": "6715c8806f7c44ee4a15b5fe6dc8b16835bc6fdd8bb04e771aa0163c26b56a87",
+  "git_commit": "c46ef66a52e0dd96e71a7859ccd7396443cba9fc",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "manifests_verified": true,
+  "gradient_smoothing_m": 10
+}

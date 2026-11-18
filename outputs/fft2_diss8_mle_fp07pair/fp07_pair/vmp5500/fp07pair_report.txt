@@ -1,0 +1,11 @@
+44 chi files: 44 read, 0 skipped, 2 bead pair(s)
+SN010 T1_dT1=T3303 T2_dT2=T3301: 21 files, W_ref 0.813 m/s, 1 segment(s)
+  SN010 T1_dT1=T3303 T2_dT2=T3301 [2026-08-22T16:03:16+00:00..2026-08-30T10:20:42+00:00]: 21 files, 6571 windows; band 0.5-94.2 Hz; ln G -0.082 (low-band slope -0.039); ln R' at 20 Hz +0.048; per-file mid-band spread 0.122; flags -
+SN010 T1_dT1=T3303 T2_dT2=T3304: 23 files, W_ref 0.814 m/s, 1 segment(s)
+  SN010 T1_dT1=T3303 T2_dT2=T3304 [2026-08-10T14:47:47+00:00..2026-08-22T10:24:54+00:00]: 23 files, 6983 windows; band 0.5-42.1 Hz; ln G +0.011 (low-band slope +0.002); ln R' at 20 Hz +0.714; per-file mid-band spread 0.248; flags -
+
+perturb config (key each block by the perturb `instruments:` key for that
+instrument -- the RAW DIRECTORY NAME, which may differ from the SN below):
+instruments:
+  SN010:
+    fp07_response: [/Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8_mle_fp07pair/fp07_pair/vmp5500/fp07pair_SN010_T3303-T3301_20260822T1503Z.nc, /Users/joegradone/SynologyDrive/Rutgers/Research/code/GitHub/spice_microstructure/outputs/fft2_diss8_mle_fp07pair/fp07_pair/vmp5500/fp07pair_SN010_T3303-T3304_20260810T1347Z.nc]

@@ -125,8 +125,9 @@ instruments:
     exclude:
       SPC_003.P: "bench test with test probes; placeholder calibrations; clock set incorrectly"
     exclude_probes:
-      # T2 (T3304) chi 1.7x T1 at signal/noise > 100 from SPC_012 to SPC_039 (0.95 on SPC_004),
-      # i.e. a gain error, not noise; T1 agrees with the replacement T3301 (0.98). T3304
+      # T2 (T3304) chi 1.7x T1 at signal/noise > 100 from SPC_012 to SPC_039 (0.95 on SPC_004);
+      # not noise. First read as a gain error; fp07-pair (2026-11-18) shows a faster bead (same power
+      # at 2 Hz, 1.5-2.4x at 10-40 Hz). T1 agrees with the replacement T3301 (0.98). T3304
       # flat-lined on SPC_040 and was replaced (decisions.md 2026-10-13).
       SPC_012.P: [T2]
       SPC_014.P: [T2]

@@ -1,0 +1,13 @@
+note: spice_microstructure patch step; spice_microstructure git c46ef66a52e0dd96e71a7859ccd7396443cba9fc;
+  config sha256 6715c8806f7c; microstructure-tpw 0.4.0 (c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4)
+author: Joe
+channels:
+  P:
+    cal_date: '2026-05-19'
+    coef0: '18.48'
+    coef1: '0.272780'
+    coef2: '-3.8053e-8'
+cruise_info:
+  operator: Rutgers
+  project: SPICE
+  ship: R/V Falkor (too)

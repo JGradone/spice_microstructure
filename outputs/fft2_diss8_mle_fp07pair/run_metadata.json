@@ -1,0 +1,120 @@
+{
+  "created_utc": "2026-11-18T15:24:26+00:00",
+  "config_sha256": "34a88280ed2a05fe78facd20baf1cfeba6e920c56109a39ce4315bd556e74192",
+  "git_commit": "281cc8b7286e64a0def4555e75f569fc67a37f45",
+  "python": "3.12.15",
+  "packages": {
+    "microstructure-tpw": "0.4.0",
+    "thermohalinesteps": "0.0.3b0",
+    "gsw": "3.6.23",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "xarray": "2026.9.0",
+    "pandas": "3.0.6",
+    "netCDF4": "1.7.4"
+  },
+  "microstructure_tpw_commit": "c90ff7fefa4c4ab6bd3020ac1b2671e80d9276c4",
+  "thermohalinesteps_commit": "976a4febdf85192aab1d247f7fc32abd3aeab83f",
+  "config_path": "config/config.yaml",
+  "run": {
+    "name": "fft2_diss8_mle_fp07pair",
+    "notes": "Analysis run with fp07-pair per-bead FP07 response equalization (anchor T1 = T3303); VMP5500 T2 (T3304) re-admitted on SPC_012-039 where the correction was applied.",
+    "instruments": [
+      "vmp250",
+      "vmp5500"
+    ],
+    "sensitivity": {
+      "of": "baseline",
+      "set": {
+        "perturb.epsilon.fft_sec": 2.0,
+        "perturb.epsilon.diss_sec": 8.0,
+        "perturb.epsilon.overlap_sec": 4.0,
+        "perturb.chi.fft_sec": 2.0,
+        "perturb.chi.diss_sec": 8.0,
+        "perturb.chi.overlap_sec": 4.0,
+        "perturb.chi.fit_method": "mle",
+        "perturb.epsilon.record_locked_shear": true,
+        "fp07_pair.enabled": true,
+        "fp07_pair.readmit_probes": {
+          "vmp5500": {
+            "SPC_012.P": [
+              "T2"
+            ],
+            "SPC_014.P": [
+              "T2"
+            ],
+            "SPC_015.P": [
+              "T2"
+            ],
+            "SPC_016.P": [
+              "T2"
+            ],
+            "SPC_017.P": [
+              "T2"
+            ],
+            "SPC_018.P": [
+              "T2"
+            ],
+            "SPC_019.P": [
+              "T2"
+            ],
+            "SPC_020.P": [
+              "T2"
+            ],
+            "SPC_021.P": [
+              "T2"
+            ],
+            "SPC_022.P": [
+              "T2"
+            ],
+            "SPC_023.P": [
+              "T2"
+            ],
+            "SPC_025.P": [
+              "T2"
+            ],
+            "SPC_026.P": [
+              "T2"
+            ],
+            "SPC_027.P": [
+              "T2"
+            ],
+            "SPC_028.P": [
+              "T2"
+            ],
+            "SPC_030.P": [
+              "T2"
+            ],
+            "SPC_031.P": [
+              "T2"
+            ],
+            "SPC_033.P": [
+              "T2"
+            ],
+            "SPC_034.P": [
+              "T2"
+            ],
+            "SPC_038.P": [
+              "T2"
+            ],
+            "SPC_039.P": [
+              "T2"
+            ]
+          }
+        }
+      },
+      "base": "fft2_diss8_mle"
+    }
+  },
+  "steps": [
+    "thermistor",
+    "regimes",
+    "dd_test",
+    "diffusivities",
+    "uncertainty",
+    "compare_archive",
+    "figures",
+    "export"
+  ],
+  "manifests_verified": true
+}
