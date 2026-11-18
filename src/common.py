@@ -80,9 +80,10 @@ def git_commit() -> str | None:
     try:
         out = subprocess.run(["git", "-C", str(REPO_ROOT), "rev-parse", "HEAD"],
                              capture_output=True, text=True, check=True)
-        # Outputs of the run itself do not make the code "dirty".
+        # Outputs of the run itself, and examples/ (it only reads the exported products),
+        # do not make the code "dirty".
         dirty = subprocess.run(["git", "-C", str(REPO_ROOT), "status", "--porcelain", "--",
-                                ".", ":(exclude)outputs"],
+                                ".", ":(exclude)outputs", ":(exclude)examples"],
                                capture_output=True, text=True, check=True)
         return out.stdout.strip() + ("-dirty" if dirty.stdout.strip() else "")
     except (OSError, subprocess.CalledProcessError):
