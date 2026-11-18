@@ -635,6 +635,15 @@ shear_probe_check:
   min_windows: 5                  # per cast and bin, else no ratio
   instruments: [vmp5500, vmp250]
 
+fp07_pair_check:
+  # Effect of the fp07-pair correction (scripts/fp07_pair_check.py): per-cast chi_T2/chi_T1,
+  # its trend with K_max/kB, the per-file guard, and the change in combined chi.
+  reference_run: fft2_diss8_mle
+  corrected_run: fft2_diss8_mle_fp07pair
+  instrument: vmp5500
+  min_P_dbar: 150
+  floor_factor: 3                 # both probes at least this many times their own noise floor
+
 processing_figures:
   # Figures of the 2026-10-29 processing changes (scripts/plot_processing_changes.py):
   # VMP5500 record-locked shear interference and the failing sh1 (M3461). Compares
