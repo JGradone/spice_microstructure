@@ -9,7 +9,7 @@ Scope: this repository is only the microstructure processing workflow. Nitrate, 
 * Analyses outside this repository read only the exported products (`export` step, specified in `docs/products.md`), never intermediate step outputs.
 * Products carry full provenance (config hash, git commit, package versions, product version) and keep every exclusion and caution as a flag, not as silently missing data.
 * Any change to product variables, units, or methods bumps `products.product_version` and gets a dated entry in `docs/decisions.md`.
-* Diffusivities are exported only as bin averages (see steps 7 and 8). The segment product carries epsilon, chi and gradients so other users can form their own averages correctly.
+* Diffusivities are exported as bin averages (see steps 7 and 8), with one deliberate exception: `finger_profiles_<instrument>` gives per-window K in each profile at the native window resolution, at the user's request (decisions.md 2026-11-18). It uses only gradients that cannot cross zero (the 1 m T_z² variance, R_rho from 10 m fits), and carries the ingredients so averages are formed from averaged chi, T_z², epsilon and N2. Every test, pooled value and attribution still uses bin averages only. The segment product carries epsilon, chi and gradients so other users can form their own averages correctly.
 
 ## Context
 
@@ -139,7 +139,7 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 ## Current state (2026-11-18; details and reasons in docs/decisions.md)
 
 * **Pin:** microstructure-tpw c90ff7f (main, not tagged; decisions.md 2026-10-29). The pin alone left the baseline identical.
-* **Products 0.7** (decisions.md 2026-11-18): `diffusivity_primary_<instrument>`, one profile per group with the primary choices and `K_nitrate`, the file to share for nitrate fluxes. Since 0.6: diffusivity depth bins from 20 dbar (pooled values and all tests stay 150 dbar down) and `T_z2_fine` in the segments product. Analysis starter: `examples/products_quickstart.ipynb`.
+* **Products 0.8** (decisions.md 2026-11-18): `finger_profiles_<instrument>`, per-window K_S and finger-driven K_S in each profile (about 6 m windows, 3 m apart) for fine-scale finger nitrate fluxes with ~1 m nitrate sensors. Since 0.7: `diffusivity_primary_<instrument>`, one bin-averaged profile per group with the primary choices and `K_nitrate`. Since 0.6: diffusivity depth bins from 20 dbar (pooled values and all tests stay 150 dbar down) and `T_z2_fine` in the segments product. Analysis starter: `examples/products_quickstart.ipynb`.
 * **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response, and `epsilon.record_locked_shear: true`.
 * **VMP5500 shear interference:** two pulses at fixed samples of every .p record, on every cast, mostly below the despike threshold. Removing the record-locked waveform lowers VMP5500 shear epsilon by a median 17% (VMP250 unaffected). A residual remains on sh1 on SPC_034 and SPC_038. `fft2_diss8_mle_norls` is the run without the removal.
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.

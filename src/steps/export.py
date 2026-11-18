@@ -10,6 +10,8 @@ Writes to <run_dir>/products/, per instrument:
   diffusivity_<instrument>.nc/.csv  bin-averaged diffusivities (diffusivities step)
   diffusivity_primary_<instrument>.nc/.csv  the same, primary choices only (products.primary):
                                     one profile per group, with K_nitrate and its source
+  finger_profiles_<instrument>.nc   per-window K_T, K_rho, K_S and finger-driven K_S in each profile
+                                    (native window resolution) with their ingredients and flags
   attribution_<instrument>.csv      finger fraction per baseline
   cast_metrics_<instrument>.csv     per-profile finger metrics
 plus README.md (file list, provenance, caveats).
@@ -276,6 +278,108 @@ def primary_product(di: pd.DataFrame, config: dict, name: str) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+FINGER_BITS = {"not_finger_favourable": 1, "r_rho_out_of_range": 2, "weak_gradient": 4, "chi_not_kept": 8,
+               "chi_at_floor": 16, "shear_not_kept": 32, "shear_at_floor": 64, "N2_nonpositive": 128,
+               "ts_salinity_invalid": 256, "no_finger_excess": 512}
+
+
+def finger_profiles_product(seg: xr.Dataset, hyd: xr.Dataset, config: dict) -> xr.Dataset:
+    """Per-window diffusivities in each profile at the native window resolution
+    (products.finger_profiles; decisions.md 2026-11-18). A deliberate exception to the
+    bin-average rule: every record also carries the ingredients, so users can average
+    chi, T_z2_fine, epsilon and N2 over windows first and form K from those averages."""
+    fc = config["products"]["finger_profiles"]
+    gamma = float(config["double_diffusion"]["flux_ratio_gamma"])
+    gs = [float(g) for g in config["diffusivities"]["gammas"]]
+    gam_flux = float(config["double_diffusion"]["flux_coefficient"])
+    r_max = float(config["diffusivities"]["k_s_max_r_rho"])
+    tu_lo, tu_hi = (float(x) for x in fc["turner_range_deg"])
+    cols = ["profile_file", "window", "time", "pressure", "depth", "fall_speed", "chi", "chi_T1", "chi_T2",
+            "chi_keep", "chi_at_floor", "T_z2_fine", "T_z_10m", "S_z_10m", "N2_10m", "alpha", "beta", "R_rho_10m",
+            "turner_angle_10m", "epsilon_shear", "epsilon_shear_bounded", "shear_keep", "shear_at_floor",
+            "ts_salinity_invalid", "staircase_rollo2022", "Re_b_shear", "use_T1", "use_T2"]
+    d = seg[[c for c in cols if c in seg]].to_dataframe().reset_index(drop=True)
+    d = d[d["pressure"] >= float(fc["min_pressure_dbar"])].reset_index(drop=True)
+    tz2, n2, rr, eps = d["T_z2_fine"], d["N2_10m"], d["R_rho_10m"], d["epsilon_shear_bounded"]
+    with np.errstate(divide="ignore", invalid="ignore"):
+        k_t = np.where(tz2 > 0, d["chi"] / (2 * tz2), np.nan)
+        k_rho = np.where(n2 > 0, gam_flux * eps / n2, np.nan)
+    finger = d["turner_angle_10m"].between(tu_lo, tu_hi, inclusive="neither")
+    r_ok = (rr > 1) & (rr <= r_max)
+    ts_bad = d["ts_salinity_invalid"] == 1 if "ts_salinity_invalid" in d else pd.Series(False, index=d.index)
+    s_ok = finger & r_ok & ~ts_bad              # R_rho needs valid salinity
+    k_t_f = k_t - k_rho
+    flags = np.zeros(len(d), np.int32)
+    weak = tz2 < float(fc["weak_gradient_fraction"]) * d["T_z_10m"] ** 2
+    excess_none = s_ok & np.isfinite(k_t_f) & (k_t_f <= 0)
+    for bit, m in (("not_finger_favourable", ~finger), ("r_rho_out_of_range", ~r_ok), ("weak_gradient", weak),
+                   ("chi_not_kept", d["chi_keep"] != 1), ("chi_at_floor", d.get("chi_at_floor", 0) == 1),
+                   ("shear_not_kept", d["shear_keep"] != 1), ("shear_at_floor", d["shear_at_floor"] == 1),
+                   ("N2_nonpositive", ~(n2 > 0)), ("ts_salinity_invalid", d.get("ts_salinity_invalid", 0) == 1),
+                   ("no_finger_excess", excess_none)):
+        flags |= np.where(np.asarray(m, bool), FINGER_BITS[bit], 0).astype(np.int32)
+    with np.errstate(invalid="ignore"):
+        d["K_T"], d["K_rho"] = k_t, k_rho
+        d["K_S"] = np.where(s_ok, rr * k_t / gamma, np.nan)
+        d["K_S_gamma_low"] = np.where(s_ok, rr * k_t / max(gs), np.nan)
+        d["K_S_gamma_high"] = np.where(s_ok, rr * k_t / min(gs), np.nan)
+        d["K_S_finger"] = np.where(s_ok, rr * np.clip(k_t_f, 0, None) / gamma, np.nan)
+        d["chi_T1_T2_ratio"] = (np.where((d["use_T1"] == 1) & (d["use_T2"] == 1), d["chi_T1"] / d["chi_T2"], np.nan)
+                                if {"chi_T2", "use_T1", "use_T2"} <= set(d.columns) else np.nan)
+    d["finger_flags"] = flags
+    loc = pd.DataFrame({"profile_file": hyd["profile_file"].values, "lat": hyd["lat"].values,
+                        "lon": hyd["lon"].values})
+    d = d.drop(columns=[c for c in ("use_T1", "use_T2") if c in d.columns])
+    d = d.merge(loc, on="profile_file", how="left")
+    for c in d.columns:
+        if d[c].dtype == bool:
+            d[c] = d[c].astype(np.int8)
+        elif d[c].dtype == object and c != "time":
+            d[c] = d[c].fillna("").astype(str)
+    ds = xr.Dataset({c: ("window_record", d[c].to_numpy()) for c in d.columns if c != "time"})
+    ds["time"] = ("window_record", pd.to_datetime(d["time"]).to_numpy())
+    units = {"pressure": "dbar", "depth": "m", "fall_speed": "m s-1", "chi": "K2 s-1", "chi_T1": "K2 s-1",
+             "chi_T2": "K2 s-1", "T_z2_fine": "K2 m-2", "T_z_10m": "K m-1", "S_z_10m": "g kg-1 m-1",
+             "N2_10m": "s-2", "alpha": "K-1", "beta": "kg g-1", "turner_angle_10m": "degree",
+             "epsilon_shear": "W kg-1", "epsilon_shear_bounded": "W kg-1", "R_rho_10m": "1",
+             "lat": "degrees_north", "lon": "degrees_east"}
+    for k, u in units.items():
+        if k in ds:
+            ds[k].attrs["units"] = u
+    desc = {
+        "K_T": "chi / (2 T_z2_fine): heat diffusivity on 1 m gradients, this window only",
+        "K_rho": f"{gam_flux:g} epsilon_shear_bounded / N2_10m: shear-turbulence diffusivity (Osborn); an upper "
+                 "bound where shear_at_floor",
+        "K_S": f"R_rho_10m K_T / {gamma:g}: salt diffusivity if all of chi is finger-driven; finger-favourable "
+               f"windows with 1 < R_rho <= {r_max:g} and valid salinity only",
+        "K_S_gamma_low": f"K_S at gamma {max(gs):g}", "K_S_gamma_high": f"K_S at gamma {min(gs):g}",
+        "K_S_finger": f"R_rho_10m max(K_T - K_rho, 0) / {gamma:g}: finger-driven salt diffusivity after removing "
+                      "the shear-turbulence part of chi; 0 where no excess; a lower bound where shear_at_floor",
+        "chi_T1_T2_ratio": "chi_T1 / chi_T2 where both FP07 probes are used (measurement scatter)",
+    }
+    for k, v in desc.items():
+        ds[k].attrs["long_name"] = v
+        if k.startswith("K_"):
+            ds[k].attrs["units"] = "m2 s-1"
+    ds["finger_flags"].attrs.update(flag_attrs(FINGER_BITS, "per-window diffusivity flags"))
+    # measurement scatter of chi (FP07 pair) against the window-to-window scatter of K_T in a profile
+    both = np.isfinite(d["chi_T1_T2_ratio"]) & (d["chi_T1_T2_ratio"] > 0) if "chi_T2" in d else pd.Series(False)
+    ds.attrs["chi_pair_sd_ln"] = float(np.log(d.loc[both, "chi_T1_T2_ratio"]).std()) if both.any() else np.nan
+    lk = pd.Series(np.log(k_t)).where(np.isfinite(np.log(k_t)))
+    resid = lk - lk.groupby(d["profile_file"]).transform(lambda x: x.rolling(9, center=True, min_periods=3).median())
+    ds.attrs["K_T_window_sd_ln"] = float(resid.std())
+    ds.attrs.update({"gamma": gamma, "gammas": ",".join(str(g) for g in gs), "flux_coefficient": gam_flux,
+                     "turner_range_deg": f"{tu_lo:g},{tu_hi:g}", "r_rho_max": r_max,
+                     "weak_gradient_fraction": float(fc["weak_gradient_fraction"]),
+                     "comment": "One record per dissipation window (about 6 m tall, about 3 m apart), per profile, "
+                                "from min_pressure_dbar. Single windows are snapshots of patchy mixing: K varies "
+                                "window to window by about exp(K_T_window_sd_ln), far more than the FP07 "
+                                "measurement scatter (chi_pair_sd_ln). To average, average chi, T_z2_fine, "
+                                "epsilon and N2 over windows first and form K from the averages "
+                                "(docs/products.md section 4b)."})
+    return ds
+
+
 PRIMARY_UNITS = {"depth_bin": "dbar", "P_top_dbar": "dbar", "P_bottom_dbar": "dbar", "finger_fraction": "1",
                  "R_rho_finger": "1"}
 PRIMARY_DESC = {
@@ -319,6 +423,10 @@ def run(ctx: dict) -> None:
         seg.attrs.update(global_attrs(config, prov, name, inst, "dissipation segments"))
         seg.to_netcdf(out / f"segments_{name}.nc", encoding={v: enc for v in seg.data_vars
                                                             if seg[v].dtype.kind in "fiu"})
+        fp = finger_profiles_product(seg, hyd, config)
+        fp.attrs = {**global_attrs(config, prov, name, inst, "per-window finger diffusivity profiles"), **fp.attrs}
+        fp.to_netcdf(out / f"finger_profiles_{name}.nc", encoding={v: enc for v in fp.data_vars
+                                                                  if fp[v].dtype.kind in "fiu"})
         binned = binned_product(seg, hyd, bin_m)
         binned.attrs.update(global_attrs(config, prov, name, inst, f"profiles binned at {bin_m:g} m"))
         binned.to_netcdf(out / f"binned_{name}.nc", encoding={v: enc for v in binned.data_vars

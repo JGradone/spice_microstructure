@@ -577,7 +577,7 @@ products:
   # variables are specified in docs/products.md.
   format: netcdf4
   conventions: "CF-1.13, ACDD-1.3"
-  product_version: "0.7"          # bump on any change to variables or methods
+  product_version: "0.8"          # bump on any change to variables or methods
   recommended_run: fft2_diss8_mle # run whose products are published to outputs/<recommended_dir>/ (scripts/publish_recommended.py)
   recommended_dir: recommended
   recommended_sensitivity_label: sensitivity   # outputs/comparisons/<label>/ used for the uncertainty ranges
@@ -589,6 +589,10 @@ products:
     finger_set: finger_any        # finger-favourable water (Turner 45-90 deg)
     finger_fraction_min: 0.5      # K_nitrate = K_S where at least this fraction of the bin's windows is
                                   # finger-favourable (and K_S is defined), else K_T of all water
+  finger_profiles:                # finger_profiles_<instrument>: per-window K in each profile (decisions.md 2026-11-18)
+    min_pressure_dbar: 20         # products' shallowest reliable depth
+    turner_range_deg: [45, 90]    # finger-favourable Turner angle (10 m fits), exclusive
+    weak_gradient_fraction: 0.1   # flag weak_gradient where T_z2_fine < this x T_z_10m^2 (mixed layers of staircases)
   creator_name: "Joe Gradone"
   creator_email: "joe@gradone.com"
   institution: "Rutgers University"

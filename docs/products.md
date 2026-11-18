@@ -2,7 +2,7 @@
 
 The `export` step writes the products below to `<output_root>/<run.name>/products/`. These files are the interface to analyses done outside this repository. Everything upstream of them is internal and may change between runs; the products change only with a `products.product_version` bump, recorded in `docs/decisions.md`.
 
-Status: written by the `export` step (product version 0.7, 2026-11-18). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
+Status: written by the `export` step (product version 0.8, 2026-11-18). Scope: microstructure only; nitrate, productivity and grazing data are combined with these products outside this repository.
 
 ## Common to every file
 
@@ -57,6 +57,23 @@ Since 0.7. The starting point for nitrate fluxes: the same values as section 4, 
 * `K_S` with 95% intervals: finger-favourable water at the primary γ; `K_S_gamma_low` and `K_S_gamma_high` at the largest and smallest γ in `diffusivities.gammas`. Empty where K_S is not defined (R_rho outside 1 to `k_s_max_r_rho`) or the finger water has too few profiles. `R_rho_finger`, `n_profiles_finger`.
 * `K_GM`: Garrett–Munk reference.
 * `K_nitrate`, its 95% interval, and `K_nitrate_source`: `K_S` where `finger_fraction` ≥ `products.primary.finger_fraction_min` (0.5) and K_S is defined, else `K_T` of all water. This is a suggestion, not a method: it assumes K_N = K_S in fingering and treats a bin as finger-dominated or not, so bins near the threshold can switch between instruments. The underlying columns are all in the file.
+
+## 4b. Per-window finger diffusivities: `finger_profiles_<instrument>.nc`
+
+Since 0.8. For salt-finger nitrate fluxes in single profiles at the native resolution: one record per dissipation window (8 s, about 6 m tall, about 3 m apart; the height scales with fall speed) in each profile, from `products.finger_profiles.min_pressure_dbar` (20) down. No averaging over profiles or windows. This is a deliberate exception to the bin-average rule (decisions.md 2026-11-18); everything else in these products is bin-averaged.
+
+* Position and time: `profile_file`, `window`, `time`, `pressure`, `depth`, `lat`, `lon`, `fall_speed`
+* `K_T` = chi / (2 `T_z2_fine`): heat diffusivity on 1 m gradients, the scale of a ~1 m nitrate sensor. `T_z2_fine` is a variance and cannot cross zero.
+* `K_rho` = 0.2 `epsilon_shear_bounded` / `N2_10m`: the shear-turbulence diffusivity; an upper bound where `shear_at_floor`.
+* `K_S` = `R_rho_10m` K_T / γ (γ 0.65; `K_S_gamma_low`/`_high` at γ 0.7/0.5): salt (nitrate) diffusivity if all of chi is finger-driven. Only in finger-favourable windows (10 m Turner angle 45–90°) with 1 < R_rho ≤ 4 and valid salinity; empty elsewhere.
+* `K_S_finger` = `R_rho_10m` max(K_T − K_rho, 0) / γ: the finger-driven part, after removing the chi that shear turbulence at Γ = 0.2 would produce. 0 where there is no excess (flag `no_finger_excess`); a lower bound where `shear_at_floor`.
+* Ingredients: `chi` (and `chi_T1`, `chi_T2`, `chi_T1_T2_ratio`), `T_z2_fine`, `T_z_10m`, `S_z_10m`, `N2_10m`, `alpha`, `beta`, `R_rho_10m`, `turner_angle_10m`, `epsilon_shear`, `epsilon_shear_bounded`, `staircase_rollo2022`, `Re_b_shear`, and the QC columns `chi_keep`, `shear_keep`, `chi_at_floor`, `shear_at_floor`, `ts_salinity_invalid`
+* `finger_flags` (bit flags with `flag_meanings`): not_finger_favourable, r_rho_out_of_range, weak_gradient (`T_z2_fine` < `weak_gradient_fraction` × T_z_10m², mostly staircase mixed layers, where K can spike), chi_not_kept, chi_at_floor, shear_not_kept, shear_at_floor, N2_nonpositive, ts_salinity_invalid, no_finger_excess
+* Attributes: `chi_pair_sd_ln`, the scatter of ln(chi_T1/chi_T2) where both probes are used (measurement noise: VMP250 0.19, VMP5500 0.29), and `K_T_window_sd_ln`, the window-to-window scatter of ln K_T within a profile (about 1.1, i.e. ×3). Single windows are snapshots of patchy mixing; the variability is mostly real, not measurement noise. No per-window confidence interval is given (perturb provides no per-window fit uncertainty).
+
+Using it:
+* Fine-scale nitrate flux: F_N = −K × dN/dz with the nitrate gradient over the same window. Use `K_S` or `K_S_finger` in finger-favourable windows.
+* **To average** (over depth in one profile, or over profiles), average `chi`, `T_z2_fine`, `epsilon_shear_bounded` and `N2_10m` over the windows first, then form K. Never average the per-window K: in finger water the mean of per-window K_T is about 4× the ratio of averages (150 dbar down), because a few windows with weak gradients dominate. For a flux, averaging the per-window flux F_N is fine if dN/dz is measured per window.
 
 ## 5. Finger attribution: `attribution_<instrument>.csv`
 

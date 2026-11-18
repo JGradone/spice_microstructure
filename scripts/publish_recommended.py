@@ -117,6 +117,12 @@ def main() -> int:
         f"least {cfg['products']['primary']['finger_fraction_min']:g} of the bin is finger-favourable and K_S is "
         "defined, else `K_T` of all water; K_N ≈ K_S in fingering is an assumption to state. Use rows with "
         "`min_profiles_ok` true. The values are the same as in the full table below.",
+        "* **Fine-scale finger fluxes in single profiles:** `finger_profiles_<instrument>.nc`. One record per "
+        "dissipation window (about 6 m tall, 3 m apart) in each profile, from 20 dbar: `K_S` (all of chi "
+        "finger-driven) and `K_S_finger` (after removing the shear-turbulence part) in finger-favourable windows, with "
+        "`K_T`, `K_rho`, the ingredients and `finger_flags`. Pair with a nitrate gradient over the same window. Single "
+        "windows vary by about ×3 from one to the next (patchy mixing); to average, average chi, `T_z2_fine`, epsilon "
+        "and N2 first, never the per-window K (`docs/products.md` 4b).",
         "* **All variants of the diffusivities:** `diffusivity_<instrument>.csv` (or `.nc`). In "
         "finger-favourable water use `K_S_g<gamma>` (salt diffusivity; nitrate behaves like salt in fingering, "
         "K_N ≈ K_S is an assumption to state). Use `K_T` for heat and, outside finger water, `K_rho` (flag "
