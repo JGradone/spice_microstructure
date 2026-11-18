@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-11-17T21:37:38+00:00",
-  "config_sha256": "021f933b84d6ec98463c467b878bc7f12f7365164cb4274df10b89e1308c7c11",
-  "git_commit": "7d063ded488586d7ca3544b7587f02b4fbbe0c16",
+  "created_utc": "2026-11-18T14:15:52+00:00",
+  "config_sha256": "fb54a623d630613208623943669ed3b3b6c293ddaf0f6d5fa4385fe20e417f45",
+  "git_commit": "d328f33e4c72ba97bf6b6e8806456f6cba6370b7",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -18,7 +18,7 @@
   "config_path": "config/config.yaml",
   "run": {
     "name": "an_mlgrad001",
-    "notes": "Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.",
+    "notes": "Sensitivity run an_mlgrad001 of fft2_diss8_mle; changed settings in sensitivity_overrides.",
     "instruments": [
       "vmp250",
       "vmp5500"
@@ -41,9 +41,6 @@
     "reuse_convert_from": "fft2_diss8_mle"
   },
   "steps": [
-    "dd_test",
-    "diffusivities",
-    "uncertainty",
     "export"
   ],
   "manifests_verified": true

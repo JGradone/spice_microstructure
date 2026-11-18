@@ -1043,3 +1043,13 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
 * **Reruns:** `dd_test` to `export` for `baseline` and the analysis-run family (`fft2_diss8` and `fft2_diss16` stop at `thermistor`, as before), all at 7d063de with a clean tree; then `compare_sensitivity.py` (labels `sensitivity` and `all_settings`), `write_run_summaries.py`, `publish_recommended.py` and `plot_team_summary.py`.
 
 * Results and config committed in d706f42 (code in 2eaa333 and 7d063de).
+
+## 2026-11-18: Primary diffusivity profiles for collaborators; run_notes per run; products 0.7
+
+* **Why:** collaborators computing nitrate fluxes need one diffusivity profile, not the full table (1155 VMP250 records: group × staircase method × Turner set × staircase label × gradient choice × depth bin × γ), where a non-primary row is easy to pick. Separately, every sensitivity run's products carried the baseline's `run_notes` ("Baseline: all VMP casts from raw…"), because `apply_sensitivity` copied `run.notes` unchanged; the recommended products (analysis run) were mislabelled.
+* **Change:**
+  * New product `diffusivity_primary_<instrument>.csv/.nc` (export step, config `products.primary`): one row per group (`all free fall`, `process_station free fall`) and 25 m bin from 20 dbar, with the primary choices only (rollo2022, finescale, finger set `finger_any`, γ = 0.65). Columns: K_T and K_rho of all water with 95% intervals; K_S of the finger-favourable water with its interval and γ range; finger-favourable fraction; R_rho of the finger water; K_GM; and `K_nitrate` with `K_nitrate_source`. Values are copied from `diffusivity_<instrument>`; nothing is recomputed.
+  * `K_nitrate` = K_S where at least `finger_fraction_min` (0.5) of the bin's windows are finger-favourable and K_S is defined, else K_T of all water. K_T rather than K_rho outside finger water: it uses the same chi and gradients as K_S and does not depend on shear epsilon near the noise floor. It is a suggestion carrying the K_N = K_S assumption; the threshold is a choice, and bins near it switch between instruments (100–125 dbar: VMP250 62% finger-favourable, so K_S = 1.0e-5; VMP5500 47%, so K_T = 9.5e-7). Below about 750 dbar on the VMP5500 the water is finger-favourable but R_rho > 4, so K_S is not defined and K_nitrate is K_T.
+  * Sensitivity runs take `notes` from their own `sensitivity_runs` entry, otherwise a generic "Sensitivity run X of <base>" note; the analysis run has its own notes.
+  * `product_version` 0.6 → 0.7. All existing product tables are byte-for-byte unchanged.
+* **Reruns:** `export` only for `baseline` and the analysis-run family (nothing upstream changed), at d328f33 with a clean tree; then `publish_recommended.py` and `write_run_summaries.py`.

@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-11-17T21:31:22+00:00",
-  "config_sha256": "b2dbcea08efd9c1e27186991f5332c2b7fe7d3f38165924672631673f0ae8bdf",
-  "git_commit": "7d063ded488586d7ca3544b7587f02b4fbbe0c16",
+  "created_utc": "2026-11-18T14:15:09+00:00",
+  "config_sha256": "4e19379ae3d109315c3a795db758895d7fdbfc971f62be148b10a76dfb6cc8d2",
+  "git_commit": "d328f33e4c72ba97bf6b6e8806456f6cba6370b7",
   "python": "3.12.15",
   "packages": {
     "microstructure-tpw": "0.4.0",
@@ -18,7 +18,7 @@
   "config_path": "config/config.yaml",
   "run": {
     "name": "fft2_diss8_mle",
-    "notes": "Baseline: all VMP casts from raw on the pinned package version with shipboard parameters.",
+    "notes": "Analysis run: 2 s FFT / 8 s windows, chi by MLE, record-locked shear interference removed; all science results come from this run.",
     "instruments": [
       "vmp250",
       "vmp5500"
@@ -39,9 +39,6 @@
     }
   },
   "steps": [
-    "dd_test",
-    "diffusivities",
-    "uncertainty",
     "export"
   ],
   "manifests_verified": true

@@ -136,10 +136,10 @@ Exact reproduction with the shipboard version (microstructure-tpw 0.3.1, commit 
 * Every later change (noise floor tests, Kraichnan epsilon, the chi comparison, sensitivity runs) is reported as a difference from the baseline.
 * Upgrading the pinned commit later starts a new baseline. Record why in `docs/decisions.md` and rerun.
 
-## Current state (2026-11-17; details and reasons in docs/decisions.md)
+## Current state (2026-11-18; details and reasons in docs/decisions.md)
 
 * **Pin:** microstructure-tpw c90ff7f (main, not tagged; decisions.md 2026-10-29). The pin alone left the baseline identical.
-* **Products 0.6** (decisions.md 2026-11-17): diffusivity depth bins from 20 dbar (pooled values and all tests stay 150 dbar down); `T_z2_fine` in the segments product. Analysis starter: `examples/products_quickstart.ipynb`.
+* **Products 0.7** (decisions.md 2026-11-18): `diffusivity_primary_<instrument>`, one profile per group with the primary choices and `K_nitrate`, the file to share for nitrate fluxes. Since 0.6: diffusivity depth bins from 20 dbar (pooled values and all tests stay 150 dbar down) and `T_z2_fine` in the segments product. Analysis starter: `examples/products_quickstart.ipynb`.
 * **Analysis settings:** 2 s FFT / 8 s windows (about 6 m, resolves staircase interfaces), chi by MLE, single-pole FP07 response, and `epsilon.record_locked_shear: true`.
 * **VMP5500 shear interference:** two pulses at fixed samples of every .p record, on every cast, mostly below the despike threshold. Removing the record-locked waveform lowers VMP5500 shear epsilon by a median 17% (VMP250 unaffected). A residual remains on sh1 on SPC_034 and SPC_038. `fft2_diss8_mle_norls` is the run without the removal.
 * **Shear epsilon:** refit from 1 Hz to K_max. The noise floor is kept as an upper bound. FM is a flag only. On probe disagreement the smaller estimate is kept, but persistent disagreements are checked against neighbouring casts: a fouled probe reads low.
