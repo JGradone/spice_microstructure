@@ -1053,3 +1053,4 @@ The email thread (Pat Welch, Eli Hunter, Joe Gradone; 2026-07-14 to 08-13) promp
   * Sensitivity runs take `notes` from their own `sensitivity_runs` entry, otherwise a generic "Sensitivity run X of <base>" note; the analysis run has its own notes.
   * `product_version` 0.6 → 0.7. All existing product tables are byte-for-byte unchanged.
 * **Reruns:** `export` only for `baseline` and the analysis-run family (nothing upstream changed), at d328f33 with a clean tree; then `publish_recommended.py` and `write_run_summaries.py`.
+* Results committed in db47f58 (code in d328f33).
