@@ -516,6 +516,23 @@ uncertainty:
   bootstrap_samples: 1000
   random_seed: 20260812
 
+fp07_pair:
+  # Per-bead FP07 response equalization (microstructure-tpw `fp07-pair`, f77e5de; decisions.md
+  # 2026-11-18). The fp07_pair step fits corrections on the chi products of source_run (same perturb
+  # settings, no correction); convert passes them to perturb (instruments.<key>.fp07_response),
+  # which equalizes each bead's spectra before chi and runs a file uncorrected when its own
+  # mid-band ratio disagrees with the correction by more than ln 0.3 (fp07_response_applied = 0).
+  enabled: false
+  source_run: fft2_diss8_mle
+  instruments: [vmp5500]          # the VMP250 pair agrees (median chi ratio 1.01)
+  anchor: T1                      # T3303, T1 on every VMP5500 cast, keeps the default model; it agrees
+                                  # with T3301 within ~10% at all frequencies (fp07-pair default: geomean)
+  min_files: 8                    # fp07-pair default
+  segment: true                   # split a pair where its ratio changes in time (fp07-pair default)
+  allow_amplitude: false          # refuse pairs with a flat gain beyond ln 2 (fp07-pair default)
+  readmit_probes: {}              # {instrument: {file: [probes]}}: excluded probes used again on files
+                                  # where the correction was applied (thermistor step)
+
 sensitivity_runs:
   # Each entry is its own run, reported as a difference from the baseline. Optional `notes`
   # describe the run in product metadata (run_notes); runs without them get a generic note.
@@ -571,6 +588,17 @@ sensitivity_runs:
   - name: fft2_diss8_mle_norls    # analysis run without the record-locked shear removal; own perturb run
     base: fft2_diss8_mle
     set: {perturb.epsilon.record_locked_shear: false}
+  - name: fft2_diss8_mle_fp07pair  # FP07 per-bead response equalization; T3304 re-admitted where corrected; own perturb run
+    base: fft2_diss8_mle
+    notes: "Analysis run with fp07-pair per-bead FP07 response equalization (anchor T1 = T3303); VMP5500 T2 (T3304) re-admitted on SPC_012-039 where the correction was applied."
+    set:
+      fp07_pair.enabled: true
+      fp07_pair.readmit_probes:
+        vmp5500: {SPC_012.P: [T2], SPC_014.P: [T2], SPC_015.P: [T2], SPC_016.P: [T2], SPC_017.P: [T2],
+                  SPC_018.P: [T2], SPC_019.P: [T2], SPC_020.P: [T2], SPC_021.P: [T2], SPC_022.P: [T2],
+                  SPC_023.P: [T2], SPC_025.P: [T2], SPC_026.P: [T2], SPC_027.P: [T2], SPC_028.P: [T2],
+                  SPC_030.P: [T2], SPC_031.P: [T2], SPC_033.P: [T2], SPC_034.P: [T2], SPC_038.P: [T2],
+                  SPC_039.P: [T2]}    # SPC_040 not: T3304 flat-lined
 
 products:
   # Final exported products for use outside this repository. Layout and

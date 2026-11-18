@@ -69,6 +69,13 @@ def perturb_config(config: dict, name: str, inst: dict, patched: Path, output: P
     pc["hotel"] = {"enable": False}
     pc["parallel"] = {"jobs": conv["jobs"]}
     pc["instruments"] = {}
+    fpc = config["fp07_pair"]
+    if fpc["enabled"] and name in fpc["instruments"]:
+        # per-bead FP07 response corrections from the fp07_pair step, keyed like perturb's
+        # instrument lookup: the name of the directory holding the .p files
+        rec = json.loads((output.parent.parent / "fp07_pair" / f"corrections_{name}.json").read_text())
+        pc["instruments"][patched.name] = {
+            "fp07_response": [config_dir_path(common.REPO_ROOT / f, cfg_dir) for f in rec["files"]]}
     pc["netcdf"] = {
         "title": f"SPICE FKt260806 {inst['model']} SN {inst['serial']} microstructure",
         "institution": prod["institution"], "creator_name": prod["creator_name"],

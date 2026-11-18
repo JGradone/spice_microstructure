@@ -26,6 +26,7 @@ import common
 STEPS = [
     "cast_log",       # 0. cast table and ship track from the Sealog export
     "patch",          # 0. regenerate patched .p files from raw (per-cast edits)
+    "fp07_pair",      # 0. per-bead FP07 response corrections (fp07-pair fit; off unless enabled)
     "convert",        # 1. perturb run: profiles, epsilon, chi, CTD, binning
     "segments",       # 2. per-window QC flags (applied when segments.enabled)
     "hydrography",    # 3. background hydrography

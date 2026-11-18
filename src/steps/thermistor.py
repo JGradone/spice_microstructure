@@ -101,8 +101,11 @@ def load(chi_dir: Path) -> dict:
                                             ("chi", "epsilon_T", "kB", "K_max_T", "fom", "K_max_ratio"))
             s, m, n, K = (read_var(d, k) for k in ("spec_gradT", "spec_batch", "spec_noise", "K"))
             u, nu, P = read_var(d, "speed"), read_var(d, "nu"), read_var(d, "P_mean")
+            # fp07-pair response correction: 1 applied, 0 refused by perturb's per-file guard, -1 none
+            applied = int(getattr(d, "fp07_response_applied", -1))
         for w in range(chi.shape[1]):
-            row = {"profile_file": f.name, "window": w, "P_mean": P[w], "speed": u[w], "nu": nu[w]}
+            row = {"profile_file": f.name, "window": w, "P_mean": P[w], "speed": u[w], "nu": nu[w],
+                   "fp07_response_applied": applied}
             for i, p in enumerate(probes):
                 row.update({f"chi_{p}": chi[i, w], f"epsilon_T_{p}": epsT[i, w], f"kB_{p}": kB[i, w],
                             f"K_max_T_{p}": kmax[i, w], f"fom_{p}": fom[i, w], f"K_max_ratio_{p}": kr[i, w]})
@@ -141,7 +144,11 @@ def combine(values: np.ndarray, use: np.ndarray, how: str) -> np.ndarray:
     return np.where(n > 0, out, np.nan)
 
 
-def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dict) -> tuple[pd.DataFrame, dict]:
+def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dict,
+       readmit: dict | None = None) -> tuple[pd.DataFrame, dict]:
+    """readmit: {file: [probes]} excluded probes used again where perturb applied the
+    fp07-pair response correction to that file (fp07_pair.readmit_probes)."""
+    readmit = readmit or {}
     fl = floors(data)                                   # also adds snr_<probe> to data["df"]
     df = data["df"].merge(seg[["profile_file", "window", "keep"]].rename(columns={"keep": "segment_keep"}),
                           on=["profile_file", "window"], how="left", validate="one_to_one")
@@ -161,6 +168,11 @@ def qc(data: dict, seg: pd.DataFrame, cfg: dict, seg_enabled: bool, exclude: dic
         prof = df["profile_file"].str[:-3]
         excl = (stem.map(lambda s, p=p: p in exclude.get(f"{s}.P", exclude.get(f"{s}.p", [])))
                 | prof.map(lambda s, p=p: p in exclude.get(s, []))).to_numpy(bool)
+        back = (stem.map(lambda s, p=p: p in readmit.get(f"{s}.P", readmit.get(f"{s}.p", [])))
+                .to_numpy(bool) & (df["fp07_response_applied"].to_numpy() == 1))
+        stage.setdefault("probe_readmitted", 0)
+        stage["probe_readmitted"] += int((ok & excl & back).sum())
+        excl &= ~back
         stage["probe_exclusion"] += int((ok & excl).sum())
         ok &= ~excl
         kr_bad = df[f"K_max_ratio_{p}"].to_numpy() < kc["min"]
@@ -421,7 +433,9 @@ def run(ctx: dict) -> None:
     for name, inst in common.instruments(config):
         data = load(common.single_dir(ctx["run_dir"] / "convert" / name, "chi"))
         seg = pd.read_csv(ctx["run_dir"] / "segments" / f"segments_{name}.csv")
-        df, counts = qc(data, seg, cfg, seg_enabled, inst.get("exclude_probes") or {})
+        fpc = config["fp07_pair"]
+        readmit = (fpc["readmit_probes"].get(name) or {}) if fpc["enabled"] else {}
+        df, counts = qc(data, seg, cfg, seg_enabled, inst.get("exclude_probes") or {}, readmit)
         shear = pd.read_csv(ctx["run_dir"] / "epsilon_shear" / f"epsilon_shear_{name}.csv")
         df = resolved_gate(df, shear, data["probes"], cfg["epsilon_T"])
         df.insert(0, "instrument", name)
